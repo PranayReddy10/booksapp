@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+
+    <application
+        android:name="com.jntuh.util.MyApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/app_icon"
+        android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:requestLegacyExternalStorage="true"
+        android:roundIcon="@mipmap/app_icon_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.AndroidEBook_V16"
+        android:usesCleartextTraffic="true"
+        tools:replace="android:usesCleartextTraffic,android:theme">
+        <activity
+            android:name="com.jntuh.books.SplashActivity"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:theme="@style/RemoveAppSplashTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="@string/host"
+                    android:pathPrefix="@string/pathPrefix"
+                    android:scheme="@string/scheme" />
+                <data
+                    android:host="@string/get_host"
+                    android:pathPrefix="@string/get_pathPrefix"
+                    android:scheme="@string/get_scheme" />
+
+            </intent-filter>
+        </activity>
+        <activity android:name="com.jntuh.books.IntroActivity" />
+        <activity android:name="com.jntuh.books.LoginActivity" />
+        <activity
+            android:name="com.jntuh.books.MainActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name="com.jntuh.books.RegisterActivity" />
+        <activity android:name="com.jntuh.books.ForgotPassActivity" />
+        <activity android:name="com.jntuh.books.SubCategoryActivity" />
+        <activity android:name="com.jntuh.books.BookListBySubCatActivity" />
+        <activity android:name="com.jntuh.books.BookDetailsActivity" />
+        <activity android:name="com.jntuh.books.RateReviewActivity" />
+        <activity android:name="com.jntuh.books.SettingsActivity" />
+        <activity android:name="com.jntuh.books.AboutUsActivity" />
+        <activity android:name="com.jntuh.books.PagesActivity" />
+        <activity
+            android:name="com.jntuh.books.PDFShow"
+            android:configChanges="orientation|screenLayout|screenSize" />
+        <activity
+            android:name="com.jntuh.books.EditProfileActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity android:name="com.jntuh.books.SearchBookActivity" />
+        <activity android:name="com.jntuh.books.PlanListActivity" />
+        <activity android:name="com.jntuh.books.PaymentMethodActivity" />
+        <activity android:name="com.jntuh.books.HomeSectionListActivity" />
+        <activity android:name="com.jntuh.books.FilterSearchBookActivity" />
+        <activity android:name="com.jntuh.books.AuthorDetailsActivity" />
+        <activity android:name="com.jntuh.books.TrendingBookActivity" />
+        <activity android:name="com.jntuh.books.DownloadActivity" />
+        <activity android:name="com.jntuh.paymentmethod.PayStackActivity" />
+        <activity android:name="com.jntuh.paymentmethod.StripeActivity" />
+        <activity android:name="com.jntuh.paymentmethod.PayPalActivity" />
+        <activity android:name="com.jntuh.paymentmethod.RazorPayActivity" />
+        <activity android:name="com.jntuh.paymentmethod.PayUMoneyActivity" />
+        <activity android:name="com.jntuh.paymentmethod.FlutterWaveActivity" />
+        <activity android:name="com.jntuh.paymentmethod.MyCinetPayActivity" />
+        <activity android:name="com.jntuh.paymentmethod.ManualBankPaymentActivity" />
+        <activity android:name="com.jntuh.paymentmethod.SslCommerzActivity" />
+        <activity
+            android:name="com.folioreader.ui.activity.FolioActivity"
+            android:label="@string/app_name"
+            android:theme="@style/FolioActivityDayTheme" />
+
+        <meta-data
+            android:name="applovin.sdk.key"
+            android:value="@string/applovin_sdk_key" />
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="@string/admob_id" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <activity
+            android:name="com.google.android.gms.ads.AdActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" />
+
+        <meta-data
+            android:name="com.wortise.ads.utm"
+            android:value="viaviweb" />
+        <meta-data
+            android:name="firebase_crash_collection_enabled"
+            android:value="false" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/app_name" />
+
+        <activity
+            android:name="com.folioreader.ui.activity.SearchActivity"
+            android:exported="true"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+        </activity>
+
+        <service
+            android:name="com.jntuh.service.DownloadService"
+            android:exported="false"
+            android:foregroundServiceType="dataSync" />
+
+        <receiver
+            android:name="com.razorpay.RzpTokenReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="rzp.device_token.share" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name="com.razorpay.CheckoutActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:theme="@style/CheckoutTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <data
+                    android:host="rzp.io"
+                    android:scheme="io.rzp" />
+            </intent-filter>
+        </activity>
+
+        <meta-data
+            android:name="com.onesignal.NotificationOpened.DEFAULT"
+            android:value="DISABLE" />
+
+    </application>
+</manifest>

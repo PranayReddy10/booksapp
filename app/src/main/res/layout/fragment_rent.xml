@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_bg"
+    tools:context="com.jntuh.books.MainActivity">
+
+    <LinearLayout
+        android:id="@+id/laySubs"
+        android:layout_width="match_parent"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:layout_marginEnd="@dimen/_10px"
+        android:layout_marginStart="@dimen/_10px"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_gravity="center"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/empty_rent_book"/>
+
+        <TextView
+            style="@style/txt_OpenSansRomanBold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/_10px"
+            android:text="@string/empty_rent_title"
+            android:textColor="@color/subs_title"
+            android:textSize="@dimen/_18sp"
+            tools:text="@string/empty_rent_title" />
+
+        <TextView
+            style="@style/txtOpenSansRomanSemiBold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/_10px"
+            android:text="@string/empty_rent_desc"
+            android:textColor="@color/home_by_author"
+            android:textSize="@dimen/_15sp"
+            android:layout_marginBottom="@dimen/_5px"
+            tools:text="@string/empty_rent_desc" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnStartSubs"
+            style="@style/txt_OpenSansRomanBold"
+            android:layout_width="wrap_content"
+            android:layout_height="43dp"
+            android:background="@drawable/rectangle_bg_deep_orange_btn_submit"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_15px"
+            android:layout_marginBottom="@dimen/_10px"
+            android:singleLine="true"
+            android:paddingStart="@dimen/_30px"
+            android:paddingEnd="@dimen/_30px"
+            android:text="@string/empty_rent_start_btn"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_15sp"
+            tools:text="@string/empty_rent_start_btn" />
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvFav"
+        style="@style/groupStyle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/_8px"
+        android:clipToPadding="false"
+        android:layout_marginStart="@dimen/_8px" />
+
+    <ProgressBar
+        android:id="@+id/progressFav"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:theme="@style/ProgressBar" />
+
+    <include
+        android:id="@+id/llNoData"
+        layout="@layout/no_data_found"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true" />
+</RelativeLayout>

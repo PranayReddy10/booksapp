@@ -1,0 +1,110 @@
+buildscript {
+    repositories {
+        google()
+        maven { url 'https://plugins.gradle.org/m2/' }
+    }
+}
+plugins {
+    id 'com.onesignal.androidsdk.onesignal-gradle-plugin'
+    id 'com.android.application'
+    id 'com.google.gms.google-services'
+
+}
+repositories {
+    maven {
+        url "https://maven.google.com"
+    }
+}
+
+
+android {
+    compileSdk 35
+
+    defaultConfig {
+        applicationId "com.jntuh.books"
+        minSdk 23
+        targetSdk 35
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    buildFeatures {
+        viewBinding  true
+        //noinspection DataBindingWithoutKapt
+    }
+    buildTypes.each {
+        it.buildConfigField 'String', 'My_api', app_url
+    }
+
+    lintOptions {
+        disable 'MissingTranslation'
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
+    namespace 'com.jntuh.books'
+
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'androidx.appcompat:appcompat:1.7.1'
+    implementation 'com.google.android.material:material:1.13.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.7.0'
+    implementation project(path: ':SmoothCheckBox-master')
+    implementation 'com.github.siyamed:android-shape-imageview:0.9.3@aar'
+    implementation 'com.squareup.retrofit2:retrofit:3.0.0'
+    implementation 'com.squareup.retrofit2:converter-gson:3.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.4.0'
+    implementation 'org.jetbrains:annotations:26.0.2-1'
+    implementation 'com.github.bumptech.glide:glide:5.0.5'
+    annotationProcessor 'com.github.bumptech.glide:compiler:5.0.5'
+    implementation("com.tbuonomo:dotsindicator:5.1.0")
+    implementation 'com.github.ornolfr:rating-view:0.1.2@aar'
+    implementation 'com.google.firebase:firebase-messaging:25.0.1'
+    implementation 'com.google.android.gms:play-services-ads:24.8.0'
+    implementation 'com.google.firebase:firebase-analytics:23.0.0'
+    implementation 'com.google.android.gms:play-services-auth:21.4.0'
+    implementation 'io.github.oothp:android-pdf-viewer:3.2.0-beta06'
+    implementation project(':folioreader')
+    implementation 'io.github.lizhangqu:coreprogress:1.0.2'
+    implementation 'com.karumi:dexter:6.2.3'
+    implementation 'org.greenrobot:eventbus:3.3.1'
+    implementation 'com.razorpay:checkout:1.6.20'
+    implementation 'com.stripe:stripe-android:18.2.0'
+    implementation 'com.braintreepayments.api:drop-in:6.14.0'
+    implementation 'in.payu:payu-checkout-pro:1.8.2'
+    implementation 'co.paystack.android:paystack:3.3.2'
+    implementation 'com.github.10bis:compactCreditInput:2.0.2'
+    implementation 'com.github.flutterwave.rave-android:rave_android:2.1.39'
+    implementation 'com.onesignal:OneSignal:5.4.1'
+    implementation "androidx.concurrent:concurrent-futures:1.3.0"
+    implementation 'androidx.multidex:multidex:2.0.1'
+    implementation 'com.google.android.gms:play-services-location:21.3.0'
+    implementation('com.google.ads.mediation:facebook:6.21.0.0') {
+        exclude group: "com.google.android.gms", module: "play-services-ads"
+    }
+    implementation 'com.startapp:inapp-sdk:5.2.4'
+    implementation 'com.applovin:applovin-sdk:13.5.1'
+    implementation 'com.wortise:android-sdk:1.7.2'
+    implementation 'com.unity3d.ads:unity-ads:4.16.4'
+    implementation "commons-io:commons-io:2.21.0"
+    implementation 'com.cinetpay:androidsdk:1.0.0'
+    implementation files('libs/sslCommerzSdk.aar')
+    implementation 'dev.chrisbanes.insetter:insetter:0.6.1'
+}

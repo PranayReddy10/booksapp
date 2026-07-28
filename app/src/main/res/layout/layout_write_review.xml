@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <View
+                android:id="@+id/line"
+                android:layout_width="@dimen/_70px"
+                android:layout_height="@dimen/_2px"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginStart="@dimen/_20px"
+                android:layout_marginTop="@dimen/_10px"
+                android:layout_marginEnd="@dimen/_20px"
+                android:background="@drawable/rectangle_bg_view_line_intro" />
+
+            <TextView
+                android:id="@+id/tvBookReview"
+                style="@style/txt_OpenSansRomanBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/line"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/_15px"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="@string/lbl_book_review"
+                android:textColor="@color/gray_2"
+                android:textSize="@dimen/_20sp"
+                tools:text="@string/lbl_book_review" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:gravity="center"
+                android:background="@drawable/close_shadow"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/ivCloseReport"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="8dp"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/img_close" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/txtDescription"
+            style="@style/txtOpenSansRomanSemiBold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_40px"
+            android:layout_marginTop="@dimen/_15px"
+            android:layout_marginEnd="@dimen/_40px"
+            android:gravity="center_horizontal"
+            android:includeFontPadding="false"
+            android:lineSpacingExtra="3dp"
+            android:text="@string/msg_how_likely_are"
+            android:textColor="@color/write_review_sub_title"
+            android:textSize="@dimen/_14sp"
+            tools:text="@string/msg_how_likely_are" />
+
+        <com.github.ornolfr.ratingview.RatingView
+            android:id="@+id/ratingView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/_20px"
+            android:layout_marginTop="@dimen/_15px"
+            android:layout_marginEnd="@dimen/_20px"
+            app:drawable_empty="@drawable/ic_star_empty"
+            app:drawable_filled="@drawable/ic_star_filled"
+            app:drawable_half="@drawable/ic_star_half"
+            app:drawable_margin="10dp"
+            app:drawable_size="30dp"
+            app:max_count="5"
+            app:rating="0" />
+
+        <TextView
+            android:id="@+id/txtWriteYourReview"
+            style="@style/txt_OpenSansRomanBold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginStart="@dimen/_20px"
+            android:layout_marginTop="@dimen/_15px"
+            android:layout_marginEnd="@dimen/_20px"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="@string/lbl_write_your_review"
+            android:textColor="@color/gray_2"
+            android:textSize="@dimen/_17sp"
+            tools:text="@string/lbl_write_your_review" />
+
+        <EditText
+            android:id="@+id/etYourReviewText"
+            style="@style/etdReviewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20px"
+            android:layout_marginTop="@dimen/_10px"
+            android:layout_marginEnd="@dimen/_20px"
+            android:background="@drawable/rectangle_bg_white_review_editbox_border"
+            android:ellipsize="end"
+            android:hint="@string/lbl_your_review_here"
+            android:inputType="text"
+            android:lineSpacingExtra="@dimen/_1px"
+            android:paddingStart="@dimen/_18px"
+            android:paddingTop="@dimen/_15px"
+            android:paddingEnd="@dimen/_30px"
+            android:paddingBottom="@dimen/_30px"
+            android:singleLine="true"
+            android:textColor="@color/write_review_hint"
+            android:textColorHint="@color/write_review_hint"
+            android:textCursorDrawable="@drawable/cursor"
+            tools:ignore="Autofill" />
+
+
+        <LinearLayout
+            android:id="@+id/llBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20px"
+            android:layout_marginTop="@dimen/_20px"
+            android:layout_marginEnd="@dimen/_20px"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnSubmit"
+                style="@style/txt_OpenSansRomanBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_5px"
+                android:layout_marginBottom="@dimen/_20px"
+                android:background="@drawable/rectangle_bg_deep_orange_btn_submit"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="@string/lbl_submit"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_15sp"
+                tools:text="@string/lbl_submit" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

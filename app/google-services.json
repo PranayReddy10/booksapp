@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "3520309722",
+    "firebase_url": "https://codecanyon-cede9.firebaseio.com",
+    "project_id": "codecanyon-cede9",
+    "storage_bucket": "codecanyon-cede9.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:3520309722:android:76aac0fe0e58bf0f9b78e3",
+        "android_client_info": {
+          "package_name": "com.jntuh.books"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "3520309722-a0e82qitamnsntik8ov87b83184kfer0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsmbddNo6hVFNkm55fmraBxGGC85dii5o"
+        },
+        {
+          "current_key": "AIzaSyD9Xp7EdiFdlilyxdXqXLmVCzZKjP7H5cI"
+        },
+        {
+          "current_key": "AIzaSyAVnzNKyCepWc3GuSJVmrlJpgnF6m-P55Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "3520309722-9kdvo7v05al1fbhi0e1cguigpgnbte9n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

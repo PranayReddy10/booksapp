@@ -1,0 +1,6 @@
+rootProject.name = "AndroidEBook"
+include ':app',':SmoothCheckBox-master'
+
+
+include ':folioreader'
+include ':r2-streamer-kotlin-local:r2-streamer'

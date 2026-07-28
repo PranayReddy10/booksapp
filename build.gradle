@@ -1,0 +1,69 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+   apply from: 'versions.gradle'
+
+    repositories {
+        google()
+	   mavenCentral()
+	   maven { url 'https://maven.aliyun.com/repository/jcenter' }
+    }
+    dependencies {
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+        classpath 'com.android.tools.build:gradle:8.8.2'
+        classpath 'com.google.gms:google-services:4.4.4'// Add this line
+        classpath 'gradle.plugin.com.onesignal:onesignal-gradle-plugin:0.14.0'
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin"
+    }
+}
+
+plugins {
+    id "com.github.spotbugs" version "2.0.0" apply(false)
+}
+
+// Workaround to be able to access SpotBugsTask from external gradle script.
+// More info: https://discuss.gradle.org/t/buildscript-dependencies-in-external-script/23243
+project.extensions.extraProperties.set('SpotBugsTask', com.github.spotbugs.SpotBugsTask)
+
+allprojects {
+
+    configurations.all {
+        resolutionStrategy {
+            cacheChangingModulesFor 0, 'seconds'
+        }
+    }
+
+    repositories {
+        google()
+        mavenLocal()
+        mavenCentral()
+        maven { url 'https://jitpack.io' }
+        maven { url 'https://plugins.gradle.org/m2' }
+        maven {
+            url "https://cardinalcommerceprod.jfrog.io/artifactory/android"
+            credentials {
+                username 'braintree_team_sdk'
+                password ''
+            }
+        }
+
+        maven {
+            url "https://s3-ap-southeast-1.amazonaws.com/godel-release/godel/"
+        }
+        maven { url "https://maven.google.com" }
+        maven { url 'https://maven.wortise.com/artifactory/public' }
+        maven { url 'https://android-sdk.is.com/' }
+        maven { url 'https://artifact.bytedance.com/repository/pangle' }
+        maven { url 'https://cboost.jfrog.io/artifactory/chartboost-ads/' }
+        maven { url 'https://maven.ogury.co' }
+        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

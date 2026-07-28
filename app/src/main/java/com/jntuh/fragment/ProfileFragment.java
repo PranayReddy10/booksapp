@@ -1,0 +1,418 @@
+package com.jntuh.fragment;
+
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
+import com.bumptech.glide.Glide;
+import com.jntuh.books.DownloadActivity;
+import com.jntuh.books.EditProfileActivity;
+import com.jntuh.books.LoginActivity;
+import com.jntuh.books.R;
+import com.jntuh.books.databinding.FragmentProfileBinding;
+import com.jntuh.response.DeleteAccRP;
+import com.jntuh.response.LoginRP;
+import com.jntuh.rest.ApiClient;
+import com.jntuh.rest.ApiInterface;
+import com.jntuh.util.API;
+import com.jntuh.util.Events;
+import com.jntuh.util.GlobalBus;
+import com.jntuh.util.Method;
+import com.jntuh.util.StatusBarUtil;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.tabs.TabLayoutMediator;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import org.greenrobot.eventbus.Subscribe;
+import org.jetbrains.annotations.NotNull;
+import java.util.ArrayList;
+import java.util.List;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+
+public class ProfileFragment extends Fragment {
+
+    FragmentProfileBinding viewProfile;
+    Method method;
+    LoginRP.ItemUser itemUser;
+    FragmentManager childFragmentManager;
+    boolean isContinue = false;
+    String imageProfile;
+    int movePos;
+    ProgressDialog progressDialog;
+
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+
+        StatusBarUtil.setStatusBar(requireActivity(), "profile");
+
+//        requireActivity().getWindow().setNavigationBarColor(Color.BLACK);
+
+//        setSystemBars(requireActivity(), R.color.purple_200, ContextCompat.getColor(requireContext(), R.color.bg_status_bar));
+
+        viewProfile = FragmentProfileBinding.inflate(inflater, container, false);
+
+
+        ViewCompat.setOnApplyWindowInsetsListener(viewProfile.main, (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, 0, systemBars.right, 0);
+            return insets;
+        });
+
+        progressDialog = new ProgressDialog(requireActivity(),R.style.MyAlertDialogStyle);
+        if (getActivity() != null) {
+            method = new Method(requireActivity());
+            childFragmentManager = getChildFragmentManager();
+            GlobalBus.getBus().register(this);
+
+            if (getArguments() != null) {
+                isContinue = getArguments().getBoolean("isContinue");
+                movePos = getArguments().getInt("movePos");
+            }
+
+            viewProfile.ivMoreMenu.setOnClickListener(v -> profileMenuDialog());
+
+            if (method.getIsLogin()) {
+                viewProfile.llLogin.setVisibility(View.GONE);
+                viewProfile.llProfile.setVisibility(View.GONE);
+                viewProfile.llProfile2.setVisibility(View.GONE);
+                viewProfile.ivMoreMenu.setVisibility(View.VISIBLE);
+                viewProfile.progressProfile.setVisibility(View.GONE);
+                viewProfile.llNoData.clNoDataFound.setVisibility(View.GONE);
+                userProfile();
+            } else {
+                viewProfile.llLogin.setVisibility(View.VISIBLE);
+                viewProfile.llProfile.setVisibility(View.GONE);
+                viewProfile.llProfile2.setVisibility(View.GONE);
+                viewProfile.ivMoreMenu.setVisibility(View.GONE);
+                viewProfile.progressProfile.setVisibility(View.GONE);
+                viewProfile.llNoData.clNoDataFound.setVisibility(View.GONE);
+            }
+
+            setupViewPager(viewProfile.vpTab);
+            new TabLayoutMediator(viewProfile.tabLayout, viewProfile.vpTab, (tab, position) -> {
+                if (position == 0) {
+                    tab.setText(getString(R.string.tab_continue));
+                } else if (position == 1) {
+                    tab.setText(getString(R.string.tab_subs));
+                } else if (position == 2) {
+                    tab.setText(getString(R.string.tab_rent));
+                }
+            }).attach();
+
+
+            viewProfile.btnLogIn.setOnClickListener(v -> {
+                Intent intentLogin = new Intent(requireActivity(), LoginActivity.class);
+                startActivity(intentLogin);
+                requireActivity().finishAffinity();
+            });
+
+        }
+        return viewProfile.getRoot();
+    }
+
+    private void setupViewPager(final ViewPager2 viewPager) {
+        final ViewPagerAdapter adapter = new ViewPagerAdapter(requireActivity());
+        adapter.addFragment(new ContinueFragment(), getString(R.string.tab_continue));
+        adapter.addFragment(new DashBoardFragment(), getString(R.string.tab_subs));
+        adapter.addFragment(new RentBookFragment(), getString(R.string.tab_rent));
+        viewPager.setAdapter(adapter);
+        if (isContinue) {
+            viewPager.setCurrentItem(movePos, false);
+        }
+    }
+
+    class ViewPagerAdapter extends FragmentStateAdapter {
+        final List<Fragment> mFragmentList = new ArrayList<>();
+        final List<String> mFragmentTitleList = new ArrayList<>();
+
+        private ViewPagerAdapter(FragmentActivity activity) {
+            super(activity);
+        }
+
+        private void addFragment(Fragment fragment, String title) {
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
+        }
+        @NonNull
+        @Override
+        public Fragment createFragment(int position) {
+            return mFragmentList.get(position);
+        }
+        @Override
+        public int getItemCount() {
+            return mFragmentList.size();
+        }
+    }
+
+    public void userProfile() {
+        if (getActivity() != null) {
+            viewProfile.progressProfile.setVisibility(View.VISIBLE);
+
+            JsonObject jsObj = (JsonObject) new Gson().toJsonTree(new API(requireActivity()));
+            jsObj.addProperty("user_id", method.getUserId());
+            ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+            Call<LoginRP> call = apiService.getProfileData(API.toBase64(jsObj.toString()));
+            call.enqueue(new Callback<LoginRP>() {
+                @Override
+                public void onResponse(@NotNull Call<LoginRP> call, @NotNull Response<LoginRP> response) {
+                    if (getActivity() != null) {
+                        try {
+                            LoginRP loginRPSocial = response.body();
+
+                            if (loginRPSocial != null && loginRPSocial.getSuccess().equals("1")) {
+                                if (loginRPSocial.getItemUserList().get(0).getSuccess().equals("1")) {
+                                    itemUser = loginRPSocial.getItemUserList().get(0);
+                                    viewProfile.llProfile.setVisibility(View.VISIBLE);
+                                    viewProfile.llProfile2.setVisibility(View.VISIBLE);
+                                    viewProfile.ivMoreMenu.setVisibility(View.VISIBLE);
+                                    imageProfile = itemUser.getUser_image();
+                                    if (!imageProfile.isEmpty()) {
+                                        Glide.with(requireActivity().getApplicationContext()).load(imageProfile)
+                                                .placeholder(R.drawable.user_profile)
+                                                .into(viewProfile.ivUser);
+                                    }
+
+                                    viewProfile.tvProfileName.setText(itemUser.getName());
+                                    viewProfile.tvProfileEmail.setText(itemUser.getEmail());
+
+                                } else {
+                                    method.alertBox(loginRPSocial.getItemUserList().get(0).getMsg());
+                                }
+                            } else {
+                                viewProfile.llNoData.clNoDataFound.setVisibility(View.VISIBLE);
+                                viewProfile.progressProfile.setVisibility(View.GONE);
+                                method.alertBox(getString(R.string.failed_try_again));
+                            }
+
+                        } catch (Exception e) {
+                            Log.d("exception_error", e.toString());
+                            method.alertBox(getString(R.string.failed_try_again));
+                        }
+                    }
+                    viewProfile.progressProfile.setVisibility(View.GONE);
+
+                }
+
+                @Override
+                public void onFailure(@NotNull Call<LoginRP> call, @NotNull Throwable t) {
+                    // Log error here since request failed
+                    Log.e("fail", t.toString());
+                    viewProfile.llNoData.clNoDataFound.setVisibility(View.VISIBLE);
+                    viewProfile.progressProfile.setVisibility(View.GONE);
+                    method.alertBox(getString(R.string.failed_try_again));
+                }
+            });
+        }
+    }
+
+
+    @Subscribe
+    public void getName(Events.ProfileUpdate profileUpdate) {
+        imageProfile = profileUpdate.getImage();
+        Glide.with(requireActivity().getApplicationContext()).load(imageProfile)
+                .placeholder(R.drawable.placeholder_portable)
+                .into(viewProfile.ivUser);
+        viewProfile.tvProfileName.setText(profileUpdate.getName());
+        itemUser.setName(profileUpdate.getName());
+        itemUser.setPhone(profileUpdate.getPhone());
+
+    }
+
+    public void profileMenuDialog() {
+        BottomSheetDialog dialog = new BottomSheetDialog(requireActivity());
+        dialog.setContentView(R.layout.layout_option_profile);
+        if (method.isRtl()) {
+            dialog.getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        }
+
+        RelativeLayout layoutLogout = dialog.findViewById(R.id.layLogout);
+        RelativeLayout layoutEditProfile = dialog.findViewById(R.id.layEditProfile);
+        RelativeLayout layoutDeleteAcc = dialog.findViewById(R.id.layDeleteAcc);
+        RelativeLayout layoutDownload = dialog.findViewById(R.id.layDownload);
+        RelativeLayout layoutFav = dialog.findViewById(R.id.layFav);
+
+        assert layoutDownload != null;
+        layoutDownload.setOnClickListener(v -> {
+            Intent intentDown = new Intent(requireActivity(), DownloadActivity.class);
+            intentDown.putExtra("isDown", "isDown");
+            startActivity(intentDown);
+            dialog.dismiss();
+        });
+
+        assert layoutFav != null;
+        layoutFav.setOnClickListener(v -> {
+            Intent intentFav = new Intent(requireActivity(), DownloadActivity.class);
+            intentFav.putExtra("isDown", "isFav");
+            startActivity(intentFav);
+            dialog.dismiss();
+        });
+
+        assert layoutLogout != null;
+        layoutLogout.setOnClickListener(v -> {
+            logoutDialog();
+            dialog.dismiss();
+        });
+
+        assert layoutEditProfile != null;
+        layoutEditProfile.setOnClickListener(v -> {
+            Intent intentProfile = new Intent(requireActivity(), EditProfileActivity.class);
+            intentProfile.putExtra("uId", itemUser.getUser_id());
+            intentProfile.putExtra("uName", itemUser.getName());
+            intentProfile.putExtra("uEmail", itemUser.getEmail());
+            intentProfile.putExtra("uImage", imageProfile);
+            intentProfile.putExtra("uPhone", itemUser.getPhone());
+            intentProfile.putExtra("uType", method.getUserType());
+            startActivity(intentProfile);
+            dialog.dismiss();
+        });
+
+        assert layoutDeleteAcc != null;
+        layoutDeleteAcc.setOnClickListener(v -> {
+            dialog.dismiss();
+            deleteDialog();
+        });
+
+
+        dialog.show();
+    }
+
+    public void logoutDialog() {
+        BottomSheetDialog dialog = new BottomSheetDialog(requireActivity());
+        dialog.setContentView(R.layout.layout_logout);
+        if (method.isRtl()) {
+            dialog.getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        }
+        AppCompatButton buttonCancel = dialog.findViewById(R.id.btnMaybeLater);
+        AppCompatButton buttonYes = dialog.findViewById(R.id.btnSubmit);
+
+        assert buttonCancel != null;
+        buttonCancel.setOnClickListener(v -> dialog.dismiss());
+
+        assert buttonYes != null;
+        buttonYes.setOnClickListener(v -> {
+            if (method.getUserType().equals("google")) {
+
+                // Configure sign-in to request the ic_user_login's ID, email address, and basic
+                // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
+                GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                        .requestEmail()
+                        .build();
+
+                // Build a GoogleSignInClient with the options specified by gso.
+                //Google login
+                GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(requireActivity(), gso);
+
+                mGoogleSignInClient.signOut()
+                        .addOnCompleteListener(requireActivity(), task -> {
+                            method.saveIsLogin(false);
+                            method.setUserId("");
+                            startActivity(new Intent(requireActivity(), LoginActivity.class));
+                            requireActivity().finishAffinity();
+                        });
+            } else {
+                method.saveIsLogin(false);
+                method.setUserId("");
+                startActivity(new Intent(requireActivity(), LoginActivity.class));
+                requireActivity().finishAffinity();
+            }
+            dialog.dismiss();
+        });
+
+        dialog.show();
+    }
+
+    public void deleteDialog() {
+        BottomSheetDialog dialog = new BottomSheetDialog(requireActivity());
+        dialog.setContentView(R.layout.layout_logout);
+        if (method.isRtl()) {
+            dialog.getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        }
+        AppCompatButton buttonCancel = dialog.findViewById(R.id.btnMaybeLater);
+        AppCompatButton buttonYes = dialog.findViewById(R.id.btnSubmit);
+        TextView tvTitle=dialog.findViewById(R.id.tvBookReview);
+        TextView tvMsg=dialog.findViewById(R.id.txtMsg);
+        buttonYes.setText(getString(R.string.delete_acc_btn));
+        tvTitle.setText(getString(R.string.delete_acc));
+        tvMsg.setText(getString(R.string.delete_acc_info));
+
+        assert buttonCancel != null;
+        buttonCancel.setOnClickListener(v -> dialog.dismiss());
+
+        buttonYes.setOnClickListener(v -> {
+            deleteAcc();
+            dialog.dismiss();
+        });
+
+        dialog.show();
+    }
+
+    public void deleteAcc() {
+
+        progressDialog.show();
+        progressDialog.setMessage(getResources().getString(R.string.loading));
+        progressDialog.setCancelable(false);
+
+        JsonObject jsObj = (JsonObject) new Gson().toJsonTree(new API(requireActivity()));
+        jsObj.addProperty("user_id", method.getUserId());
+        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+        Call<DeleteAccRP> call = apiService.getDeleteData(API.toBase64(jsObj.toString()));
+        call.enqueue(new Callback<DeleteAccRP>() {
+            @Override
+            public void onResponse(@NotNull Call<DeleteAccRP> call, @NotNull Response<DeleteAccRP> response) {
+
+                try {
+                    DeleteAccRP dataRP = response.body();
+                    assert dataRP != null;
+                    if (dataRP.getItemDeleteAcc().get(0).getDeleteSuccess().equals("1")) {
+                            method.saveIsLogin(false);
+                            method.setUserId("");
+                            startActivity(new Intent(requireActivity(), LoginActivity.class));
+                            requireActivity().finishAffinity();
+                            Toast.makeText(requireActivity(), dataRP.getItemDeleteAcc().get(0).getDeleteMsg(), Toast.LENGTH_SHORT).show();
+                        }else {
+                            method.alertBox(dataRP.getItemDeleteAcc().get(0).getDeleteMsg());
+                        }
+
+                } catch (Exception e) {
+                    Log.d("exception_error", e.toString());
+                    method.alertBox(getResources().getString(R.string.failed_try_again));
+                }
+
+                progressDialog.dismiss();
+
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<DeleteAccRP> call, @NotNull Throwable t) {
+                // Log error here since request failed
+                Log.e("fail", t.toString());
+                progressDialog.dismiss();
+                method.alertBox(getResources().getString(R.string.failed_try_again));
+            }
+        });
+    }
+}

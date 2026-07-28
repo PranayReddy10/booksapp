@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#F97F68</color>
+    <color name="purple_500">#F97F68</color>
+    <color name="purple_700">#F97F68</color>
+    <color name="teal_200">#F97F68</color>
+    <color name="teal_700">#F97F68</color>
+    <color name="black">#FF000000</color>
+
+    <color name="white">#FFFFFFFF</color>
+    <color name="orange">#F97F68</color>
+    <color name="free_bg">#D6D6D6</color>
+    <color name="free_box_text">#4e4b66</color>
+    <color name="orange_star">#F97F68</color>
+    <color name="orange_star_text">#FFFFFF</color>
+    <color name="gray_2">#4e4b66</color>
+    <color name="gray_show_in">#4e4b66</color>
+    <color name="social_login_text">#4e4b66</color>
+    <color name="gray">#3f3d56</color>
+    <color name="app_bg">#f9f9f9</color>
+    <color name="app_bg_orange">#F97F68</color>
+    <color name="app_bg_white">#ffffff</color>
+    <color name="cursor_color">#4e4b66</color>
+    <color name="cursor_search_color">#4e4b66</color>
+    <color name="paystack_title">#FF000000</color>
+
+    <color name="deep_orange">#ffe6e2</color>
+    <color name="gray_trans_99">#cc4d506c</color>
+    <color name="gray_edt_text">#4e4b66</color>
+    <color name="white_light">#fdfdfd</color>
+    <color name="gray_border_stroke">#99ffd9d2</color>
+    <color name="gray_edt_hint_text">#B24E4B66</color>
+    <color name="gray_edt_search_text">#B24E4B66</color>
+
+    <color name="slider_bg">#33F97F68</color>
+    <color name="slider_btn_bg">#F97F68</color>
+    <color name="slider_btn_text">#ffffff</color>
+    <color name="slider_title">#000000</color>
+    <color name="slider_author_title">#B64927</color>
+
+    <color name="progress_bar">#3f3d56</color>
+
+    <color name="check_box_bg_login">#FEFEFE</color>
+    <color name="check_box_check_bg_login">#F97F68</color>
+    <color name="check_box_tick_login">#FFFFFF</color>
+    <color name="check_box_circle_login">#99ffd9d2</color>
+
+    <color name="orange_login_bg">#F97F68</color>
+    <color name="red_99">#99ffd9d2</color>
+    <color name="gray_70">#b24d506c</color>
+    <color name="search_home_bg">#F2F2F2</color>
+
+    <color name="bottom_menu_bg_normal">#4E4B66</color>
+    <color name="bottom_menu_bg_select">#F97F68</color>
+
+    <color name="non_select_dot">#504F6D66</color>
+    <color name="select_dot">#F97F68</color>
+    <color name="intro_line">#5a504f6d</color>
+    <color name="intro_title">#4d506c</color>
+    <color name="intro_desc">#b24e4b66</color>
+
+     <color name="home_search_text">#992F2E41</color>
+    <color name="home_text_sub">#4D506C</color>
+    <color name="home_author_border">#80F97F68</color>
+    <color name="premium_border_bg">#f2f97f68</color>
+    <color name="home_by_author">#99414141</color>
+    <color name="home_cat">#ffffff</color>
+    <color name="home_cat_end">#80000000</color>
+    <color name="home_cat_center">#59000000</color>
+    <color name="home_cat_start">#3f000000</color>
+
+    <color name="book_detail_bg">#ffeeea</color>
+    <color name="grid_list_bg">#ffeeea</color>
+    <color name="icon_view_select">#F97F68</color>
+    <color name="icon_view_normal">#4E4B66</color>
+    <color name="card_view_bg">#FFFFFFFF</color>
+
+    <color name="detail_author">#99414141</color>
+    <color name="detail_white">#ffffff</color>
+    <color name="detail_gray">#99414141</color>
+    <color name="detail_line">#b2d9d9d9</color>
+
+
+    <color name="review_user">#4e4b66</color>
+    <color name="review_time">#414141</color>
+    <color name="review_msg">#99414141</color>
+
+    <color name="write_review_bg">#ffffff</color>
+    <color name="write_review_sub_title">#99414141</color>
+    <color name="write_review_msg">#b24e4b66</color>
+    <color name="write_review_hint">#b24e4b66</color>
+    <color name="write_edt_border">#75fdfdfd</color>
+
+    <color name="deep_orange_bg">#1ef97f68</color>
+    <color name="orange_bg">#F97F68</color>
+    <color name="bg_payment">#fef0ed</color>
+
+    <color name="switch_thumb_disable">#b24e4b66</color>
+    <color name="switch_track">#ccff927e</color>
+    <color name="switch_track_disable">#b24e4b66</color>
+    <color name="switch_thumb_enable">#F97F68</color>
+
+    <color name="about_icon_bg">#26FF716A</color>
+    <color name="setting_title">#CC4E4B66</color>
+    <color name="setting_line">#D9D9D9</color>
+
+    <color name="about_sub_title_bg">#2665637B</color>
+    <color name="about_sec_bg">#CCFFFFFF</color>
+    <color name="about_us_title">#4e4b66</color>
+    <color name="about_us_sub_title">#65637B</color>
+    <color name="about_us_border">#1A3F3D56</color>
+
+    <color name="custom_dialog_text">#000000</color>
+    <color name="custom_textView_app_color">#F97F68</color>
+
+    <color name="bg_custom_nf">#FFFFFF</color>
+    <color name="textView_custom_nf">#000000</color>
+    <color name="progressBar_custom_nf">#B6B6B6</color>
+    <color name="progressBar_fill_custom_nf">#F97F68</color>
+
+    <color name="profile_border">#F9B0A2</color>
+    <color name="profile_text_name">#F4F4F4</color>
+    <color name="profile_text_email">#CCF4F4F4</color>
+
+    <color name="tab_text_normal">#4E4B66</color>
+    <color name="tab_text_select">#F97F68</color>
+    <color name="tab_text_indicator">#F97F68</color>
+
+    <color name="edt_profile_email">#994E4B66</color>
+    <color name="edt_profile_text">#B24E4B66</color>
+
+    <color name="plan_circle_unselect">#DBDBDB</color>
+    <color name="plan_circle_select">#FFFFFF</color>
+    <color name="plan_card_bg_unselect">#FFFFFF</color>
+    <color name="plan_title">#4E4B66</color>
+    <color name="plan_title_desc">#B24E4B66</color>
+    <color name="plan_name_unselect">#4E4B66</color>
+    <color name="plan_price_unselect">#4E4B66</color>
+    <color name="plan_days_unselect">#CC3F3D56</color>
+
+    <color name="payment_circle_select">#F97F68</color>
+    <color name="payment_title_unselect">#CC3F3D56</color>
+    <color name="payment_title_select">#CC3F3D56</color>
+
+    <color name="plan_card_bg_select">#F97F68</color>
+    <color name="plan_text_select">#FFFFFF</color>
+    <color name="plan_days_select">#CCFFFFFF</color>
+    <color name="logo_bg">#993F3D56</color>
+    <color name="pay_success_msg">#CC4E4B66</color>
+
+    <color name="textView_them">#4e4b66</color>
+    <color name="textView_theme_radio_color">#F97F68</color>
+
+    <color name="subs_title">#cc4d506c</color>
+    <color name="filter_bg">#0DF97F68</color>
+
+    <color name="rating_text">#4e4b66</color>
+    <color name="rating_icon">#F97F68</color>
+
+    <color name="dialog_text">#4e4b66</color>
+    <color name="dialog_bg">#ffffff</color>
+    <color name="dialog_progress">#F97F68</color>
+
+    <color name="bottom_sheet_filter_item_bg">#FAFAFA</color>
+    <color name="bottom_sheet_line">#D9D9D9</color>
+
+    <color name="filter_select_box">#F97F68</color>
+    <color name="filter_select_text">#FFFFFF</color>
+    <color name="filter_unselect_box">#FFFFFFFF</color>
+    <color name="filter_unselect_text">#4e4b66</color>
+
+    <color name="bg_status_bar">#f9f9f9</color>
+ </resources>

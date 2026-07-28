@@ -1,0 +1,479 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <View
+                android:id="@+id/line"
+                android:layout_width="@dimen/_70px"
+                android:layout_height="@dimen/_2px"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginStart="@dimen/_20px"
+                android:layout_marginTop="@dimen/_10px"
+                android:layout_marginEnd="@dimen/_20px"
+                android:background="@drawable/rectangle_bg_view_line_intro" />
+
+            <TextView
+                android:id="@+id/tvBookReview"
+                style="@style/txt_OpenSansRomanBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/line"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="@dimen/_15px"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="@string/filter_title"
+                android:textColor="@color/gray_2"
+                android:textSize="@dimen/_20sp"
+                tools:text="@string/filter_title" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="15dp"
+                android:background="@drawable/close_shadow"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/ivCloseReport"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/img_close" />
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/bottom_sheet_line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.4"
+            android:background="@color/bottom_sheet_filter_item_bg"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvSortBy"
+                style="@style/txt_OpenSansRomanBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@color/bottom_sheet_filter_item_bg"
+                android:ellipsize="end"
+                android:includeFontPadding="false"
+                android:paddingStart="20dp"
+                android:paddingTop="15dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="15dp"
+                android:singleLine="true"
+                android:text="@string/filter_sort"
+                android:textColor="@color/orange_star"
+                android:textSize="@dimen/_16sp"
+                tools:text="@string/filter_sort" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/bottom_sheet_line" />
+
+            <TextView
+                android:id="@+id/tvAuthorBy"
+                style="@style/txt_OpenSansRomanBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@color/bottom_sheet_filter_item_bg"
+                android:ellipsize="end"
+                android:includeFontPadding="false"
+                android:paddingStart="20dp"
+                android:paddingTop="15dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="15dp"
+                android:singleLine="true"
+                android:text="@string/filter_author"
+                android:textColor="@color/orange"
+                android:textSize="@dimen/_16sp"
+                tools:text="@string/filter_author" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/bottom_sheet_line" />
+
+            <TextView
+                android:id="@+id/tvCatBy"
+                style="@style/txt_OpenSansRomanBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@color/bottom_sheet_filter_item_bg"
+                android:ellipsize="end"
+                android:includeFontPadding="false"
+                android:paddingStart="20dp"
+                android:paddingTop="15dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="15dp"
+                android:singleLine="true"
+                android:text="@string/filter_cat"
+                android:textColor="@color/orange"
+                android:textSize="@dimen/_16sp"
+                tools:text="@string/filter_cat" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/bottom_sheet_line" />
+
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/bottom_sheet_line" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.6"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/rlAuthor"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <RelativeLayout
+                    android:id="@+id/rlAuthorSearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10px"
+                    android:layout_marginTop="@dimen/_10px"
+                    android:layout_marginEnd="@dimen/_10px"
+                    android:background="@drawable/rectangle_bg_filter_search">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:theme="@style/ThemeOverlay.AppTheme.TextInputEditText.Outlined"
+                        app:boxStrokeWidth="0dp"
+                        app:boxStrokeWidthFocused="0dp"
+                        app:endIconMode="clear_text"
+                        app:endIconTint="@color/gray_edt_hint_text"
+                        app:hintAnimationEnabled="false"
+                        app:hintEnabled="false">
+
+                        <EditText
+                            android:id="@+id/edtAuthorSearch"
+                            style="@style/txt_PoppinsMedium"
+                            android:layout_width="match_parent"
+                            android:layout_height="35dp"
+                            android:layout_centerVertical="true"
+                            android:layout_toStartOf="@+id/imageAuthorSearch"
+                            android:background="@android:color/transparent"
+                            android:ellipsize="end"
+                            android:hint="@string/search_author"
+                            android:imeOptions="actionDone"
+                            android:inputType="text"
+                            android:lineSpacingExtra="@dimen/_1px"
+                            android:paddingStart="@dimen/_15px"
+                            android:paddingTop="6dp"
+                            android:paddingEnd="@dimen/_10px"
+                            android:paddingBottom="6dp"
+                            android:singleLine="true"
+                            android:textColor="@color/gray_edt_hint_text"
+                            android:textColorHint="@color/gray_edt_hint_text"
+                            android:textCursorDrawable="@drawable/cursor"
+                            android:textSize="@dimen/_15sp"
+                            tools:ignore="Autofill" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <ImageView
+                        android:id="@+id/imageAuthorSearch"
+                        android:layout_width="@dimen/_20px"
+                        android:layout_height="@dimen/_20px"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="@dimen/_10px"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/img_search"
+                        android:visibility="gone" />
+
+                </RelativeLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvList"
+                    style="@style/groupStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rlAuthorSearch"
+                    android:layout_marginTop="@dimen/_10px"
+                    android:clipToPadding="false" />
+
+                <ProgressBar
+                    android:id="@+id/progress_home"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:theme="@style/ProgressBar" />
+
+                <include
+                    android:id="@+id/llNoData"
+                    layout="@layout/no_data_found"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rlCategory"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <RelativeLayout
+                    android:id="@+id/rlCatSearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10px"
+                    android:layout_marginTop="@dimen/_10px"
+                    android:layout_marginEnd="@dimen/_10px"
+                    android:background="@drawable/rectangle_bg_filter_search">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:theme="@style/ThemeOverlay.AppTheme.TextInputEditText.Outlined"
+                        app:boxStrokeWidth="0dp"
+                        app:boxStrokeWidthFocused="0dp"
+                        app:endIconMode="clear_text"
+                        app:endIconTint="@color/gray_edt_hint_text"
+                        app:hintAnimationEnabled="false"
+                        app:hintEnabled="false">
+
+                        <EditText
+                            android:id="@+id/edtCatSearch"
+                            style="@style/txt_PoppinsMedium"
+                            android:layout_width="match_parent"
+                            android:layout_height="35dp"
+                            android:layout_centerVertical="true"
+                            android:layout_toStartOf="@+id/imageCatSearch"
+                            android:background="@android:color/transparent"
+                            android:ellipsize="end"
+                            android:hint="@string/search_cat"
+                            android:imeOptions="actionDone"
+                            android:inputType="text"
+                            android:lineSpacingExtra="@dimen/_1px"
+                            android:paddingStart="@dimen/_15px"
+                            android:paddingTop="6dp"
+                            android:paddingEnd="@dimen/_10px"
+                            android:paddingBottom="6dp"
+                            android:singleLine="true"
+                            android:textColor="@color/gray_edt_hint_text"
+                            android:textColorHint="@color/gray_edt_hint_text"
+                            android:textCursorDrawable="@drawable/cursor"
+                            android:textSize="@dimen/_15sp"
+                            tools:ignore="Autofill" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <ImageView
+                        android:id="@+id/imageCatSearch"
+                        android:layout_width="@dimen/_20px"
+                        android:layout_height="@dimen/_20px"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="@dimen/_10px"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/img_search"
+                        android:visibility="gone" />
+
+                </RelativeLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvListCategory"
+                    style="@style/groupStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rlCatSearch"
+                    android:layout_marginTop="@dimen/_10px"
+                    android:clipToPadding="false" />
+
+                <ProgressBar
+                    android:id="@+id/progressCategory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:theme="@style/ProgressBar" />
+
+                <include
+                    android:id="@+id/llNoDataCat"
+                    layout="@layout/no_data_found"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rlSortBy"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10px"
+                    android:orientation="vertical">
+
+                    <RadioGroup
+                        android:id="@+id/rgSortBy"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_5px"
+                        android:layout_marginEnd="@dimen/_5px"
+                        android:orientation="vertical"
+                        android:weightSum="3">
+
+                        <com.google.android.material.radiobutton.MaterialRadioButton
+                            android:id="@+id/rbSortByNew"
+                            style="@style/txtOpenSansRomanSemiBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:paddingStart="@dimen/_10px"
+                            android:paddingEnd="@dimen/_10px"
+                            android:text="@string/filter_sort_new"
+                            android:textColor="@color/rating_text"
+                            android:textSize="@dimen/_16sp"
+                            app:buttonTint="@color/rating_icon" />
+
+                        <com.google.android.material.radiobutton.MaterialRadioButton
+                            android:id="@+id/rbSortByPop"
+                            style="@style/txtOpenSansRomanSemiBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:paddingStart="@dimen/_10px"
+                            android:paddingEnd="@dimen/_10px"
+                            android:text="@string/filter_sort_pop"
+                            android:textColor="@color/rating_text"
+                            android:textSize="@dimen/_16sp"
+                            app:buttonTint="@color/rating_icon" />
+
+                        <com.google.android.material.radiobutton.MaterialRadioButton
+                            android:id="@+id/rbSortByRating"
+                            style="@style/txtOpenSansRomanSemiBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:paddingStart="@dimen/_10px"
+                            android:paddingEnd="@dimen/_10px"
+                            android:text="@string/filter_sort_rating"
+                            android:textColor="@color/rating_text"
+                            android:textSize="@dimen/_16sp"
+                            app:buttonTint="@color/rating_icon" />
+
+                    </RadioGroup>
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/bottom_sheet_line" />
+
+    <LinearLayout
+        android:id="@+id/llBottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_20px"
+        android:layout_marginTop="@dimen/_20px"
+        android:layout_marginEnd="@dimen/_20px"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnReset"
+            style="@style/txt_OpenSansRomanBold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_5px"
+            android:layout_marginBottom="@dimen/_20px"
+            android:layout_weight="0.5"
+            android:background="@drawable/rectangle_bg_deep_orange_btn_later"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="@string/filter_reset"
+            android:textAllCaps="true"
+            android:textColor="@color/orange"
+            android:textSize="@dimen/_15sp"
+            tools:text="@string/filter_reset" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnSubmit"
+            style="@style/txt_OpenSansRomanBold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_5px"
+            android:layout_marginBottom="@dimen/_20px"
+            android:layout_weight="0.5"
+            android:background="@drawable/rectangle_bg_deep_orange_btn_submit"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="@string/filter_apply"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_15sp"
+            tools:text="@string/filter_apply" />
+
+    </LinearLayout>
+</LinearLayout>
+
