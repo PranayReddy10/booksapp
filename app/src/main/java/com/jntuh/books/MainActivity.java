@@ -124,6 +124,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Feed is public to browse; uploading from inside it requires login.
+        viewMain.fabFeed.setOnClickListener(v ->
+                startActivity(new Intent(MainActivity.this, MediaFeedActivity.class)));
+
     }
 
     private void profileFragment(boolean isContinue, int pos) {

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvFeed"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <ProgressBar
+        android:id="@+id/progressFeed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" />
+
+    <TextView
+        android:id="@+id/tvNoFeed"
+        style="@style/txt_OpenSansRomanBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/no_media_yet"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_16sp"
+        android:visibility="gone" />
+
+    <!-- Back button floats over the feed -->
+    <ImageView
+        android:id="@+id/ivFeedBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|start"
+        android:layout_margin="@dimen/_16px"
+        android:padding="@dimen/_5px"
+        android:src="@drawable/img_arrow_toolbar"
+        app:tint="@color/white"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:ignore="ContentDescription" />
+
+    <!-- My Media shortcut, top-right -->
+    <ImageView
+        android:id="@+id/ivFeedMyMedia"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|end"
+        android:layout_margin="@dimen/_16px"
+        android:padding="@dimen/_5px"
+        android:src="@android:drawable/ic_menu_gallery"
+        app:tint="@color/white"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:ignore="ContentDescription" />
+
+    <!-- Upload from the feed, bottom-right -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabFeedUpload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="@dimen/_16px"
+        android:layout_marginBottom="@dimen/_24px"
+        android:contentDescription="@string/lbl_upload_media"
+        app:backgroundTint="@color/orange"
+        app:srcCompat="@android:drawable/ic_input_add"
+        app:tint="@color/white"
+        xmlns:app="http://schemas.android.com/apk/res-auto" />
+
+</FrameLayout>

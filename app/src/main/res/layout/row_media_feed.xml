@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- One post = one full screen. Photo uses ivPhoto; video uses playerView with
+     ivVideoPoster shown until the player is ready. Only one is visible at a time. -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black">
+
+    <!-- PHOTO variant -->
+    <ImageView
+        android:id="@+id/ivPhoto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitCenter"
+        android:visibility="gone"
+        tools:ignore="ContentDescription" />
+
+    <!-- VIDEO variant -->
+    <androidx.media3.ui.PlayerView
+        android:id="@+id/playerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        app:resize_mode="fit"
+        app:use_controller="false" />
+
+    <!-- Poster shown over the player until the first frame renders -->
+    <ImageView
+        android:id="@+id/ivVideoPoster"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitCenter"
+        android:visibility="gone"
+        tools:ignore="ContentDescription" />
+
+    <!-- Bottom scrim so caption text is readable over bright media -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:layout_gravity="bottom"
+        android:background="@drawable/media_bottom_scrim" />
+
+    <!-- Uploader + caption overlay -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/_16px"
+        android:paddingEnd="@dimen/_16px"
+        android:paddingBottom="@dimen/_24px">
+
+        <TextView
+            android:id="@+id/tvUploader"
+            style="@style/txt_OpenSansRomanBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_15sp"
+            tools:text="\@johndoe" />
+
+        <TextView
+            android:id="@+id/tvCaption"
+            style="@style/txtOpenSansRomanSemiBold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_3px"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14sp"
+            tools:text="A caption for this post" />
+    </LinearLayout>
+
+    <!-- Buffering spinner for videos -->
+    <ProgressBar
+        android:id="@+id/progressVideo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+
+</FrameLayout>

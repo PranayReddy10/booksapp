@@ -37,7 +37,7 @@
     <string name="lbl_gender">Gender</string>
     <string name="lbl_year">Year</string>
     <string name="rewarded_required">Please watch the ad to read this book</string>
-    <string name="tab_manage_books">Manage Books</string>
+    <string name="tab_manage_books">Uploaded Books</string>
     <string name="upload_not_live">This book isn\'t live yet</string>
     <string name="lbl_select_university">Select University</string>
     <string name="lbl_select_department">Select Department</string>
@@ -76,6 +76,28 @@
     <string name="status_approved">Approved</string>
     <string name="status_rejected">Rejected</string>
     <string name="reason_prefix">Reason: </string>
+
+    <!-- Media feed -->
+    <string name="lbl_feed">Feed</string>
+    <string name="lbl_upload_media">Upload Media</string>
+    <string name="lbl_my_media">My Media</string>
+    <string name="lbl_photo">Photo</string>
+    <string name="lbl_video">Video</string>
+    <string name="lbl_pick_media">Choose file</string>
+    <string name="lbl_caption">Caption (optional)</string>
+    <string name="lbl_description">Description (optional)</string>
+    <string name="lbl_submit">Submit</string>
+    <string name="no_media_yet">No posts yet</string>
+    <string name="no_media_uploads">You haven\'t uploaded any media yet</string>
+    <string name="please_pick_media">Please choose a photo or video</string>
+    <string name="invalid_media_type">Unsupported file type</string>
+    <string name="photo_too_large">Photo is larger than 10MB</string>
+    <string name="video_too_large">Video is larger than 100MB</string>
+    <string name="media_live">Your post is live!</string>
+    <string name="media_pending">Uploaded — pending admin approval.</string>
+    <string name="media_uploaded">Uploaded</string>
+    <string name="confirm_delete_media">Delete this post?</string>
+    <string name="lbl_admin">Admin</string>
     <string name="please_enter_phone">Please enter phone no</string>
 
     <string name="lbl_next">Next</string>
@@ -140,7 +162,6 @@
     <string name="msg_how_likely_are">How likely are you to recommend moving it to friend?(1-low,5-high)</string>
     <string name="lbl_write_your_review">Write Your Review</string>
     <string name="lbl_your_review_here">Your review here..</string>
-    <string name="lbl_submit">Submit</string>
     <string name="loading">Loading..</string>
     <string name="enter_review">Please write your review</string>
 

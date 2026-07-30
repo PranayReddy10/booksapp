@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <include
+        android:id="@+id/toolbarMain"
+        layout="@layout/row_toolbar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/_16px">
+
+            <!-- Photo / Video toggle -->
+            <RadioGroup
+                android:id="@+id/rgMediaType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rbPhoto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="@string/lbl_photo"
+                    android:textColor="@color/gray_2" />
+
+                <RadioButton
+                    android:id="@+id/rbVideo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_16px"
+                    android:text="@string/lbl_video"
+                    android:textColor="@color/gray_2" />
+            </RadioGroup>
+
+            <!-- Media preview -->
+            <ImageView
+                android:id="@+id/ivMediaPreview"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="@dimen/_10px"
+                android:background="@color/card_view_bg"
+                android:scaleType="centerCrop"
+                android:visibility="gone"
+                tools:ignore="ContentDescription"
+                xmlns:tools="http://schemas.android.com/tools" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnPickMedia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10px"
+                android:text="@string/lbl_pick_media"
+                app:cornerRadius="8dp" />
+
+            <TextView
+                android:id="@+id/tvMediaName"
+                style="@style/txtOpenSansRomanSemiBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5px"
+                android:ellipsize="middle"
+                android:singleLine="true"
+                android:textColor="@color/gray_2"
+                android:textSize="@dimen/_13sp"
+                android:visibility="gone" />
+
+            <EditText
+                android:id="@+id/edtTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_16px"
+                android:hint="@string/lbl_caption"
+                android:inputType="text"
+                android:textColor="@color/gray_2"
+                android:autofillHints=""
+                tools:ignore="LabelFor"
+                xmlns:tools="http://schemas.android.com/tools" />
+
+            <EditText
+                android:id="@+id/edtDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10px"
+                android:gravity="top"
+                android:hint="@string/lbl_description"
+                android:inputType="textMultiLine"
+                android:minLines="3"
+                android:textColor="@color/gray_2"
+                android:autofillHints=""
+                tools:ignore="LabelFor"
+                xmlns:tools="http://schemas.android.com/tools" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSubmitMedia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_24px"
+                android:text="@string/lbl_submit"
+                app:cornerRadius="8dp" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

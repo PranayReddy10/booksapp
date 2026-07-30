@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <include
+        android:id="@+id/toolbarMain"
+        layout="@layout/row_toolbar" />
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeMedia"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvMyMedia"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingStart="@dimen/_10px"
+                android:paddingEnd="@dimen/_10px"
+                android:paddingTop="@dimen/_10px"
+                android:paddingBottom="@dimen/_15px"
+                android:clipToPadding="false" />
+
+            <ProgressBar
+                android:id="@+id/progressMedia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true" />
+
+            <TextView
+                android:id="@+id/tvNoMedia"
+                style="@style/txt_OpenSansRomanBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/no_media_uploads"
+                android:textColor="@color/gray_trans_99"
+                android:textSize="@dimen/_16sp"
+                android:visibility="gone" />
+        </RelativeLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</LinearLayout>

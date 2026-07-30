@@ -28,6 +28,9 @@ import com.jntuh.response.DepartmentRP;
 import com.jntuh.response.CollegeRP;
 import com.jntuh.response.UserUploadRP;
 import com.jntuh.response.MyUploadRP;
+import com.jntuh.response.MediaFeedRP;
+import com.jntuh.response.MyMediaRP;
+import com.jntuh.response.MediaUploadRP;
 import com.google.gson.JsonObject;
 
 import okhttp3.MultipartBody;
@@ -301,4 +304,33 @@ public interface ApiInterface {
     @POST("my_uploaded_books")
     @FormUrlEncoded
     Call<MyUploadRP> getMyUploadedBooksData(@Field("data") String data);
+
+    // --- Media feed (photos + videos) ---
+
+    //scroll feed (approved + live). page for pagination, optional media_type filter.
+    @POST("media_feed")
+    @FormUrlEncoded
+    Call<MediaFeedRP> getMediaFeedData(@Field("data") String data, @Query("page") int page);
+
+    //upload a photo/video (multipart: data + media_file + optional thumb_file)
+    @POST("media_upload")
+    @Multipart
+    Call<MediaUploadRP> getMediaUploadData(@Part("data") RequestBody data,
+                                           @Part MultipartBody.Part mediaFile,
+                                           @Part MultipartBody.Part thumbFile);
+
+    //the user's own media posts with moderation status
+    @POST("my_uploaded_media")
+    @FormUrlEncoded
+    Call<MyMediaRP> getMyUploadedMediaData(@Field("data") String data);
+
+    //delete own post
+    @POST("media_delete")
+    @FormUrlEncoded
+    Call<PostRateRP> getMediaDeleteData(@Field("data") String data);
+
+    //increment view count as a post scrolls into view
+    @POST("media_view")
+    @FormUrlEncoded
+    Call<JsonObject> getMediaViewData(@Field("data") String data);
 }

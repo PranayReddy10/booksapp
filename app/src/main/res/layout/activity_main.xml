@@ -39,6 +39,21 @@
         app:iconTint="@color/white"
         app:elevation="6dp" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabFeed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/fabUpload"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="@dimen/_20px"
+        android:layout_marginBottom="@dimen/_12px"
+        android:contentDescription="@string/lbl_feed"
+        app:backgroundTint="@color/orange"
+        app:fabSize="mini"
+        app:srcCompat="@android:drawable/ic_menu_slideshow"
+        app:tint="@color/white"
+        app:elevation="6dp" />
+
     <include
         android:id="@+id/bottom_nav"
         layout="@layout/row_bottom_menu"
