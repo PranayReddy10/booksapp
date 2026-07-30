@@ -6,6 +6,7 @@
     <dimen name="_2px">2.0dp</dimen>
     <dimen name="_3px">3.0dp</dimen>
     <dimen name="_5px">5.0dp</dimen>
+    <dimen name="_6px">6.0dp</dimen>
     <dimen name="_4px">4.0dp</dimen>
     <dimen name="_8px">8.0dp</dimen>
     <dimen name="_9px">9.0dp</dimen>
@@ -22,9 +23,11 @@
     <dimen name="_30px">30.0dp</dimen>
     <dimen name="_40px">40.0dp</dimen>
     <dimen name="_50px">50.0dp</dimen>
+    <dimen name="_55px">55.0dp</dimen>
     <dimen name="_60px">60.0dp</dimen>
     <dimen name="_70px">70.0dp</dimen>
     <dimen name="_90px">90.0dp</dimen>
+    <dimen name="_95px">95.0dp</dimen>
     <dimen name="_100px">100.0dp</dimen>
     <dimen name="_120px">120.0dp</dimen>
     <dimen name="_150px">150.0dp</dimen>

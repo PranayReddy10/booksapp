@@ -26,12 +26,13 @@ public class Constant {
     public static boolean isNative= false;
     public static boolean isBanner= false;
     public static boolean isInterstitial= false;
+    public static boolean isRewarded= false;
 
     public static AdsInfo adsInfo;
 
     public static int interstitialClick,nativePosition;
     public static String bannerId,interstitialId,nativeId,publisherId,
-            adNetworkType;
+            adNetworkType,rewardedId;
 
     public static boolean isAppUpdate = false, isAppUpdateCancel = false;
     public static int appUpdateVersion;

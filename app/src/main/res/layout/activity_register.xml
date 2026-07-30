@@ -179,6 +179,188 @@
                                 android:textColorHint="@color/gray_edt_hint_text"
                                 tools:ignore="Autofill" />
 
+                            <!-- University -->
+                            <TextView
+                                style="@style/txt_OpenSansRomanBold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_15px"
+                                android:layout_marginBottom="@dimen/_5px"
+                                android:text="@string/lbl_university"
+                                android:textColor="@color/gray_trans_99"
+                                android:textSize="@dimen/_14sp" />
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/rectangle_bg_white_border"
+                                android:minHeight="@dimen/_55px">
+
+                                <Spinner
+                                    android:id="@+id/spRegUniversity"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_toStartOf="@+id/ivRegUniversityArrow"
+                                    android:paddingStart="@dimen/_16px"
+                                    android:paddingEnd="@dimen/_5px"
+                                    tools:ignore="RtlSymmetry" />
+
+                                <ImageView
+                                    android:id="@+id/ivRegUniversityArrow"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginEnd="@dimen/_16px"
+                                    android:src="@drawable/img_arrow_dropdown"
+                                    tools:ignore="ContentDescription" />
+                            </RelativeLayout>
+
+                            <!-- Department (cascades from university) -->
+                            <TextView
+                                style="@style/txt_OpenSansRomanBold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_15px"
+                                android:layout_marginBottom="@dimen/_5px"
+                                android:text="@string/lbl_department"
+                                android:textColor="@color/gray_trans_99"
+                                android:textSize="@dimen/_14sp" />
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/rectangle_bg_white_border"
+                                android:minHeight="@dimen/_55px">
+
+                                <Spinner
+                                    android:id="@+id/spRegDepartment"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_toStartOf="@+id/ivRegDepartmentArrow"
+                                    android:paddingStart="@dimen/_16px"
+                                    android:paddingEnd="@dimen/_5px"
+                                    tools:ignore="RtlSymmetry" />
+
+                                <ImageView
+                                    android:id="@+id/ivRegDepartmentArrow"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginEnd="@dimen/_16px"
+                                    android:src="@drawable/img_arrow_dropdown"
+                                    tools:ignore="ContentDescription" />
+                            </RelativeLayout>
+
+                            <!-- College -->
+                            <TextView
+                                style="@style/txt_OpenSansRomanBold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_15px"
+                                android:layout_marginBottom="@dimen/_5px"
+                                android:text="@string/lbl_college"
+                                android:textColor="@color/gray_trans_99"
+                                android:textSize="@dimen/_14sp" />
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/rectangle_bg_white_border"
+                                android:minHeight="@dimen/_55px">
+
+                                <Spinner
+                                    android:id="@+id/spRegCollege"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_toStartOf="@+id/ivRegCollegeArrow"
+                                    android:paddingStart="@dimen/_16px"
+                                    android:paddingEnd="@dimen/_5px"
+                                    tools:ignore="RtlSymmetry" />
+
+                                <ImageView
+                                    android:id="@+id/ivRegCollegeArrow"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginEnd="@dimen/_16px"
+                                    android:src="@drawable/img_arrow_dropdown"
+                                    tools:ignore="ContentDescription" />
+                            </RelativeLayout>
+
+                            <!-- Gender -->
+                            <TextView
+                                style="@style/txt_OpenSansRomanBold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_15px"
+                                android:layout_marginBottom="@dimen/_5px"
+                                android:text="@string/lbl_gender"
+                                android:textColor="@color/gray_trans_99"
+                                android:textSize="@dimen/_14sp" />
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/rectangle_bg_white_border"
+                                android:minHeight="@dimen/_55px">
+
+                                <Spinner
+                                    android:id="@+id/spRegGender"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_toStartOf="@+id/ivRegGenderArrow"
+                                    android:paddingStart="@dimen/_16px"
+                                    android:paddingEnd="@dimen/_5px"
+                                    tools:ignore="RtlSymmetry" />
+
+                                <ImageView
+                                    android:id="@+id/ivRegGenderArrow"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginEnd="@dimen/_16px"
+                                    android:src="@drawable/img_arrow_dropdown"
+                                    tools:ignore="ContentDescription" />
+                            </RelativeLayout>
+
+                            <!-- Roll number -->
+                            <TextView
+                                style="@style/txt_OpenSansRomanBold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_15px"
+                                android:layout_marginBottom="@dimen/_5px"
+                                android:text="@string/lbl_roll_number"
+                                android:textColor="@color/gray_trans_99"
+                                android:textSize="@dimen/_14sp" />
+
+                            <EditText
+                                android:id="@+id/edtRegRoll"
+                                style="@style/edtBoxRoundedOutline"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/rectangle_bg_white_border"
+                                android:ellipsize="end"
+                                android:hint="@string/lbl_roll_number"
+                                android:textCursorDrawable="@drawable/cursor"
+                                android:inputType="text"
+                                android:lineSpacingExtra="@dimen/_1px"
+                                android:paddingStart="@dimen/_20px"
+                                android:paddingTop="@dimen/_18px"
+                                android:paddingEnd="@dimen/_30px"
+                                android:paddingBottom="@dimen/_18px"
+                                android:singleLine="true"
+                                android:textColorHint="@color/gray_edt_hint_text"
+                                tools:ignore="Autofill" />
+
                         </LinearLayout>
                     </RelativeLayout>
 

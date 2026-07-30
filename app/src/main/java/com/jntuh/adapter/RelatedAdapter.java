@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
+import com.jntuh.util.CoverHelper;
 import com.jntuh.books.R;
 import com.jntuh.books.databinding.RowRelatedBinding;
 import com.jntuh.item.BookRelatedList;
@@ -43,11 +43,11 @@ public class RelatedAdapter extends RecyclerView.Adapter<RelatedAdapter.ViewHold
 
         BookRelatedList bookRelatedListPos=bookRelatedLists.get(position);
         holder.relatedBinding.tvHomeBookName.setText(bookRelatedListPos.getPost_title());
-        if (!bookRelatedListPos.getPost_image().equals("")) {
-            Glide.with(activity.getApplicationContext()).load(bookRelatedListPos.getPost_image())
-                    .placeholder(R.drawable.placeholder_portable)
-                    .into(holder.relatedBinding.ivHomePopular);
-        }
+        holder.relatedBinding.ivHomePopular.post(() ->
+                CoverHelper.bind(holder.relatedBinding.ivHomePopular,
+                        bookRelatedListPos.getPost_image(),
+                        bookRelatedListPos.getPost_title(),
+                        null));
         if (bookRelatedListPos.getBook_on_rent().equals("1")) {
             holder.relatedBinding.llPremium.setVisibility(View.VISIBLE);
             holder.relatedBinding.tvPremium.setText(activity.getString(R.string.rent));

@@ -42,6 +42,7 @@ public class EditProfileActivity extends AppCompatActivity {
     ActivityEditProfileBinding viewEditProfile;
     Method method;
     String uId, uName, uEmail, uImage, uPhone, uType;
+    String uUniversity, uDepartment, uCollege, uGender, uYear, uRoll;
     boolean isProfile = false;
     ProgressDialog progressDialog;
     String imageProfile;
@@ -66,6 +67,12 @@ public class EditProfileActivity extends AppCompatActivity {
         uImage = intent.getStringExtra("uImage");
         uPhone = intent.getStringExtra("uPhone");
         uType = intent.getStringExtra("uType");
+        uUniversity = intent.getStringExtra("uUniversity");
+        uDepartment = intent.getStringExtra("uDepartment");
+        uCollege = intent.getStringExtra("uCollege");
+        uGender = intent.getStringExtra("uGender");
+        uYear = intent.getStringExtra("uYear");
+        uRoll = intent.getStringExtra("uRoll");
 
         viewEditProfile.toolbarMain.tvToolbarTitle.setText(getString(R.string.profile_edt_title));
         viewEditProfile.toolbarMain.ivSearch.setVisibility(View.GONE);
@@ -80,6 +87,13 @@ public class EditProfileActivity extends AppCompatActivity {
         viewEditProfile.edtName.setText(uName);
         viewEditProfile.edtEmail.setText(uEmail);
         viewEditProfile.edtPhone.setText(uPhone);
+
+        bindDetailRow(viewEditProfile.llUniversityRow, viewEditProfile.tvUniversityValue, uUniversity);
+        bindDetailRow(viewEditProfile.llDepartmentRow, viewEditProfile.tvDepartmentValue, uDepartment);
+        bindDetailRow(viewEditProfile.llCollegeRow, viewEditProfile.tvCollegeValue, uCollege);
+        bindDetailRow(viewEditProfile.llYearRow, viewEditProfile.tvYearValue, uYear);
+        bindDetailRow(viewEditProfile.llGenderRow, viewEditProfile.tvGenderValue, uGender);
+        bindDetailRow(viewEditProfile.llRollRow, viewEditProfile.tvRollValue, uRoll);
 
         viewEditProfile.btnSave.setOnClickListener(v -> save());
 
@@ -101,6 +115,16 @@ public class EditProfileActivity extends AppCompatActivity {
                     .into(viewEditProfile.ivUser);
         }
 
+    }
+
+    // Show a read-only detail row only when the profile API returned a value for it.
+    private void bindDetailRow(android.widget.LinearLayout row, android.widget.TextView value, String text) {
+        if (text != null && !text.trim().isEmpty()) {
+            value.setText(text);
+            row.setVisibility(View.VISIBLE);
+        } else {
+            row.setVisibility(View.GONE);
+        }
     }
 
     private void save() {

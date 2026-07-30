@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Selected/collapsed appearance of a spinner (the closed box). -->
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="@dimen/_50px"
+    android:gravity="center_vertical"
+    android:paddingStart="@dimen/_4px"
+    android:paddingEnd="@dimen/_10px"
+    android:paddingTop="@dimen/_10px"
+    android:paddingBottom="@dimen/_10px"
+    android:ellipsize="end"
+    android:maxLines="1"
+    android:textColor="@color/gray"
+    android:textSize="@dimen/_15sp"
+    android:fontFamily="@font/opensansromansemibold"
+    tools:ignore="RtlSymmetry"
+    xmlns:tools="http://schemas.android.com/tools" />

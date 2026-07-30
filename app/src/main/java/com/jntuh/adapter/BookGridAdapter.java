@@ -29,7 +29,7 @@ import com.applovin.mediation.MaxError;
 import com.applovin.mediation.nativeAds.MaxNativeAdListener;
 import com.applovin.mediation.nativeAds.MaxNativeAdLoader;
 import com.applovin.mediation.nativeAds.MaxNativeAdView;
-import com.bumptech.glide.Glide;
+import com.jntuh.util.CoverHelper;
 import com.jntuh.books.BuildConfig;
 import com.jntuh.books.R;
 import com.jntuh.books.databinding.RowBookGridBinding;
@@ -126,11 +126,11 @@ public class BookGridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 viewHolder.rowBookGridBinding.tvBookPrice.setTextColor(ContextCompat.getColor(activity, R.color.free_box_text));
             }
 
-            if (!subCatListBook.getPost_image().equals("")) {
-                Glide.with(activity.getApplicationContext()).load(subCatListBook.getPost_image())
-                        .placeholder(R.drawable.placeholder_portable)
-                        .into(viewHolder.rowBookGridBinding.ivBook);
-            }
+            viewHolder.rowBookGridBinding.ivBook.post(() ->
+                    CoverHelper.bind(viewHolder.rowBookGridBinding.ivBook,
+                            subCatListBook.getPost_image(),
+                            subCatListBook.getPost_title(),
+                            subCatListBook.getCover_color()));
 
             viewHolder.rowBookGridBinding.llBookGrid.setOnClickListener(new View.OnClickListener() {
                 @Override

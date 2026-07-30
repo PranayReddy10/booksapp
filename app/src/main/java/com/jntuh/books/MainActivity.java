@@ -114,6 +114,15 @@ public class MainActivity extends AppCompatActivity {
 
         viewMain.bottomNav.frameProfile.setOnClickListener(v -> profileFragment(false, 0));
 
+        viewMain.fabUpload.setOnClickListener(v -> {
+            if (method.getIsLogin()) {
+                startActivity(new Intent(MainActivity.this, UploadBookActivity.class));
+            } else {
+                Toast.makeText(MainActivity.this, getString(R.string.login_require), Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            }
+        });
+
     }
 
     private void profileFragment(boolean isContinue, int pos) {

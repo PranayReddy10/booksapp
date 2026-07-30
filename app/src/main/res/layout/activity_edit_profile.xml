@@ -170,6 +170,217 @@
                     android:textCursorDrawable="@drawable/cursor"
                     tools:ignore="Autofill" />
 
+                <!-- Read-only academic details (shown when the profile API returns them) -->
+                <LinearLayout
+                    android:id="@+id/llUniversityRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20px"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        style="@style/txt_OpenSansRomanBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_5px"
+                        android:text="@string/lbl_university"
+                        android:textColor="@color/gray_trans_99"
+                        android:textSize="@dimen/_14sp" />
+
+                    <TextView
+                        android:id="@+id/tvUniversityValue"
+                        style="@style/txt_OpenSansRomanBold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/rectangle_bg_white_border"
+                        android:minHeight="@dimen/_50px"
+                        android:gravity="center_vertical"
+                        android:paddingStart="@dimen/_20px"
+                        android:paddingEnd="@dimen/_20px"
+                        android:paddingTop="@dimen/_12px"
+                        android:paddingBottom="@dimen/_12px"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_15sp"
+                        tools:ignore="RtlSymmetry"
+                        tools:text="JNTUH" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llDepartmentRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_15px"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        style="@style/txt_OpenSansRomanBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_5px"
+                        android:text="@string/lbl_department"
+                        android:textColor="@color/gray_trans_99"
+                        android:textSize="@dimen/_14sp" />
+
+                    <TextView
+                        android:id="@+id/tvDepartmentValue"
+                        style="@style/txt_OpenSansRomanBold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/rectangle_bg_white_border"
+                        android:minHeight="@dimen/_50px"
+                        android:gravity="center_vertical"
+                        android:paddingStart="@dimen/_20px"
+                        android:paddingEnd="@dimen/_20px"
+                        android:paddingTop="@dimen/_12px"
+                        android:paddingBottom="@dimen/_12px"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_15sp"
+                        tools:ignore="RtlSymmetry"
+                        tools:text="CSE" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llCollegeRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_15px"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        style="@style/txt_OpenSansRomanBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_5px"
+                        android:text="@string/lbl_college"
+                        android:textColor="@color/gray_trans_99"
+                        android:textSize="@dimen/_14sp" />
+
+                    <TextView
+                        android:id="@+id/tvCollegeValue"
+                        style="@style/txt_OpenSansRomanBold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/rectangle_bg_white_border"
+                        android:minHeight="@dimen/_50px"
+                        android:gravity="center_vertical"
+                        android:paddingStart="@dimen/_20px"
+                        android:paddingEnd="@dimen/_20px"
+                        android:paddingTop="@dimen/_12px"
+                        android:paddingBottom="@dimen/_12px"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_15sp"
+                        tools:ignore="RtlSymmetry"
+                        tools:text="University College of Engineering" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llYearRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_15px"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        style="@style/txt_OpenSansRomanBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_5px"
+                        android:text="@string/lbl_year"
+                        android:textColor="@color/gray_trans_99"
+                        android:textSize="@dimen/_14sp" />
+
+                    <TextView
+                        android:id="@+id/tvYearValue"
+                        style="@style/txt_OpenSansRomanBold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/rectangle_bg_white_border"
+                        android:minHeight="@dimen/_50px"
+                        android:gravity="center_vertical"
+                        android:paddingStart="@dimen/_20px"
+                        android:paddingEnd="@dimen/_20px"
+                        android:paddingTop="@dimen/_12px"
+                        android:paddingBottom="@dimen/_12px"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_15sp"
+                        tools:ignore="RtlSymmetry"
+                        tools:text="3rd Year" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llGenderRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_15px"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        style="@style/txt_OpenSansRomanBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_5px"
+                        android:text="@string/lbl_gender"
+                        android:textColor="@color/gray_trans_99"
+                        android:textSize="@dimen/_14sp" />
+
+                    <TextView
+                        android:id="@+id/tvGenderValue"
+                        style="@style/txt_OpenSansRomanBold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/rectangle_bg_white_border"
+                        android:minHeight="@dimen/_50px"
+                        android:gravity="center_vertical"
+                        android:paddingStart="@dimen/_20px"
+                        android:paddingEnd="@dimen/_20px"
+                        android:paddingTop="@dimen/_12px"
+                        android:paddingBottom="@dimen/_12px"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_15sp"
+                        tools:ignore="RtlSymmetry"
+                        tools:text="Male" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llRollRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_15px"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        style="@style/txt_OpenSansRomanBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_5px"
+                        android:text="@string/lbl_roll_number"
+                        android:textColor="@color/gray_trans_99"
+                        android:textSize="@dimen/_14sp" />
+
+                    <TextView
+                        android:id="@+id/tvRollValue"
+                        style="@style/txt_OpenSansRomanBold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/rectangle_bg_white_border"
+                        android:minHeight="@dimen/_50px"
+                        android:gravity="center_vertical"
+                        android:paddingStart="@dimen/_20px"
+                        android:paddingEnd="@dimen/_20px"
+                        android:paddingTop="@dimen/_12px"
+                        android:paddingBottom="@dimen/_12px"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_15sp"
+                        tools:ignore="RtlSymmetry"
+                        tools:text="21H51A0512" />
+                </LinearLayout>
+
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnSave"
                     style="@style/txtOpenSansRomanBold"

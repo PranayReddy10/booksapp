@@ -32,6 +32,28 @@ public class AdsInfo {
     @SerializedName("native_position")
     @Expose
     private int nativePosition;
+    @SerializedName("rewarded_on_off")
+    @Expose
+    private String rewardedOnOff;
+    @SerializedName("rewarded_id")
+    @Expose
+    private String rewardedId;
+
+    public String getRewardedOnOff() {
+        return rewardedOnOff;
+    }
+
+    public void setRewardedOnOff(String rewardedOnOff) {
+        this.rewardedOnOff = rewardedOnOff;
+    }
+
+    public String getRewardedId() {
+        return rewardedId;
+    }
+
+    public void setRewardedId(String rewardedId) {
+        this.rewardedId = rewardedId;
+    }
 
     public String getPublisherId() {
         return publisherId;

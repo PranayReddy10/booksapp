@@ -10,8 +10,7 @@ import android.widget.LinearLayout;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.jntuh.books.R;
+import com.jntuh.util.CoverHelper;
 import com.jntuh.books.databinding.RowFavoriteBinding;
 import com.jntuh.item.SubCatListBook;
 import com.jntuh.util.AdInterstitialAds;
@@ -54,11 +53,11 @@ public class ContinueAdapter extends RecyclerView.Adapter<ContinueAdapter.ViewHo
         holder.rowFavoriteBinding.llHomeBook.setLayoutParams(new LinearLayout.LayoutParams(columnWidth / 3, columnWidth / 2));
         holder.rowFavoriteBinding.tvHomeConTitle.setText(favListBookList.get(position).getPost_title());
 
-         if (!favListBookList.get(position).getPost_image().equals("")) {
-            Glide.with(activity.getApplicationContext()).load(favListBookList.get(position).getPost_image())
-                    .placeholder(R.drawable.placeholder_portable)
-                    .into(holder.rowFavoriteBinding.ivHomeCont);
-        }
+         holder.rowFavoriteBinding.ivHomeCont.post(() ->
+                CoverHelper.bind(holder.rowFavoriteBinding.ivHomeCont,
+                        favListBookList.get(position).getPost_image(),
+                        favListBookList.get(position).getPost_title(),
+                        favListBookList.get(position).getCover_color()));
 
         holder.rowFavoriteBinding.rlFav.setOnClickListener(new View.OnClickListener() {
             @Override

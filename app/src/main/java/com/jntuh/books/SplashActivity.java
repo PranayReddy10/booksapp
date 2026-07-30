@@ -140,6 +140,10 @@ public class SplashActivity extends AppCompatActivity {
                                 Constant.interstitialId = Constant.adsInfo.getInterstitialId();
                                 Constant.adNetworkType = Constant.appListData.getAdsList().get(0).getAdsName();
                                 Constant.interstitialClick = Constant.adsInfo.getInterstitialClicks();
+                                if (Constant.adsInfo.getRewardedOnOff() != null) {
+                                    Constant.isRewarded = Constant.adsInfo.getRewardedOnOff().equals("1");
+                                    Constant.rewardedId = Constant.adsInfo.getRewardedId();
+                                }
                                 initializeAds();
 
                             }

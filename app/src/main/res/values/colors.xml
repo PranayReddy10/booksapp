@@ -17,6 +17,9 @@
     <color name="gray_show_in">#4e4b66</color>
     <color name="social_login_text">#4e4b66</color>
     <color name="gray">#3f3d56</color>
+    <color name="status_pending">#F5A623</color>
+    <color name="status_approved">#2E9E5B</color>
+    <color name="status_rejected">#D0021B</color>
     <color name="app_bg">#f9f9f9</color>
     <color name="app_bg_orange">#F97F68</color>
     <color name="app_bg_white">#ffffff</color>

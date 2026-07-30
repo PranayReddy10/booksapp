@@ -23,6 +23,11 @@ import com.jntuh.response.RegisterRP;
 import com.jntuh.response.StripeCheckOutRP;
 import com.jntuh.response.SubCatListBookRP;
 import com.jntuh.response.SubCatRP;
+import com.jntuh.response.UniversityRP;
+import com.jntuh.response.DepartmentRP;
+import com.jntuh.response.CollegeRP;
+import com.jntuh.response.UserUploadRP;
+import com.jntuh.response.MyUploadRP;
 import com.google.gson.JsonObject;
 
 import okhttp3.MultipartBody;
@@ -269,4 +274,31 @@ public interface ApiInterface {
     @POST("account_delete")
     @FormUrlEncoded
     Call<DeleteAccRP> getDeleteData(@Field("data") String data);
+
+    //get university list (registration dropdown)
+    @POST("university_list")
+    @FormUrlEncoded
+    Call<UniversityRP> getUniversityListData(@Field("data") String data);
+
+    //get department list (optional university_id filter for cascade)
+    @POST("department_list")
+    @FormUrlEncoded
+    Call<DepartmentRP> getDepartmentListData(@Field("data") String data);
+
+    //get college list (registration dropdown)
+    @POST("college_list")
+    @FormUrlEncoded
+    Call<CollegeRP> getCollegeListData(@Field("data") String data);
+
+    //user uploads a book (multipart: data + optional cover + optional file)
+    @POST("user_upload_book")
+    @Multipart
+    Call<UserUploadRP> getUserUploadBookData(@Part("data") RequestBody data,
+                                             @Part MultipartBody.Part bookImage,
+                                             @Part MultipartBody.Part bookFile);
+
+    //get user's own uploads with moderation status
+    @POST("my_uploaded_books")
+    @FormUrlEncoded
+    Call<MyUploadRP> getMyUploadedBooksData(@Field("data") String data);
 }

@@ -28,6 +28,12 @@ public class BookDetailList implements Serializable {
     @SerializedName("post_image")
     private String post_image;
 
+    @SerializedName("rewarded_ad")
+    private String rewarded_ad;
+
+    @SerializedName("cover_color")
+    private String cover_color;
+
     @SerializedName("post_url_type")
     private String post_url_type;
 
@@ -130,6 +136,14 @@ public class BookDetailList implements Serializable {
 
     public void setPost_image(String post_image) {
         this.post_image = post_image;
+    }
+
+    public String getRewarded_ad() {
+        return rewarded_ad;
+    }
+
+    public String getCover_color() {
+        return cover_color;
     }
 
     public String getPost_url_type() {

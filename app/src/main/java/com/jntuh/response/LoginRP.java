@@ -60,6 +60,27 @@ public class LoginRP implements Serializable {
         @SerializedName("user_image")
         String user_image;
 
+        @SerializedName("university")
+        String university;
+
+        @SerializedName("department")
+        String department;
+
+        @SerializedName("department_id")
+        String department_id;
+
+        @SerializedName("college")
+        String college;
+
+        @SerializedName("gender")
+        String gender;
+
+        @SerializedName("year")
+        String year;
+
+        @SerializedName("rollnumber")
+        String rollnumber;
+
         @SerializedName("msg")
         String msg;
 
@@ -104,6 +125,34 @@ public class LoginRP implements Serializable {
 
         public void setUser_image(String user_image) {
             this.user_image = user_image;
+        }
+
+        public String getUniversity() {
+            return university;
+        }
+
+        public String getDepartment() {
+            return department;
+        }
+
+        public String getDepartment_id() {
+            return department_id;
+        }
+
+        public String getCollege() {
+            return college;
+        }
+
+        public String getGender() {
+            return gender;
+        }
+
+        public String getYear() {
+            return year;
+        }
+
+        public String getRollnumber() {
+            return rollnumber;
         }
 
         public String getMsg() {

@@ -84,6 +84,72 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/layUploadBook"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="@dimen/_15px"
+        android:paddingHorizontal="@dimen/_20px"
+        android:background="?attr/selectableItemBackground">
+
+        <TextView
+            style="@style/txtOpenSansRomanSemiBold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="start"
+            android:layout_toStartOf="@+id/ivEdArwUpload"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="@string/lbl_upload_book"
+            android:textColor="@color/gray_2"
+            android:textSize="@dimen/_17sp"
+            tools:text="@string/lbl_upload_book" />
+
+        <ImageView
+            android:id="@+id/ivEdArwUpload"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/img_arrow_setting" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layMyUploads"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="@dimen/_15px"
+        android:paddingHorizontal="@dimen/_20px"
+        android:background="?attr/selectableItemBackground">
+
+        <TextView
+            style="@style/txtOpenSansRomanSemiBold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="start"
+            android:layout_toStartOf="@+id/ivEdArwMyUploads"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="@string/lbl_my_uploads"
+            android:textColor="@color/gray_2"
+            android:textSize="@dimen/_17sp"
+            tools:text="@string/lbl_my_uploads" />
+
+        <ImageView
+            android:id="@+id/ivEdArwMyUploads"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/img_arrow_setting" />
+    </RelativeLayout>
+
+    <RelativeLayout
         android:id="@+id/layEditProfile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

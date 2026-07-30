@@ -76,6 +76,8 @@
         <activity android:name="com.jntuh.books.AuthorDetailsActivity" />
         <activity android:name="com.jntuh.books.TrendingBookActivity" />
         <activity android:name="com.jntuh.books.DownloadActivity" />
+        <activity android:name="com.jntuh.books.UploadBookActivity" />
+        <activity android:name="com.jntuh.books.MyUploadsActivity" />
         <activity android:name="com.jntuh.paymentmethod.PayStackActivity" />
         <activity android:name="com.jntuh.paymentmethod.StripeActivity" />
         <activity android:name="com.jntuh.paymentmethod.PayPalActivity" />

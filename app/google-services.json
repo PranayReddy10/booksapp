@@ -1,45 +1,56 @@
 {
   "project_info": {
-    "project_number": "3520309722",
-    "firebase_url": "https://codecanyon-cede9.firebaseio.com",
-    "project_id": "codecanyon-cede9",
-    "storage_bucket": "codecanyon-cede9.firebasestorage.app"
+    "project_number": "150256038085",
+    "firebase_url": "https://jntubookspdfs-1626545239508-default-rtdb.firebaseio.com",
+    "project_id": "jntubookspdfs-1626545239508",
+    "storage_bucket": "jntubookspdfs-1626545239508.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:3520309722:android:76aac0fe0e58bf0f9b78e3",
+        "mobilesdk_app_id": "1:150256038085:android:b145156edcb398e49c00ac",
         "android_client_info": {
           "package_name": "com.jntuh.books"
         }
       },
       "oauth_client": [
         {
-          "client_id": "3520309722-a0e82qitamnsntik8ov87b83184kfer0.apps.googleusercontent.com",
+          "client_id": "150256038085-9jko3rhph1gk686s19t1qgr0r80kkiuv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jntuh.books",
+            "certificate_hash": "997a1e41cde1a755607d7f638aa05d13801fbcd1"
+          }
+        },
+        {
+          "client_id": "150256038085-kcsfu4tvm2l0s24ul052v5gq3n7ta0bm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jntuh.books",
+            "certificate_hash": "f47a8fc84af211043fee4331854901ff165e5b54"
+          }
+        },
+        {
+          "client_id": "150256038085-npacjts15opiu306j2onulmkt7htk3r0.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAsmbddNo6hVFNkm55fmraBxGGC85dii5o"
-        },
-        {
-          "current_key": "AIzaSyD9Xp7EdiFdlilyxdXqXLmVCzZKjP7H5cI"
-        },
-        {
-          "current_key": "AIzaSyAVnzNKyCepWc3GuSJVmrlJpgnF6m-P55Q"
+          "current_key": "AIzaSyDbAtx-893XW49pv6oLTVDXA_gDHkZLLmA"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "3520309722-9kdvo7v05al1fbhi0e1cguigpgnbte9n.apps.googleusercontent.com",
+              "client_id": "150256038085-brhvv4gtjubie8fdntvgpu7gu106k8fp.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
         }
-      }
+      },
+      "admob_app_id": "ca-app-pub-4878518502456145~8907238027"
     }
   ],
   "configuration_version": "1"

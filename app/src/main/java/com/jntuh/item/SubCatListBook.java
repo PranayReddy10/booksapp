@@ -34,6 +34,9 @@ public class SubCatListBook implements Serializable {
     @SerializedName("post_image")
     private String post_image;
 
+    @SerializedName("cover_color")
+    private String cover_color;
+
     @SerializedName("total_views")
     private String total_views;
 
@@ -129,6 +132,10 @@ public class SubCatListBook implements Serializable {
 
     public String getPost_image() {
         return post_image;
+    }
+
+    public String getCover_color() {
+        return cover_color;
     }
 
     public void setPost_image(String post_image) {

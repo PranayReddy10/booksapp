@@ -25,6 +25,8 @@ import com.bumptech.glide.Glide;
 import com.jntuh.books.DownloadActivity;
 import com.jntuh.books.EditProfileActivity;
 import com.jntuh.books.LoginActivity;
+import com.jntuh.books.MyUploadsActivity;
+import com.jntuh.books.UploadBookActivity;
 import com.jntuh.books.R;
 import com.jntuh.books.databinding.FragmentProfileBinding;
 import com.jntuh.response.DeleteAccRP;
@@ -117,8 +119,10 @@ public class ProfileFragment extends Fragment {
                 if (position == 0) {
                     tab.setText(getString(R.string.tab_continue));
                 } else if (position == 1) {
-                    tab.setText(getString(R.string.tab_subs));
+                    tab.setText(getString(R.string.tab_manage_books));
                 } else if (position == 2) {
+                    tab.setText(getString(R.string.tab_subs));
+                } else if (position == 3) {
                     tab.setText(getString(R.string.tab_rent));
                 }
             }).attach();
@@ -137,6 +141,7 @@ public class ProfileFragment extends Fragment {
     private void setupViewPager(final ViewPager2 viewPager) {
         final ViewPagerAdapter adapter = new ViewPagerAdapter(requireActivity());
         adapter.addFragment(new ContinueFragment(), getString(R.string.tab_continue));
+        adapter.addFragment(new ManageBooksFragment(), getString(R.string.tab_manage_books));
         adapter.addFragment(new DashBoardFragment(), getString(R.string.tab_subs));
         adapter.addFragment(new RentBookFragment(), getString(R.string.tab_rent));
         viewPager.setAdapter(adapter);
@@ -254,6 +259,8 @@ public class ProfileFragment extends Fragment {
         RelativeLayout layoutDeleteAcc = dialog.findViewById(R.id.layDeleteAcc);
         RelativeLayout layoutDownload = dialog.findViewById(R.id.layDownload);
         RelativeLayout layoutFav = dialog.findViewById(R.id.layFav);
+        RelativeLayout layoutUploadBook = dialog.findViewById(R.id.layUploadBook);
+        RelativeLayout layoutMyUploads = dialog.findViewById(R.id.layMyUploads);
 
         assert layoutDownload != null;
         layoutDownload.setOnClickListener(v -> {
@@ -268,6 +275,18 @@ public class ProfileFragment extends Fragment {
             Intent intentFav = new Intent(requireActivity(), DownloadActivity.class);
             intentFav.putExtra("isDown", "isFav");
             startActivity(intentFav);
+            dialog.dismiss();
+        });
+
+        assert layoutUploadBook != null;
+        layoutUploadBook.setOnClickListener(v -> {
+            startActivity(new Intent(requireActivity(), UploadBookActivity.class));
+            dialog.dismiss();
+        });
+
+        assert layoutMyUploads != null;
+        layoutMyUploads.setOnClickListener(v -> {
+            startActivity(new Intent(requireActivity(), MyUploadsActivity.class));
             dialog.dismiss();
         });
 
@@ -286,6 +305,12 @@ public class ProfileFragment extends Fragment {
             intentProfile.putExtra("uImage", imageProfile);
             intentProfile.putExtra("uPhone", itemUser.getPhone());
             intentProfile.putExtra("uType", method.getUserType());
+            intentProfile.putExtra("uUniversity", itemUser.getUniversity());
+            intentProfile.putExtra("uDepartment", itemUser.getDepartment());
+            intentProfile.putExtra("uCollege", itemUser.getCollege());
+            intentProfile.putExtra("uGender", itemUser.getGender());
+            intentProfile.putExtra("uYear", itemUser.getYear());
+            intentProfile.putExtra("uRoll", itemUser.getRollnumber());
             startActivity(intentProfile);
             dialog.dismiss();
         });

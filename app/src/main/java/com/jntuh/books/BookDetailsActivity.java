@@ -24,7 +24,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.bumptech.glide.Glide;
 import com.jntuh.adapter.RelatedAdapter;
 import com.jntuh.books.databinding.ActivityBookDetailBinding;
 import com.jntuh.fragment.ReportBookFragment;
@@ -36,6 +35,8 @@ import com.jntuh.rest.ApiInterface;
 import com.jntuh.util.API;
 import com.jntuh.util.BannerAds;
 import com.jntuh.util.Constant;
+import com.jntuh.util.AdRewardedAds;
+import com.jntuh.util.CoverHelper;
 import com.jntuh.util.Events;
 import com.jntuh.util.FavouriteIF;
 import com.jntuh.util.GlobalBus;
@@ -176,11 +177,11 @@ public class BookDetailsActivity extends AppCompatActivity {
                                 viewBookDetail.tvBookPrice.setTextColor(ContextCompat.getColor(BookDetailsActivity.this, R.color.free_box_text));
                             }
 
-                            if (!bookDetailListPos.getPost_image().equals("")) {
-                                Glide.with(BookDetailsActivity.this).load(bookDetailListPos.getPost_image())
-                                        .placeholder(R.drawable.placeholder_portable)
-                                        .into(viewBookDetail.ivBook);
-                            }
+                            viewBookDetail.ivBook.post(() ->
+                                    CoverHelper.bind(viewBookDetail.ivBook,
+                                            bookDetailListPos.getPost_image(),
+                                            bookDetailListPos.getPost_title(),
+                                            bookDetailListPos.getCover_color()));
 
                             WebSettings webSettings = viewBookDetail.wvBookDesc.getSettings();
                             webSettings.setJavaScriptEnabled(true);
@@ -297,7 +298,7 @@ public class BookDetailsActivity extends AppCompatActivity {
 
                             viewBookDetail.llReadBook.setOnClickListener(v -> {
                                 if (checkRentSubsPlanStatus()) {
-                                    openBook();
+                                    maybeShowRewardedThenOpen();
                                 } else {
                                     showPaidMsgDialog();
                                 }
@@ -489,6 +490,29 @@ public class BookDetailsActivity extends AppCompatActivity {
                 Log.e("fail", t.toString());
             }
         });
+    }
+
+     // If this book requires a rewarded ad (and rewarded is enabled), show it first
+     // and only open the book once the reward is earned. Otherwise open directly.
+     private void maybeShowRewardedThenOpen() {
+        boolean bookWantsRewarded = bookDetailListPos != null
+                && "1".equals(bookDetailListPos.getRewarded_ad());
+        if (bookWantsRewarded && Constant.isRewarded) {
+            AdRewardedAds.showRewardedAd(BookDetailsActivity.this, new AdRewardedAds.OnRewardListener() {
+                @Override
+                public void onReward() {
+                    openBook();
+                }
+
+                @Override
+                public void onFailed() {
+                    Toast.makeText(BookDetailsActivity.this,
+                            getString(R.string.rewarded_required), Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            openBook();
+        }
     }
 
      private void openBook() {

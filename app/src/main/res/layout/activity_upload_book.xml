@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <include
+        android:id="@+id/toolbarMain"
+        layout="@layout/row_toolbar" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/_20px">
+
+            <EditText
+                android:id="@+id/edtTitle"
+                style="@style/edtBoxRoundedOutline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rectangle_bg_white_border"
+                android:hint="@string/lbl_book_title"
+                android:textCursorDrawable="@drawable/cursor"
+                android:inputType="text"
+                android:paddingStart="@dimen/_20px"
+                android:paddingTop="@dimen/_18px"
+                android:paddingEnd="@dimen/_20px"
+                android:paddingBottom="@dimen/_18px"
+                android:singleLine="true"
+                android:textColorHint="@color/gray_edt_hint_text"
+                tools:ignore="Autofill" />
+
+            <EditText
+                android:id="@+id/edtDescription"
+                style="@style/edtBoxRoundedOutline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15px"
+                android:background="@drawable/rectangle_bg_white_border"
+                android:gravity="top"
+                android:hint="@string/lbl_book_description"
+                android:textCursorDrawable="@drawable/cursor"
+                android:inputType="textMultiLine"
+                android:minLines="3"
+                android:paddingStart="@dimen/_20px"
+                android:paddingTop="@dimen/_18px"
+                android:paddingEnd="@dimen/_20px"
+                android:paddingBottom="@dimen/_18px"
+                android:textColorHint="@color/gray_edt_hint_text"
+                tools:ignore="Autofill" />
+
+            <!-- Category -->
+            <TextView
+                style="@style/txt_OpenSansRomanBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15px"
+                android:layout_marginBottom="@dimen/_5px"
+                android:text="@string/lbl_select_category"
+                android:textColor="@color/gray_trans_99"
+                android:textSize="@dimen/_14sp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rectangle_bg_white_border"
+                android:minHeight="@dimen/_55px">
+
+                <Spinner
+                    android:id="@+id/spCategory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@+id/ivCategoryArrow"
+                    android:paddingStart="@dimen/_16px"
+                    android:paddingEnd="@dimen/_5px"
+                    tools:ignore="RtlSymmetry" />
+
+                <ImageView
+                    android:id="@+id/ivCategoryArrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/_16px"
+                    android:src="@drawable/img_arrow_dropdown"
+                    tools:ignore="ContentDescription" />
+            </RelativeLayout>
+
+            <!-- Department -->
+            <TextView
+                style="@style/txt_OpenSansRomanBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15px"
+                android:layout_marginBottom="@dimen/_5px"
+                android:text="@string/lbl_department"
+                android:textColor="@color/gray_trans_99"
+                android:textSize="@dimen/_14sp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rectangle_bg_white_border"
+                android:minHeight="@dimen/_55px">
+
+                <Spinner
+                    android:id="@+id/spDepartment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@+id/ivDepartmentArrow"
+                    android:paddingStart="@dimen/_16px"
+                    android:paddingEnd="@dimen/_5px"
+                    tools:ignore="RtlSymmetry" />
+
+                <ImageView
+                    android:id="@+id/ivDepartmentArrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/_16px"
+                    android:src="@drawable/img_arrow_dropdown"
+                    tools:ignore="ContentDescription" />
+            </RelativeLayout>
+
+            <!-- Cover image picker -->
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnPickCover"
+                style="@style/txtOpenSansRomanBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15px"
+                android:background="@drawable/rectangle_bg_white_border"
+                android:paddingTop="@dimen/_16px"
+                android:paddingBottom="@dimen/_16px"
+                android:text="@string/lbl_pick_cover"
+                android:textAllCaps="false"
+                android:textColor="@color/gray" />
+
+            <ImageView
+                android:id="@+id/ivCoverPreview"
+                android:layout_width="@dimen/_120px"
+                android:layout_height="@dimen/_160px"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/_10px"
+                android:scaleType="centerCrop"
+                android:visibility="gone"
+                tools:ignore="ContentDescription" />
+
+            <!-- Source type: file vs link -->
+            <RadioGroup
+                android:id="@+id/rgSource"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20px"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rbFile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:checked="true"
+                    android:text="@string/lbl_source_file" />
+
+                <RadioButton
+                    android:id="@+id/rbLink"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/lbl_source_link" />
+            </RadioGroup>
+
+            <!-- File chooser row (visible in file mode) -->
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnPickFile"
+                style="@style/txtOpenSansRomanBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10px"
+                android:background="@drawable/rectangle_bg_white_border"
+                android:paddingTop="@dimen/_16px"
+                android:paddingBottom="@dimen/_16px"
+                android:text="@string/lbl_pick_file"
+                android:textAllCaps="false"
+                android:textColor="@color/gray" />
+
+            <TextView
+                android:id="@+id/tvFileName"
+                style="@style/txt_OpenSansRomanBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5px"
+                android:textColor="@color/gray_trans_99"
+                android:textSize="@dimen/_14sp"
+                android:visibility="gone" />
+
+            <!-- Link input (visible in link mode) -->
+            <EditText
+                android:id="@+id/edtLink"
+                style="@style/edtBoxRoundedOutline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10px"
+                android:background="@drawable/rectangle_bg_white_border"
+                android:hint="@string/lbl_book_url_hint"
+                android:textCursorDrawable="@drawable/cursor"
+                android:inputType="textUri"
+                android:paddingStart="@dimen/_20px"
+                android:paddingTop="@dimen/_18px"
+                android:paddingEnd="@dimen/_20px"
+                android:paddingBottom="@dimen/_18px"
+                android:singleLine="true"
+                android:textColorHint="@color/gray_edt_hint_text"
+                android:visibility="gone"
+                tools:ignore="Autofill" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnSubmitUpload"
+                style="@style/txtOpenSansRomanBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_25px"
+                android:gravity="center"
+                android:paddingTop="@dimen/_16px"
+                android:paddingBottom="@dimen/_16px"
+                android:text="@string/lbl_submit"
+                android:textAllCaps="false" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

@@ -10,8 +10,7 @@ import android.widget.LinearLayout;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.jntuh.books.R;
+import com.jntuh.util.CoverHelper;
 import com.jntuh.books.databinding.RowRentBookBinding;
 import com.jntuh.item.SubCatListBook;
 import com.jntuh.util.AdInterstitialAds;
@@ -54,11 +53,11 @@ public class RentAdapter extends RecyclerView.Adapter<RentAdapter.ViewHolder> {
         holder.rowRentBookBinding.tvHomeConTitle.setText(favListBookListPis.getPost_title());
         holder.rowRentBookBinding.tvExp.setText(favListBookListPis.getRent_exp_date());
 
-         if (!favListBookListPis.getPost_image().equals("")) {
-            Glide.with(activity.getApplicationContext()).load(favListBookListPis.getPost_image())
-                    .placeholder(R.drawable.placeholder_portable)
-                    .into(holder.rowRentBookBinding.ivHomeCont);
-        }
+         holder.rowRentBookBinding.ivHomeCont.post(() ->
+                CoverHelper.bind(holder.rowRentBookBinding.ivHomeCont,
+                        favListBookListPis.getPost_image(),
+                        favListBookListPis.getPost_title(),
+                        favListBookListPis.getCover_color()));
 
         holder.rowRentBookBinding.rlFav.setOnClickListener(new View.OnClickListener() {
             @Override
