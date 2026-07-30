@@ -211,7 +211,7 @@ public class PayPalActivity extends AppCompatActivity {
         new AlertDialog.Builder(PayPalActivity.this)
                 .setTitle(getString(R.string.paypal_payment_error_4))
                 .setMessage(Title)
-                .setIcon(R.mipmap.app_icon)
+                .setIcon(R.mipmap.ic_launcher_round)
                 .setPositiveButton(android.R.string.yes, (dialog, which) -> {
 
                 })

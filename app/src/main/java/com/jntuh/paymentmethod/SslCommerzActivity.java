@@ -109,7 +109,7 @@ public class SslCommerzActivity extends AppCompatActivity implements SSLCTransac
         new AlertDialog.Builder(SslCommerzActivity.this)
                 .setTitle(getString(R.string.payment_sslcommerz))
                 .setMessage(Title)
-                .setIcon(R.mipmap.app_icon)
+                .setIcon(R.mipmap.ic_launcher_round)
                 .setPositiveButton(android.R.string.yes, (dialog, which) -> {
 
                 })

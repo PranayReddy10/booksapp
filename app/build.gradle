@@ -108,4 +108,7 @@ dependencies {
     implementation 'com.cinetpay:androidsdk:1.0.0'
     implementation files('libs/sslCommerzSdk.aar')
     implementation 'dev.chrisbanes.insetter:insetter:0.6.1'
+
+    def lottieVersion = "3.4.0"
+    implementation "com.airbnb.android:lottie:$lottieVersion"
 }

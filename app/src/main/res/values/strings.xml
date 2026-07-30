@@ -2,7 +2,7 @@
     <string name="app_name">Jntu Books &amp; Updates</string>
 
     <string name="lbl_ebook_app">JNTU books</string>
-    <string name="lbl_welcome_back">Welcome Back!</string>
+    <string name="lbl_welcome_back">Welcome to JNTU App</string>
     <string name="lbl_let_s_log_in_a">Login in to continue</string>
     <string name="lbl_email">Email*</string>
     <string name="lbl_name">Name*</string>
@@ -38,6 +38,7 @@
     <string name="lbl_year">Year</string>
     <string name="rewarded_required">Please watch the ad to read this book</string>
     <string name="tab_manage_books">Manage Books</string>
+    <string name="upload_not_live">This book isn\'t live yet</string>
     <string name="lbl_select_university">Select University</string>
     <string name="lbl_select_department">Select Department</string>
     <string name="lbl_select_college">Select College</string>
@@ -82,7 +83,7 @@
     <string name="intro_desc_1">Books can help you to increase your knowledge and become more successfully.</string>
     <string name="intro_title_2">Learn On Your Time Schedule</string>
     <string name="intro_desc_2">Learn a lot of new skills with our interesting lessons by our courses and solve tasks</string>
-    <string name="intro_title_3">Welcome to Ebook App</string>
+    <string name="intro_title_3">Welcome to JNTU App</string>
     <string name="intro_desc_3">We have true friend in our life and the books is that. Book has power to change yourself and make you more valuable.</string>
     <string name="lbl_get_started">Get Started</string>
 

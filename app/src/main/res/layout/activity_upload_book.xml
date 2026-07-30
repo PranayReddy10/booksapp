@@ -136,6 +136,7 @@
 
             <!-- Cover image picker -->
             <androidx.appcompat.widget.AppCompatButton
+                android:visibility="gone"
                 android:id="@+id/btnPickCover"
                 style="@style/txtOpenSansRomanBold"
                 android:layout_width="match_parent"

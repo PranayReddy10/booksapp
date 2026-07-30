@@ -135,7 +135,7 @@ public class FlutterWaveActivity extends AppCompatActivity{
         new AlertDialog.Builder(FlutterWaveActivity.this)
                 .setTitle(getString(R.string.flutterwave_payment_error))
                 .setMessage(Title)
-                .setIcon(R.mipmap.app_icon)
+                .setIcon(R.mipmap.ic_launcher_round)
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
 

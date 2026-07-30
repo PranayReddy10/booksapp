@@ -15,6 +15,9 @@ public class MyUploadList implements Serializable {
     @SerializedName("post_image")
     private String post_image;
 
+    @SerializedName("cover_color")
+    private String cover_color;
+
     @SerializedName("upload_status")
     private String upload_status;
 
@@ -43,6 +46,10 @@ public class MyUploadList implements Serializable {
 
     public void setPost_image(String post_image) {
         this.post_image = post_image;
+    }
+
+    public String getCover_color() {
+        return cover_color;
     }
 
     public String getUpload_status() {

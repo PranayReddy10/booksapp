@@ -39,6 +39,7 @@
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatButton
+                            android:visibility="gone"
                             android:id="@+id/btnSkip"
                             style="@style/btnSolidRoundedSkip"
                             android:layout_width="@dimen/_70px"

@@ -114,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
 
         viewMain.bottomNav.frameProfile.setOnClickListener(v -> profileFragment(false, 0));
 
+        viewMain.fabUpload.extend();
         viewMain.fabUpload.setOnClickListener(v -> {
             if (method.getIsLogin()) {
                 startActivity(new Intent(MainActivity.this, UploadBookActivity.class));
@@ -183,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
 
             });
         }
-        builder.setIcon(R.mipmap.app_icon);
+        builder.setIcon(R.mipmap.ic_launcher_round);
         builder.show();
     }
 

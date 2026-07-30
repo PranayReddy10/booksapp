@@ -1,6 +1,8 @@
 package com.jntuh.adapter;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.widget.Toast;
 import android.app.Activity;
 import android.graphics.drawable.GradientDrawable;
 import android.view.View;
@@ -11,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.jntuh.util.CoverHelper;
 import com.jntuh.books.R;
+import com.jntuh.books.BookDetailsActivity;
 import com.jntuh.books.databinding.RowMyUploadBinding;
 import com.jntuh.item.MyUploadList;
 
@@ -41,11 +44,26 @@ public class MyUploadAdapter extends RecyclerView.Adapter<MyUploadAdapter.ViewHo
 
         holder.binding.tvUploadTitle.setText(item.getPost_title());
 
+        // Tapping an upload opens the book's detail page — but only approved books are
+        // live (books_details returns status=1 only), so guard pending/rejected.
+        holder.binding.getRoot().setOnClickListener(v -> {
+            String st = item.getUpload_status() == null ? "" : item.getUpload_status().trim().toLowerCase();
+            boolean approved = st.equals("approved") || st.equals("1");
+            if (approved && item.getPost_id() != null && !item.getPost_id().isEmpty()) {
+                Intent intent = new Intent(activity, BookDetailsActivity.class);
+                intent.putExtra("BOOK_ID", item.getPost_id());
+                activity.startActivity(intent);
+            } else {
+                Toast.makeText(activity, activity.getString(R.string.upload_not_live),
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+
         holder.binding.ivUploadCover.post(() ->
                 CoverHelper.bind(holder.binding.ivUploadCover,
                         item.getPost_image(),
                         item.getPost_title(),
-                        null));
+                        item.getCover_color()));
 
         // Status can arrive as label ("pending"/"approved"/"rejected") or numeric.
         String raw = item.getUpload_status() == null ? "" : item.getUpload_status().trim().toLowerCase();

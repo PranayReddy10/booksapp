@@ -39,7 +39,7 @@
                     android:layout_height="@dimen/_100px"
                     android:layout_centerHorizontal="true"
                     android:contentDescription="@string/app_name"
-                    android:src="@mipmap/app_icon"
+                    android:src="@mipmap/ic_launcher_round"
                     android:scaleType="centerCrop"
                     app:shapeAppearanceOverlay="@style/CircleImage"
                     app:strokeColor="@color/profile_border"

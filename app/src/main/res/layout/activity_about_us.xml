@@ -44,7 +44,7 @@
                     android:layout_width="@dimen/_40px"
                     android:layout_height="@dimen/_40px"
                     android:contentDescription="@string/app_name"
-                    android:src="@mipmap/app_icon"
+                    android:src="@mipmap/ic_launcher_round"
                     app:shapeAppearanceOverlay="@style/CircleImage" />
 
                 <TextView

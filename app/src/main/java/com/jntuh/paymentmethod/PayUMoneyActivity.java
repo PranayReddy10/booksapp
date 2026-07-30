@@ -112,7 +112,7 @@ public class PayUMoneyActivity extends AppCompatActivity {
         PayUPaymentParams payUPaymentParams = builder.build();
         PayUCheckoutProConfig payUCheckoutProConfig = new PayUCheckoutProConfig();
         payUCheckoutProConfig.setMerchantName(getString(R.string.app_name));
-        payUCheckoutProConfig.setMerchantLogo(R.mipmap.app_icon);
+        payUCheckoutProConfig.setMerchantLogo(R.mipmap.ic_launcher_round);
 
         PayUCheckoutPro.open(PayUMoneyActivity.this, payUPaymentParams, payUCheckoutProConfig, new PayUCheckoutProListener() {
             @Override
@@ -183,7 +183,7 @@ public class PayUMoneyActivity extends AppCompatActivity {
         new AlertDialog.Builder(PayUMoneyActivity.this)
                 .setTitle(getString(R.string.payment_payumoney))
                 .setMessage(Title)
-                .setIcon(R.mipmap.app_icon)
+                .setIcon(R.mipmap.ic_launcher_round)
                 .setPositiveButton(android.R.string.yes, (dialog, which) -> {
 
                 })
@@ -197,7 +197,7 @@ public class PayUMoneyActivity extends AppCompatActivity {
         new AlertDialog.Builder(PayUMoneyActivity.this)
                 .setTitle(getString(R.string.payment_payumoney))
                 .setMessage(getString(R.string.payment_need_phone))
-                .setIcon(R.mipmap.app_icon)
+                .setIcon(R.mipmap.ic_launcher_round)
                 .setPositiveButton(android.R.string.yes, (dialog, which) -> {
                     Intent intent = new Intent(PayUMoneyActivity.this, EditProfileActivity.class);
                     intent.putExtra("isFromPayU", true);
