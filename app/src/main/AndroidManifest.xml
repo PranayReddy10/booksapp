@@ -46,6 +46,18 @@
                     android:scheme="@string/get_scheme" />
 
             </intent-filter>
+
+            <!-- App Links for the public website (posts + books). autoVerify uses
+                 the assetlinks.json served at read.jntubooks.in/.well-known/. -->
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="https" android:host="read.jntubooks.in" android:pathPrefix="/post/" />
+                <data android:scheme="https" android:host="read.jntubooks.in" android:pathPrefix="/book/" />
+            </intent-filter>
         </activity>
         <activity android:name="com.jntuh.books.IntroActivity" />
         <activity android:name="com.jntuh.books.LoginActivity" />
@@ -80,6 +92,8 @@
         <activity android:name="com.jntuh.books.MediaFeedActivity" />
         <activity android:name="com.jntuh.books.MediaUploadActivity" />
         <activity android:name="com.jntuh.books.MyMediaActivity" />
+        <activity android:name="com.jntuh.books.MediaCommentsActivity" />
+        <activity android:name="com.jntuh.books.MediaNotificationActivity" />
         <activity android:name="com.jntuh.paymentmethod.PayStackActivity" />
         <activity android:name="com.jntuh.paymentmethod.StripeActivity" />
         <activity android:name="com.jntuh.paymentmethod.PayPalActivity" />

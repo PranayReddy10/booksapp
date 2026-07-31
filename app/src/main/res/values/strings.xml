@@ -98,6 +98,23 @@
     <string name="media_uploaded">Uploaded</string>
     <string name="confirm_delete_media">Delete this post?</string>
     <string name="lbl_admin">Admin</string>
+
+    <!-- Media interactions -->
+    <string name="lbl_follow">Follow</string>
+    <string name="lbl_open_link">Open link</string>
+    <string name="lbl_comments">Comments</string>
+    <string name="lbl_notifications">Notifications</string>
+    <string name="hint_write_comment">Add a comment…</string>
+    <string name="lbl_send">Send</string>
+    <string name="lbl_post">Post</string>
+    <string name="likes_disabled">Likes are turned off for this post</string>
+    <string name="comments_disabled">Comments are turned off for this post</string>
+    <string name="no_comments_yet">No comments yet. Be the first!</string>
+    <string name="no_notifications">No notifications yet</string>
+    <string name="confirm_delete_comment">Delete this comment?</string>
+    <string name="mark_all_read">Mark all read</string>
+    <string name="cant_open_link">Couldn\'t open the link</string>
+    <string name="share_via">Share via</string>
     <string name="please_enter_phone">Please enter phone no</string>
 
     <string name="lbl_next">Next</string>

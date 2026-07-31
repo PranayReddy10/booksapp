@@ -84,8 +84,18 @@ public class SplashActivity extends AppCompatActivity {
             } else {
                 Uri data = intent.getData();
                 if (data != null) {
-                    id = data.getLastPathSegment();
-                    type = "deepLink";
+                    // App Links from the website: read.jntubooks.in/post/{id} or /book/{id}-{slug}
+                    String path = data.getPath();
+                    if (path != null && path.startsWith("/post/")) {
+                        id = path.substring("/post/".length()).split("-")[0].replaceAll("[^0-9]", "");
+                        type = "media_post";
+                    } else if (path != null && path.startsWith("/book/")) {
+                        id = path.substring("/book/".length()).split("-")[0].replaceAll("[^0-9]", "");
+                        type = "deepLink";
+                    } else {
+                        id = data.getLastPathSegment();
+                        type = "deepLink";
+                    }
                 }
             }
         }
@@ -236,6 +246,11 @@ public class SplashActivity extends AppCompatActivity {
                         .putExtra("BOOK_ID", id)
                         .putExtra("position", 0)
                         .putExtra("type", "external"));
+                finishAffinity();
+                break;
+            case "media_post":
+                startActivity(new Intent(SplashActivity.this, MediaFeedActivity.class)
+                        .putExtra(MediaFeedActivity.EXTRA_POST_ID, id));
                 finishAffinity();
                 break;
             default:

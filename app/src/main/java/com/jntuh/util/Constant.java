@@ -7,6 +7,10 @@ import com.jntuh.item.AppList;
 public class Constant {
 
     public static String constantCurrency;
+
+    // Public website host used for shareable links and App Links (see assetlinks.json).
+    public static final String MEDIA_WEB_HOST = "read.jntubooks.in";
+    public static final String MEDIA_WEB_BASE = "https://read.jntubooks.in";
     public static String webViewText = "#41414199;";
     public static String webViewTextDark = "#FFFFFF;";
 

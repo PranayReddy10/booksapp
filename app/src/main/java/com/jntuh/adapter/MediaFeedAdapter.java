@@ -22,27 +22,33 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 /**
- * Full-bleed feed adapter. Photos render straight into an ImageView; videos use a
- * single shared ExoPlayer that is bound to whichever row is currently centered.
- * We never hold more than one player — {@link #playPosition(int)} moves it, and
- * {@link #releasePlayer()} tears it down when the screen goes away.
+ * Full-screen card feed (one post per screen). A single shared ExoPlayer plays only
+ * the centered video and is released on scroll-away. The action bar under each post
+ * shows like / comment / share / link / views, each gated on that post's toggle.
  */
 public class MediaFeedAdapter extends RecyclerView.Adapter<MediaFeedAdapter.ViewHolder> {
 
-    private static final int TYPE_PHOTO = 0;
-    private static final int TYPE_VIDEO = 1;
+    public interface InteractionListener {
+        void onLike(com.jntuh.item.MediaItem item, int position);
+        void onComment(com.jntuh.item.MediaItem item, int position);
+        void onShare(com.jntuh.item.MediaItem item);
+        void onOpenLink(com.jntuh.item.MediaItem item);
+    }
 
     private final Activity activity;
     private final List<com.jntuh.item.MediaItem> items;
+    private final InteractionListener listener;
 
     private ExoPlayer player;
-    private VideoHolder boundVideoHolder;   // the holder the player is currently attached to
+    private ViewHolder boundVideoHolder;
     private int boundPosition = -1;
     private RecyclerView recyclerView;
 
-    public MediaFeedAdapter(Activity activity, List<com.jntuh.item.MediaItem> items) {
+    public MediaFeedAdapter(Activity activity, List<com.jntuh.item.MediaItem> items,
+                            InteractionListener listener) {
         this.activity = activity;
         this.items = items;
+        this.listener = listener;
     }
 
     @Override
@@ -51,51 +57,117 @@ public class MediaFeedAdapter extends RecyclerView.Adapter<MediaFeedAdapter.View
         this.recyclerView = rv;
     }
 
-    @Override
-    public int getItemViewType(int position) {
-        String t = items.get(position).getMedia_type();
-        return "video".equalsIgnoreCase(t) ? TYPE_VIDEO : TYPE_PHOTO;
-    }
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType) {
         RowMediaFeedBinding binding = RowMediaFeedBinding.inflate(activity.getLayoutInflater(), parent, false);
-        // Force each row to fill the parent (one post = one screen).
         binding.getRoot().setLayoutParams(new RecyclerView.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        return (viewType == TYPE_VIDEO)
-                ? new VideoHolder(binding)
-                : new PhotoHolder(binding);
+        return new ViewHolder(binding);
     }
 
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NotNull ViewHolder holder, int position) {
         com.jntuh.item.MediaItem item = items.get(position);
+        RowMediaFeedBinding b = holder.binding;
 
-        // Caption + uploader overlay (shared by both types).
-        holder.binding.tvCaption.setText(item.getTitle());
+        // Header
         boolean isAdmin = "1".equals(item.getIs_admin());
-        holder.binding.tvUploader.setText(
-                isAdmin ? activity.getString(R.string.lbl_admin)
-                        : "@" + safe(item.getUploaded_by()));
+        b.tvUploader.setText(isAdmin ? activity.getString(R.string.lbl_admin)
+                : safe(item.getUploaded_by()));
+        b.tvTime.setText(relativeTime(item.getCreated_at()));
 
-        holder.bind(item);
+        // Caption
+        b.tvCaption.setText(item.getTitle());
+
+        // Media
+        boolean isVideo = "video".equalsIgnoreCase(item.getMedia_type());
+        if (isVideo) {
+            b.ivPhoto.setVisibility(View.GONE);
+            b.playerView.setVisibility(View.VISIBLE);
+            b.ivVideoPoster.setVisibility(View.VISIBLE);
+            String thumb = item.getThumb_url();
+            if (thumb != null && !thumb.isEmpty()) {
+                Glide.with(activity.getApplicationContext()).load(thumb).into(b.ivVideoPoster);
+            }
+        } else {
+            b.playerView.setVisibility(View.GONE);
+            b.ivVideoPoster.setVisibility(View.GONE);
+            b.progressVideo.setVisibility(View.GONE);
+            b.ivPhoto.setVisibility(View.VISIBLE);
+            Glide.with(activity.getApplicationContext()).load(item.getFile_url()).into(b.ivPhoto);
+        }
+
+        // Views (overlay) — only when show_views is on
+        if ("1".equals(item.getShow_views())) {
+            b.llViewsOverlay.setVisibility(View.VISIBLE);
+            b.tvViewOverlay.setText(num(item.getView_count()));
+        } else {
+            b.llViewsOverlay.setVisibility(View.GONE);
+        }
+
+        // Like — only when allow_likes is on
+        if ("1".equals(item.getAllow_likes())) {
+            b.llLike.setVisibility(View.VISIBLE);
+            bindLikeState(holder, item);
+            b.llLike.setOnClickListener(v -> {
+                if (listener != null) listener.onLike(item, holder.getBindingAdapterPosition());
+            });
+        } else {
+            b.llLike.setVisibility(View.GONE);
+        }
+
+        // Comment — only when allow_comments is on
+        if ("1".equals(item.getAllow_comments())) {
+            b.llComment.setVisibility(View.VISIBLE);
+            b.tvCommentCount.setText(num(item.getComment_count()));
+            b.llComment.setOnClickListener(v -> {
+                if (listener != null) listener.onComment(item, holder.getBindingAdapterPosition());
+            });
+        } else {
+            b.llComment.setVisibility(View.GONE);
+        }
+
+        // Share — always available
+        b.ivShare.setOnClickListener(v -> {
+            if (listener != null) listener.onShare(item);
+        });
+
+        // Link chip — only when link_url present
+        String link = item.getLink_url();
+        if (link != null && !link.trim().isEmpty()) {
+            b.tvLinkChip.setVisibility(View.VISIBLE);
+            b.tvLinkChip.setOnClickListener(v -> {
+                if (listener != null) listener.onOpenLink(item);
+            });
+        } else {
+            b.tvLinkChip.setVisibility(View.GONE);
+        }
     }
 
-    @Override
-    public int getItemCount() {
-        return items.size();
+    /** Update just the like icon + count from the current item state. */
+    public void bindLikeState(@NonNull ViewHolder holder, com.jntuh.item.MediaItem item) {
+        boolean liked = "1".equals(item.getIs_liked());
+        holder.binding.ivLike.setImageResource(
+                liked ? android.R.drawable.btn_star_big_on : android.R.drawable.ic_menu_myplaces);
+        holder.binding.ivLike.setColorFilter(
+                androidx.core.content.ContextCompat.getColor(activity,
+                        liked ? R.color.status_rejected : R.color.gray_2));
+        holder.binding.tvLikeCount.setText(num(item.getLike_count()));
     }
 
-    // ---- Playback control, driven by the snap listener in the activity ----
+    /** Refresh the like row for a given position without rebinding the whole card. */
+    public void refreshLike(int position) {
+        if (recyclerView == null) return;
+        RecyclerView.ViewHolder vh = recyclerView.findViewHolderForAdapterPosition(position);
+        if (vh instanceof ViewHolder && position >= 0 && position < items.size()) {
+            bindLikeState((ViewHolder) vh, items.get(position));
+        }
+    }
 
-    /**
-     * Make {@code position} the active page. If it's a video, attach the shared
-     * player to that row and start it; if it's a photo, just release any playing
-     * video. Called once per snap. Never holds more than one player.
-     */
+    // ---- Playback control ----
+
     @OptIn(markerClass = UnstableApi.class)
     public void playPosition(int position) {
         if (position < 0 || position >= items.size()) return;
@@ -107,8 +179,8 @@ public class MediaFeedAdapter extends RecyclerView.Adapter<MediaFeedAdapter.View
         if (!isVideo(position) || recyclerView == null) return;
 
         RecyclerView.ViewHolder vh = recyclerView.findViewHolderForAdapterPosition(position);
-        if (!(vh instanceof VideoHolder)) return;   // not laid out yet; onViewAttached will retry
-        final VideoHolder holder = (VideoHolder) vh;
+        if (!(vh instanceof ViewHolder)) return;
+        final ViewHolder holder = (ViewHolder) vh;
 
         if (player == null) {
             player = new ExoPlayer.Builder(activity).build();
@@ -138,7 +210,6 @@ public class MediaFeedAdapter extends RecyclerView.Adapter<MediaFeedAdapter.View
         });
     }
 
-    /** Detach the player from its current holder (keeps the player instance alive). */
     public void detachPlayer() {
         if (player != null) {
             player.setPlayWhenReady(false);
@@ -152,7 +223,6 @@ public class MediaFeedAdapter extends RecyclerView.Adapter<MediaFeedAdapter.View
         }
     }
 
-    /** Fully release the player. Call from the activity's onDestroy / onPause. */
     public void releasePlayer() {
         detachPlayer();
         if (player != null) {
@@ -167,17 +237,11 @@ public class MediaFeedAdapter extends RecyclerView.Adapter<MediaFeedAdapter.View
                 && "video".equalsIgnoreCase(items.get(position).getMedia_type());
     }
 
-    private String safe(String s) {
-        return s == null ? "" : s;
-    }
-
     @Override
     public void onViewAttachedToWindow(@NonNull ViewHolder holder) {
         super.onViewAttachedToWindow(holder);
-        // If the snap targeted this position before its holder existed, start now.
-        if (holder instanceof VideoHolder
-                && holder.getBindingAdapterPosition() == boundPosition
-                && boundVideoHolder == null) {
+        if (holder.getBindingAdapterPosition() == boundPosition
+                && boundVideoHolder == null && isVideo(boundPosition)) {
             playPosition(boundPosition);
         }
     }
@@ -185,58 +249,53 @@ public class MediaFeedAdapter extends RecyclerView.Adapter<MediaFeedAdapter.View
     @Override
     public void onViewDetachedFromWindow(@NonNull ViewHolder holder) {
         super.onViewDetachedFromWindow(holder);
-        if (holder instanceof VideoHolder && holder == boundVideoHolder) {
+        if (holder == boundVideoHolder) {
             detachPlayer();
         }
     }
 
-    // ---- Holders ----
+    @Override
+    public int getItemCount() {
+        return items.size();
+    }
 
-    abstract static class ViewHolder extends RecyclerView.ViewHolder {
+    private String safe(String s) {
+        return s == null ? "" : s;
+    }
+
+    private String num(String s) {
+        return (s == null || s.isEmpty()) ? "0" : s;
+    }
+
+    // Very small relative-time formatter for "created_at" (yyyy-MM-dd HH:mm:ss, UTC-ish).
+    private String relativeTime(String created) {
+        if (created == null || created.isEmpty()) return "";
+        try {
+            java.text.SimpleDateFormat fmt =
+                    new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss", java.util.Locale.US);
+            java.util.Date d = fmt.parse(created);
+            if (d == null) return created;
+            long diff = System.currentTimeMillis() - d.getTime();
+            if (diff < 0) diff = 0;
+            long min = diff / 60000;
+            if (min < 1) return "just now";
+            if (min < 60) return min + (min == 1 ? " minute ago" : " minutes ago");
+            long hr = min / 60;
+            if (hr < 24) return hr + (hr == 1 ? " hour ago" : " hours ago");
+            long day = hr / 24;
+            if (day < 30) return day + (day == 1 ? " day ago" : " days ago");
+            return created.substring(0, 10);
+        } catch (Exception e) {
+            return created;
+        }
+    }
+
+    static class ViewHolder extends RecyclerView.ViewHolder {
         final RowMediaFeedBinding binding;
 
         ViewHolder(RowMediaFeedBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
-        }
-
-        abstract void bind(com.jntuh.item.MediaItem item);
-    }
-
-    class PhotoHolder extends ViewHolder {
-        PhotoHolder(RowMediaFeedBinding binding) {
-            super(binding);
-        }
-
-        @Override
-        void bind(com.jntuh.item.MediaItem item) {
-            binding.playerView.setVisibility(View.GONE);
-            binding.ivVideoPoster.setVisibility(View.GONE);
-            binding.progressVideo.setVisibility(View.GONE);
-            binding.ivPhoto.setVisibility(View.VISIBLE);
-            Glide.with(activity.getApplicationContext())
-                    .load(item.getFile_url())
-                    .into(binding.ivPhoto);
-        }
-    }
-
-    class VideoHolder extends ViewHolder {
-        VideoHolder(RowMediaFeedBinding binding) {
-            super(binding);
-        }
-
-        @Override
-        void bind(com.jntuh.item.MediaItem item) {
-            binding.ivPhoto.setVisibility(View.GONE);
-            binding.playerView.setVisibility(View.VISIBLE);
-            binding.ivVideoPoster.setVisibility(View.VISIBLE);
-            // Poster from thumb_url (falls back to nothing if empty).
-            String thumb = item.getThumb_url();
-            if (thumb != null && !thumb.isEmpty()) {
-                Glide.with(activity.getApplicationContext())
-                        .load(thumb)
-                        .into(binding.ivVideoPoster);
-            }
         }
     }
 }

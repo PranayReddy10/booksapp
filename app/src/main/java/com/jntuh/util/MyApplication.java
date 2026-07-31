@@ -18,6 +18,7 @@ import androidx.multidex.MultiDex;
 import com.jntuh.books.ForgotPassActivity;
 import com.jntuh.books.LoginActivity;
 import com.jntuh.books.MainActivity;
+import com.jntuh.books.MediaFeedActivity;
 import com.jntuh.books.PaymentMethodActivity;
 import com.jntuh.books.PlanListActivity;
 import com.jntuh.books.RegisterActivity;
@@ -92,6 +93,17 @@ public class MyApplication extends Application implements Application.ActivityLi
         public void onClick(@NonNull INotificationClickEvent result) {
             JSONObject jsonObject = result.getNotification().getAdditionalData();
             if (jsonObject != null) {
+                // Media feed push: type=="media" + post_id -> open that post.
+                if ("media".equals(jsonObject.optString("type"))) {
+                    String postId = jsonObject.optString("post_id");
+                    Intent mediaIntent = new Intent(MyApplication.this, MediaFeedActivity.class);
+                    mediaIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    if (postId != null && !postId.isEmpty()) {
+                        mediaIntent.putExtra(MediaFeedActivity.EXTRA_POST_ID, postId);
+                    }
+                    startActivity(mediaIntent);
+                    return;
+                }
                 try {
 
                     String id = jsonObject.getString("post_id");

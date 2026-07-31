@@ -57,6 +57,9 @@ public class LoginRP implements Serializable {
         @SerializedName("phone")
         String phone;
 
+        @SerializedName("username")
+        String username;
+
         @SerializedName("user_image")
         String user_image;
 
@@ -117,6 +120,14 @@ public class LoginRP implements Serializable {
 
         public void setPhone(String phone) {
             this.phone = phone;
+        }
+
+        public String getUsername() {
+            return username;
+        }
+
+        public void setUsername(String username) {
+            this.username = username;
         }
 
         public String getUser_image() {

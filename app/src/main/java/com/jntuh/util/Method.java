@@ -182,6 +182,25 @@ public class Method {
         editor.apply();
     }
 
+    // Media feature: store the @username and avatar returned by login/profile.
+    public void saveMediaProfile(String username, String userImage) {
+        pref = activity.getSharedPreferences(myPreference, 0);
+        editor = pref.edit();
+        if (username != null) editor.putString("username", username);
+        if (userImage != null) editor.putString("user_image", userImage);
+        editor.apply();
+    }
+
+    public String getUsername() {
+        pref = activity.getSharedPreferences(myPreference, 0);
+        return pref.getString("username", "");
+    }
+
+    public String getUserImage() {
+        pref = activity.getSharedPreferences(myPreference, 0);
+        return pref.getString("user_image", "");
+    }
+
     public void savePhone(String userPhone) {
         pref = activity.getSharedPreferences(myPreference, 0);
         editor = pref.edit();

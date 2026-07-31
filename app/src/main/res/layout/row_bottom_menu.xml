@@ -132,16 +132,16 @@
                 android:layout_marginStart="@dimen/_15px"
                 android:layout_marginEnd="@dimen/_15px"
                 android:scaleType="fitXY"
-                android:src="@drawable/menu_author"
+                android:src="@drawable/menu_feed"
                 tools:ignore="ContentDescription"
-                tools:src="@drawable/menu_author" />
+                tools:src="@drawable/menu_feed" />
 
             <TextView
                 android:id="@+id/tvAuthor"
                 style="@style/txt_OpenSansRomanBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/bottom_author"
+                android:text="@string/lbl_feed"
                 android:textColor="@color/bottom_menu_bg_normal"
                 android:textSize="@dimen/_12sp"
                 android:layout_marginTop="@dimen/_5px" />

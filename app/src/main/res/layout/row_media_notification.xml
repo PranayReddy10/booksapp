@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rowRoot"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:paddingStart="@dimen/_12px"
+    android:paddingTop="@dimen/_12px"
+    android:paddingEnd="@dimen/_12px"
+    android:paddingBottom="@dimen/_12px">
+
+    <View
+        android:id="@+id/viewUnread"
+        android:layout_width="8dp"
+        android:layout_height="8dp"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/bg_unread_dot"
+        android:visibility="gone" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvNotifImage"
+        android:layout_width="54dp"
+        android:layout_height="54dp"
+        android:layout_marginStart="@dimen/_12px"
+        android:layout_toEndOf="@+id/viewUnread"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="0dp">
+
+        <ImageView
+            android:id="@+id/ivNotifImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/card_view_bg"
+            android:scaleType="centerCrop"
+            tools:ignore="ContentDescription" />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/tvNotifTitle"
+        style="@style/txt_OpenSansRomanBold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_12px"
+        android:layout_toEndOf="@+id/cvNotifImage"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textColor="@color/gray_2"
+        android:textSize="@dimen/_14sp"
+        tools:text="New post from Admin" />
+
+    <TextView
+        android:id="@+id/tvNotifMessage"
+        style="@style/txtOpenSansRomanSemiBold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvNotifTitle"
+        android:layout_marginStart="@dimen/_12px"
+        android:layout_marginTop="1dp"
+        android:layout_toEndOf="@+id/cvNotifImage"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textColor="@color/gray_trans_99"
+        android:textSize="@dimen/_13sp"
+        tools:text="Check out this new photo in the feed" />
+
+    <TextView
+        android:id="@+id/tvNotifTime"
+        style="@style/txtOpenSansRomanSemiBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvNotifMessage"
+        android:layout_marginStart="@dimen/_12px"
+        android:layout_marginTop="2dp"
+        android:layout_toEndOf="@+id/cvNotifImage"
+        android:textColor="@color/gray_trans_99"
+        android:textSize="11sp"
+        tools:text="2h ago" />
+</RelativeLayout>

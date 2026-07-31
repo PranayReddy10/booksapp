@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_bg"
+    tools:context="com.jntuh.books.MainActivity">
+
+    <!-- Top bar: title + notification bell (with unread dot) -->
+    <RelativeLayout
+        android:id="@+id/exploreTopBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="@color/white"
+        android:paddingStart="@dimen/_16px"
+        android:paddingTop="@dimen/_12px"
+        android:paddingEnd="@dimen/_16px"
+        android:paddingBottom="@dimen/_12px">
+
+        <TextView
+            android:id="@+id/tvExploreTitle"
+            style="@style/txt_OpenSansRomanBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:text="@string/lbl_feed"
+            android:textColor="@color/gray_2"
+            android:textSize="@dimen/_20sp" />
+
+        <ImageView
+            android:id="@+id/ivExploreUpload"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:src="@android:drawable/ic_input_add"
+            app:tint="@color/gray_2"
+            tools:ignore="ContentDescription" />
+
+        <FrameLayout
+            android:id="@+id/flBell"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/_20px"
+            android:layout_toStartOf="@+id/ivExploreUpload">
+
+            <ImageView
+                android:id="@+id/ivExploreBell"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:src="@android:drawable/ic_popup_reminder"
+                app:tint="@color/gray_2"
+                tools:ignore="ContentDescription" />
+
+            <View
+                android:id="@+id/viewBellDot"
+                android:layout_width="9dp"
+                android:layout_height="9dp"
+                android:layout_gravity="top|end"
+                android:background="@drawable/bg_unread_dot"
+                android:visibility="gone" />
+        </FrameLayout>
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvExplore"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/exploreTopBar"
+        android:clipToPadding="false"
+        android:paddingStart="@dimen/_3px"
+        android:paddingEnd="@dimen/_3px"
+        android:paddingBottom="@dimen/_8px" />
+
+    <ProgressBar
+        android:id="@+id/progressExplore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:theme="@style/ProgressBar" />
+
+    <include
+        android:id="@+id/llNoData"
+        layout="@layout/no_data_found"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true" />
+</RelativeLayout>

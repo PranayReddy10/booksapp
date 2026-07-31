@@ -28,9 +28,12 @@ import com.jntuh.response.DepartmentRP;
 import com.jntuh.response.CollegeRP;
 import com.jntuh.response.UserUploadRP;
 import com.jntuh.response.MyUploadRP;
-import com.jntuh.response.MediaFeedRP;
-import com.jntuh.response.MyMediaRP;
+import com.jntuh.response.MediaFeedRP;import com.jntuh.response.MyMediaRP;
 import com.jntuh.response.MediaUploadRP;
+import com.jntuh.response.MediaLikeRP;
+import com.jntuh.response.MediaCommentRP;
+import com.jntuh.response.MediaCommentListRP;
+import com.jntuh.response.MediaNotificationListRP;
 import com.google.gson.JsonObject;
 
 import okhttp3.MultipartBody;
@@ -333,4 +336,31 @@ public interface ApiInterface {
     @POST("media_view")
     @FormUrlEncoded
     Call<JsonObject> getMediaViewData(@Field("data") String data);
+
+    // --- Likes ---
+    @POST("media_like")
+    @FormUrlEncoded
+    Call<MediaLikeRP> getMediaLikeData(@Field("data") String data);
+
+    // --- Comments ---
+    @POST("media_comment_add")
+    @FormUrlEncoded
+    Call<MediaCommentRP> getMediaCommentAddData(@Field("data") String data);
+
+    @POST("media_comment_list")
+    @FormUrlEncoded
+    Call<MediaCommentListRP> getMediaCommentListData(@Field("data") String data);
+
+    @POST("media_comment_delete")
+    @FormUrlEncoded
+    Call<MediaCommentRP> getMediaCommentDeleteData(@Field("data") String data);
+
+    // --- Notifications ---
+    @POST("media_notification_list")
+    @FormUrlEncoded
+    Call<MediaNotificationListRP> getMediaNotificationListData(@Field("data") String data);
+
+    @POST("media_notification_read")
+    @FormUrlEncoded
+    Call<PostRateRP> getMediaNotificationReadData(@Field("data") String data);
 }

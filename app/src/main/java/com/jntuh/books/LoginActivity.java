@@ -196,6 +196,7 @@ public class LoginActivity extends AppCompatActivity {
                             itemUser = loginRP.getItemUserList().get(0);
                             method.saveIsLogin(true);
                             method.saveLogin(itemUser.getUser_id(), itemUser.getName(), itemUser.getEmail(), "normal", "");
+                            method.saveMediaProfile(itemUser.getUsername(), itemUser.getUser_image());
                             if (isWhichScreen) {
                                 finish();
                             } else {
@@ -255,6 +256,7 @@ public class LoginActivity extends AppCompatActivity {
                             itemUser = loginRPSocial.getItemUserList().get(0);
                             method.saveIsLogin(true);
                             method.saveLogin(itemUser.getUser_id(), itemUser.getName(), itemUser.getEmail(), type, aid);
+                            method.saveMediaProfile(itemUser.getUsername(), itemUser.getUser_image());
                             if (isWhichScreen) {
                                 finish();
                             } else {

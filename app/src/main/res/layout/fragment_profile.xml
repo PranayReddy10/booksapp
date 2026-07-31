@@ -127,6 +127,20 @@
                 android:textSize="@dimen/_20sp" />
 
             <TextView
+                android:id="@+id/tvProfileUsername"
+                style="@style/txtOpenSansRomanSemiBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|start"
+                android:layout_marginTop="@dimen/_1px"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:textColor="@color/orange"
+                android:textSize="@dimen/_14sp"
+                android:visibility="gone"
+                tools:text="\@pranay_reddy" />
+
+            <TextView
                 android:id="@+id/tvProfileEmail"
                 style="@style/txtOpenSansRomanSemiBold"
                 android:layout_width="wrap_content"

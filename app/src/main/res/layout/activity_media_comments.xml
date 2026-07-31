@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/toolbarMain"
+        layout="@layout/row_toolbar" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvComments"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingTop="@dimen/_8px"
+            android:paddingBottom="@dimen/_8px" />
+
+        <ProgressBar
+            android:id="@+id/progressComments"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:theme="@style/ProgressBar" />
+
+        <TextView
+            android:id="@+id/tvNoComments"
+            style="@style/txtOpenSansRomanSemiBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/no_comments_yet"
+            android:textColor="@color/gray_trans_99"
+            android:textSize="@dimen/_14sp"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_border_stroke" />
+
+    <!-- Input bar -->
+    <LinearLayout
+        android:id="@+id/llInputBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/_12px"
+        android:paddingTop="@dimen/_8px"
+        android:paddingEnd="@dimen/_12px"
+        android:paddingBottom="@dimen/_8px">
+
+        <EditText
+            android:id="@+id/edtComment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/bg_comment_input"
+            android:hint="@string/hint_write_comment"
+            android:inputType="textCapSentences|textMultiLine"
+            android:maxLines="4"
+            android:paddingStart="@dimen/_16px"
+            android:paddingTop="10dp"
+            android:paddingEnd="@dimen/_16px"
+            android:paddingBottom="10dp"
+            android:textColor="@color/gray_2"
+            android:textSize="@dimen/_14sp"
+            android:autofillHints=""
+            android:importantForAutofill="no" />
+
+        <TextView
+            android:id="@+id/btnSendComment"
+            style="@style/txt_OpenSansRomanBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10px"
+            android:padding="@dimen/_8px"
+            android:text="@string/lbl_post"
+            android:textColor="@color/orange"
+            android:textSize="@dimen/_15sp" />
+    </LinearLayout>
+</LinearLayout>

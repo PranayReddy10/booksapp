@@ -19,6 +19,9 @@ public class MediaItem implements Serializable {
     @SerializedName("description")
     private String description;
 
+    @SerializedName("link_url")
+    private String link_url;
+
     @SerializedName("file_url")
     private String file_url;
 
@@ -31,8 +34,26 @@ public class MediaItem implements Serializable {
     @SerializedName("is_admin")
     private String is_admin;
 
+    @SerializedName("show_views")
+    private String show_views;
+
+    @SerializedName("allow_likes")
+    private String allow_likes;
+
+    @SerializedName("allow_comments")
+    private String allow_comments;
+
     @SerializedName("view_count")
     private String view_count;
+
+    @SerializedName("like_count")
+    private String like_count;
+
+    @SerializedName("comment_count")
+    private String comment_count;
+
+    @SerializedName("is_liked")
+    private String is_liked;
 
     @SerializedName("created_at")
     private String created_at;
@@ -99,6 +120,62 @@ public class MediaItem implements Serializable {
 
     public void setIs_admin(String is_admin) {
         this.is_admin = is_admin;
+    }
+
+    public String getLink_url() {
+        return link_url;
+    }
+
+    public void setLink_url(String link_url) {
+        this.link_url = link_url;
+    }
+
+    public String getShow_views() {
+        return show_views;
+    }
+
+    public void setShow_views(String show_views) {
+        this.show_views = show_views;
+    }
+
+    public String getAllow_likes() {
+        return allow_likes;
+    }
+
+    public void setAllow_likes(String allow_likes) {
+        this.allow_likes = allow_likes;
+    }
+
+    public String getAllow_comments() {
+        return allow_comments;
+    }
+
+    public void setAllow_comments(String allow_comments) {
+        this.allow_comments = allow_comments;
+    }
+
+    public String getLike_count() {
+        return like_count;
+    }
+
+    public void setLike_count(String like_count) {
+        this.like_count = like_count;
+    }
+
+    public String getComment_count() {
+        return comment_count;
+    }
+
+    public void setComment_count(String comment_count) {
+        this.comment_count = comment_count;
+    }
+
+    public String getIs_liked() {
+        return is_liked;
+    }
+
+    public void setIs_liked(String is_liked) {
+        this.is_liked = is_liked;
     }
 
     public String getView_count() {

@@ -19,7 +19,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.jntuh.books.databinding.ActivityMainBinding;
-import com.jntuh.fragment.AuthorFragment;
+import com.jntuh.fragment.MediaExploreFragment;
 import com.jntuh.fragment.CategoryFragment;
 import com.jntuh.fragment.HomeFragment;
 import com.jntuh.fragment.LatestFragment;
@@ -108,8 +108,8 @@ public class MainActivity extends AppCompatActivity {
         viewMain.bottomNav.frameAuthor.setOnClickListener(v -> {
             selectBottomNav(3);
             viewMain.toolbarMain.toolbarToolbar.setVisibility(View.GONE);
-            AuthorFragment authorFragment = new AuthorFragment();
-            loadFrag(authorFragment, "", fragmentManager);
+            MediaExploreFragment mediaExploreFragment = new MediaExploreFragment();
+            loadFrag(mediaExploreFragment, "", fragmentManager);
         });
 
         viewMain.bottomNav.frameProfile.setOnClickListener(v -> profileFragment(false, 0));

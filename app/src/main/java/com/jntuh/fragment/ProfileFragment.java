@@ -204,6 +204,14 @@ public class ProfileFragment extends Fragment {
                                     viewProfile.tvProfileName.setText(itemUser.getName());
                                     viewProfile.tvProfileEmail.setText(itemUser.getEmail());
 
+                                    String uname = itemUser.getUsername();
+                                    if (uname != null && !uname.isEmpty()) {
+                                        viewProfile.tvProfileUsername.setVisibility(View.VISIBLE);
+                                        viewProfile.tvProfileUsername.setText("@" + uname);
+                                        method.saveMediaProfile(uname, itemUser.getUser_image());
+                                    } else {
+                                        viewProfile.tvProfileUsername.setVisibility(View.GONE);
+                                    }
                                 } else {
                                     method.alertBox(loginRPSocial.getItemUserList().get(0).getMsg());
                                 }
