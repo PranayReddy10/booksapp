@@ -83,10 +83,15 @@ public class BookDetailsActivity extends AppCompatActivity {
         viewBookDetail.toolbarMain.imageFilter.setVisibility(View.VISIBLE);
         viewBookDetail.toolbarMain.imageFilter.setImageResource(R.drawable.img_share);
         viewBookDetail.toolbarMain.imageFilter.setOnClickListener(v -> {
-            if (bookDetailListPos != null && bookDetailListPos.getShare_url() != null) {
+            if (bookDetailListPos != null && bookDetailListPos.getPost_id() != null) {
+                // Match the public website's share URL: read.jntubooks.in/book/{id}-{slug}
+                String slug = com.jntuh.util.Constant.webSlug(bookDetailListPos.getPost_title());
+                String shareUrl = com.jntuh.util.Constant.MEDIA_WEB_BASE
+                        + "/book/" + bookDetailListPos.getPost_id()
+                        + (slug.isEmpty() ? "" : "-" + slug);
                 Intent intent1 = new Intent(Intent.ACTION_SEND);
                 intent1.setType("text/plain");
-                intent1.putExtra(Intent.EXTRA_TEXT, bookDetailListPos.getShare_url());
+                intent1.putExtra(Intent.EXTRA_TEXT, shareUrl);
                 startActivity(Intent.createChooser(intent1, "Choose one"));
             } else {
                 method.alertBox(getResources().getString(R.string.wrong));

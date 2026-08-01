@@ -150,10 +150,11 @@ public class MediaFeedAdapter extends RecyclerView.Adapter<MediaFeedAdapter.View
     public void bindLikeState(@NonNull ViewHolder holder, com.jntuh.item.MediaItem item) {
         boolean liked = "1".equals(item.getIs_liked());
         holder.binding.ivLike.setImageResource(
-                liked ? android.R.drawable.btn_star_big_on : android.R.drawable.ic_menu_myplaces);
+                liked ? R.drawable.ic_feed_heart : R.drawable.ic_feed_heart_outline);
+        // Filled heart is red when liked; outline is white on the media overlay.
         holder.binding.ivLike.setColorFilter(
                 androidx.core.content.ContextCompat.getColor(activity,
-                        liked ? R.color.status_rejected : R.color.gray_2));
+                        liked ? R.color.status_rejected : R.color.white));
         holder.binding.tvLikeCount.setText(num(item.getLike_count()));
     }
 

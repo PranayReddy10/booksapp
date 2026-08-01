@@ -1,6 +1,7 @@
 package com.jntuh.books;
 
 import android.os.Bundle;
+import android.widget.Toast;
 import android.util.Log;
 import android.view.View;
 
@@ -113,6 +114,19 @@ public class MyMediaActivity extends AppCompatActivity implements MyMediaAdapter
                 .setPositiveButton(android.R.string.ok, (d, w) -> deleteMedia(item, position))
                 .setNegativeButton(android.R.string.cancel, null)
                 .show();
+    }
+
+    @Override
+    public void onOpen(MyMediaItem item, int position) {
+        // Only approved posts appear in the public feed; pending/rejected can't open.
+        String status = item.getUpload_status() == null ? "" : item.getUpload_status().trim().toLowerCase();
+        boolean approved = status.equals("approved") || status.equals("1");
+        if (!approved) {
+            Toast.makeText(this, getString(R.string.media_not_live_yet), Toast.LENGTH_SHORT).show();
+            return;
+        }
+        startActivity(new android.content.Intent(this, MediaFeedActivity.class)
+                .putExtra(MediaFeedActivity.EXTRA_POST_ID, item.getPost_id()));
     }
 
     private void deleteMedia(MyMediaItem item, int position) {

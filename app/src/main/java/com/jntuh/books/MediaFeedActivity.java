@@ -327,7 +327,12 @@ public class MediaFeedActivity extends AppCompatActivity implements MediaFeedAda
 
     @Override
     public void onShare(MediaItem item) {
-        String url = Constant.MEDIA_WEB_BASE + "/post/" + item.getPost_id();
+        // Use the backend-provided share URL (same scheme as book sharing:
+        // https://<app_base>/share/media/{id}). Fall back only if missing.
+        String url = item.getShare_url();
+        if (url == null || url.trim().isEmpty()) {
+            url = Constant.MEDIA_WEB_BASE + "/post/" + item.getPost_id();
+        }
         String text = (item.getTitle() != null && !item.getTitle().isEmpty())
                 ? item.getTitle() + "\n" + url : url;
         Intent share = new Intent(Intent.ACTION_SEND);

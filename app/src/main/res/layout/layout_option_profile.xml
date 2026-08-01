@@ -150,6 +150,39 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/layMyMedia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="@dimen/_15px"
+        android:paddingHorizontal="@dimen/_20px"
+        android:background="?attr/selectableItemBackground">
+
+        <TextView
+            style="@style/txtOpenSansRomanSemiBold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="start"
+            android:layout_toStartOf="@+id/ivEdArwMyMedia"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="@string/lbl_my_media"
+            android:textColor="@color/gray_2"
+            android:textSize="@dimen/_17sp"
+            tools:text="@string/lbl_my_media" />
+
+        <ImageView
+            android:id="@+id/ivEdArwMyMedia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/img_arrow_setting" />
+    </RelativeLayout>
+
+    <RelativeLayout
         android:id="@+id/layEditProfile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

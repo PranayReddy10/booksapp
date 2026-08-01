@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_auth_mesh"
     android:orientation="vertical">
 
     <androidx.core.widget.NestedScrollView
@@ -18,6 +19,28 @@
             android:layout_height="match_parent"
             android:gravity="center_horizontal"
             android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/authBlobViolet"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="30dp"
+                android:layout_marginStart="-50dp"
+                android:src="@drawable/bg_auth_blob_violet"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:id="@+id/authBlobPink"
+                android:layout_width="180dp"
+                android:layout_height="180dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="-50dp"
+                android:src="@drawable/bg_auth_blob_pink"
+                tools:ignore="ContentDescription" />
 
             <LinearLayout
                 android:id="@+id/linearLoginScreen"
@@ -46,6 +69,7 @@
                             android:layout_gravity="start"
                             android:layout_marginEnd="@dimen/_30px"
                             android:scaleType="fitXY"
+                            android:visibility="gone"
                             android:src="@drawable/img_ellipse_login"
                             tools:ignore="ContentDescription"
                             tools:src="@drawable/img_ellipse_login" />
@@ -69,7 +93,7 @@
                                 android:ellipsize="end"
                                 android:singleLine="true"
                                 android:text="@string/lbl_sign_up"
-                                android:textColor="@color/gray"
+                                android:textColor="@color/auth_text_primary"
                                 android:textSize="@dimen/_30sp"
                                 tools:text="@string/lbl_sign_up" />
 
@@ -84,7 +108,7 @@
                                 android:lineSpacingExtra="@dimen/_1px"
                                 android:singleLine="true"
                                 android:text="@string/lbl_let_sing_up"
-                                android:textColor="@color/gray_trans_99"
+                                android:textColor="@color/auth_text_secondary"
                                 android:textSize="@dimen/_16sp"
                                 tools:text="@string/lbl_let_sing_up" />
 
@@ -105,7 +129,7 @@
                                 style="@style/edtBoxRoundedOutline"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:background="@drawable/rectangle_bg_white_border"
+                                android:background="@drawable/bg_auth_field"
                                 android:ellipsize="end"
                                 android:hint="@string/lbl_name"
                                 android:textCursorDrawable="@drawable/cursor"
@@ -116,7 +140,8 @@
                                 android:paddingEnd="@dimen/_30px"
                                 android:paddingBottom="@dimen/_18px"
                                 android:singleLine="true"
-                                android:textColorHint="@color/gray_edt_hint_text"
+                                android:textColor="@color/auth_text_primary"
+                                android:textColorHint="@color/auth_text_hint"
                                 tools:ignore="Autofill" />
 
                             <EditText
@@ -125,7 +150,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/_15px"
-                                android:background="@drawable/rectangle_bg_white_border"
+                                android:background="@drawable/bg_auth_field"
                                 android:ellipsize="end"
                                 android:textCursorDrawable="@drawable/cursor"
                                 android:hint="@string/lbl_email"
@@ -136,7 +161,8 @@
                                 android:paddingEnd="@dimen/_30px"
                                 android:paddingBottom="@dimen/_18px"
                                 android:singleLine="true"
-                                android:textColorHint="@color/gray_edt_hint_text"
+                                android:textColor="@color/auth_text_primary"
+                                android:textColorHint="@color/auth_text_hint"
                                 tools:ignore="Autofill" />
 
                             <EditText
@@ -145,7 +171,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/_15px"
-                                android:background="@drawable/rectangle_bg_white_border"
+                                android:background="@drawable/bg_auth_field"
                                 android:ellipsize="end"
                                 android:hint="@string/lbl_pass"
                                 android:textCursorDrawable="@drawable/cursor"
@@ -156,7 +182,8 @@
                                 android:paddingEnd="@dimen/_30px"
                                 android:paddingBottom="@dimen/_18px"
                                 android:singleLine="true"
-                                android:textColorHint="@color/gray_edt_hint_text"
+                                android:textColor="@color/auth_text_primary"
+                                android:textColorHint="@color/auth_text_hint"
                                 tools:ignore="Autofill" />
 
                             <EditText
@@ -165,7 +192,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/_15px"
-                                android:background="@drawable/rectangle_bg_white_border"
+                                android:background="@drawable/bg_auth_field"
                                 android:ellipsize="end"
                                 android:hint="@string/lbl_phone"
                                 android:textCursorDrawable="@drawable/cursor"
@@ -176,7 +203,8 @@
                                 android:paddingEnd="@dimen/_30px"
                                 android:paddingBottom="@dimen/_18px"
                                 android:singleLine="true"
-                                android:textColorHint="@color/gray_edt_hint_text"
+                                android:textColor="@color/auth_text_primary"
+                                android:textColorHint="@color/auth_text_hint"
                                 tools:ignore="Autofill" />
 
                             <!-- University -->
@@ -187,13 +215,13 @@
                                 android:layout_marginTop="@dimen/_15px"
                                 android:layout_marginBottom="@dimen/_5px"
                                 android:text="@string/lbl_university"
-                                android:textColor="@color/gray_trans_99"
+                                android:textColor="@color/auth_text_secondary"
                                 android:textSize="@dimen/_14sp" />
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:background="@drawable/rectangle_bg_white_border"
+                                android:background="@drawable/bg_auth_field"
                                 android:minHeight="@dimen/_55px">
 
                                 <Spinner
@@ -225,13 +253,13 @@
                                 android:layout_marginTop="@dimen/_15px"
                                 android:layout_marginBottom="@dimen/_5px"
                                 android:text="@string/lbl_department"
-                                android:textColor="@color/gray_trans_99"
+                                android:textColor="@color/auth_text_secondary"
                                 android:textSize="@dimen/_14sp" />
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:background="@drawable/rectangle_bg_white_border"
+                                android:background="@drawable/bg_auth_field"
                                 android:minHeight="@dimen/_55px">
 
                                 <Spinner
@@ -263,13 +291,13 @@
                                 android:layout_marginTop="@dimen/_15px"
                                 android:layout_marginBottom="@dimen/_5px"
                                 android:text="@string/lbl_college"
-                                android:textColor="@color/gray_trans_99"
+                                android:textColor="@color/auth_text_secondary"
                                 android:textSize="@dimen/_14sp" />
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:background="@drawable/rectangle_bg_white_border"
+                                android:background="@drawable/bg_auth_field"
                                 android:minHeight="@dimen/_55px">
 
                                 <Spinner
@@ -301,13 +329,13 @@
                                 android:layout_marginTop="@dimen/_15px"
                                 android:layout_marginBottom="@dimen/_5px"
                                 android:text="@string/lbl_gender"
-                                android:textColor="@color/gray_trans_99"
+                                android:textColor="@color/auth_text_secondary"
                                 android:textSize="@dimen/_14sp" />
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:background="@drawable/rectangle_bg_white_border"
+                                android:background="@drawable/bg_auth_field"
                                 android:minHeight="@dimen/_55px">
 
                                 <Spinner
@@ -339,7 +367,7 @@
                                 android:layout_marginTop="@dimen/_15px"
                                 android:layout_marginBottom="@dimen/_5px"
                                 android:text="@string/lbl_roll_number"
-                                android:textColor="@color/gray_trans_99"
+                                android:textColor="@color/auth_text_secondary"
                                 android:textSize="@dimen/_14sp" />
 
                             <EditText
@@ -347,7 +375,7 @@
                                 style="@style/edtBoxRoundedOutline"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:background="@drawable/rectangle_bg_white_border"
+                                android:background="@drawable/bg_auth_field"
                                 android:ellipsize="end"
                                 android:hint="@string/lbl_roll_number"
                                 android:textCursorDrawable="@drawable/cursor"
@@ -358,7 +386,8 @@
                                 android:paddingEnd="@dimen/_30px"
                                 android:paddingBottom="@dimen/_18px"
                                 android:singleLine="true"
-                                android:textColorHint="@color/gray_edt_hint_text"
+                                android:textColor="@color/auth_text_primary"
+                                android:textColorHint="@color/auth_text_hint"
                                 tools:ignore="Autofill" />
 
                         </LinearLayout>
@@ -376,6 +405,7 @@
                     android:layout_marginStart="@dimen/_30px"
                     android:layout_marginTop="@dimen/_20px"
                     android:layout_marginEnd="@dimen/_30px"
+                    android:background="@drawable/bg_auth_cta"
                     android:ellipsize="end"
                     android:gravity="center"
                     android:lineSpacingExtra="@dimen/_1px"
@@ -386,6 +416,7 @@
                     android:singleLine="true"
                     android:text="@string/lbl_register"
                     android:textAllCaps="false"
+                    android:textColor="@color/auth_text_primary"
                     tools:text="@string/lbl_register" />
 
                 <RelativeLayout
@@ -424,7 +455,7 @@
                         android:lineSpacingExtra="@dimen/_1px"
                         android:singleLine="true"
                         android:text="@string/msg_by_signing_up_y"
-                        android:textColor="@color/gray_trans_99"
+                        android:textColor="@color/auth_text_secondary"
                         android:textSize="@dimen/_14sp"
                         tools:text="@string/msg_by_signing_up_y" />
 
@@ -463,6 +494,7 @@
                         android:layout_marginEnd="-50dp"
                         android:layout_marginBottom="-50dp"
                         android:scaleType="fitXY"
+                        android:visibility="gone"
                         android:src="@drawable/img_ellipse_login_bottom"
                         tools:ignore="ContentDescription"
                         tools:src="@drawable/img_ellipse_login_bottom" />
@@ -486,7 +518,7 @@
                             android:lineSpacingExtra="@dimen/_1px"
                             android:singleLine="true"
                             android:text="@string/msg_already_have_acc"
-                            android:textColor="@color/gray_trans_99"
+                            android:textColor="@color/auth_text_secondary"
                             android:textSize="@dimen/_17sp"
                             tools:text="@string/msg_already_have_acc" />
 

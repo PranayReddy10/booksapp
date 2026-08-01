@@ -59,6 +59,10 @@ public class LoginActivity extends AppCompatActivity {
         View view = viewLoginBinding.getRoot();
         setContentView(view);
 
+        // Ambient drift for the mesh background blobs.
+        com.jntuh.util.AuthAnimator.floatView(viewLoginBinding.authBlobTeal, 40f, -55f, 4200);
+        com.jntuh.util.AuthAnimator.floatView(viewLoginBinding.authBlobViolet, -45f, 35f, 5200);
+
         pref = getSharedPreferences(mypreference, 0); // 0 - for private mode
         editor = pref.edit();
         method = new Method(LoginActivity.this);

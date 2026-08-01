@@ -61,7 +61,7 @@ public class MediaExploreFragment extends Fragment {
 
         layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
-        binding.rvExplore.setHasFixedSize(true);
+        binding.rvExplore.setHasFixedSize(false);
         binding.rvExplore.setLayoutManager(layoutManager);
 
         adapter = new MediaTileAdapter(requireActivity(), items, this::openFullFeed);

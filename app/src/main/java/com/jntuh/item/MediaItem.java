@@ -22,6 +22,9 @@ public class MediaItem implements Serializable {
     @SerializedName("link_url")
     private String link_url;
 
+    @SerializedName("share_url")
+    private String share_url;
+
     @SerializedName("file_url")
     private String file_url;
 
@@ -128,6 +131,14 @@ public class MediaItem implements Serializable {
 
     public void setLink_url(String link_url) {
         this.link_url = link_url;
+    }
+
+    public String getShare_url() {
+        return share_url;
+    }
+
+    public void setShare_url(String share_url) {
+        this.share_url = share_url;
     }
 
     public String getShow_views() {

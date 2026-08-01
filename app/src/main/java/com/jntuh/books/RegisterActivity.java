@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -63,6 +62,10 @@ public class RegisterActivity extends AppCompatActivity {
         View view = viewRegisterBinding.getRoot();
         setContentView(view);
 
+        // Ambient drift for the mesh background blobs.
+        com.jntuh.util.AuthAnimator.floatView(viewRegisterBinding.authBlobViolet, 40f, 45f, 5000);
+        com.jntuh.util.AuthAnimator.floatView(viewRegisterBinding.authBlobPink, -35f, 30f, 4300);
+
         method = new Method(this);
         method.forceRTLIfSupported();
         progressDialog = new ProgressDialog(this, R.style.MyAlertDialogStyle);
@@ -98,19 +101,19 @@ public class RegisterActivity extends AppCompatActivity {
     private void setupSpinners() {
         // University
         universityNames.add(getString(R.string.lbl_select_university));
-        universityAdapter = new ArrayAdapter<>(this, R.layout.row_spinner_item, universityNames);
+        universityAdapter = new ArrayAdapter<>(this, R.layout.row_spinner_item_auth, universityNames);
         universityAdapter.setDropDownViewResource(R.layout.row_spinner_dropdown_item);
         viewRegisterBinding.spRegUniversity.setAdapter(universityAdapter);
 
         // Department
         departmentNames.add(getString(R.string.lbl_select_department));
-        departmentAdapter = new ArrayAdapter<>(this, R.layout.row_spinner_item, departmentNames);
+        departmentAdapter = new ArrayAdapter<>(this, R.layout.row_spinner_item_auth, departmentNames);
         departmentAdapter.setDropDownViewResource(R.layout.row_spinner_dropdown_item);
         viewRegisterBinding.spRegDepartment.setAdapter(departmentAdapter);
 
         // College
         collegeNames.add(getString(R.string.lbl_select_college));
-        collegeAdapter = new ArrayAdapter<>(this, R.layout.row_spinner_item, collegeNames);
+        collegeAdapter = new ArrayAdapter<>(this, R.layout.row_spinner_item_auth, collegeNames);
         collegeAdapter.setDropDownViewResource(R.layout.row_spinner_dropdown_item);
         viewRegisterBinding.spRegCollege.setAdapter(collegeAdapter);
 
@@ -120,7 +123,7 @@ public class RegisterActivity extends AppCompatActivity {
         genderLabels.add(getString(R.string.lbl_gender_male));
         genderLabels.add(getString(R.string.lbl_gender_female));
         genderLabels.add(getString(R.string.lbl_gender_other));
-        genderAdapter = new ArrayAdapter<>(this, R.layout.row_spinner_item, genderLabels);
+        genderAdapter = new ArrayAdapter<>(this, R.layout.row_spinner_item_auth, genderLabels);
         genderAdapter.setDropDownViewResource(R.layout.row_spinner_dropdown_item);
         viewRegisterBinding.spRegGender.setAdapter(genderAdapter);
 

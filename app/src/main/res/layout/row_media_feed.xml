@@ -1,93 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- One post = one full screen (card style like the reference post view).
-     Header (uploader + follow) · media (photo OR video) · action bar · caption. -->
+<!-- One post = one full screen, immersive style: media fills the frame, header and
+     a right-side action rail overlay on top with scrims for legibility. -->
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/app_bg">
+    android:background="@android:color/black">
 
-    <!-- ===== Header ===== -->
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cvAvatar"
-        android:layout_width="42dp"
-        android:layout_height="42dp"
-        android:layout_marginStart="@dimen/_12px"
-        android:layout_marginTop="@dimen/_12px"
-        app:cardCornerRadius="21dp"
-        app:cardElevation="0dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/ivAvatar"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:src="@drawable/img_user"
-            tools:ignore="ContentDescription" />
-    </androidx.cardview.widget.CardView>
-
-    <TextView
-        android:id="@+id/tvUploader"
-        style="@style/txt_OpenSansRomanBold"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_10px"
-        android:ellipsize="end"
-        android:singleLine="true"
-        android:textColor="@color/gray_2"
-        android:textSize="@dimen/_16sp"
-        app:layout_constraintEnd_toStartOf="@+id/btnFollow"
-        app:layout_constraintStart_toEndOf="@+id/cvAvatar"
-        app:layout_constraintTop_toTopOf="@+id/cvAvatar"
-        tools:text="Test 2" />
-
-    <TextView
-        android:id="@+id/tvTime"
-        style="@style/txtOpenSansRomanSemiBold"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_10px"
-        android:ellipsize="end"
-        android:singleLine="true"
-        android:textColor="@color/gray_trans_99"
-        android:textSize="@dimen/_12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/cvAvatar"
-        app:layout_constraintStart_toEndOf="@+id/cvAvatar"
-        app:layout_constraintTop_toBottomOf="@+id/tvUploader"
-        tools:text="22 minutes ago" />
-
-    <TextView
-        android:id="@+id/btnFollow"
-        style="@style/txt_OpenSansRomanBold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/_12px"
-        android:background="@drawable/bg_follow_btn"
-        android:paddingStart="@dimen/_16px"
-        android:paddingTop="6dp"
-        android:paddingEnd="@dimen/_16px"
-        android:paddingBottom="6dp"
-        android:text="@string/lbl_follow"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_13sp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/cvAvatar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/cvAvatar" />
-
-    <!-- ===== Media ===== -->
+    <!-- ===== Media (fills the whole screen) ===== -->
     <FrameLayout
         android:id="@+id/flMedia"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="@dimen/_12px"
-        android:background="@android:color/black"
-        app:layout_constraintBottom_toTopOf="@+id/barActions"
-        app:layout_constraintTop_toBottomOf="@+id/cvAvatar">
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <ImageView
             android:id="@+id/ivPhoto"
@@ -119,70 +47,127 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:visibility="gone" />
-
-        <!-- View pill, bottom-right over media (only when show_views on) -->
-        <LinearLayout
-            android:id="@+id/llViewsOverlay"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="@dimen/_12px"
-            android:background="@drawable/bg_tile_badge"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingStart="8dp"
-            android:paddingTop="3dp"
-            android:paddingEnd="10dp"
-            android:paddingBottom="3dp"
-            android:visibility="gone">
-
-            <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:src="@android:drawable/ic_menu_view"
-                app:tint="@color/white"
-                tools:ignore="ContentDescription" />
-
-            <TextView
-                android:id="@+id/tvViewOverlay"
-                style="@style/txtOpenSansRomanSemiBold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_13sp"
-                tools:text="2" />
-        </LinearLayout>
     </FrameLayout>
 
-    <!-- ===== Action bar ===== -->
+    <!-- Top scrim for header legibility -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:background="@drawable/bg_scrim_top"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Bottom scrim for caption legibility -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:background="@drawable/bg_scrim_bottom"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <!-- ===== Header (overlay, top) ===== -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvAvatar"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="@dimen/_16px"
+        android:layout_marginTop="@dimen/_16px"
+        app:cardCornerRadius="21dp"
+        app:cardElevation="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/ivAvatar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/img_user"
+            tools:ignore="ContentDescription" />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/tvUploader"
+        style="@style/txt_OpenSansRomanBold"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10px"
+        android:ellipsize="end"
+        android:shadowColor="#80000000"
+        android:shadowDx="0"
+        android:shadowDy="1"
+        android:shadowRadius="3"
+        android:singleLine="true"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_16sp"
+        app:layout_constraintEnd_toStartOf="@+id/btnFollow"
+        app:layout_constraintStart_toEndOf="@+id/cvAvatar"
+        app:layout_constraintTop_toTopOf="@+id/cvAvatar"
+        tools:text="Admin" />
+
+    <TextView
+        android:id="@+id/tvTime"
+        style="@style/txtOpenSansRomanSemiBold"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10px"
+        android:ellipsize="end"
+        android:shadowColor="#80000000"
+        android:shadowDx="0"
+        android:shadowDy="1"
+        android:shadowRadius="3"
+        android:singleLine="true"
+        android:textColor="#DDFFFFFF"
+        android:textSize="@dimen/_12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/cvAvatar"
+        app:layout_constraintStart_toEndOf="@+id/cvAvatar"
+        app:layout_constraintTop_toBottomOf="@+id/tvUploader"
+        tools:text="1 day ago" />
+
+    <TextView
+        android:id="@+id/btnFollow"
+        style="@style/txt_OpenSansRomanBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_16px"
+        android:background="@drawable/bg_follow_btn"
+        android:paddingStart="@dimen/_16px"
+        android:paddingTop="6dp"
+        android:paddingEnd="@dimen/_16px"
+        android:paddingBottom="6dp"
+        android:text="@string/lbl_follow"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_13sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/cvAvatar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/cvAvatar" />
+
+    <!-- ===== Right-side action rail (overlay) ===== -->
     <LinearLayout
         android:id="@+id/barActions"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingStart="@dimen/_12px"
-        android:paddingTop="@dimen/_10px"
-        android:paddingEnd="@dimen/_12px"
-        android:paddingBottom="@dimen/_5px"
-        app:layout_constraintBottom_toTopOf="@+id/tvCaption">
+        android:layout_marginEnd="@dimen/_12px"
+        android:layout_marginBottom="@dimen/_20px"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <!-- Like -->
         <LinearLayout
             android:id="@+id/llLike"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_18px"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:gravity="center"
-            android:orientation="vertical"
-            android:paddingEnd="@dimen/_16px">
+            android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/ivLike"
-                android:layout_width="26dp"
-                android:layout_height="26dp"
-                android:src="@android:drawable/ic_menu_myplaces"
-                app:tint="@color/gray_2"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_feed_heart_outline"
                 tools:ignore="ContentDescription" />
 
             <TextView
@@ -190,9 +175,13 @@
                 style="@style/txtOpenSansRomanSemiBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/gray_2"
+                android:layout_marginTop="2dp"
+                android:shadowColor="#80000000"
+                android:shadowDy="1"
+                android:shadowRadius="3"
+                android:textColor="@color/white"
                 android:textSize="@dimen/_12sp"
-                tools:text="0" />
+                tools:text="12" />
         </LinearLayout>
 
         <!-- Comment -->
@@ -200,16 +189,16 @@
             android:id="@+id/llComment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_18px"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:gravity="center"
-            android:orientation="vertical"
-            android:paddingEnd="@dimen/_16px">
+            android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/ivComment"
-                android:layout_width="26dp"
-                android:layout_height="26dp"
-                android:src="@android:drawable/ic_menu_sort_by_size"
-                app:tint="@color/gray_2"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_feed_comment"
                 tools:ignore="ContentDescription" />
 
             <TextView
@@ -217,67 +206,114 @@
                 style="@style/txtOpenSansRomanSemiBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/gray_2"
+                android:layout_marginTop="2dp"
+                android:shadowColor="#80000000"
+                android:shadowDy="1"
+                android:shadowRadius="3"
+                android:textColor="@color/white"
                 android:textSize="@dimen/_12sp"
-                tools:text="0" />
+                tools:text="3" />
         </LinearLayout>
 
         <!-- Share -->
         <ImageView
             android:id="@+id/ivShare"
-            android:layout_width="26dp"
-            android:layout_height="26dp"
-            android:src="@android:drawable/ic_menu_send"
-            app:tint="@color/gray_2"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginBottom="@dimen/_18px"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_feed_share"
             tools:ignore="ContentDescription" />
-
-        <!-- Link chip -->
-        <TextView
-            android:id="@+id/tvLinkChip"
-            style="@style/txtOpenSansRomanSemiBold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_16px"
-            android:background="@drawable/bg_follow_btn"
-            android:drawablePadding="4dp"
-            android:paddingStart="@dimen/_12px"
-            android:paddingTop="5dp"
-            android:paddingEnd="@dimen/_12px"
-            android:paddingBottom="5dp"
-            android:text="@string/lbl_open_link"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_12sp"
-            android:visibility="gone" />
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="1" />
 
         <!-- Bookmark (display only for now) -->
         <ImageView
             android:id="@+id/ivBookmark"
-            android:layout_width="26dp"
-            android:layout_height="26dp"
-            android:src="@android:drawable/ic_menu_save"
-            app:tint="@color/gray_2"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_feed_bookmark"
             tools:ignore="ContentDescription" />
     </LinearLayout>
 
-    <!-- ===== Caption ===== -->
+    <!-- ===== Views pill (bottom-left, above caption) ===== -->
+    <LinearLayout
+        android:id="@+id/llViewsOverlay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_16px"
+        android:layout_marginBottom="@dimen/_10px"
+        android:background="@drawable/bg_tile_badge"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="8dp"
+        android:paddingTop="3dp"
+        android:paddingEnd="11dp"
+        android:paddingBottom="3dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/tvCaption"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:src="@drawable/ic_feed_eye"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/tvViewOverlay"
+            style="@style/txtOpenSansRomanSemiBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_13sp"
+            tools:text="14" />
+    </LinearLayout>
+
+    <!-- ===== Open-link chip (bottom-left, above caption) ===== -->
+    <TextView
+        android:id="@+id/tvLinkChip"
+        style="@style/txt_OpenSansRomanBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_16px"
+        android:layout_marginBottom="@dimen/_10px"
+        android:background="@drawable/bg_follow_btn"
+        android:drawableStart="@drawable/ic_feed_link"
+        android:drawablePadding="6dp"
+        android:gravity="center_vertical"
+        android:paddingStart="@dimen/_14px"
+        android:paddingTop="7dp"
+        android:paddingEnd="@dimen/_16px"
+        android:paddingBottom="7dp"
+        android:text="@string/lbl_open_link"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_13sp"
+        android:visibility="gone"
+        app:drawableTint="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/tvCaption"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- ===== Caption (bottom, overlay) ===== -->
     <TextView
         android:id="@+id/tvCaption"
         style="@style/txtOpenSansRomanSemiBold"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_12px"
+        android:layout_marginStart="@dimen/_16px"
         android:layout_marginEnd="@dimen/_12px"
-        android:layout_marginBottom="@dimen/_16px"
+        android:layout_marginBottom="@dimen/_20px"
         android:ellipsize="end"
         android:maxLines="3"
-        android:textColor="@color/gray_2"
-        android:textSize="@dimen/_14sp"
+        android:shadowColor="#80000000"
+        android:shadowDx="0"
+        android:shadowDy="1"
+        android:shadowRadius="4"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_15sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:text="view" />
+        app:layout_constraintEnd_toStartOf="@+id/barActions"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="Personalized gifts for every moment" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

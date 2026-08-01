@@ -22,6 +22,7 @@ public class MyMediaAdapter extends RecyclerView.Adapter<MyMediaAdapter.ViewHold
 
     public interface OnDeleteListener {
         void onDelete(MyMediaItem item, int position);
+        void onOpen(MyMediaItem item, int position);
     }
 
     private final Activity activity;
@@ -97,6 +98,14 @@ public class MyMediaAdapter extends RecyclerView.Adapter<MyMediaAdapter.ViewHold
             int pos = holder.getBindingAdapterPosition();
             if (pos != RecyclerView.NO_POSITION && deleteListener != null) {
                 deleteListener.onDelete(mediaList.get(pos), pos);
+            }
+        });
+
+        // Tapping the row opens that post in the full-screen feed.
+        holder.binding.getRoot().setOnClickListener(v -> {
+            int pos = holder.getBindingAdapterPosition();
+            if (pos != RecyclerView.NO_POSITION && deleteListener != null) {
+                deleteListener.onOpen(mediaList.get(pos), pos);
             }
         });
     }

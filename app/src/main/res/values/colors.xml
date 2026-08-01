@@ -62,7 +62,7 @@
     <color name="intro_title">#4d506c</color>
     <color name="intro_desc">#b24e4b66</color>
 
-     <color name="home_search_text">#992F2E41</color>
+    <color name="home_search_text">#992F2E41</color>
     <color name="home_text_sub">#4D506C</color>
     <color name="home_author_border">#80F97F68</color>
     <color name="premium_border_bg">#f2f97f68</color>
@@ -173,4 +173,17 @@
     <color name="filter_unselect_text">#4e4b66</color>
 
     <color name="bg_status_bar">#f9f9f9</color>
- </resources>
+    <!-- Auth (Mesh) screens -->
+    <color name="auth_bg_base">#141428</color>
+    <color name="auth_bg_base2">#1B1B34</color>
+    <color name="auth_teal">#00E0C0</color>
+    <color name="auth_violet">#7B61FF</color>
+    <color name="auth_pink">#FF5E8A</color>
+    <color name="auth_field_bg">#26FFFFFF</color>
+    <color name="auth_field_stroke">#4DFFFFFF</color>
+    <color name="auth_text_primary">#FFFFFFFF</color>
+    <color name="auth_text_secondary">#B8FFFFFF</color>
+    <color name="auth_text_hint">#80FFFFFF</color>
+    <color name="auth_cta_start">#7B61FF</color>
+    <color name="auth_cta_end">#FF5E8A</color>
+</resources>

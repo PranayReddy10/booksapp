@@ -28,7 +28,7 @@
             <ImageView
                 android:id="@+id/ivMediaThumb"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="270dp"
                 android:scaleType="centerCrop"
                 android:background="@color/card_view_bg"
                 tools:ignore="ContentDescription" />
@@ -36,11 +36,13 @@
             <!-- Play glyph for video rows -->
             <ImageView
                 android:id="@+id/ivPlayBadge"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
                 android:layout_alignTop="@+id/ivMediaThumb"
                 android:layout_alignBottom="@+id/ivMediaThumb"
                 android:layout_centerHorizontal="true"
+                android:background="@drawable/bg_circle_scrim"
+                android:padding="10dp"
                 android:src="@android:drawable/ic_media_play"
                 android:visibility="gone"
                 app:tint="@color/white"

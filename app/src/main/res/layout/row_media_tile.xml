@@ -19,7 +19,6 @@
             android:id="@+id/ivTile"
             android:layout_width="match_parent"
             android:layout_height="220dp"
-            android:adjustViewBounds="true"
             android:background="@color/card_view_bg"
             android:scaleType="centerCrop"
             tools:ignore="ContentDescription" />

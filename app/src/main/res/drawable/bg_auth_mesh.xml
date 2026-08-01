@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Dark base -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:angle="135"
+                android:startColor="@color/auth_bg_base2"
+                android:endColor="@color/auth_bg_base"
+                android:type="linear" />
+        </shape>
+    </item>
+
+    <!-- Teal glow, top-left -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:centerX="0.18"
+                android:centerY="0.16"
+                android:gradientRadius="420"
+                android:startColor="#8000E0C0"
+                android:endColor="#0000E0C0"
+                android:type="radial" />
+        </shape>
+    </item>
+
+    <!-- Violet glow, top-right -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:centerX="0.85"
+                android:centerY="0.12"
+                android:gradientRadius="460"
+                android:startColor="#807B61FF"
+                android:endColor="#007B61FF"
+                android:type="radial" />
+        </shape>
+    </item>
+
+    <!-- Pink glow, bottom -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:centerX="0.5"
+                android:centerY="0.92"
+                android:gradientRadius="520"
+                android:startColor="#80FF5E8A"
+                android:endColor="#00FF5E8A"
+                android:type="radial" />
+        </shape>
+    </item>
+</layer-list>

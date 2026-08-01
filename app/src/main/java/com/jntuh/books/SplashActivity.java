@@ -50,6 +50,11 @@ public class SplashActivity extends AppCompatActivity {
     String str_package;
     Boolean isCancelled = false;
     int WAIT = 3000;
+
+    // Splash resilience: retry the app-detail call a couple of times on transient
+    // server hiccups before giving up, so one bad response can't trap the user.
+    private int appDetailRetries = 0;
+    private static final int MAX_APP_DETAIL_RETRIES = 2;
     private String id = "0", type = "", title = "";
 
     @Override
@@ -117,6 +122,21 @@ public class SplashActivity extends AppCompatActivity {
             finishAffinity();
         }
 
+    }
+
+    // Retry the app-detail call after a short delay, or show the error once we've
+    // exhausted retries. Prevents a single transient 500 / timeout from stranding
+    // the user on the splash screen.
+    private void retryOrFail(String userId) {
+        if (isCancelled) return;
+        if (appDetailRetries < MAX_APP_DETAIL_RETRIES) {
+            appDetailRetries++;
+            new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                if (!isCancelled) appDetailData(userId);
+            }, 1500);
+        } else {
+            method.alertBox(getResources().getString(R.string.failed_try_again));
+        }
     }
 
     private void appDetailData(String userId) {
@@ -203,12 +223,12 @@ public class SplashActivity extends AppCompatActivity {
                         }
                     } else {
 
-                        method.alertBox(getResources().getString(R.string.failed_try_again));
+                        retryOrFail(userId);
                     }
 
                 } catch (Exception e) {
                     Log.d("exception_error", e.toString());
-                    method.alertBox(getResources().getString(R.string.failed_try_again));
+                    retryOrFail(userId);
                 }
             }
 
@@ -216,7 +236,7 @@ public class SplashActivity extends AppCompatActivity {
             public void onFailure(@NotNull Call<AppDetailRP> call, @NotNull Throwable t) {
                 // Log error here since request failed
                 Log.e("fail", t.toString());
-                method.alertBox(getResources().getString(R.string.failed_try_again));
+                retryOrFail(userId);
             }
         });
     }

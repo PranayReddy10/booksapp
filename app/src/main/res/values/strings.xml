@@ -81,6 +81,7 @@
     <string name="lbl_feed">Feed</string>
     <string name="lbl_upload_media">Upload Media</string>
     <string name="lbl_my_media">My Media</string>
+    <string name="media_not_live_yet">This post isn\'t live yet</string>
     <string name="lbl_photo">Photo</string>
     <string name="lbl_video">Video</string>
     <string name="lbl_pick_media">Choose file</string>

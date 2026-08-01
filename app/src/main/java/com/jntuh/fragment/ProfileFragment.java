@@ -269,6 +269,7 @@ public class ProfileFragment extends Fragment {
         RelativeLayout layoutFav = dialog.findViewById(R.id.layFav);
         RelativeLayout layoutUploadBook = dialog.findViewById(R.id.layUploadBook);
         RelativeLayout layoutMyUploads = dialog.findViewById(R.id.layMyUploads);
+        RelativeLayout layoutMyMedia = dialog.findViewById(R.id.layMyMedia);
 
         assert layoutDownload != null;
         layoutDownload.setOnClickListener(v -> {
@@ -295,6 +296,12 @@ public class ProfileFragment extends Fragment {
         assert layoutMyUploads != null;
         layoutMyUploads.setOnClickListener(v -> {
             startActivity(new Intent(requireActivity(), MyUploadsActivity.class));
+            dialog.dismiss();
+        });
+
+        assert layoutMyMedia != null;
+        layoutMyMedia.setOnClickListener(v -> {
+            startActivity(new Intent(requireActivity(), com.jntuh.books.MyMediaActivity.class));
             dialog.dismiss();
         });
 
