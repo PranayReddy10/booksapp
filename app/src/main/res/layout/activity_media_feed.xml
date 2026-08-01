@@ -46,24 +46,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="top|end"
-        android:layout_margin="@dimen/_16px"
+        android:layout_marginTop="@dimen/_16px"
+        android:layout_marginEnd="@dimen/_16px"
         android:padding="@dimen/_5px"
-        android:src="@android:drawable/ic_menu_gallery"
+        android:src="@drawable/ic_feed_grid"
         app:tint="@color/white"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         tools:ignore="ContentDescription" />
 
-    <!-- Upload from the feed, bottom-right -->
+    <!-- Upload from the feed, bottom-left (clear of the right-side action rail) -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabFeedUpload"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginEnd="@dimen/_16px"
+        android:layout_gravity="bottom|start"
+        android:layout_marginStart="@dimen/_16px"
         android:layout_marginBottom="@dimen/_24px"
         android:contentDescription="@string/lbl_upload_media"
         app:backgroundTint="@color/orange"
+        app:fabSize="mini"
         app:srcCompat="@android:drawable/ic_input_add"
         app:tint="@color/white"
         xmlns:app="http://schemas.android.com/apk/res-auto" />

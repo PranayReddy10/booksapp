@@ -191,6 +191,8 @@ public class ProfileFragment extends Fragment {
                             if (loginRPSocial != null && loginRPSocial.getSuccess().equals("1")) {
                                 if (loginRPSocial.getItemUserList().get(0).getSuccess().equals("1")) {
                                     itemUser = loginRPSocial.getItemUserList().get(0);
+                                    // TEMP DEBUG: shows exactly what the server returned for username.
+                                    Log.d("PROFILE_USERNAME", "username='" + itemUser.getUsername() + "'");
                                     viewProfile.llProfile.setVisibility(View.VISIBLE);
                                     viewProfile.llProfile2.setVisibility(View.VISIBLE);
                                     viewProfile.ivMoreMenu.setVisibility(View.VISIBLE);

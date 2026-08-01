@@ -76,6 +76,7 @@
     <string name="status_approved">Approved</string>
     <string name="status_rejected">Rejected</string>
     <string name="reason_prefix">Reason: </string>
+    <string name="lbl_username_hint">Username</string>
 
     <!-- Media feed -->
     <string name="lbl_feed">Feed</string>
@@ -375,4 +376,6 @@
     <string name="rent">Rent</string>
 
 
+    <string name="lbl_view_book">View book</string>
+    <string name="lbl_view_book_fmt">View book: %1$s</string>
 </resources>

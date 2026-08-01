@@ -22,8 +22,16 @@ public class MediaItem implements Serializable {
     @SerializedName("link_url")
     private String link_url;
 
+    @SerializedName("book_id")
+    private String book_id;
+
+    @SerializedName("book_title")
+    private String book_title;
+
     @SerializedName("share_url")
     private String share_url;
+
+
 
     @SerializedName("file_url")
     private String file_url;
@@ -129,13 +137,23 @@ public class MediaItem implements Serializable {
         return link_url;
     }
 
-    public void setLink_url(String link_url) {
-        this.link_url = link_url;
+    public String getBook_id() {
+        return book_id;
+    }
+
+    public String getBook_title() {
+        return book_title;
     }
 
     public String getShare_url() {
         return share_url;
     }
+
+    public void setLink_url(String link_url) {
+        this.link_url = link_url;
+    }
+
+
 
     public void setShare_url(String share_url) {
         this.share_url = share_url;

@@ -18,6 +18,21 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <ImageView
+            android:id="@+id/ivBlurBg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:visibility="gone"
+            tools:ignore="ContentDescription" />
+
+        <View
+            android:id="@+id/vBlurScrim"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#66000000"
+            android:visibility="gone" />
+
+        <ImageView
             android:id="@+id/ivPhoto"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -69,7 +84,7 @@
         android:layout_width="42dp"
         android:layout_height="42dp"
         android:layout_marginStart="@dimen/_16px"
-        android:layout_marginTop="@dimen/_16px"
+        android:layout_marginTop="@dimen/_60px"
         app:cardCornerRadius="21dp"
         app:cardElevation="0dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -215,6 +230,37 @@
                 tools:text="3" />
         </LinearLayout>
 
+        <!-- Views (count only, no tap) -->
+        <LinearLayout
+            android:id="@+id/llViewsRail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_18px"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_feed_eye"
+                app:tint="@color/white"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/tvViewRail"
+                style="@style/txtOpenSansRomanSemiBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:shadowColor="#80000000"
+                android:shadowDy="1"
+                android:shadowRadius="3"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12sp"
+                tools:text="14" />
+        </LinearLayout>
+
         <!-- Share -->
         <ImageView
             android:id="@+id/ivShare"
@@ -235,39 +281,53 @@
             tools:ignore="ContentDescription" />
     </LinearLayout>
 
-    <!-- ===== Views pill (bottom-left, above caption) ===== -->
+    <!-- ===== "View book" bar (shows when the post is linked to a book) ===== -->
     <LinearLayout
-        android:id="@+id/llViewsOverlay"
-        android:layout_width="wrap_content"
+        android:id="@+id/btnViewBook"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_16px"
+        android:layout_marginEnd="@dimen/_16px"
         android:layout_marginBottom="@dimen/_10px"
-        android:background="@drawable/bg_tile_badge"
+        android:background="@drawable/bg_view_book"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingStart="8dp"
-        android:paddingTop="3dp"
-        android:paddingEnd="11dp"
-        android:paddingBottom="3dp"
+        android:paddingStart="@dimen/_16px"
+        android:paddingTop="12dp"
+        android:paddingEnd="@dimen/_14px"
+        android:paddingBottom="12dp"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/tvCaption"
+        app:layout_constraintBottom_toTopOf="@+id/tvLinkChip"
+        app:layout_constraintEnd_toStartOf="@+id/barActions"
         app:layout_constraintStart_toStartOf="parent">
 
         <ImageView
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:src="@drawable/ic_feed_eye"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_feed_book"
+            app:tint="@color/white"
             tools:ignore="ContentDescription" />
 
         <TextView
-            android:id="@+id/tvViewOverlay"
-            style="@style/txtOpenSansRomanSemiBold"
-            android:layout_width="wrap_content"
+            android:id="@+id/tvViewBookLabel"
+            style="@style/txt_OpenSansRomanBold"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
+            android:layout_weight="1"
+            android:layout_marginStart="10dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@string/lbl_view_book"
             android:textColor="@color/white"
-            android:textSize="@dimen/_13sp"
-            tools:text="14" />
+            android:textSize="@dimen/_15sp"
+            tools:text="View book: Advanced Supply" />
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:src="@drawable/ic_feed_chevron"
+            app:tint="@color/white"
+            tools:ignore="ContentDescription" />
     </LinearLayout>
 
     <!-- ===== Open-link chip (bottom-left, above caption) ===== -->

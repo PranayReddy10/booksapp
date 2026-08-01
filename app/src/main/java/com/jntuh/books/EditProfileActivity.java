@@ -41,7 +41,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
     ActivityEditProfileBinding viewEditProfile;
     Method method;
-    String uId, uName, uEmail, uImage, uPhone, uType;
+    String uId, uName, uEmail, uImage, uPhone, uType, uUsername;
     String uUniversity, uDepartment, uCollege, uGender, uYear, uRoll;
     boolean isProfile = false;
     ProgressDialog progressDialog;
@@ -64,6 +64,7 @@ public class EditProfileActivity extends AppCompatActivity {
         uId = intent.getStringExtra("uId");
         uName = intent.getStringExtra("uName");
         uEmail = intent.getStringExtra("uEmail");
+        uUsername = intent.getStringExtra("uUsername");
         uImage = intent.getStringExtra("uImage");
         uPhone = intent.getStringExtra("uPhone");
         uType = intent.getStringExtra("uType");
@@ -86,6 +87,8 @@ public class EditProfileActivity extends AppCompatActivity {
         viewEditProfile.tvProfileEmail.setText(uEmail);
         viewEditProfile.edtName.setText(uName);
         viewEditProfile.edtEmail.setText(uEmail);
+        viewEditProfile.edtUsername.setText(
+                (uUsername != null && !uUsername.isEmpty()) ? "@" + uUsername : "");
         viewEditProfile.edtPhone.setText(uPhone);
 
         bindDetailRow(viewEditProfile.llUniversityRow, viewEditProfile.tvUniversityValue, uUniversity);

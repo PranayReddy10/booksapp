@@ -352,6 +352,14 @@ public class MediaFeedActivity extends AppCompatActivity implements MediaFeedAda
         }
     }
 
+    @Override
+    public void onOpenBook(MediaItem item) {
+        String bookId = item.getBook_id();
+        if (bookId == null || bookId.trim().isEmpty()) return;
+        startActivity(new Intent(this, BookDetailsActivity.class)
+                .putExtra("BOOK_ID", bookId.trim()));
+    }
+
     private int parse(String s) {
         try { return (s == null || s.isEmpty()) ? 0 : Integer.parseInt(s); }
         catch (NumberFormatException e) { return 0; }

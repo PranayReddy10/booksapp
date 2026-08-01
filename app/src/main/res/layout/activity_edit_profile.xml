@@ -131,6 +131,26 @@
                     tools:ignore="Autofill" />
 
                 <EditText
+                    android:id="@+id/edtUsername"
+                    style="@style/edtBoxRoundedOutline"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20px"
+                    android:background="@drawable/rectangle_bg_white_border"
+                    android:ellipsize="end"
+                    android:enabled="false"
+                    android:hint="@string/lbl_username_hint"
+                    android:inputType="text"
+                    android:lineSpacingExtra="@dimen/_1px"
+                    android:paddingStart="@dimen/_20px"
+                    android:paddingTop="@dimen/_15px"
+                    android:paddingEnd="@dimen/_30px"
+                    android:paddingBottom="@dimen/_15px"
+                    android:singleLine="true"
+                    android:textColorHint="@color/edt_profile_text"
+                    tools:ignore="Autofill" />
+
+                <EditText
                     android:id="@+id/edtPassword"
                     style="@style/edtBoxRoundedOutline"
                     android:layout_width="match_parent"

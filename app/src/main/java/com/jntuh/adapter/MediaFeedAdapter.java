@@ -33,6 +33,7 @@ public class MediaFeedAdapter extends RecyclerView.Adapter<MediaFeedAdapter.View
         void onComment(com.jntuh.item.MediaItem item, int position);
         void onShare(com.jntuh.item.MediaItem item);
         void onOpenLink(com.jntuh.item.MediaItem item);
+        void onOpenBook(com.jntuh.item.MediaItem item);
     }
 
     private final Activity activity;
@@ -83,6 +84,20 @@ public class MediaFeedAdapter extends RecyclerView.Adapter<MediaFeedAdapter.View
 
         // Media
         boolean isVideo = "video".equalsIgnoreCase(item.getMedia_type());
+
+        // Blurred fill behind the media so posters/portrait media don't sit in
+        // flat black bars.
+        String bgSrc = isVideo ? item.getThumb_url() : item.getFile_url();
+        if (bgSrc != null && !bgSrc.isEmpty()) {
+            b.ivBlurBg.setVisibility(View.VISIBLE);
+            b.vBlurScrim.setVisibility(View.VISIBLE);
+            Glide.with(activity.getApplicationContext()).load(bgSrc).into(b.ivBlurBg);
+            applyBlur(b.ivBlurBg);
+        } else {
+            b.ivBlurBg.setVisibility(View.GONE);
+            b.vBlurScrim.setVisibility(View.GONE);
+        }
+
         if (isVideo) {
             b.ivPhoto.setVisibility(View.GONE);
             b.playerView.setVisibility(View.VISIBLE);
@@ -99,12 +114,12 @@ public class MediaFeedAdapter extends RecyclerView.Adapter<MediaFeedAdapter.View
             Glide.with(activity.getApplicationContext()).load(item.getFile_url()).into(b.ivPhoto);
         }
 
-        // Views (overlay) — only when show_views is on
+        // Views — shown in the right action rail (below comment), when enabled.
         if ("1".equals(item.getShow_views())) {
-            b.llViewsOverlay.setVisibility(View.VISIBLE);
-            b.tvViewOverlay.setText(num(item.getView_count()));
+            b.llViewsRail.setVisibility(View.VISIBLE);
+            b.tvViewRail.setText(num(item.getView_count()));
         } else {
-            b.llViewsOverlay.setVisibility(View.GONE);
+            b.llViewsRail.setVisibility(View.GONE);
         }
 
         // Like — only when allow_likes is on
@@ -143,6 +158,22 @@ public class MediaFeedAdapter extends RecyclerView.Adapter<MediaFeedAdapter.View
             });
         } else {
             b.tvLinkChip.setVisibility(View.GONE);
+        }
+
+        // "View book" bar — only when the post is linked to a book.
+        String bookId = item.getBook_id();
+        if (bookId != null && !bookId.trim().isEmpty()) {
+            String title = item.getBook_title();
+            b.tvViewBookLabel.setText(
+                    (title != null && !title.trim().isEmpty())
+                            ? activity.getString(R.string.lbl_view_book_fmt, title)
+                            : activity.getString(R.string.lbl_view_book));
+            b.btnViewBook.setVisibility(View.VISIBLE);
+            b.btnViewBook.setOnClickListener(v -> {
+                if (listener != null) listener.onOpenBook(item);
+            });
+        } else {
+            b.btnViewBook.setVisibility(View.GONE);
         }
     }
 
@@ -288,6 +319,17 @@ public class MediaFeedAdapter extends RecyclerView.Adapter<MediaFeedAdapter.View
             return created.substring(0, 10);
         } catch (Exception e) {
             return created;
+        }
+    }
+
+    private void applyBlur(android.widget.ImageView view) {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+            try {
+                view.setRenderEffect(
+                        android.graphics.RenderEffect.createBlurEffect(
+                                45f, 45f, android.graphics.Shader.TileMode.CLAMP));
+            } catch (Throwable ignored) {
+            }
         }
     }
 
