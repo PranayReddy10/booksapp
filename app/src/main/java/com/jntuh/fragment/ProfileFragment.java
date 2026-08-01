@@ -319,6 +319,7 @@ public class ProfileFragment extends Fragment {
             intentProfile.putExtra("uId", itemUser.getUser_id());
             intentProfile.putExtra("uName", itemUser.getName());
             intentProfile.putExtra("uEmail", itemUser.getEmail());
+            intentProfile.putExtra("uUsername", itemUser.getUsername());
             intentProfile.putExtra("uImage", imageProfile);
             intentProfile.putExtra("uPhone", itemUser.getPhone());
             intentProfile.putExtra("uType", method.getUserType());
