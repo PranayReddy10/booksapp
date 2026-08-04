@@ -77,6 +77,7 @@
     <string name="status_rejected">Rejected</string>
     <string name="reason_prefix">Reason: </string>
     <string name="lbl_username_hint">Username</string>
+    <string name="tab_my_media">My Media</string>
 
     <!-- Media feed -->
     <string name="lbl_feed">Feed</string>
@@ -378,4 +379,8 @@
 
     <string name="lbl_view_book">View book</string>
     <string name="lbl_view_book_fmt">View book: %1$s</string>
+    <string name="lbl_complete_profile">Complete your profile</string>
+    <string name="lbl_complete_profile_sub">Select your university, department and college to continue.</string>
+    <string name="lbl_continue">Continue</string>
+    <string name="lbl_complete_all_fields">Please select all fields to continue</string>
 </resources>

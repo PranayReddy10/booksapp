@@ -175,6 +175,11 @@ public interface ApiInterface {
     @Multipart
     Call<EditProfileRP> getEditProfileData(@Part("data") RequestBody data, @Part MultipartBody.Part part);
 
+    //complete-profile (no image upload): saves university/department/college
+    @POST("profile_update")
+    @FormUrlEncoded
+    Call<EditProfileRP> getCompleteProfileData(@Field("data") String data);
+
     //get book latest data
     @POST("latest_books")
     @FormUrlEncoded

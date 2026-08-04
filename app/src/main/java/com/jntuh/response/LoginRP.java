@@ -60,6 +60,9 @@ public class LoginRP implements Serializable {
         @SerializedName("username")
         String username;
 
+        @SerializedName("profile_complete")
+        String profile_complete;
+
         @SerializedName("user_image")
         String user_image;
 
@@ -124,6 +127,10 @@ public class LoginRP implements Serializable {
 
         public String getUsername() {
             return username;
+        }
+
+        public String getProfile_complete() {
+            return profile_complete;
         }
 
         public void setUsername(String username) {

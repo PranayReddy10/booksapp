@@ -21,8 +21,10 @@
     <dimen name="_18px">18.0dp</dimen>
     <dimen name="_20px">20.0dp</dimen>
     <dimen name="_25px">25.0dp</dimen>
+    <dimen name="_26px">26.0dp</dimen>
     <dimen name="_28px">28.0dp</dimen>
     <dimen name="_30px">30.0dp</dimen>
+    <dimen name="_32px">32.0dp</dimen>
     <dimen name="_40px">40.0dp</dimen>
     <dimen name="_50px">50.0dp</dimen>
     <dimen name="_55px">55.0dp</dimen>
@@ -51,6 +53,7 @@
     <dimen name="_21sp">21.0sp</dimen>
     <dimen name="_22sp">22.0sp</dimen>
     <dimen name="_24sp">24.0sp</dimen>
+    <dimen name="_26sp">26.0sp</dimen>
     <dimen name="_30sp">30.0sp</dimen>
 
 </resources>

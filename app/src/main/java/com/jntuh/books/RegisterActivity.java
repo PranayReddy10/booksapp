@@ -127,6 +127,11 @@ public class RegisterActivity extends AppCompatActivity {
         genderAdapter.setDropDownViewResource(R.layout.row_spinner_dropdown_item);
         viewRegisterBinding.spRegGender.setAdapter(genderAdapter);
 
+        // Long lists get a searchable dialog on tap (gender stays a normal spinner).
+        com.jntuh.util.SearchableSpinner.attach(viewRegisterBinding.spRegUniversity, getString(R.string.lbl_select_university));
+        com.jntuh.util.SearchableSpinner.attach(viewRegisterBinding.spRegDepartment, getString(R.string.lbl_select_department));
+        com.jntuh.util.SearchableSpinner.attach(viewRegisterBinding.spRegCollege, getString(R.string.lbl_select_college));
+
         // Cascade: when a university is chosen, refresh departments for it
         viewRegisterBinding.spRegUniversity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

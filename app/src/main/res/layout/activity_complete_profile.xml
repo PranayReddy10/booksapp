@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_auth_mesh"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/_24px">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_40px"
+            android:text="@string/lbl_complete_profile"
+            android:textColor="@color/auth_text_primary"
+            android:textSize="@dimen/_26sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_6px"
+            android:text="@string/lbl_complete_profile_sub"
+            android:textColor="@color/auth_text_secondary"
+            android:textSize="@dimen/_14sp" />
+
+        <Spinner
+            android:id="@+id/spUniversity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_28px"
+            android:background="@drawable/bg_auth_field"
+            android:padding="@dimen/_6px" />
+
+        <Spinner
+            android:id="@+id/spDepartment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_16px"
+            android:background="@drawable/bg_auth_field"
+            android:padding="@dimen/_6px" />
+
+        <Spinner
+            android:id="@+id/spCollege"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_16px"
+            android:background="@drawable/bg_auth_field"
+            android:padding="@dimen/_6px" />
+
+        <Button
+            android:id="@+id/btnSaveProfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_32px"
+            android:background="@drawable/bg_auth_cta"
+            android:padding="@dimen/_14px"
+            android:text="@string/lbl_continue"
+            android:textAllCaps="false"
+            android:textColor="@color/auth_text_primary"
+            android:textSize="@dimen/_16sp"
+            tools:ignore="ButtonStyle" />
+
+        <ProgressBar
+            android:id="@+id/progressComplete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/_16px"
+            android:visibility="gone" />
+    </LinearLayout>
+</ScrollView>

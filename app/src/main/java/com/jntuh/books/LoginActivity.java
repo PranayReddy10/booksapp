@@ -235,7 +235,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    public void registerSocialNetwork(String aid, String sendName, String sendEmail, String type) {
+    public void registerSocialNetwork(String aid, String sendName, String sendEmail, String type, String photoUrl) {
 
         progressDialog.show();
         progressDialog.setMessage(getResources().getString(R.string.loading));
@@ -246,6 +246,9 @@ public class LoginActivity extends AppCompatActivity {
         jsObj.addProperty("email", sendEmail);
         jsObj.addProperty("social_id", aid);
         jsObj.addProperty("login_type", type);
+        if (photoUrl != null && !photoUrl.isEmpty()) {
+            jsObj.addProperty("user_image", photoUrl);
+        }
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
         Call<LoginRP> call = apiService.getLoginSocialData(API.toBase64(jsObj.toString()));
         call.enqueue(new Callback<LoginRP>() {
@@ -261,6 +264,18 @@ public class LoginActivity extends AppCompatActivity {
                             method.saveIsLogin(true);
                             method.saveLogin(itemUser.getUser_id(), itemUser.getName(), itemUser.getEmail(), type, aid);
                             method.saveMediaProfile(itemUser.getUsername(), itemUser.getUser_image());
+
+                            // Google users must complete University/Department/College
+                            // before entering the app.
+                            if ("0".equals(itemUser.getProfile_complete())) {
+                                progressDialog.dismiss();
+                                Intent ci = new Intent(LoginActivity.this, CompleteProfileActivity.class);
+                                ci.putExtra("uId", itemUser.getUser_id());
+                                startActivity(ci);
+                                finish();
+                                return;
+                            }
+
                             if (isWhichScreen) {
                                 finish();
                             } else {
@@ -334,8 +349,9 @@ public class LoginActivity extends AppCompatActivity {
             String id = account.getId();
             String name = account.getDisplayName();
             String email = account.getEmail();
+            String photo = account.getPhotoUrl() != null ? account.getPhotoUrl().toString() : "";
 
-            registerSocialNetwork(id, name, email, "google");
+            registerSocialNetwork(id, name, email, "google", photo);
 
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.

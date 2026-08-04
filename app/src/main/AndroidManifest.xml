@@ -65,6 +65,7 @@
             android:name="com.jntuh.books.MainActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name="com.jntuh.books.RegisterActivity" />
+        <activity android:name="com.jntuh.books.CompleteProfileActivity" />
         <activity android:name="com.jntuh.books.ForgotPassActivity" />
         <activity android:name="com.jntuh.books.SubCategoryActivity" />
         <activity android:name="com.jntuh.books.BookListBySubCatActivity" />

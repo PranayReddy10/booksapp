@@ -209,6 +209,7 @@ public class UploadBookActivity extends AppCompatActivity {
         categoryAdapter = new ArrayAdapter<>(this, R.layout.row_spinner_item, categoryNames);
         categoryAdapter.setDropDownViewResource(R.layout.row_spinner_dropdown_item);
         binding.spCategory.setAdapter(categoryAdapter);
+        com.jntuh.util.SearchableSpinner.attach(binding.spCategory, getString(R.string.lbl_select_category));
     }
 
     private void setupDepartmentSpinner() {
@@ -216,6 +217,7 @@ public class UploadBookActivity extends AppCompatActivity {
         departmentAdapter = new ArrayAdapter<>(this, R.layout.row_spinner_item, departmentNames);
         departmentAdapter.setDropDownViewResource(R.layout.row_spinner_dropdown_item);
         binding.spDepartment.setAdapter(departmentAdapter);
+        com.jntuh.util.SearchableSpinner.attach(binding.spDepartment, getString(R.string.lbl_select_department));
     }
 
     private void setupSourceToggle() {
