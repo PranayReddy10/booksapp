@@ -133,11 +133,8 @@ public class HomeContentSingleAdapter extends RecyclerView.Adapter<RecyclerView.
             BookHolder bookHolder = (BookHolder) holder;
             HomeContent homeContentPos = homeContents.get(position);
             bookHolder.rowTrendHomeBinding.tvBookName.setText(homeContentPos.getPostTitle());
-            if (!homeContentPos.getPostImage().equals("")) {
-                Glide.with(activity.getApplicationContext()).load(homeContentPos.getPostImage())
-                        .placeholder(R.drawable.placeholder_portable)
-                        .into(bookHolder.rowTrendHomeBinding.ivBook);
-            }
+            com.jntuh.util.CoverHelper.bind(bookHolder.rowTrendHomeBinding.ivBook,
+                    homeContentPos.getPostImage(), homeContentPos.getPostTitle(), null);
             if (homeContentPos.getBook_on_rent().equals("1")) {
                 bookHolder.rowTrendHomeBinding.llPremium.setVisibility(View.VISIBLE);
                 bookHolder.rowTrendHomeBinding.tvPremium.setText(activity.getString(R.string.rent));

@@ -259,6 +259,16 @@ public class LoginActivity extends AppCompatActivity {
 
                 try {
                     LoginRP loginRPSocial = response.body();
+                    android.util.Log.d("GOOGLE_LOGIN", "http=" + response.code()
+                            + " body=" + (loginRPSocial == null ? "NULL" : "ok")
+                            + " outerSuccess=" + (loginRPSocial == null ? "-" : loginRPSocial.getSuccess()));
+                    if (loginRPSocial != null && loginRPSocial.getItemUserList() != null
+                            && !loginRPSocial.getItemUserList().isEmpty()) {
+                        android.util.Log.d("GOOGLE_LOGIN",
+                                "innerSuccess=" + loginRPSocial.getItemUserList().get(0).getSuccess()
+                                + " profile_complete=" + loginRPSocial.getItemUserList().get(0).getProfile_complete()
+                                + " uid=" + loginRPSocial.getItemUserList().get(0).getUser_id());
+                    }
 
                     if (loginRPSocial !=null && loginRPSocial.getSuccess().equals("1")) {
                         if (loginRPSocial.getItemUserList().get(0).getSuccess().equals("1")) {
@@ -307,6 +317,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onFailure(@NotNull Call<LoginRP> call, @NotNull Throwable t) {
                 // Log error here since request failed
                 Log.e("fail", t.toString());
+                android.util.Log.e("GOOGLE_LOGIN", "onFailure: " + t.toString());
                 progressDialog.dismiss();
                 method.alertBox(getResources().getString(R.string.failed_try_again));
             }

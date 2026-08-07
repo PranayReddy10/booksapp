@@ -82,6 +82,14 @@ public class MediaFeedActivity extends AppCompatActivity implements MediaFeedAda
 
         layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         binding.rvFeed.setLayoutManager(layoutManager);
+
+        // Pull-to-refresh: reload the feed from the top.
+        binding.swipeFeed.setOnRefreshListener(() -> {
+            pageIndex = 1;
+            feed.clear();
+            adapter.notifyDataSetChanged();
+            loadFeed(true);
+        });
         binding.rvFeed.setHasFixedSize(true);
 
         PagerSnapHelper snapHelper = new PagerSnapHelper();
@@ -190,6 +198,7 @@ public class MediaFeedActivity extends AppCompatActivity implements MediaFeedAda
                     public void onResponse(@NotNull Call<MediaFeedRP> call, @NotNull Response<MediaFeedRP> response) {
                         isLoading = false;
                         binding.progressFeed.setVisibility(View.GONE);
+                        binding.swipeFeed.setRefreshing(false);
                         try {
                             MediaFeedRP body = response.body();
                             if (body != null && "1".equals(body.getSuccess())) {
@@ -215,6 +224,7 @@ public class MediaFeedActivity extends AppCompatActivity implements MediaFeedAda
                         Log.e("fail", t.toString());
                         isLoading = false;
                         binding.progressFeed.setVisibility(View.GONE);
+                        binding.swipeFeed.setRefreshing(false);
                         binding.tvNoFeed.setVisibility(feed.isEmpty() ? View.VISIBLE : View.GONE);
                     }
                 });

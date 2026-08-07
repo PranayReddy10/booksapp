@@ -433,6 +433,15 @@ public class ProfileFragment extends Fragment {
                     if (dataRP.getItemDeleteAcc().get(0).getDeleteSuccess().equals("1")) {
                             method.saveIsLogin(false);
                             method.setUserId("");
+                            // Fully sign out of Google so a later Google login starts
+                            // fresh (otherwise Google silently returns the deleted
+                            // account and login gets stuck).
+                            try {
+                                GoogleSignInOptions gso = new GoogleSignInOptions.Builder(
+                                        GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
+                                GoogleSignIn.getClient(requireActivity(), gso).signOut();
+                            } catch (Exception ignored) {
+                            }
                             startActivity(new Intent(requireActivity(), LoginActivity.class));
                             requireActivity().finishAffinity();
                             Toast.makeText(requireActivity(), dataRP.getItemDeleteAcc().get(0).getDeleteMsg(), Toast.LENGTH_SHORT).show();

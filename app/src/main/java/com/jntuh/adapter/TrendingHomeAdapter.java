@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.jntuh.books.R;
 import com.jntuh.books.databinding.RowTrendHomeBinding;
 import com.jntuh.item.HomeContent;
@@ -46,11 +45,8 @@ public class TrendingHomeAdapter extends RecyclerView.Adapter<TrendingHomeAdapte
 
         HomeContent homeContentTrendPos = homeContentsTrend.get(position);
         holder.rowTrendHomeBinding.tvHomeBookName.setText(homeContentTrendPos.getPostTitle());
-        if (!homeContentTrendPos.getPostImage().equals("")) {
-            Glide.with(activity.getApplicationContext()).load(homeContentTrendPos.getPostImage())
-                    .placeholder(R.drawable.placeholder_portable)
-                    .into(holder.rowTrendHomeBinding.ivHomePopular);
-        }
+        com.jntuh.util.CoverHelper.bind(holder.rowTrendHomeBinding.ivHomePopular,
+                homeContentTrendPos.getPostImage(), homeContentTrendPos.getPostTitle(), null);
         if (homeContentTrendPos.getBook_on_rent().equals("1")) {
             holder.rowTrendHomeBinding.llPremium.setVisibility(View.VISIBLE);
             holder.rowTrendHomeBinding.tvPremium.setText(activity.getString(R.string.rent));

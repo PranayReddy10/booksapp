@@ -70,7 +70,12 @@ public class MyApplication extends Application implements Application.ActivityLi
         StrictMode.setVmPolicy(builder.build());
         builder.detectFileUriExposure();
 
-        OneSignal.initWithContext(this, "ddb1b0a7-b5e1-4v82-86c3-5b30f3fb5e50");
+        // FIXME(notifications): the App ID below had an INVALID character ('v' in
+        // "4v82" — not a hex digit), so OneSignal never initialized and push stopped
+        // working. Replace the whole string with the exact App ID from your OneSignal
+        // dashboard (Settings -> Keys & IDs -> OneSignal App ID). It is a UUID with
+        // only 0-9 and a-f. Likely "4f82" but CONFIRM from the dashboard.
+        OneSignal.initWithContext(this, "eae192d0-74ef-4b78-ba41-bd6d43aa28bf");
         OneSignal.getNotifications().addClickListener(new NotificationExtenderExample());
 
     }
