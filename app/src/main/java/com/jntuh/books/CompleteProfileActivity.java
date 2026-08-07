@@ -93,6 +93,11 @@ public class CompleteProfileActivity extends AppCompatActivity {
         collegeAdapter.setDropDownViewResource(R.layout.row_spinner_dropdown_item);
         binding.spCollege.setAdapter(collegeAdapter);
 
+        // Long lists → searchable dialog on tap (same as registration/upload).
+        com.jntuh.util.SearchableSpinner.attach(binding.spUniversity, getString(R.string.lbl_select_university));
+        com.jntuh.util.SearchableSpinner.attach(binding.spDepartment, getString(R.string.lbl_select_department));
+        com.jntuh.util.SearchableSpinner.attach(binding.spCollege, getString(R.string.lbl_select_college));
+
         binding.spUniversity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {

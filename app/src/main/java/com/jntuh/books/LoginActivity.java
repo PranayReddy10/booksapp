@@ -82,6 +82,8 @@ public class LoginActivity extends AppCompatActivity {
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
         viewLoginBinding.cbRemMe.setChecked(false);
+        // Privacy/terms is pre-selected by default.
+        viewLoginBinding.cbPrivacyTerms.setChecked(true, false);
         if (pref.getBoolean(pref_check, false)) {
             viewLoginBinding.edtEmail.setText(pref.getString(pref_email, null));
             viewLoginBinding.edtPass.setText(pref.getString(pref_password, null));

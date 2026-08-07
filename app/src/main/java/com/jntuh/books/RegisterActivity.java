@@ -81,6 +81,8 @@ public class RegisterActivity extends AppCompatActivity {
 
         viewRegisterBinding.cbRegPrivacyTerms.setOnCheckedChangeListener((checkBox, isChecked) -> {
         });
+        // Privacy/terms is pre-selected by default.
+        viewRegisterBinding.cbRegPrivacyTerms.setChecked(true, false);
 
         viewRegisterBinding.btnRegister.setOnClickListener(v -> form());
 
