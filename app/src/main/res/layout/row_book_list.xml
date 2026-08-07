@@ -28,6 +28,19 @@
             tools:ignore="ContentDescription"
             tools:src="@drawable/placeholder_portable" />
 
+        <ImageView
+            android:id="@+id/ivPlayBadge"
+            android:layout_width="135dp"
+            android:layout_height="185dp"
+            android:layout_alignTop="@+id/ivBook"
+            android:layout_alignBottom="@+id/ivBook"
+            android:layout_alignStart="@+id/ivBook"
+            android:layout_alignEnd="@+id/ivBook"
+            android:scaleType="center"
+            android:src="@drawable/ic_play_badge"
+            android:visibility="gone"
+            tools:ignore="ContentDescription" />
+
         <LinearLayout
             android:id="@+id/llPremium"
             android:background="@drawable/rectangle_book_premium"

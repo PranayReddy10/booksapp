@@ -147,6 +147,13 @@ public class BookDetailsActivity extends AppCompatActivity {
                             viewBookDetail.btnBuyBook.setVisibility(View.VISIBLE);
                             bookDetailListPos = bookDetailRP.getBookDetailLists().get(0);
                             bookViewData(postBookId);
+
+                            // Video (YouTube): show Play, hide Download; plays in-app.
+                            if (bookDetailListPos.isVideo()) {
+                                viewBookDetail.llDownload.setVisibility(View.GONE);
+                                viewBookDetail.ivReadBook.setImageResource(R.drawable.ic_play_badge);
+                                viewBookDetail.tvReadBook.setText(R.string.lbl_play_video);
+                            }
                             viewBookDetail.tvBookName.setText(bookDetailListPos.getPost_title());
                             viewBookDetail.tvByAuthor.setSelected(true);
                             StringBuilder strAuthor = new StringBuilder();
@@ -302,7 +309,9 @@ public class BookDetailsActivity extends AppCompatActivity {
                             });
 
                             viewBookDetail.llReadBook.setOnClickListener(v -> {
-                                if (checkRentSubsPlanStatus()) {
+                                if (bookDetailListPos.isVideo()) {
+                                    openVideo();
+                                } else if (checkRentSubsPlanStatus()) {
                                     maybeShowRewardedThenOpen();
                                 } else {
                                     showPaidMsgDialog();
@@ -370,6 +379,28 @@ public class BookDetailsActivity extends AppCompatActivity {
                 method.alertBox(getResources().getString(R.string.failed_try_again));
             }
         });
+    }
+
+    // Play a YouTube video IN-APP (no redirect). content_type == "video".
+    private void openVideo() {
+        String vid = bookDetailListPos.getVideo_id();
+        if ((vid == null || vid.isEmpty())) {
+            // Fall back to extracting the id from the watch URL if needed.
+            String url = bookDetailListPos.getVideo_url();
+            if (url != null && url.contains("v=")) {
+                vid = url.substring(url.indexOf("v=") + 2);
+                int amp = vid.indexOf('&');
+                if (amp > 0) vid = vid.substring(0, amp);
+            }
+        }
+        if (vid == null || vid.isEmpty()) {
+            Toast.makeText(this, getString(R.string.wrong), Toast.LENGTH_SHORT).show();
+            return;
+        }
+        Intent i = new Intent(this, VideoPlayerActivity.class);
+        i.putExtra("video_id", vid);
+        i.putExtra("title", bookDetailListPos.getPost_title());
+        startActivity(i);
     }
 
     private void downloadPermission() {

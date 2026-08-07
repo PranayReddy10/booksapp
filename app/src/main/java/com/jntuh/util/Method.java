@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
@@ -27,7 +26,6 @@ import com.jntuh.item.DownloadList;
 import com.jntuh.response.FavoriteRP;
 import com.jntuh.rest.ApiClient;
 import com.jntuh.rest.ApiInterface;
-import com.jntuh.service.DownloadService;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -330,14 +328,22 @@ public class Method {
 
             Method.isDownload = false;
 
-            Intent serviceIntent = new Intent(activity, DownloadService.class);
-            serviceIntent.setAction(DownloadService.ACTION_START);
-            serviceIntent.putExtra("id", id);
-            serviceIntent.putExtra("downloadUrl", bookUrl);
-            serviceIntent.putExtra("file_path", rootBook.toString());
-            serviceIntent.putExtra("file_name", filename);
+            androidx.work.Data inputData = new androidx.work.Data.Builder()
+                    .putString(com.jntuh.service.DownloadWorker.KEY_ID, id)
+                    .putString(com.jntuh.service.DownloadWorker.KEY_URL, bookUrl)
+                    .putString(com.jntuh.service.DownloadWorker.KEY_PATH, rootBook.toString())
+                    .putString(com.jntuh.service.DownloadWorker.KEY_NAME, filename)
+                    .build();
 
-            activity.startService(serviceIntent);
+            androidx.work.OneTimeWorkRequest downloadRequest =
+                    new androidx.work.OneTimeWorkRequest.Builder(com.jntuh.service.DownloadWorker.class)
+                            .setInputData(inputData)
+                            .build();
+
+            androidx.work.WorkManager.getInstance(activity.getApplicationContext())
+                    .enqueueUniqueWork(com.jntuh.service.DownloadWorker.WORK_PREFIX + id,
+                            androidx.work.ExistingWorkPolicy.KEEP, downloadRequest);
+
             bookDownloadData(id);
 
         } else {

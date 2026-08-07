@@ -126,6 +126,8 @@ public class BookListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                             subCatListBook.getPost_title(),
                             subCatListBook.getCover_color()));
 
+            viewHolder.rowBookListBinding.ivPlayBadge.setVisibility(subCatListBook.isVideo() ? View.VISIBLE : View.GONE);
+
             viewHolder.rowBookListBinding.llBook.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

@@ -1,0 +1,12 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="64dp" android:height="64dp" android:viewportWidth="64" android:viewportHeight="64">
+    <!-- soft shadow disc -->
+    <path android:fillColor="#33000000"
+        android:pathData="M32,4A28,28 0 1,0 32,60A28,28 0 1,0 32,4Z"/>
+    <!-- red rounded rect -->
+    <path android:fillColor="#FFFF0000"
+        android:pathData="M20,22 h24 a6,6 0 0 1 6,6 v8 a6,6 0 0 1 -6,6 h-24 a6,6 0 0 1 -6,-6 v-8 a6,6 0 0 1 6,-6 Z"/>
+    <!-- white play triangle -->
+    <path android:fillColor="#FFFFFFFF"
+        android:pathData="M28,26 L40,32 L28,38 Z"/>
+</vector>

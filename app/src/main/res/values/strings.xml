@@ -383,4 +383,5 @@
     <string name="lbl_complete_profile_sub">Select your university, department and college to continue.</string>
     <string name="lbl_continue">Continue</string>
     <string name="lbl_complete_all_fields">Please select all fields to continue</string>
+    <string name="lbl_play_video">Play video</string>
 </resources>

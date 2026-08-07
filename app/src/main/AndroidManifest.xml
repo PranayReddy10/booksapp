@@ -5,9 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
 
     <application
         android:name="com.jntuh.util.MyApplication"
@@ -64,6 +62,10 @@
         <activity
             android:name="com.jntuh.books.MainActivity"
             android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name="com.jntuh.books.VideoPlayerActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="fullSensor" />
         <activity android:name="com.jntuh.books.RegisterActivity" />
         <activity android:name="com.jntuh.books.CompleteProfileActivity" />
         <activity android:name="com.jntuh.books.ForgotPassActivity" />
@@ -145,10 +147,9 @@
                 android:resource="@xml/searchable" />
         </activity>
 
-        <service
-            android:name="com.jntuh.service.DownloadService"
-            android:exported="false"
-            android:foregroundServiceType="dataSync" />
+        <receiver
+            android:name="com.jntuh.service.DownloadCancelReceiver"
+            android:exported="false" />
 
         <receiver
             android:name="com.razorpay.RzpTokenReceiver"

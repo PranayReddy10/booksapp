@@ -37,6 +37,15 @@ public class BookDetailList implements Serializable {
     @SerializedName("post_url_type")
     private String post_url_type;
 
+    @SerializedName("content_type")
+    private String content_type;
+
+    @SerializedName("video_id")
+    private String video_id;
+
+    @SerializedName("video_url")
+    private String video_url;
+
     @SerializedName("post_file_url")
     private String post_file_url;
 
@@ -149,6 +158,11 @@ public class BookDetailList implements Serializable {
     public String getPost_url_type() {
         return post_url_type;
     }
+
+    public String getContent_type() { return content_type; }
+    public String getVideo_id() { return video_id; }
+    public String getVideo_url() { return video_url; }
+    public boolean isVideo() { return "video".equals(content_type); }
 
     public void setPost_url_type(String post_url_type) {
         this.post_url_type = post_url_type;

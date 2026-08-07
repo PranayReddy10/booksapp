@@ -24,8 +24,8 @@ android {
         applicationId "com.jntuh.books"
         minSdk 23
         targetSdk 35
-        versionCode 37
-        versionName "1.37"
+        versionCode 39
+        versionName "1.39"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -61,6 +61,7 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'androidx.work:work-runtime:2.9.1'
     implementation 'androidx.appcompat:appcompat:1.7.1'
     implementation 'com.google.android.material:material:1.13.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
@@ -76,7 +77,9 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:5.0.5'
     annotationProcessor 'com.github.bumptech.glide:compiler:5.0.5'
 
+
     // Media3 (ExoPlayer) for the video feed
+    implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:12.1.0'
     implementation 'androidx.media3:media3-exoplayer:1.4.1'
     implementation 'androidx.media3:media3-ui:1.4.1'
     implementation("com.tbuonomo:dotsindicator:5.1.0")

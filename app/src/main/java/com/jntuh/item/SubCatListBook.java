@@ -34,6 +34,12 @@ public class SubCatListBook implements Serializable {
     @SerializedName("post_image")
     private String post_image;
 
+    @SerializedName("content_type")
+    private String content_type;
+
+    @SerializedName("video_id")
+    private String video_id;
+
     @SerializedName("cover_color")
     private String cover_color;
 
@@ -133,6 +139,10 @@ public class SubCatListBook implements Serializable {
     public String getPost_image() {
         return post_image;
     }
+
+    public String getContent_type() { return content_type; }
+    public String getVideo_id() { return video_id; }
+    public boolean isVideo() { return "video".equals(content_type); }
 
     public String getCover_color() {
         return cover_color;
