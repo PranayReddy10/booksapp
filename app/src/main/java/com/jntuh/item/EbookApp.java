@@ -17,6 +17,12 @@ public class EbookApp implements Serializable {
     @Expose
     private List<HomeContent> trending_books;
 
+    @SerializedName("latest_books")
+    private List<HomeContent> latest_books;
+
+    @SerializedName("feed_posts")
+    private List<FeedPost> feed_posts;
+
     @SerializedName("featured_books")
     @Expose
     private List<FeaturedBook> featuredBooks;
@@ -50,6 +56,14 @@ public class EbookApp implements Serializable {
 
     public List<HomeContent> getTrending_books() {
         return trending_books;
+    }
+
+    public List<HomeContent> getLatest_books() {
+        return latest_books;
+    }
+
+    public List<FeedPost> getFeed_posts() {
+        return feed_posts;
     }
 
     public void setTrending_books(List<HomeContent> trending_books) {

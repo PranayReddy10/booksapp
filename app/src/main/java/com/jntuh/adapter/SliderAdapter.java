@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 
-import com.bumptech.glide.Glide;
 import com.jntuh.books.R;
 import com.jntuh.books.databinding.RowSliderHomeBinding;
 import com.jntuh.item.FeaturedBook;
@@ -41,14 +40,9 @@ public class SliderAdapter extends PagerAdapter {
         viewAdapterSlider = RowSliderHomeBinding.inflate(inflater, container, false);
         View view = viewAdapterSlider.getRoot();
 
-        String sliderImg = sliderLists.get(position).getPostImage();
-        if (sliderImg != null && !sliderImg.isEmpty()) {
-            Glide.with(activity.getApplicationContext()).load(sliderImg)
-                    .placeholder(R.drawable.placeholder_landscape)
-                    .into(viewAdapterSlider.ivHomeFeature);
-        } else {
-            viewAdapterSlider.ivHomeFeature.setImageResource(R.drawable.placeholder_landscape);
-        }
+        com.jntuh.util.CoverHelper.bind(viewAdapterSlider.ivHomeFeature,
+                sliderLists.get(position).getPostImage(),
+                sliderLists.get(position).getPostTitle(), null);
 
         viewAdapterSlider.tvBookName.setText(sliderLists.get(position).getPostTitle());
         viewAdapterSlider.tvAuthor.setText(activity.getString(R.string.by_author, sliderLists.get(position).getAuthorName().isEmpty()?"":sliderLists.get(position).getAuthorName()));

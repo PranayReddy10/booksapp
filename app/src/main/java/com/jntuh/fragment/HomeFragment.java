@@ -20,6 +20,7 @@ import com.jntuh.adapter.HomeSectionAdapter;
 import com.jntuh.adapter.SliderAdapter;
 import com.jntuh.adapter.TrendingHomeAdapter;
 import com.jntuh.books.BookDetailsActivity;
+import com.jntuh.books.MediaFeedActivity;
 import com.jntuh.books.BookListBySubCatActivity;
 import com.jntuh.books.R;
 import com.jntuh.books.SettingsActivity;
@@ -91,6 +92,16 @@ public class HomeFragment extends Fragment {
         viewHome.rvHomeTrendingBook.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         viewHome.rvHomeTrendingBook.setFocusable(false);
         viewHome.rvHomeTrendingBook.setNestedScrollingEnabled(false);
+
+        viewHome.rvHomeLatestBook.setHasFixedSize(true);
+        viewHome.rvHomeLatestBook.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        viewHome.rvHomeLatestBook.setFocusable(false);
+        viewHome.rvHomeLatestBook.setNestedScrollingEnabled(false);
+
+        viewHome.rvHomeFeed.setHasFixedSize(true);
+        viewHome.rvHomeFeed.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        viewHome.rvHomeFeed.setFocusable(false);
+        viewHome.rvHomeFeed.setNestedScrollingEnabled(false);
 
         if (method.isNetworkAvailable()) {
             if (method.getIsLogin()) {
@@ -240,6 +251,35 @@ public class HomeFragment extends Fragment {
                                 } else {
                                     viewHome.rlTrendSection.setVisibility(View.GONE);
                                     viewHome.rvHomeTrendingBook.setVisibility(View.GONE);
+                                }
+
+                                // Latest Books (same design as Trending)
+                                if (homeRP.getEbookApp().getLatest_books() != null
+                                        && homeRP.getEbookApp().getLatest_books().size() != 0) {
+                                    TrendingHomeAdapter latestAdapter =
+                                            new TrendingHomeAdapter(getActivity(), homeRP.getEbookApp().getLatest_books());
+                                    viewHome.rvHomeLatestBook.setAdapter(latestAdapter);
+                                    latestAdapter.setOnItemClickListener(position -> {
+                                        Intent d = new Intent(requireActivity(), BookDetailsActivity.class);
+                                        d.putExtra("BOOK_ID", homeRP.getEbookApp().getLatest_books().get(position).getPostId());
+                                        startActivity(d);
+                                    });
+                                } else {
+                                    viewHome.rlLatestHeader.setVisibility(View.GONE);
+                                    viewHome.rvHomeLatestBook.setVisibility(View.GONE);
+                                }
+
+                                // Feed (horizontal thumbnails → full-screen viewer)
+                                if (homeRP.getEbookApp().getFeed_posts() != null
+                                        && homeRP.getEbookApp().getFeed_posts().size() != 0) {
+                                    com.jntuh.adapter.HomeFeedAdapter feedAdapter =
+                                            new com.jntuh.adapter.HomeFeedAdapter(getActivity(), homeRP.getEbookApp().getFeed_posts());
+                                    viewHome.rvHomeFeed.setAdapter(feedAdapter);
+                                    viewHome.ivHomeFeedArrow.setOnClickListener(v ->
+                                            startActivity(new Intent(requireActivity(), MediaFeedActivity.class)));
+                                } else {
+                                    viewHome.rlFeedHeader.setVisibility(View.GONE);
+                                    viewHome.rvHomeFeed.setVisibility(View.GONE);
                                 }
 
                                 viewHome.llHomeMain.setVisibility(View.VISIBLE);
