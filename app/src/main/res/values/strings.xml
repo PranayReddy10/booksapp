@@ -53,7 +53,7 @@
     <string name="please_select_gender">Please select gender</string>
     <!-- User upload book -->
     <string name="lbl_upload_book">Upload Book</string>
-    <string name="lbl_upload">Upload</string>
+    <string name="lbl_upload">Upload Books</string>
     <string name="lbl_my_uploads">My Uploads</string>
     <string name="lbl_book_title">Book Title</string>
     <string name="lbl_book_description">Description</string>
@@ -384,4 +384,9 @@
     <string name="lbl_continue">Continue</string>
     <string name="lbl_complete_all_fields">Please select all fields to continue</string>
     <string name="lbl_play_video">Play video</string>
+    <string name="lbl_home">Home</string>
+    <string name="lbl_upload_reels_photos">Upload Reels / Photos</string>
+    <string name="lbl_manage_feed">Manage Feed</string>
+    <string name="lbl_profile">Profile</string>
+    <string name="lbl_settings">Settings</string>
 </resources>

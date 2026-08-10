@@ -276,6 +276,7 @@ public class LoginActivity extends AppCompatActivity {
                             method.saveIsLogin(true);
                             method.saveLogin(itemUser.getUser_id(), itemUser.getName(), itemUser.getEmail(), type, aid);
                             method.saveMediaProfile(itemUser.getUsername(), itemUser.getUser_image());
+                            method.saveProfileComplete(itemUser.getProfile_complete());
 
                             // Google users must complete University/Department/College
                             // before entering the app.

@@ -268,6 +268,7 @@ public class CompleteProfileActivity extends AppCompatActivity {
     }
 
     private void goToApp() {
+        method.saveProfileComplete("1");
         ActivityCompat.finishAffinity(this);
         startActivity(new Intent(this, MainActivity.class));
         finish();

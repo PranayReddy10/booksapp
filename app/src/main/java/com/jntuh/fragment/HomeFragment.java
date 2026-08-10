@@ -108,6 +108,9 @@ public class HomeFragment extends Fragment {
             startActivity(intentSetting);
         });
 
+        viewHome.ibWhatsapp.setOnClickListener(v -> openLink("https://www.whatsapp.com/channel/0029Vb5uthA7NoZyvanZPr1J"));
+        viewHome.ibInstagram.setOnClickListener(v -> openLink("https://www.instagram.com/jntu_books_updates/"));
+
         viewHome.imageHomeSearch.setOnClickListener(v -> {
             if (viewHome.edtHomeSearch.getText().toString().isEmpty()) {
                 Toast.makeText(requireActivity(), getString(R.string.search_msg), Toast.LENGTH_SHORT).show();
@@ -269,5 +272,13 @@ public class HomeFragment extends Fragment {
 
     public void setOnItemClickListener(OnClick clickListener) {
         onClickPos = clickListener;
+    }
+
+    private void openLink(String url) {
+        try {
+            startActivity(new Intent(Intent.ACTION_VIEW, android.net.Uri.parse(url)));
+        } catch (Exception e) {
+            Log.d("exception_error", e.toString());
+        }
     }
 }

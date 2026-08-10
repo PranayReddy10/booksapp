@@ -194,6 +194,20 @@ public class Method {
         return pref.getString("username", "");
     }
 
+    // Whether the user has finished University/Department/College. "1" = complete.
+    public void saveProfileComplete(String complete) {
+        pref = activity.getSharedPreferences(myPreference, 0);
+        editor = pref.edit();
+        editor.putString("profile_complete", complete != null ? complete : "1");
+        editor.apply();
+    }
+
+    public String getProfileComplete() {
+        pref = activity.getSharedPreferences(myPreference, 0);
+        // Default "1" so existing email users are never blocked.
+        return pref.getString("profile_complete", "1");
+    }
+
     public String getUserImage() {
         pref = activity.getSharedPreferences(myPreference, 0);
         return pref.getString("user_image", "");

@@ -68,6 +68,30 @@
                 android:scaleType="fitCenter"
                 android:src="@drawable/img_setting"
                 tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:id="@+id/ibInstagram"
+                android:layout_width="@dimen/_40px"
+                android:layout_height="@dimen/_40px"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/ibSetting"
+                android:layout_marginEnd="@dimen/_6px"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="@dimen/_8px"
+                android:src="@drawable/ic_instagram"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:id="@+id/ibWhatsapp"
+                android:layout_width="@dimen/_40px"
+                android:layout_height="@dimen/_40px"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/ibInstagram"
+                android:layout_marginEnd="@dimen/_2px"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="@dimen/_8px"
+                android:src="@drawable/ic_whatsapp"
+                tools:ignore="ContentDescription" />
         </RelativeLayout>
 
         <androidx.core.widget.NestedScrollView

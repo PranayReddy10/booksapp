@@ -81,6 +81,11 @@ public class MainActivity extends AppCompatActivity {
 
         loadFrag(homeFragment, "", fragmentManager);
         viewMain.toolbarMain.toolbarToolbar.setVisibility(View.GONE);
+
+        // Deep-link from the feed menu: open the Profile tab directly.
+        if (getIntent() != null && getIntent().getBooleanExtra("openProfile", false)) {
+            profileFragment(false, 0);
+        }
         viewMain.bottomNav.frameHome.setOnClickListener(v -> {
             selectBottomNav(0);
             viewMain.toolbarMain.toolbarToolbar.setVisibility(View.GONE);

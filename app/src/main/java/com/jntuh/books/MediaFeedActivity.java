@@ -77,8 +77,7 @@ public class MediaFeedActivity extends AppCompatActivity implements MediaFeedAda
         method = new Method(this);
 
         binding.ivFeedBack.setOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
-        binding.fabFeedUpload.setOnClickListener(v -> requireLoginThen(MediaUploadActivity.class));
-        binding.ivFeedMyMedia.setOnClickListener(v -> requireLoginThen(MyMediaActivity.class));
+        binding.ivFeedMenu.setOnClickListener(this::showFeedMenu);
 
         layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         binding.rvFeed.setLayoutManager(layoutManager);
@@ -140,6 +139,33 @@ public class MediaFeedActivity extends AppCompatActivity implements MediaFeedAda
             Toast.makeText(this, getString(R.string.login_require), Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this, LoginActivity.class));
         }
+    }
+
+    private void showFeedMenu(android.view.View anchor) {
+        androidx.appcompat.widget.PopupMenu popup =
+                new androidx.appcompat.widget.PopupMenu(this, anchor);
+        popup.getMenuInflater().inflate(R.menu.menu_feed, popup.getMenu());
+        popup.setOnMenuItemClickListener(item -> {
+            int id = item.getItemId();
+            if (id == R.id.menu_home) {
+                startActivity(new Intent(this, MainActivity.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                finish();
+            } else if (id == R.id.menu_upload_media) {
+                requireLoginThen(MediaUploadActivity.class);
+            } else if (id == R.id.menu_manage_feed) {
+                requireLoginThen(MyMediaActivity.class);
+            } else if (id == R.id.menu_profile) {
+                startActivity(new Intent(this, MainActivity.class)
+                        .putExtra("openProfile", true)
+                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                finish();
+            } else if (id == R.id.menu_settings) {
+                startActivity(new Intent(this, SettingsActivity.class));
+            }
+            return true;
+        });
+        popup.show();
     }
 
     private void consumeHandoff() {
