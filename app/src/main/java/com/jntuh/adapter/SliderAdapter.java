@@ -41,10 +41,13 @@ public class SliderAdapter extends PagerAdapter {
         viewAdapterSlider = RowSliderHomeBinding.inflate(inflater, container, false);
         View view = viewAdapterSlider.getRoot();
 
-        if (!sliderLists.get(position).getPostImage().equals("")) {
-            Glide.with(activity.getApplicationContext()).load(sliderLists.get(position).getPostImage())
+        String sliderImg = sliderLists.get(position).getPostImage();
+        if (sliderImg != null && !sliderImg.isEmpty()) {
+            Glide.with(activity.getApplicationContext()).load(sliderImg)
                     .placeholder(R.drawable.placeholder_landscape)
                     .into(viewAdapterSlider.ivHomeFeature);
+        } else {
+            viewAdapterSlider.ivHomeFeature.setImageResource(R.drawable.placeholder_landscape);
         }
 
         viewAdapterSlider.tvBookName.setText(sliderLists.get(position).getPostTitle());

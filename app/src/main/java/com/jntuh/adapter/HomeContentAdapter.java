@@ -62,7 +62,7 @@ public class HomeContentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         if (holder.getItemViewType() == VIEW_TYPE_CAT) {
             CategoryHolder categoryHolder = (CategoryHolder) holder;
             categoryHolder.rowCatHomeBinding.tvHomeCat.setText(homeContents.get(position).getPostTitle());
-            if (!homeContents.get(position).getPostImage().equals("")) {
+            if (homeContents.get(position).getPostImage()!=null && !homeContents.get(position).getPostImage().isEmpty()) {
                 Glide.with(activity.getApplicationContext()).load(homeContents.get(position).getPostImage())
                         .placeholder(R.drawable.placeholder_landscape)
                         .into(categoryHolder.rowCatHomeBinding.ivHomeCat);
@@ -76,7 +76,7 @@ public class HomeContentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         } else if (holder.getItemViewType() == VIEW_TYPE_SUB_CAT) {
             SubCategoryHolder subCategoryHolder = (SubCategoryHolder) holder;
             subCategoryHolder.rowSubCatHomeBinding.tvHomeCat.setText(homeContents.get(position).getPostTitle());
-            if (!homeContents.get(position).getPostImage().equals("")) {
+            if (homeContents.get(position).getPostImage()!=null && !homeContents.get(position).getPostImage().isEmpty()) {
                 Glide.with(activity.getApplicationContext()).load(homeContents.get(position).getPostImage())
                         .placeholder(R.drawable.placeholder_landscape)
                         .into(subCategoryHolder.rowSubCatHomeBinding.ivHomeCat);
@@ -129,7 +129,7 @@ public class HomeContentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         } else if (holder.getItemViewType() == VIEW_TYPE_AUTHOR) {
             AuthorHolder authorHolder = (AuthorHolder) holder;
             authorHolder.rowAuthorHomeBinding.tvHomeAuthorName.setText(homeContents.get(position).getPostTitle());
-            if (!homeContents.get(position).getPostImage().equals("")) {
+            if (homeContents.get(position).getPostImage()!=null && !homeContents.get(position).getPostImage().isEmpty()) {
                 Glide.with(activity.getApplicationContext()).load(homeContents.get(position).getPostImage())
                         .placeholder(R.drawable.placeholder_author)
                         .into(authorHolder.rowAuthorHomeBinding.ivHomeAuthor);

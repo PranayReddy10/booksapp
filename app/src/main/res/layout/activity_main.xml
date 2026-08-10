@@ -33,9 +33,16 @@
         android:contentDescription="@string/lbl_upload_book"
         android:text="@string/lbl_upload"
         android:textColor="@color/white"
+        android:textSize="12sp"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:minHeight="0dp"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
         app:backgroundTint="@color/orange"
         app:icon="@drawable/ic_upload_book"
         app:iconGravity="textStart"
+        app:iconSize="16dp"
         app:iconTint="@color/white"
         app:elevation="6dp" />
 

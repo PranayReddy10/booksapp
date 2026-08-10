@@ -7,8 +7,6 @@ import android.view.ViewGroup;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.jntuh.books.R;
 import com.jntuh.books.databinding.RowContinueHomeBinding;
 import com.jntuh.item.HomeContent;
 import com.jntuh.util.AdInterstitialAds;
@@ -42,11 +40,9 @@ public class ContinueHomeAdapter extends RecyclerView.Adapter<ContinueHomeAdapte
          holder.rowContinueHomeBinding.tvHomeConTitle.setText(homeContentsContinue.get(position).getPostTitle());
 
 
-        if (!homeContentsContinue.get(position).getPostImage().equals("")) {
-            Glide.with(activity.getApplicationContext()).load(homeContentsContinue.get(position).getPostImage())
-                    .placeholder(R.drawable.placeholder_portable)
-                    .into(holder.rowContinueHomeBinding.ivHomeCont);
-        }
+        com.jntuh.util.CoverHelper.bind(holder.rowContinueHomeBinding.ivHomeCont,
+                homeContentsContinue.get(position).getPostImage(),
+                homeContentsContinue.get(position).getPostTitle(), null);
 
         holder.rowContinueHomeBinding.llContinueHome.setOnClickListener(new View.OnClickListener() {
             @Override
