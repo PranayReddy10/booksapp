@@ -8,7 +8,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -269,8 +268,9 @@ public class CompleteProfileActivity extends AppCompatActivity {
 
     private void goToApp() {
         method.saveProfileComplete("1");
-        ActivityCompat.finishAffinity(this);
-        startActivity(new Intent(this, MainActivity.class));
+        Intent i = new Intent(this, MainActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(i);
         finish();
     }
 
