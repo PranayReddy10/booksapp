@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
 import com.jntuh.books.databinding.ActivityLoginBinding;
 import com.jntuh.response.LoginRP;
@@ -206,8 +205,8 @@ public class LoginActivity extends AppCompatActivity {
                             if (isWhichScreen) {
                                 finish();
                             } else {
-                                ActivityCompat.finishAffinity(LoginActivity.this);
                                 Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 startActivity(i);
                                 finish();
                             }
@@ -292,8 +291,8 @@ public class LoginActivity extends AppCompatActivity {
                             if (isWhichScreen) {
                                 finish();
                             } else {
-                                ActivityCompat.finishAffinity(LoginActivity.this);
                                 Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 startActivity(i);
                                 finish();
                             }

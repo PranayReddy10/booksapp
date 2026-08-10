@@ -67,13 +67,7 @@ public class MediaExploreFragment extends Fragment {
         adapter = new MediaTileAdapter(requireActivity(), items, this::openFullFeed);
         binding.rvExplore.setAdapter(adapter);
 
-        binding.ivExploreUpload.setOnClickListener(v -> {
-            if (method.getIsLogin()) {
-                startActivity(new Intent(requireActivity(), MediaUploadActivity.class));
-            } else {
-                startActivity(new Intent(requireActivity(), LoginActivity.class));
-            }
-        });
+        binding.ivExploreMenu.setOnClickListener(this::showFeedMenu);
 
         binding.flBell.setOnClickListener(v -> {
             if (method.getIsLogin()) {
@@ -183,5 +177,38 @@ public class MediaExploreFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    private void showFeedMenu(android.view.View anchor) {
+        androidx.appcompat.widget.PopupMenu popup =
+                new androidx.appcompat.widget.PopupMenu(requireActivity(), anchor);
+        popup.getMenuInflater().inflate(R.menu.menu_feed, popup.getMenu());
+        popup.setOnMenuItemClickListener(item -> {
+            int id = item.getItemId();
+            if (id == R.id.menu_home) {
+                startActivity(new Intent(requireActivity(), com.jntuh.books.MainActivity.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+            } else if (id == R.id.menu_upload_media) {
+                requireLoginThen(MediaUploadActivity.class);
+            } else if (id == R.id.menu_manage_feed) {
+                requireLoginThen(com.jntuh.books.MyMediaActivity.class);
+            } else if (id == R.id.menu_profile) {
+                startActivity(new Intent(requireActivity(), com.jntuh.books.MainActivity.class)
+                        .putExtra("openProfile", true)
+                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+            } else if (id == R.id.menu_settings) {
+                startActivity(new Intent(requireActivity(), com.jntuh.books.SettingsActivity.class));
+            }
+            return true;
+        });
+        popup.show();
+    }
+
+    private void requireLoginThen(Class<?> target) {
+        if (method.getIsLogin()) {
+            startActivity(new Intent(requireActivity(), target));
+        } else {
+            startActivity(new Intent(requireActivity(), LoginActivity.class));
+        }
     }
 }

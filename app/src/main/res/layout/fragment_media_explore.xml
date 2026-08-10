@@ -31,12 +31,12 @@
             android:textSize="@dimen/_20sp" />
 
         <ImageView
-            android:id="@+id/ivExploreUpload"
+            android:id="@+id/ivExploreMenu"
             android:layout_width="26dp"
             android:layout_height="26dp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:src="@android:drawable/ic_input_add"
+            android:src="@drawable/ic_feed_menu"
             app:tint="@color/gray_2"
             tools:ignore="ContentDescription" />
 
@@ -46,7 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/_20px"
-            android:layout_toStartOf="@+id/ivExploreUpload">
+            android:layout_toStartOf="@+id/ivExploreMenu">
 
             <ImageView
                 android:id="@+id/ivExploreBell"
