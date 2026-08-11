@@ -186,4 +186,9 @@
     <color name="auth_text_hint">#80FFFFFF</color>
     <color name="auth_cta_start">#7B61FF</color>
     <color name="auth_cta_end">#FF5E8A</color>
+
+    <!-- My Results feature colors -->
+    <color name="result_verified_green">#2E7D32</color>
+    <color name="result_backlog_red">#C62828</color>
+    <color name="result_brand_blue">#0D47A1</color>
 </resources>

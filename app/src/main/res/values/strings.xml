@@ -390,4 +390,133 @@
     <string name="lbl_profile">Profile</string>
     <string name="lbl_settings">Settings</string>
     <string name="lbl_latest_books">Latest Books</string>
+
+    <!-- Tab -->
+    <string name="tab_my_results">My Results</string>
+
+    <!-- Summary / cards -->
+    <string name="result_student">Student</string>
+    <string name="result_hall_ticket">Hall Ticket</string>
+    <string name="result_cgpa">CGPA</string>
+    <string name="result_credits">Credits</string>
+    <string name="result_backlogs">Backlogs</string>
+    <string name="result_sgpa">SGPA</string>
+    <string name="result_dash">—</string>
+    <string name="result_zero">0</string>
+    <string name="result_verified">Verified</string>
+    <string name="result_semesters">Semesters</string>
+    <string name="result_subjects">Subjects</string>
+    <string name="result_expand">Expand</string>
+    <string name="result_backlog_tag">Backlog</string>
+
+    <!-- Column headers -->
+    <string name="result_col_subject">Subject</string>
+    <string name="result_col_cr">Cr</string>
+    <string name="result_col_gr">Gr</string>
+    <string name="result_col_pts">Pts</string>
+
+    <!-- Locked -->
+    <string name="result_locked_short">Locked</string>
+    <string name="result_locked_banner">This result has been verified and is locked for editing.</string>
+
+    <!-- Actions -->
+    <string name="result_view_share_report">View / Share report card</string>
+    <string name="result_edit">Edit</string>
+    <string name="result_add_my_result">Add my result</string>
+    <string name="result_add_semester">Add semester</string>
+    <string name="result_add_subject">Add subject</string>
+    <string name="result_share">Share</string>
+    <string name="result_share_report_card">Share report card</string>
+    <string name="result_regenerate">Regenerate</string>
+    <string name="result_save">Save result</string>
+    <string name="result_back">Back</string>
+    <string name="result_report_card">Report card</string>
+
+    <!-- Empty / login states -->
+    <string name="result_empty_title">No result yet</string>
+    <string name="result_empty_desc">Add your semester-wise marks and grades to build your CGPA report card.</string>
+    <string name="result_login_needed">Please log in to view and manage your results.</string>
+    <string name="result_report_generating">Generating your report card…</string>
+
+    <!-- Edit screen -->
+    <string name="result_add_title">Add result</string>
+    <string name="result_edit_title">Edit result</string>
+    <string name="result_hall_ticket_label">Hall ticket number</string>
+    <string name="result_hall_ticket_hint">e.g. 21XX1A05XX</string>
+    <string name="result_name_label">Student name</string>
+    <string name="result_name_hint">Your full name</string>
+    <string name="result_branch_label">Branch</string>
+    <string name="result_regulation_label">Regulation</string>
+    <string name="result_degree_label">Degree</string>
+    <string name="result_degree_hint">e.g. B.Tech</string>
+    <string name="result_sem_code_label">Semester</string>
+    <string name="result_sem_code_hint">e.g. 2-1</string>
+    <string name="result_exam_label">Exam month/year</string>
+    <string name="result_exam_hint">e.g. Nov 2024</string>
+    <string name="result_remove_semester">Remove semester</string>
+    <string name="result_remove_subject">Remove subject</string>
+    <string name="result_sub_code_hint">Subject code</string>
+    <string name="result_sub_name_hint">Subject name</string>
+    <string name="result_more_marks">Marks</string>
+    <string name="result_internal">Internal</string>
+    <string name="result_external">External</string>
+    <string name="result_total">Total</string>
+
+    <!-- Validation / toasts -->
+    <string name="result_need_hall_ticket">Please enter your hall ticket number.</string>
+    <string name="result_need_one_semester">Add at least one semester with subjects.</string>
+    <string name="result_saved">Result saved.</string>
+    <string name="result_report_ready">Report card ready.</string>
+    <string name="result_share_prep">Preparing image…</string>
+    <string name="result_share_failed">Couldn\'t prepare the image. Sharing the link instead.</string>
+
+    <!-- Spinner placeholders -->
+    <string name="result_select_branch">Select branch</string>
+    <string name="result_select_regulation">Select regulation</string>
+
+    <!-- Grade spinner entries -->
+    <string-array name="result_grade_entries">
+        <item>O</item>
+        <item>A+</item>
+        <item>A</item>
+        <item>B+</item>
+        <item>B</item>
+        <item>C</item>
+        <item>F</item>
+        <item>Ab</item>
+    </string-array>
+
+    <!-- Common JNTUH branches (searchable spinner) -->
+    <string-array name="result_branch_entries">
+        <item>CSE</item>
+        <item>CSE (AI &amp; ML)</item>
+        <item>CSE (Data Science)</item>
+        <item>CSE (Cyber Security)</item>
+        <item>CSE (IoT)</item>
+        <item>AI &amp; DS</item>
+        <item>IT</item>
+        <item>ECE</item>
+        <item>EEE</item>
+        <item>MECH</item>
+        <item>CIVIL</item>
+        <item>Chemical</item>
+        <item>Bio-Technology</item>
+        <item>Automobile</item>
+        <item>Mining</item>
+        <item>Metallurgy</item>
+        <item>Pharmacy</item>
+        <item>MBA</item>
+        <item>MCA</item>
+        <item>Other</item>
+    </string-array>
+
+    <!-- Regulations -->
+    <string-array name="result_regulation_entries">
+        <item>R22</item>
+        <item>R18</item>
+        <item>R16</item>
+        <item>R15</item>
+        <item>R13</item>
+        <item>Other</item>
+    </string-array>
 </resources>

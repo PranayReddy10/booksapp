@@ -56,4 +56,9 @@
     <dimen name="_26sp">26.0sp</dimen>
     <dimen name="_30sp">30.0sp</dimen>
 
+    <!-- My Results feature dimens -->
+    <dimen name="result_card_radius">18dp</dimen>
+    <dimen name="result_row_pad_v">7dp</dimen>
+    <dimen name="result_input_height">48dp</dimen>
+
 </resources>

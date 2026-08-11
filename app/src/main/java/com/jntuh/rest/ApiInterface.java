@@ -34,6 +34,9 @@ import com.jntuh.response.MediaLikeRP;
 import com.jntuh.response.MediaCommentRP;
 import com.jntuh.response.MediaCommentListRP;
 import com.jntuh.response.MediaNotificationListRP;
+import com.jntuh.response.ResultRP;
+import com.jntuh.response.ResultSaveRP;
+import com.jntuh.response.ReportCardRP;
 import com.google.gson.JsonObject;
 
 import okhttp3.MultipartBody;
@@ -368,4 +371,17 @@ public interface ApiInterface {
     @POST("media_notification_read")
     @FormUrlEncoded
     Call<PostRateRP> getMediaNotificationReadData(@Field("data") String data);
+
+    // --- Results (My Results feature) ---
+    @POST("result_get")
+    @FormUrlEncoded
+    Call<ResultRP> getResult(@Field("data") String data);
+
+    @POST("result_save")
+    @FormUrlEncoded
+    Call<ResultSaveRP> saveResult(@Field("data") String data);
+
+    @POST("report_generate")
+    @FormUrlEncoded
+    Call<ReportCardRP> generateReportCard(@Field("data") String data);
 }

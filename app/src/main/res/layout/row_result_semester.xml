@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="2dp"
+    app:cardBackgroundColor="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Header (tap to expand/collapse) -->
+        <LinearLayout
+            android:id="@+id/llSemHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="16dp"
+            android:background="?attr/selectableItemBackground">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvSemTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/gray"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/opensansromanextrabold" />
+
+                <TextView
+                    android:id="@+id/tvSemMeta"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:textColor="@color/gray_2"
+                    android:textSize="11sp"
+                    android:fontFamily="@font/opensansromansemibold" />
+            </LinearLayout>
+
+            <!-- SGPA chip -->
+            <LinearLayout
+                android:id="@+id/llSgpaChip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="@drawable/bg_grade_chip"
+                android:paddingHorizontal="14dp"
+                android:paddingVertical="6dp">
+
+                <TextView
+                    android:id="@+id/tvSemSgpa"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/result_brand_blue"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/opensansromanextrabold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/result_sgpa"
+                    android:textColor="@color/gray_2"
+                    android:textSize="9sp"
+                    android:fontFamily="@font/opensansromansemibold" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/ivSemChevron"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_marginStart="8dp"
+                android:src="@drawable/ic_result_expand"
+                android:contentDescription="@string/result_expand" />
+        </LinearLayout>
+
+        <!-- Subject table (collapsible) -->
+        <LinearLayout
+            android:id="@+id/llSubjectContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp"
+            android:paddingBottom="10dp"
+            android:visibility="gone">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="8dp"
+                android:background="#12000000" />
+
+            <!-- Column header -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="6dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/result_col_subject"
+                    android:textColor="@color/gray_2"
+                    android:textSize="10sp"
+                    android:fontFamily="@font/opensansromanbold" />
+
+                <TextView
+                    android:layout_width="44dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/result_col_cr"
+                    android:textColor="@color/gray_2"
+                    android:textSize="10sp"
+                    android:fontFamily="@font/opensansromanbold" />
+
+                <TextView
+                    android:layout_width="44dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/result_col_gr"
+                    android:textColor="@color/gray_2"
+                    android:textSize="10sp"
+                    android:fontFamily="@font/opensansromanbold" />
+
+                <TextView
+                    android:layout_width="44dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/result_col_pts"
+                    android:textColor="@color/gray_2"
+                    android:textSize="10sp"
+                    android:fontFamily="@font/opensansromanbold" />
+            </LinearLayout>
+
+            <!-- Subject rows injected here at runtime -->
+            <LinearLayout
+                android:id="@+id/llSubjectRows"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

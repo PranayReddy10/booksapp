@@ -200,4 +200,64 @@
         <!--<item name="android:windowIsTranslucent">true</item>-->
         <item name="android:windowAnimationStyle">@android:style/Animation</item>
     </style>
+
+
+    <!-- ================= My Results feature styles ================= -->
+
+    <!-- Section/field label above an input -->
+    <style name="ResultFieldLabel">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">12dp</item>
+        <item name="android:layout_marginBottom">6dp</item>
+        <item name="android:textColor">@color/gray_2</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:fontFamily">@font/opensansromanbold</item>
+    </style>
+
+    <!-- Tiny label above compact inputs (credits/grade/points) -->
+    <style name="ResultMiniLabel">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">2dp</item>
+        <item name="android:textColor">@color/gray_2</item>
+        <item name="android:textSize">9.5sp</item>
+        <item name="android:fontFamily">@font/opensansromanbold</item>
+    </style>
+
+    <!-- Rounded text input used on the edit screen -->
+    <style name="ResultInput">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/result_input_height</item>
+        <item name="android:background">@drawable/bg_result_input</item>
+        <item name="android:paddingHorizontal">14dp</item>
+        <item name="android:textColor">@color/gray</item>
+        <item name="android:textColorHint">#99000000</item>
+        <item name="android:textSize">13.5sp</item>
+        <item name="android:fontFamily">@font/opensansromansemibold</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <!-- Small numeric input for internal/external/total -->
+    <style name="ResultMarkInput">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">42dp</item>
+        <item name="android:background">@drawable/bg_result_input</item>
+
+        <item name="android:gravity">center</item>
+        <item name="android:inputType">number</item>
+        <item name="android:textColor">@color/gray</item>
+        <item name="android:textColorHint">#99000000</item>
+        <item name="android:hint">@string/result_dash</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:fontFamily">@font/opensansromanbold</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <!-- Spinner styled to look like the rounded inputs -->
+    <style name="ResultSpinner">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/result_input_height</item>
+        <item name="android:background">@drawable/bg_result_input</item>
+    </style>
 </resources>

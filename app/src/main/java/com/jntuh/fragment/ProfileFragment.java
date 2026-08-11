@@ -124,6 +124,8 @@ public class ProfileFragment extends Fragment {
                     tab.setText(getString(R.string.tab_subs));
                 } else if (position == 3) {
                     tab.setText(getString(R.string.tab_rent));
+                } else if (position == 4) {
+                    tab.setText(getString(R.string.tab_my_results));
                 }
             }).attach();
 
@@ -144,6 +146,7 @@ public class ProfileFragment extends Fragment {
         adapter.addFragment(new ManageBooksFragment(), getString(R.string.tab_manage_books));
         adapter.addFragment(new DashBoardFragment(), getString(R.string.tab_subs));
         adapter.addFragment(new RentBookFragment(), getString(R.string.tab_rent));
+        adapter.addFragment(new MyResultsFragment(), getString(R.string.tab_my_results));
         viewPager.setAdapter(adapter);
         if (isContinue) {
             viewPager.setCurrentItem(movePos, false);

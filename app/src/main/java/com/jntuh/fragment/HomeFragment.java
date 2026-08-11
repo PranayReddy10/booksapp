@@ -20,6 +20,7 @@ import com.jntuh.adapter.HomeSectionAdapter;
 import com.jntuh.adapter.SliderAdapter;
 import com.jntuh.adapter.TrendingHomeAdapter;
 import com.jntuh.books.BookDetailsActivity;
+import com.jntuh.books.MainActivity;
 import com.jntuh.books.MediaFeedActivity;
 import com.jntuh.books.BookListBySubCatActivity;
 import com.jntuh.books.R;
@@ -264,6 +265,10 @@ public class HomeFragment extends Fragment {
                                         d.putExtra("BOOK_ID", homeRP.getEbookApp().getLatest_books().get(position).getPostId());
                                         startActivity(d);
                                     });
+                                    viewHome.ivHomeLatestArrow.setOnClickListener(v ->
+                                            startActivity(new Intent(requireActivity(), MainActivity.class)
+                                                    .putExtra("openLatest", true)
+                                                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)));
                                 } else {
                                     viewHome.rlLatestHeader.setVisibility(View.GONE);
                                     viewHome.rvHomeLatestBook.setVisibility(View.GONE);

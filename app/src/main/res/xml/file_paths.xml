@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- The report card PNG is downloaded to the app cache before sharing. -->
+    <cache-path name="result_cache" path="." />
+    <external-cache-path name="result_ext_cache" path="." />
+    <files-path name="result_files" path="." />
+</paths>

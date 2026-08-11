@@ -86,6 +86,13 @@ public class MainActivity extends AppCompatActivity {
         if (getIntent() != null && getIntent().getBooleanExtra("openProfile", false)) {
             profileFragment(false, 0);
         }
+
+        // Deep-link from the home "Latest Books" arrow: open the Latest tab.
+        if (getIntent() != null && getIntent().getBooleanExtra("openLatest", false)) {
+            selectBottomNav(1);
+            viewMain.toolbarMain.toolbarToolbar.setVisibility(View.GONE);
+            loadFrag(new LatestFragment(), "", fragmentManager);
+        }
         viewMain.bottomNav.frameHome.setOnClickListener(v -> {
             selectBottomNav(0);
             viewMain.toolbarMain.toolbarToolbar.setVisibility(View.GONE);

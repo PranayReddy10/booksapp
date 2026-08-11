@@ -295,12 +295,7 @@
                     android:paddingStart="@dimen/_10px"
                     android:paddingEnd="@dimen/_10px" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvHomeSec"
-                    style="@style/groupStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clipToPadding="false" />
+
 
                 <!-- Latest Books -->
                 <RelativeLayout
@@ -323,6 +318,18 @@
                         android:text="@string/lbl_latest_books"
                         android:textColor="@color/gray_2"
                         android:textSize="@dimen/_19sp" />
+
+                    <ImageView
+                        android:id="@+id/ivHomeLatestArrow"
+                        android:layout_width="17dp"
+                        android:layout_height="13dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/_10px"
+                        android:layout_marginEnd="@dimen/_10px"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/img_arrow_home_deep_orange"
+                        tools:ignore="ContentDescription" />
                 </RelativeLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -378,6 +385,13 @@
                     android:paddingStart="@dimen/_10px"
                     android:paddingEnd="@dimen/_10px"
                     android:layout_marginBottom="@dimen/_10px" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvHomeSec"
+                    style="@style/groupStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false" />
 
 
             </LinearLayout>

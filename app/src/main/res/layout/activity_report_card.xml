@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#0E1116">
+
+    <!-- Toolbar -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="12dp">
+
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:padding="9dp"
+            android:src="@drawable/ic_result_back"
+            app:tint="@color/white"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/result_back" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="6dp"
+            android:text="@string/result_report_card"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:fontFamily="@font/opensansromanextrabold" />
+
+        <ImageView
+            android:id="@+id/ivRefresh"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:padding="10dp"
+            android:src="@drawable/ic_result_refresh"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/result_regenerate" />
+    </LinearLayout>
+
+    <!-- Image -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never">
+
+            <ImageView
+                android:id="@+id/ivReport"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:padding="14dp"
+                android:contentDescription="@string/result_report_card" />
+        </androidx.core.widget.NestedScrollView>
+
+        <ProgressBar
+            android:id="@+id/progressReport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminateTint="@color/white" />
+
+        <TextView
+            android:id="@+id/tvReportEmpty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="40dp"
+            android:gravity="center"
+            android:text="@string/result_report_generating"
+            android:textColor="#AAB0BC"
+            android:textSize="13sp"
+            android:fontFamily="@font/opensansromansemibold"
+            android:visibility="gone" />
+    </FrameLayout>
+
+    <!-- Share bar -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="14dp">
+
+        <LinearLayout
+            android:id="@+id/btnShareReport"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:background="@drawable/bg_result_btn_primary"
+            android:foreground="?attr/selectableItemBackground">
+
+            <ProgressBar
+                android:id="@+id/progressShare"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginEnd="10dp"
+                android:indeterminateTint="@color/white"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/ivShareIcon"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_marginEnd="8dp"
+                android:src="@drawable/ic_result_share"
+                android:contentDescription="@string/result_share" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/result_share_report_card"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:fontFamily="@font/opensansromanbold" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

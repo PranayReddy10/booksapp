@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/bg_result_input"
+    android:padding="10dp"
+    android:layout_marginTop="8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <EditText
+            android:id="@+id/etSubCode"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="@string/result_sub_code_hint"
+            android:background="@null"
+            android:inputType="textCapCharacters"
+            android:textSize="12.5sp"
+            android:textColor="@color/gray"
+            android:fontFamily="@font/opensansromansemibold"
+            android:importantForAutofill="no" />
+
+        <ImageView
+            android:id="@+id/ivRemoveSubject"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:padding="6dp"
+            android:src="@drawable/ic_result_delete"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/result_remove_subject" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/etSubName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/result_sub_name_hint"
+        android:background="@null"
+        android:inputType="textCapWords"
+        android:textSize="12.5sp"
+        android:textColor="@color/gray"
+        android:fontFamily="@font/opensansromansemibold"
+        android:importantForAutofill="no" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginVertical="6dp"
+        android:background="#14000000" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:baselineAligned="false">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.1"
+            android:orientation="vertical"
+            android:layout_marginEnd="6dp">
+
+            <TextView
+                style="@style/ResultMiniLabel"
+                android:text="@string/result_col_cr" />
+
+            <EditText
+                android:id="@+id/etSubCredits"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/result_zero"
+                android:background="@null"
+                android:inputType="numberDecimal"
+                android:textSize="14sp"
+                android:textColor="@color/gray"
+                android:fontFamily="@font/opensansromanbold"
+                android:importantForAutofill="no" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.3"
+            android:orientation="vertical"
+            android:layout_marginEnd="6dp">
+
+            <TextView
+                style="@style/ResultMiniLabel"
+                android:text="@string/result_col_gr" />
+
+            <Spinner
+                android:id="@+id/spSubGrade"
+                android:layout_width="match_parent"
+                android:layout_height="38dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.1"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/ResultMiniLabel"
+                android:text="@string/result_col_pts" />
+
+            <TextView
+                android:id="@+id/tvSubPointsLive"
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:gravity="center_vertical"
+                android:text="@string/result_dash"
+                android:textSize="14sp"
+                android:textColor="@color/result_brand_blue"
+                android:fontFamily="@font/opensansromanextrabold" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginTop="4dp">
+
+        <CheckBox
+            android:id="@+id/cbBacklog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/result_backlog_tag"
+            android:textColor="@color/result_backlog_red"
+            android:textSize="11sp"
+            android:fontFamily="@font/opensansromanbold"
+            app:buttonTint="@color/result_backlog_red" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/btnToggleMarks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="4dp"
+            android:text="@string/result_more_marks"
+            android:textColor="@color/gray_2"
+            android:textSize="11sp"
+            android:fontFamily="@font/opensansromanbold"
+            android:background="?attr/selectableItemBackground" />
+    </LinearLayout>
+
+    <!-- Optional internal / external / total -->
+    <LinearLayout
+        android:id="@+id/llMarksRow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:baselineAligned="false"
+        android:layout_marginTop="6dp"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginEnd="5dp">
+
+            <TextView style="@style/ResultMiniLabel" android:text="@string/result_internal" />
+
+            <EditText
+                android:id="@+id/etInternal"
+                style="@style/ResultMarkInput"
+                android:importantForAutofill="no" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginHorizontal="5dp">
+
+            <TextView style="@style/ResultMiniLabel" android:text="@string/result_external" />
+
+            <EditText
+                android:id="@+id/etExternal"
+                style="@style/ResultMarkInput"
+                android:importantForAutofill="no" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginStart="5dp">
+
+            <TextView style="@style/ResultMiniLabel" android:text="@string/result_total" />
+
+            <EditText
+                android:id="@+id/etTotal"
+                style="@style/ResultMarkInput"
+                android:importantForAutofill="no" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

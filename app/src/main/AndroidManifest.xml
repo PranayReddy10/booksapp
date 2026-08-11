@@ -176,5 +176,20 @@
             android:name="com.onesignal.NotificationOpened.DEFAULT"
             android:value="DISABLE" />
 
+        <!-- My Results feature -->
+        <activity android:name="com.jntuh.books.EditResultActivity" />
+        <activity android:name="com.jntuh.books.ReportCardActivity" />
+
+        <!-- Used to share the generated report card PNG as an image file. -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
     </application>
 </manifest>

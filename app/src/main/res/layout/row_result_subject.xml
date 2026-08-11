@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingVertical="7dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvSubName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:textColor="@color/gray"
+                android:textSize="12.5sp"
+                android:fontFamily="@font/opensansromansemibold" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="1dp">
+
+                <TextView
+                    android:id="@+id/tvSubCode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/gray_2"
+                    android:textSize="10.5sp"
+                    android:fontFamily="@font/opensansromansemibold" />
+
+                <TextView
+                    android:id="@+id/tagBacklog"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:background="@drawable/bg_backlog_tag"
+                    android:paddingHorizontal="6dp"
+                    android:paddingVertical="1dp"
+                    android:text="@string/result_backlog_tag"
+                    android:textColor="@color/result_backlog_red"
+                    android:textSize="9sp"
+                    android:fontFamily="@font/opensansromanbold"
+                    android:visibility="gone" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvSubCredits"
+            android:layout_width="44dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/gray"
+            android:textSize="12.5sp"
+            android:fontFamily="@font/opensansromanbold" />
+
+        <TextView
+            android:id="@+id/tvSubGrade"
+            android:layout_width="44dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/result_brand_blue"
+            android:textSize="12.5sp"
+            android:fontFamily="@font/opensansromanextrabold" />
+
+        <TextView
+            android:id="@+id/tvSubPoints"
+            android:layout_width="44dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/gray"
+            android:textSize="12.5sp"
+            android:fontFamily="@font/opensansromanbold" />
+    </LinearLayout>
+
+    <!-- Optional internal/external/total line -->
+    <TextView
+        android:id="@+id/tvSubMarks"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:textColor="@color/gray_2"
+        android:textSize="10sp"
+        android:fontFamily="@font/opensansromansemibold"
+        android:visibility="gone" />
+</LinearLayout>
