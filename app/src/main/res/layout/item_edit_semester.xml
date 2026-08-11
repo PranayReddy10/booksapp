@@ -29,6 +29,20 @@
                 android:textSize="15sp"
                 android:fontFamily="@font/opensansromanextrabold" />
 
+            <TextView
+                android:id="@+id/tvSemLockedTag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                android:background="@drawable/bg_verified_pill"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="3dp"
+                android:text="@string/result_sem_locked_tag"
+                android:textColor="@color/result_verified_green"
+                android:textSize="10sp"
+                android:fontFamily="@font/opensansromanbold"
+                android:visibility="gone" />
+
             <ImageView
                 android:id="@+id/ivRemoveSem"
                 android:layout_width="34dp"

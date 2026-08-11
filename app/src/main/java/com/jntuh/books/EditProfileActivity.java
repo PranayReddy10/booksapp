@@ -6,6 +6,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -43,6 +47,7 @@ public class EditProfileActivity extends AppCompatActivity {
     Method method;
     String uId, uName, uEmail, uImage, uPhone, uType, uUsername;
     String uUniversity, uDepartment, uCollege, uGender, uYear, uRoll;
+    String uBranch, uRegulation, uDegree;
     boolean isProfile = false;
     ProgressDialog progressDialog;
     String imageProfile;
@@ -74,6 +79,9 @@ public class EditProfileActivity extends AppCompatActivity {
         uGender = intent.getStringExtra("uGender");
         uYear = intent.getStringExtra("uYear");
         uRoll = intent.getStringExtra("uRoll");
+        uBranch = intent.getStringExtra("uBranch");
+        uRegulation = intent.getStringExtra("uRegulation");
+        uDegree = intent.getStringExtra("uDegree");
 
         viewEditProfile.toolbarMain.tvToolbarTitle.setText(getString(R.string.profile_edt_title));
         viewEditProfile.toolbarMain.ivSearch.setVisibility(View.GONE);
@@ -97,6 +105,15 @@ public class EditProfileActivity extends AppCompatActivity {
         bindDetailRow(viewEditProfile.llYearRow, viewEditProfile.tvYearValue, uYear);
         bindDetailRow(viewEditProfile.llGenderRow, viewEditProfile.tvGenderValue, uGender);
         bindDetailRow(viewEditProfile.llRollRow, viewEditProfile.tvRollValue, uRoll);
+
+        // Editable academic fields.
+        if (uRoll != null) viewEditProfile.edtRoll.setText(uRoll);
+        setupAcademicSpinner(viewEditProfile.spProfileBranch, viewEditProfile.edtBranchOther,
+                R.array.result_branch_entries, uBranch);
+        setupAcademicSpinner(viewEditProfile.spProfileRegulation, viewEditProfile.edtRegulationOther,
+                R.array.result_regulation_entries, uRegulation);
+        setupAcademicSpinner(viewEditProfile.spProfileDegree, viewEditProfile.edtDegreeOther,
+                R.array.result_degree_entries, uDegree);
 
         viewEditProfile.btnSave.setOnClickListener(v -> save());
 
@@ -128,6 +145,52 @@ public class EditProfileActivity extends AppCompatActivity {
         } else {
             row.setVisibility(View.GONE);
         }
+    }
+
+    // Populate a dropdown from a string-array; if the stored value isn't in the
+    // list (or "Others" is chosen) reveal the free-text box. The last array item
+    // is expected to be "Others".
+    private void setupAcademicSpinner(Spinner spinner, EditText otherBox, int arrayRes, String current) {
+        final java.util.List<String> items = new java.util.ArrayList<>();
+        for (String s : getResources().getStringArray(arrayRes)) items.add(s);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.row_spinner_item, items);
+        spinner.setAdapter(adapter);
+
+        final String othersLabel = items.get(items.size() - 1); // "Others"
+        int sel = -1;
+        if (current != null && !current.trim().isEmpty()) {
+            for (int i = 0; i < items.size(); i++) {
+                if (items.get(i).equalsIgnoreCase(current.trim())) { sel = i; break; }
+            }
+            if (sel == -1) {
+                // Value not in list -> select Others and prefill the box.
+                sel = items.size() - 1;
+                otherBox.setText(current.trim());
+                otherBox.setVisibility(View.VISIBLE);
+            }
+        }
+        if (sel >= 0) spinner.setSelection(sel);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override public void onItemSelected(AdapterView<?> parent, View v, int pos, long id) {
+                boolean isOthers = othersLabel.equalsIgnoreCase(items.get(pos));
+                otherBox.setVisibility(isOthers ? View.VISIBLE : View.GONE);
+            }
+            @Override public void onNothingSelected(AdapterView<?> parent) { }
+        });
+    }
+
+    // Resolve the effective value: the free-text box when "Others" is selected,
+    // otherwise the spinner selection. Empty string when nothing chosen.
+    private String resolveSpinnerValue(Spinner spinner, EditText otherBox, int arrayRes) {
+        Object sel = spinner.getSelectedItem();
+        String value = sel == null ? "" : String.valueOf(sel);
+        String[] arr = getResources().getStringArray(arrayRes);
+        String othersLabel = arr.length > 0 ? arr[arr.length - 1] : "Others";
+        if (othersLabel.equalsIgnoreCase(value)) {
+            return otherBox.getText().toString().trim();
+        }
+        return value;
     }
 
     private void save() {
@@ -178,6 +241,14 @@ public class EditProfileActivity extends AppCompatActivity {
         jsObj.addProperty("email", sendEmail);
         jsObj.addProperty("password", sendPass);
         jsObj.addProperty("phone", sendPhone);
+        // Academic fields (source of truth for My Results).
+        jsObj.addProperty("rollnumber", viewEditProfile.edtRoll.getText().toString().trim());
+        jsObj.addProperty("branch", resolveSpinnerValue(viewEditProfile.spProfileBranch,
+                viewEditProfile.edtBranchOther, R.array.result_branch_entries));
+        jsObj.addProperty("regulation", resolveSpinnerValue(viewEditProfile.spProfileRegulation,
+                viewEditProfile.edtRegulationOther, R.array.result_regulation_entries));
+        jsObj.addProperty("degree", resolveSpinnerValue(viewEditProfile.spProfileDegree,
+                viewEditProfile.edtDegreeOther, R.array.result_degree_entries));
         if (isProfile) {
             RequestBody requestFile =
                     RequestBody.create(MediaType.parse("multipart/form-data"), new File(profile_image));

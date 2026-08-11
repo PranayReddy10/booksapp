@@ -332,6 +332,9 @@ public class ProfileFragment extends Fragment {
             intentProfile.putExtra("uGender", itemUser.getGender());
             intentProfile.putExtra("uYear", itemUser.getYear());
             intentProfile.putExtra("uRoll", itemUser.getRollnumber());
+            intentProfile.putExtra("uBranch", itemUser.getBranch());
+            intentProfile.putExtra("uRegulation", itemUser.getRegulation());
+            intentProfile.putExtra("uDegree", itemUser.getDegree());
             startActivity(intentProfile);
             dialog.dismiss();
         });

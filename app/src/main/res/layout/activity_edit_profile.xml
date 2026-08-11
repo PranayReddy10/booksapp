@@ -190,7 +190,157 @@
                     android:textCursorDrawable="@drawable/cursor"
                     tools:ignore="Autofill" />
 
-                <!-- Read-only academic details (shown when the profile API returns them) -->
+                <!-- ===== Editable academic fields (used by My Results) ===== -->
+
+                <!-- Roll number / Hall ticket -->
+                <TextView
+                    style="@style/txt_OpenSansRomanBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20px"
+                    android:layout_marginBottom="@dimen/_5px"
+                    android:text="@string/lbl_roll_number"
+                    android:textColor="@color/gray_trans_99"
+                    android:textSize="@dimen/_14sp" />
+
+                <EditText
+                    android:id="@+id/edtRoll"
+                    style="@style/txt_OpenSansRomanBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rectangle_bg_white_border"
+                    android:minHeight="@dimen/_50px"
+                    android:gravity="center_vertical"
+                    android:hint="@string/result_hall_ticket_hint"
+                    android:inputType="textCapCharacters"
+                    android:maxLength="12"
+                    android:paddingStart="@dimen/_20px"
+                    android:paddingEnd="@dimen/_20px"
+                    android:textColor="@color/gray"
+                    android:textColorHint="@color/edt_profile_text"
+                    android:textSize="@dimen/_15sp"
+                    android:importantForAutofill="no"
+                    tools:ignore="RtlSymmetry" />
+
+                <!-- Branch (dropdown + Others) -->
+                <TextView
+                    style="@style/txt_OpenSansRomanBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_15px"
+                    android:layout_marginBottom="@dimen/_5px"
+                    android:text="@string/result_branch_label"
+                    android:textColor="@color/gray_trans_99"
+                    android:textSize="@dimen/_14sp" />
+
+                <Spinner
+                    android:id="@+id/spProfileBranch"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_50px"
+                    android:background="@drawable/rectangle_bg_white_border"
+                    android:paddingStart="@dimen/_14px"
+                    android:paddingEnd="@dimen/_10px"
+                    tools:ignore="RtlSymmetry" />
+
+                <EditText
+                    android:id="@+id/edtBranchOther"
+                    style="@style/txt_OpenSansRomanBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8px"
+                    android:background="@drawable/rectangle_bg_white_border"
+                    android:minHeight="@dimen/_50px"
+                    android:gravity="center_vertical"
+                    android:hint="@string/result_other_hint"
+                    android:inputType="textCapWords"
+                    android:paddingStart="@dimen/_20px"
+                    android:paddingEnd="@dimen/_20px"
+                    android:textColor="@color/gray"
+                    android:textColorHint="@color/edt_profile_text"
+                    android:textSize="@dimen/_15sp"
+                    android:visibility="gone"
+                    android:importantForAutofill="no"
+                    tools:ignore="RtlSymmetry" />
+
+                <!-- Regulation (dropdown + Others) -->
+                <TextView
+                    style="@style/txt_OpenSansRomanBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_15px"
+                    android:layout_marginBottom="@dimen/_5px"
+                    android:text="@string/result_regulation_label"
+                    android:textColor="@color/gray_trans_99"
+                    android:textSize="@dimen/_14sp" />
+
+                <Spinner
+                    android:id="@+id/spProfileRegulation"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_50px"
+                    android:background="@drawable/rectangle_bg_white_border"
+                    android:paddingStart="@dimen/_14px"
+                    android:paddingEnd="@dimen/_10px"
+                    tools:ignore="RtlSymmetry" />
+
+                <EditText
+                    android:id="@+id/edtRegulationOther"
+                    style="@style/txt_OpenSansRomanBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8px"
+                    android:background="@drawable/rectangle_bg_white_border"
+                    android:minHeight="@dimen/_50px"
+                    android:gravity="center_vertical"
+                    android:hint="@string/result_other_hint"
+                    android:inputType="textCapCharacters"
+                    android:paddingStart="@dimen/_20px"
+                    android:paddingEnd="@dimen/_20px"
+                    android:textColor="@color/gray"
+                    android:textColorHint="@color/edt_profile_text"
+                    android:textSize="@dimen/_15sp"
+                    android:visibility="gone"
+                    android:importantForAutofill="no"
+                    tools:ignore="RtlSymmetry" />
+
+                <!-- Degree (dropdown + Others) -->
+                <TextView
+                    style="@style/txt_OpenSansRomanBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_15px"
+                    android:layout_marginBottom="@dimen/_5px"
+                    android:text="@string/result_degree_label"
+                    android:textColor="@color/gray_trans_99"
+                    android:textSize="@dimen/_14sp" />
+
+                <Spinner
+                    android:id="@+id/spProfileDegree"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_50px"
+                    android:background="@drawable/rectangle_bg_white_border"
+                    android:paddingStart="@dimen/_14px"
+                    android:paddingEnd="@dimen/_10px"
+                    tools:ignore="RtlSymmetry" />
+
+                <EditText
+                    android:id="@+id/edtDegreeOther"
+                    style="@style/txt_OpenSansRomanBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8px"
+                    android:background="@drawable/rectangle_bg_white_border"
+                    android:minHeight="@dimen/_50px"
+                    android:gravity="center_vertical"
+                    android:hint="@string/result_other_hint"
+                    android:inputType="textCapWords"
+                    android:paddingStart="@dimen/_20px"
+                    android:paddingEnd="@dimen/_20px"
+                    android:textColor="@color/gray"
+                    android:textColorHint="@color/edt_profile_text"
+                    android:textSize="@dimen/_15sp"
+                    android:visibility="gone"
+                    android:importantForAutofill="no"
+                    tools:ignore="RtlSymmetry" />
                 <LinearLayout
                     android:id="@+id/llUniversityRow"
                     android:layout_width="match_parent"

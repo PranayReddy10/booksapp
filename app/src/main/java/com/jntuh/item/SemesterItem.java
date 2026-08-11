@@ -15,6 +15,15 @@ public class SemesterItem implements Serializable {
     @SerializedName("sem_code")
     private String sem_code;
 
+    @SerializedName("sem_id")
+    private String sem_id;
+
+    @SerializedName("verified")
+    private int verified;
+
+    @SerializedName("locked")
+    private int locked;
+
     @SerializedName("sgpa")
     private Double sgpa;
 
@@ -36,6 +45,30 @@ public class SemesterItem implements Serializable {
 
     public void setSem_code(String sem_code) {
         this.sem_code = sem_code;
+    }
+
+    public String getSem_id() {
+        return sem_id;
+    }
+
+    public void setSem_id(String sem_id) {
+        this.sem_id = sem_id;
+    }
+
+    public int getVerified() {
+        return verified;
+    }
+
+    public void setVerified(int verified) {
+        this.verified = verified;
+    }
+
+    public int getLocked() {
+        return locked;
+    }
+
+    public void setLocked(int locked) {
+        this.locked = locked;
     }
 
     public Double getSgpa() {

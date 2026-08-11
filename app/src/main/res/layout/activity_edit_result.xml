@@ -37,7 +37,73 @@
             android:fontFamily="@font/opensansromanextrabold" />
     </LinearLayout>
 
+    <!-- Blocker shown when the profile is incomplete -->
+    <LinearLayout
+        android:id="@+id/llProfileBlocker"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:paddingHorizontal="32dp"
+        android:visibility="gone">
+
+        <FrameLayout
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:background="@drawable/bg_result_empty_circle">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_result_edit"
+                app:tint="@color/app_bg_orange"
+                android:contentDescription="@string/result_complete_profile_title" />
+        </FrameLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/result_complete_profile_title"
+            android:textColor="@color/gray"
+            android:textSize="18sp"
+            android:fontFamily="@font/opensansromanextrabold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="@string/result_complete_profile_desc"
+            android:textColor="@color/gray_2"
+            android:textSize="13sp"
+            android:fontFamily="@font/opensansromansemibold" />
+
+        <LinearLayout
+            android:id="@+id/btnGoCompleteProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="52dp"
+            android:layout_marginTop="24dp"
+            android:paddingHorizontal="28dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:background="@drawable/bg_result_btn_primary"
+            android:foreground="?attr/selectableItemBackground">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/result_complete_profile_btn"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:fontFamily="@font/opensansromanbold" />
+        </LinearLayout>
+    </LinearLayout>
+
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollResultForm"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -65,77 +131,39 @@
                     android:padding="16dp">
 
                     <TextView
-                        style="@style/ResultFieldLabel"
-                        android:text="@string/result_hall_ticket_label" />
-
-                    <EditText
-                        android:id="@+id/etHallTicket"
-                        style="@style/ResultInput"
-                        android:hint="@string/result_hall_ticket_hint"
-                        android:inputType="textCapCharacters"
-                        android:maxLength="12"
-                        android:importantForAutofill="no" />
-
-                    <TextView
-                        style="@style/ResultFieldLabel"
-                        android:text="@string/result_name_label" />
-
-                    <EditText
-                        android:id="@+id/etStudentName"
-                        style="@style/ResultInput"
-                        android:hint="@string/result_name_hint"
-                        android:inputType="textCapWords"
-                        android:importantForAutofill="no" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:baselineAligned="false">
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical"
-                            android:layout_marginEnd="6dp">
-
-                            <TextView
-                                style="@style/ResultFieldLabel"
-                                android:text="@string/result_branch_label" />
-
-                            <Spinner
-                                android:id="@+id/spBranch"
-                                style="@style/ResultSpinner" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical"
-                            android:layout_marginStart="6dp">
-
-                            <TextView
-                                style="@style/ResultFieldLabel"
-                                android:text="@string/result_regulation_label" />
-
-                            <Spinner
-                                android:id="@+id/spRegulation"
-                                style="@style/ResultSpinner" />
-                        </LinearLayout>
-                    </LinearLayout>
+                        android:text="@string/result_from_profile"
+                        android:textColor="@color/gray_2"
+                        android:textSize="11sp"
+                        android:fontFamily="@font/opensansromanbold" />
 
                     <TextView
-                        style="@style/ResultFieldLabel"
-                        android:text="@string/result_degree_label" />
+                        android:id="@+id/tvProfHallTicket"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:textColor="@color/gray"
+                        android:textSize="17sp"
+                        android:fontFamily="@font/opensansromanextrabold" />
 
-                    <EditText
-                        android:id="@+id/etDegree"
-                        style="@style/ResultInput"
-                        android:hint="@string/result_degree_hint"
-                        android:inputType="textCapCharacters"
-                        android:importantForAutofill="no" />
+                    <TextView
+                        android:id="@+id/tvProfName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:textColor="@color/gray"
+                        android:textSize="13sp"
+                        android:fontFamily="@font/opensansromansemibold" />
+
+                    <TextView
+                        android:id="@+id/tvProfBranchReg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:textColor="@color/gray_2"
+                        android:textSize="12sp"
+                        android:fontFamily="@font/opensansromansemibold" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -201,6 +229,7 @@
 
     <!-- Save bar -->
     <LinearLayout
+        android:id="@+id/llSaveBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"

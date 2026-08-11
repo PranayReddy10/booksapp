@@ -29,7 +29,6 @@ import com.jntuh.rest.ApiInterface;
 import com.jntuh.util.API;
 import com.jntuh.util.GradeUtil;
 import com.jntuh.util.Method;
-import com.jntuh.util.SearchableSpinner;
 import com.jntuh.books.databinding.ActivityEditResultBinding;
 
 import org.jetbrains.annotations.NotNull;
@@ -57,6 +56,9 @@ public class EditResultActivity extends AppCompatActivity {
     private ActivityEditResultBinding binding;
     private Method method;
 
+    // Profile-sourced identity (read-only on this screen).
+    private String pRoll = "", pBranch = "", pRegulation = "", pDegree = "", pName = "";
+
     // Runtime view models: one editor view per semester, each holding subject views.
     private final List<SemesterEditor> semesterEditors = new ArrayList<>();
 
@@ -69,41 +71,85 @@ public class EditResultActivity extends AppCompatActivity {
         method = new Method(this);
         method.forceRTLIfSupported();
 
-        setupSpinners();
-
-        // Prefill name from profile; hall ticket is entered by the user.
-        if (method.getUserName() != null && !method.getUserName().isEmpty()) {
-            binding.etStudentName.setText(method.getUserName());
-        }
-
         binding.ivBack.setOnClickListener(v -> finish());
         binding.btnAddSemester.setOnClickListener(v -> addSemester(null));
         binding.btnSaveResult.setOnClickListener(v -> save());
+        binding.btnGoCompleteProfile.setOnClickListener(v -> {
+            // Route to Profile tab / edit-profile. The user edits there and returns.
+            finish();
+        });
 
-        // Load an existing result to edit; otherwise start with one blank semester.
+        // The results form pulls identity from the profile. Fetch it first, gate
+        // on completeness, then load any existing result.
+        if (method.isNetworkAvailable()) {
+            fetchProfileThenLoad();
+        } else {
+            method.alertBox(getString(R.string.internet_connection));
+            finish();
+        }
+    }
+
+    /** Fetch profile; populate read-only identity; block if incomplete. */
+    private void fetchProfileThenLoad() {
+        JsonObject jsObj = (JsonObject) new Gson().toJsonTree(new API(this));
+        jsObj.addProperty("user_id", method.getUserId());
+        ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
+        api.getProfileData(API.toBase64(jsObj.toString())).enqueue(new Callback<com.jntuh.response.LoginRP>() {
+            @Override
+            public void onResponse(@NotNull Call<com.jntuh.response.LoginRP> call,
+                                   @NotNull Response<com.jntuh.response.LoginRP> resp) {
+                if (resp.body() != null && resp.body().getItemUserList() != null
+                        && !resp.body().getItemUserList().isEmpty()) {
+                    com.jntuh.response.LoginRP.ItemUser u = resp.body().getItemUserList().get(0);
+                    pRoll = nn(u.getRollnumber());
+                    pBranch = nn(u.getBranch());
+                    pRegulation = nn(u.getRegulation());
+                    pDegree = nn(u.getDegree());
+                    pName = nn(u.getName());
+                }
+                boolean complete = !pRoll.isEmpty() && !pBranch.isEmpty() && !pRegulation.isEmpty();
+                if (!complete) {
+                    showBlocker(true);
+                    return;
+                }
+                showBlocker(false);
+                bindIdentity();
+                afterProfileReady();
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<com.jntuh.response.LoginRP> call, @NotNull Throwable t) {
+                method.alertBox(getString(R.string.failed_try_again));
+                finish();
+            }
+        });
+    }
+
+    private void showBlocker(boolean show) {
+        binding.llProfileBlocker.setVisibility(show ? View.VISIBLE : View.GONE);
+        binding.scrollResultForm.setVisibility(show ? View.GONE : View.VISIBLE);
+        binding.llSaveBar.setVisibility(show ? View.GONE : View.VISIBLE);
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void bindIdentity() {
+        binding.tvProfHallTicket.setText(pRoll);
+        binding.tvProfName.setText(pName);
+        StringBuilder br = new StringBuilder();
+        if (!pBranch.isEmpty()) br.append(pBranch);
+        if (!pRegulation.isEmpty()) { if (br.length() > 0) br.append("  ·  "); br.append(pRegulation); }
+        if (!pDegree.isEmpty()) { if (br.length() > 0) br.append("  ·  "); br.append(pDegree); }
+        binding.tvProfBranchReg.setText(br.toString());
+    }
+
+    private void afterProfileReady() {
         boolean hasResult = getIntent().getBooleanExtra(EXTRA_HAS_RESULT, false);
-        if (hasResult && method.isNetworkAvailable()) {
+        if (hasResult) {
             binding.tvEditTitle.setText(getString(R.string.result_edit_title));
             loadExisting();
         } else {
             addSemester(null);
         }
-    }
-
-    private void setupSpinners() {
-        List<String> branches = new ArrayList<>();
-        for (String s : getResources().getStringArray(R.array.result_branch_entries)) branches.add(s);
-        ArrayAdapter<String> branchAdapter =
-                new ArrayAdapter<>(this, R.layout.row_spinner_item, branches);
-        binding.spBranch.setAdapter(branchAdapter);
-        SearchableSpinner.attach(binding.spBranch, getString(R.string.result_select_branch));
-
-        List<String> regs = new ArrayList<>();
-        for (String s : getResources().getStringArray(R.array.result_regulation_entries)) regs.add(s);
-        ArrayAdapter<String> regAdapter =
-                new ArrayAdapter<>(this, R.layout.row_spinner_item, regs);
-        binding.spRegulation.setAdapter(regAdapter);
-        SearchableSpinner.attach(binding.spRegulation, getString(R.string.result_select_regulation));
     }
 
     // ---------------------------------------------------------------- load
@@ -142,12 +188,8 @@ public class EditResultActivity extends AppCompatActivity {
     }
 
     private void prefill(ResultItem item) {
-        binding.etHallTicket.setText(nn(item.getHall_ticket_no()));
-        binding.etStudentName.setText(nn(item.getStudent_name()));
-        binding.etDegree.setText(nn(item.getDegree()));
-        selectSpinner(binding.spBranch, item.getBranch());
-        selectSpinner(binding.spRegulation, item.getRegulation());
-
+        // Identity is shown read-only from the profile (bindIdentity()); here we
+        // only rebuild the semester editors from the saved result.
         binding.llSemesterEditors.removeAllViews();
         semesterEditors.clear();
         if (item.getSemesters() != null && !item.getSemesters().isEmpty()) {
@@ -178,6 +220,18 @@ public class EditResultActivity extends AppCompatActivity {
             semesterEditors.remove(ed);
             renumber();
         });
+
+        // A verified/locked semester is shown read-only: no edits, no removal,
+        // no add-subject. The student can still add other semesters.
+        ed.locked = (model != null && model.getLocked() == 1);
+        if (ed.locked) {
+            ed.etSemCode.setEnabled(false);
+            ed.etExamMonth.setEnabled(false);
+            btnAddSubject.setVisibility(View.GONE);
+            ivRemoveSem.setVisibility(View.GONE);
+            View lockTag = block.findViewById(R.id.tvSemLockedTag);
+            if (lockTag != null) lockTag.setVisibility(View.VISIBLE);
+        }
 
         if (model != null) {
             ed.etSemCode.setText(nn(model.getSem_code()));
@@ -267,6 +321,17 @@ public class EditResultActivity extends AppCompatActivity {
 
         sem.subjects.add(se);
         sem.llSubjects.addView(row);
+        if (sem.locked) {
+            se.etCode.setEnabled(false);
+            se.etName.setEnabled(false);
+            se.etCredits.setEnabled(false);
+            se.spGrade.setEnabled(false);
+            se.cbBacklog.setEnabled(false);
+            se.etInternal.setEnabled(false);
+            se.etExternal.setEnabled(false);
+            se.etTotal.setEnabled(false);
+            ivRemove.setVisibility(View.GONE);
+        }
         row.startAnimation(android.view.animation.AnimationUtils.loadAnimation(
                 this, R.anim.result_row_slide_in));
     }
@@ -281,16 +346,13 @@ public class EditResultActivity extends AppCompatActivity {
     // -------------------------------------------------------------- save
 
     private void save() {
-        String hallTicket = binding.etHallTicket.getText().toString().trim();
-        if (hallTicket.isEmpty()) {
-            Toast.makeText(this, getString(R.string.result_need_hall_ticket), Toast.LENGTH_SHORT).show();
-            binding.etHallTicket.requestFocus();
-            return;
-        }
-
         List<SemesterItem> semesters = new ArrayList<>();
         int backlogCount = 0;
         for (SemesterEditor sem : semesterEditors) {
+            // Never submit a locked (verified) semester — server ignores it too,
+            // but we skip it client-side so nothing is needlessly re-sent.
+            if (sem.locked) continue;
+
             List<SubjectItem> subjects = new ArrayList<>();
             for (SubjectEditor se : sem.subjects) {
                 String code = se.etCode.getText().toString().trim();
@@ -331,11 +393,10 @@ public class EditResultActivity extends AppCompatActivity {
 
         JsonObject jsObj = (JsonObject) new Gson().toJsonTree(new API(this));
         jsObj.addProperty("user_id", method.getUserId());
-        jsObj.addProperty("hall_ticket_no", hallTicket);
-        jsObj.addProperty("student_name", binding.etStudentName.getText().toString().trim());
-        jsObj.addProperty("regulation", str(binding.spRegulation));
-        jsObj.addProperty("degree", binding.etDegree.getText().toString().trim());
-        jsObj.addProperty("branch", str(binding.spBranch));
+        // Identity comes from the profile server-side; we still send hall_ticket
+        // (= profile roll) so an admin-added row links on first save.
+        jsObj.addProperty("hall_ticket_no", pRoll);
+        jsObj.addProperty("student_name", pName);
         jsObj.addProperty("backlogs_count", String.valueOf(backlogCount));
         jsObj.addProperty("semesters_json", new Gson().toJson(semesters)); // list -> JSON string
 
@@ -400,16 +461,6 @@ public class EditResultActivity extends AppCompatActivity {
 
     // ------------------------------------------------------------ helpers
 
-    private void selectSpinner(Spinner sp, String value) {
-        if (value == null || sp.getAdapter() == null) return;
-        for (int i = 0; i < sp.getAdapter().getCount(); i++) {
-            if (value.trim().equalsIgnoreCase(String.valueOf(sp.getAdapter().getItem(i)))) {
-                sp.setSelection(i);
-                return;
-            }
-        }
-    }
-
     private void selectGrade(Spinner sp, String grade) {
         if (grade == null) return;
         for (int i = 0; i < GradeUtil.GRADES.length; i++) {
@@ -418,11 +469,6 @@ public class EditResultActivity extends AppCompatActivity {
                 return;
             }
         }
-    }
-
-    private static String str(Spinner sp) {
-        Object o = sp.getSelectedItem();
-        return o == null ? "" : String.valueOf(o);
     }
 
     private static String nn(String s) {
@@ -460,6 +506,7 @@ public class EditResultActivity extends AppCompatActivity {
         TextView tvTitle;
         EditText etSemCode, etExamMonth;
         LinearLayout llSubjects;
+        boolean locked = false;
         final List<SubjectEditor> subjects = new ArrayList<>();
     }
 

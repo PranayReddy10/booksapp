@@ -75,6 +75,9 @@ public class SemesterAdapter extends RecyclerView.Adapter<SemesterAdapter.ViewHo
             b.llSgpaChip.setVisibility(View.GONE);
         }
 
+        // Per-semester verified/locked badge.
+        b.pillSemLocked.setVisibility(sem.getLocked() == 1 ? View.VISIBLE : View.GONE);
+
         // Build the subject rows once per bind.
         b.llSubjectRows.removeAllViews();
         List<SubjectItem> subjects = sem.getSubjects();

@@ -87,6 +87,15 @@ public class LoginRP implements Serializable {
         @SerializedName("rollnumber")
         String rollnumber;
 
+        @SerializedName("branch")
+        String branch;
+
+        @SerializedName("regulation")
+        String regulation;
+
+        @SerializedName("degree")
+        String degree;
+
         @SerializedName("msg")
         String msg;
 
@@ -171,6 +180,18 @@ public class LoginRP implements Serializable {
 
         public String getRollnumber() {
             return rollnumber;
+        }
+
+        public String getBranch() {
+            return branch;
+        }
+
+        public String getRegulation() {
+            return regulation;
+        }
+
+        public String getDegree() {
+            return degree;
         }
 
         public String getMsg() {

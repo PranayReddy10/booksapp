@@ -391,6 +391,7 @@
     <string name="lbl_settings">Settings</string>
     <string name="lbl_latest_books">Latest Books</string>
 
+    <!-- ================= My Results feature ================= -->
     <!-- Tab -->
     <string name="tab_my_results">My Results</string>
 
@@ -507,16 +508,43 @@
         <item>Pharmacy</item>
         <item>MBA</item>
         <item>MCA</item>
-        <item>Other</item>
+        <item>Others</item>
     </string-array>
 
     <!-- Regulations -->
     <string-array name="result_regulation_entries">
+        <item>R26</item>
+        <item>R25</item>
+        <item>R24</item>
+        <item>R23</item>
         <item>R22</item>
+        <item>R21</item>
+        <item>R20</item>
+        <item>R19</item>
         <item>R18</item>
+        <item>R17</item>
         <item>R16</item>
-        <item>R15</item>
-        <item>R13</item>
-        <item>Other</item>
+        <item>Others</item>
     </string-array>
+
+    <!-- Degrees -->
+    <string-array name="result_degree_entries">
+        <item>B.Tech</item>
+        <item>B.Pharmacy</item>
+        <item>M.Tech</item>
+        <item>M.Pharmacy</item>
+        <item>MBA</item>
+        <item>MCA</item>
+        <item>B.Sc</item>
+        <item>Others</item>
+    </string-array>
+
+    <string name="result_other_hint">Type your value</string>
+    <string name="result_select">Select</string>
+    <string name="result_complete_profile_title">Complete your profile first</string>
+    <string name="result_complete_profile_desc">Add your roll number, branch and regulation in Edit Profile. Your results use these details.</string>
+    <string name="result_complete_profile_btn">Complete profile</string>
+    <string name="result_sem_locked_tag">Verified · locked</string>
+    <string name="result_from_profile">FROM YOUR PROFILE</string>
+    <string name="result_sem_locked_note">Verified semesters are locked. You can still add or edit other semesters.</string>
 </resources>
