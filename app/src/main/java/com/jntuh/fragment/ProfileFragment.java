@@ -117,15 +117,15 @@ public class ProfileFragment extends Fragment {
             setupViewPager(viewProfile.vpTab);
             new TabLayoutMediator(viewProfile.tabLayout, viewProfile.vpTab, (tab, position) -> {
                 if (position == 0) {
-                    tab.setText(getString(R.string.tab_continue));
-                } else if (position == 1) {
-                    tab.setText(getString(R.string.tab_manage_books));
-                } else if (position == 2) {
-                    tab.setText(getString(R.string.tab_subs));
-                } else if (position == 3) {
-                    tab.setText(getString(R.string.tab_rent));
-                } else if (position == 4) {
                     tab.setText(getString(R.string.tab_my_results));
+                } else if (position == 1) {
+                    tab.setText(getString(R.string.tab_continue));
+                } else if (position == 2) {
+                    tab.setText(getString(R.string.tab_manage_books));
+                } else if (position == 3) {
+                    tab.setText(getString(R.string.tab_subs));
+                } else if (position == 4) {
+                    tab.setText(getString(R.string.tab_rent));
                 }
             }).attach();
 
@@ -142,11 +142,11 @@ public class ProfileFragment extends Fragment {
 
     private void setupViewPager(final ViewPager2 viewPager) {
         final ViewPagerAdapter adapter = new ViewPagerAdapter(requireActivity());
+        adapter.addFragment(new MyResultsFragment(), getString(R.string.tab_my_results));
         adapter.addFragment(new ContinueFragment(), getString(R.string.tab_continue));
         adapter.addFragment(new ManageBooksFragment(), getString(R.string.tab_manage_books));
         adapter.addFragment(new DashBoardFragment(), getString(R.string.tab_subs));
         adapter.addFragment(new RentBookFragment(), getString(R.string.tab_rent));
-        adapter.addFragment(new MyResultsFragment(), getString(R.string.tab_my_results));
         viewPager.setAdapter(adapter);
         if (isContinue) {
             viewPager.setCurrentItem(movePos, false);
@@ -194,8 +194,6 @@ public class ProfileFragment extends Fragment {
                             if (loginRPSocial != null && loginRPSocial.getSuccess().equals("1")) {
                                 if (loginRPSocial.getItemUserList().get(0).getSuccess().equals("1")) {
                                     itemUser = loginRPSocial.getItemUserList().get(0);
-                                    // TEMP DEBUG: shows exactly what the server returned for username.
-                                    Log.d("PROFILE_USERNAME", "username='" + itemUser.getUsername() + "'");
                                     viewProfile.llProfile.setVisibility(View.VISIBLE);
                                     viewProfile.llProfile2.setVisibility(View.VISIBLE);
                                     viewProfile.ivMoreMenu.setVisibility(View.VISIBLE);
@@ -210,12 +208,23 @@ public class ProfileFragment extends Fragment {
                                     viewProfile.tvProfileEmail.setText(itemUser.getEmail());
 
                                     String uname = itemUser.getUsername();
-                                    if (uname != null && !uname.isEmpty()) {
+                                    String emailLocal = itemUser.getEmail() != null && itemUser.getEmail().contains("@")
+                                            ? itemUser.getEmail().substring(0, itemUser.getEmail().indexOf('@'))
+                                            : "";
+                                    // Show the @username only when it's real and adds
+                                    // information (not empty, not just a copy of the
+                                    // name or the email's local part).
+                                    if (uname != null && !uname.trim().isEmpty()
+                                            && !uname.equalsIgnoreCase(itemUser.getName())
+                                            && !uname.equalsIgnoreCase(emailLocal)) {
                                         viewProfile.tvProfileUsername.setVisibility(View.VISIBLE);
                                         viewProfile.tvProfileUsername.setText("@" + uname);
                                         method.saveMediaProfile(uname, itemUser.getUser_image());
                                     } else {
                                         viewProfile.tvProfileUsername.setVisibility(View.GONE);
+                                        if (uname != null && !uname.trim().isEmpty()) {
+                                            method.saveMediaProfile(uname, itemUser.getUser_image());
+                                        }
                                     }
                                 } else {
                                     method.alertBox(loginRPSocial.getItemUserList().get(0).getMsg());

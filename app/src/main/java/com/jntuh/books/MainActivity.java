@@ -95,6 +95,8 @@ public class MainActivity extends AppCompatActivity {
         }
         viewMain.bottomNav.frameHome.setOnClickListener(v -> {
             selectBottomNav(0);
+            viewMain.fabUpload.show();
+            viewMain.fabFeed.show();
             viewMain.toolbarMain.toolbarToolbar.setVisibility(View.GONE);
             HomeFragment homeFragment1 = new HomeFragment();
             homeFragment1.setOnItemClickListener(position -> profileFragment(true, 0));
@@ -104,6 +106,8 @@ public class MainActivity extends AppCompatActivity {
 
         viewMain.bottomNav.frameLatest.setOnClickListener(v -> {
             selectBottomNav(1);
+            viewMain.fabUpload.show();
+            viewMain.fabFeed.show();
             viewMain.toolbarMain.toolbarToolbar.setVisibility(View.GONE);
             LatestFragment latestFragment = new LatestFragment();
             loadFrag(latestFragment, "", fragmentManager);
@@ -111,6 +115,8 @@ public class MainActivity extends AppCompatActivity {
 
         viewMain.bottomNav.frameCat.setOnClickListener(v -> {
             selectBottomNav(2);
+            viewMain.fabUpload.show();
+            viewMain.fabFeed.show();
             viewMain.toolbarMain.toolbarToolbar.setVisibility(View.GONE);
             CategoryFragment categoryFragment = new CategoryFragment();
             loadFrag(categoryFragment, "", fragmentManager);
@@ -119,6 +125,8 @@ public class MainActivity extends AppCompatActivity {
 
         viewMain.bottomNav.frameAuthor.setOnClickListener(v -> {
             selectBottomNav(3);
+            viewMain.fabUpload.show();
+            viewMain.fabFeed.show();
             viewMain.toolbarMain.toolbarToolbar.setVisibility(View.GONE);
             MediaExploreFragment mediaExploreFragment = new MediaExploreFragment();
             loadFrag(mediaExploreFragment, "", fragmentManager);
@@ -144,6 +152,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void profileFragment(boolean isContinue, int pos) {
         selectBottomNav(4);
+        // Hide the global Upload / Feed FABs on the Profile page.
+        viewMain.fabUpload.hide();
+        viewMain.fabFeed.hide();
         Bundle bundle = new Bundle();
         bundle.putBoolean("isContinue", isContinue);
         bundle.putInt("movePos", pos);

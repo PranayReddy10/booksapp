@@ -299,8 +299,15 @@ public class EditProfileActivity extends AppCompatActivity {
                 uniId = universityList.get(uPos - 1).getUniversity_id();
             }
             filterDepartments(uniId);
-            // Ensure the saved department is selected after the list is built.
             selectByName(viewEditProfile.spEditDepartment, departmentNames, uDepartment);
+            // Fallback: if the saved department isn't in the filtered list (e.g.
+            // the university name didn't match), show ALL departments so it can
+            // still be selected and displayed.
+            if (uDepartment != null && !uDepartment.trim().isEmpty()
+                    && viewEditProfile.spEditDepartment.getSelectedItemPosition() == 0) {
+                filterDepartments(null);
+                selectByName(viewEditProfile.spEditDepartment, departmentNames, uDepartment);
+            }
         }
     }
 
