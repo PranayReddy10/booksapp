@@ -24,6 +24,14 @@ import com.jntuh.util.API;
 import com.jntuh.util.Events;
 import com.jntuh.util.GlobalBus;
 import com.jntuh.util.Method;
+import com.jntuh.item.UniversityList;
+import com.jntuh.item.DepartmentList;
+import com.jntuh.item.CollegeList;
+import com.jntuh.response.UniversityRP;
+import com.jntuh.response.DepartmentRP;
+import com.jntuh.response.CollegeRP;
+import java.util.ArrayList;
+import java.util.List;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -48,6 +56,17 @@ public class EditProfileActivity extends AppCompatActivity {
     String uId, uName, uEmail, uImage, uPhone, uType, uUsername;
     String uUniversity, uDepartment, uCollege, uGender, uYear, uRoll;
     String uBranch, uRegulation, uDegree;
+
+    // University -> Department (= Branch) -> College cascade (reused from CompleteProfile).
+    private final List<UniversityList> universityList = new ArrayList<>();
+    private final List<DepartmentList> departmentAll = new ArrayList<>();
+    private final List<DepartmentList> departmentFiltered = new ArrayList<>();
+    private final List<CollegeList> collegeList = new ArrayList<>();
+    private final List<String> universityNames = new ArrayList<>();
+    private final List<String> departmentNames = new ArrayList<>();
+    private final List<String> collegeNames = new ArrayList<>();
+    private ArrayAdapter<String> universityAdapter, departmentAdapter, collegeAdapter;
+    private boolean universitiesLoaded = false, departmentsLoaded = false;
     boolean isProfile = false;
     ProgressDialog progressDialog;
     String imageProfile;
@@ -99,17 +118,18 @@ public class EditProfileActivity extends AppCompatActivity {
                 (uUsername != null && !uUsername.isEmpty()) ? "@" + uUsername : "");
         viewEditProfile.edtPhone.setText(uPhone);
 
-        bindDetailRow(viewEditProfile.llUniversityRow, viewEditProfile.tvUniversityValue, uUniversity);
-        bindDetailRow(viewEditProfile.llDepartmentRow, viewEditProfile.tvDepartmentValue, uDepartment);
-        bindDetailRow(viewEditProfile.llCollegeRow, viewEditProfile.tvCollegeValue, uCollege);
+        // University / Department (= Branch) / College become editable dropdowns.
+        viewEditProfile.llUniversityRow.setVisibility(View.VISIBLE);
+        viewEditProfile.llDepartmentRow.setVisibility(View.VISIBLE);
+        viewEditProfile.llCollegeRow.setVisibility(View.VISIBLE);
+        // Year + gender stay as-is (read-only rows, shown only if present).
         bindDetailRow(viewEditProfile.llYearRow, viewEditProfile.tvYearValue, uYear);
         bindDetailRow(viewEditProfile.llGenderRow, viewEditProfile.tvGenderValue, uGender);
-        bindDetailRow(viewEditProfile.llRollRow, viewEditProfile.tvRollValue, uRoll);
 
-        // Editable academic fields.
+        setupCascadeSpinners();
+
+        // Editable extras.
         if (uRoll != null) viewEditProfile.edtRoll.setText(uRoll);
-        setupAcademicSpinner(viewEditProfile.spProfileBranch, viewEditProfile.edtBranchOther,
-                R.array.result_branch_entries, uBranch);
         setupAcademicSpinner(viewEditProfile.spProfileRegulation, viewEditProfile.edtRegulationOther,
                 R.array.result_regulation_entries, uRegulation);
         setupAcademicSpinner(viewEditProfile.spProfileDegree, viewEditProfile.edtDegreeOther,
@@ -144,6 +164,143 @@ public class EditProfileActivity extends AppCompatActivity {
             row.setVisibility(View.VISIBLE);
         } else {
             row.setVisibility(View.GONE);
+        }
+    }
+
+    // ---- University -> Department (=Branch) -> College cascade ----
+
+    private void setupCascadeSpinners() {
+        universityNames.add(getString(R.string.lbl_select_university));
+        universityAdapter = new ArrayAdapter<>(this, R.layout.row_spinner_item, universityNames);
+        viewEditProfile.spEditUniversity.setAdapter(universityAdapter);
+
+        departmentNames.add(getString(R.string.lbl_select_department));
+        departmentAdapter = new ArrayAdapter<>(this, R.layout.row_spinner_item, departmentNames);
+        viewEditProfile.spEditDepartment.setAdapter(departmentAdapter);
+
+        collegeNames.add(getString(R.string.lbl_select_college));
+        collegeAdapter = new ArrayAdapter<>(this, R.layout.row_spinner_item, collegeNames);
+        viewEditProfile.spEditCollege.setAdapter(collegeAdapter);
+
+        com.jntuh.util.SearchableSpinner.attach(viewEditProfile.spEditUniversity, getString(R.string.lbl_select_university));
+        com.jntuh.util.SearchableSpinner.attach(viewEditProfile.spEditDepartment, getString(R.string.lbl_select_department));
+        com.jntuh.util.SearchableSpinner.attach(viewEditProfile.spEditCollege, getString(R.string.lbl_select_college));
+
+        viewEditProfile.spEditUniversity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
+                String universityId = null;
+                if (position > 0 && (position - 1) < universityList.size()) {
+                    universityId = universityList.get(position - 1).getUniversity_id();
+                }
+                filterDepartments(universityId);
+            }
+            @Override public void onNothingSelected(AdapterView<?> parent) { }
+        });
+
+        if (method.isNetworkAvailable()) {
+            loadUniversities();
+            loadDepartments();
+            loadColleges();
+        }
+    }
+
+    private void loadUniversities() {
+        JsonObject jsObj = (JsonObject) new Gson().toJsonTree(new API(this));
+        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+        apiService.getUniversityListData(API.toBase64(jsObj.toString())).enqueue(new Callback<UniversityRP>() {
+            @Override public void onResponse(@NotNull Call<UniversityRP> call, @NotNull Response<UniversityRP> response) {
+                UniversityRP body = response.body();
+                if (body != null && "1".equals(body.getSuccess()) && body.getUniversityLists() != null) {
+                    universityList.clear();
+                    universityList.addAll(body.getUniversityLists());
+                    universityNames.clear();
+                    universityNames.add(getString(R.string.lbl_select_university));
+                    for (UniversityList u : universityList) universityNames.add(u.getUniversity_name());
+                    universityAdapter.notifyDataSetChanged();
+                    universitiesLoaded = true;
+                    prefillCascade();
+                }
+            }
+            @Override public void onFailure(@NotNull Call<UniversityRP> call, @NotNull Throwable t) { }
+        });
+    }
+
+    private void loadDepartments() {
+        JsonObject jsObj = (JsonObject) new Gson().toJsonTree(new API(this));
+        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+        apiService.getDepartmentListData(API.toBase64(jsObj.toString())).enqueue(new Callback<DepartmentRP>() {
+            @Override public void onResponse(@NotNull Call<DepartmentRP> call, @NotNull Response<DepartmentRP> response) {
+                DepartmentRP body = response.body();
+                if (body != null && "1".equals(body.getSuccess()) && body.getDepartmentLists() != null) {
+                    departmentAll.clear();
+                    departmentAll.addAll(body.getDepartmentLists());
+                    departmentsLoaded = true;
+                    prefillCascade();
+                }
+            }
+            @Override public void onFailure(@NotNull Call<DepartmentRP> call, @NotNull Throwable t) { }
+        });
+    }
+
+    private void loadColleges() {
+        JsonObject jsObj = (JsonObject) new Gson().toJsonTree(new API(this));
+        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+        apiService.getCollegeListData(API.toBase64(jsObj.toString())).enqueue(new Callback<CollegeRP>() {
+            @Override public void onResponse(@NotNull Call<CollegeRP> call, @NotNull Response<CollegeRP> response) {
+                CollegeRP body = response.body();
+                if (body != null && "1".equals(body.getSuccess()) && body.getCollegeLists() != null) {
+                    collegeList.clear();
+                    collegeList.addAll(body.getCollegeLists());
+                    collegeNames.clear();
+                    collegeNames.add(getString(R.string.lbl_select_college));
+                    for (CollegeList c : collegeList) collegeNames.add(c.getCollege_name());
+                    collegeAdapter.notifyDataSetChanged();
+                    // Prefill college selection by name.
+                    selectByName(viewEditProfile.spEditCollege, collegeNames, uCollege);
+                }
+            }
+            @Override public void onFailure(@NotNull Call<CollegeRP> call, @NotNull Throwable t) { }
+        });
+    }
+
+    private void filterDepartments(String universityId) {
+        departmentFiltered.clear();
+        for (DepartmentList d : departmentAll) {
+            if (universityId == null || universityId.equals(d.getUniversity_id())) {
+                departmentFiltered.add(d);
+            }
+        }
+        departmentNames.clear();
+        departmentNames.add(getString(R.string.lbl_select_department));
+        for (DepartmentList d : departmentFiltered) departmentNames.add(d.getDepartment_name());
+        departmentAdapter.notifyDataSetChanged();
+        // Re-apply the saved department selection within the filtered list.
+        selectByName(viewEditProfile.spEditDepartment, departmentNames, uDepartment);
+    }
+
+    // Once both universities + departments are loaded, prefill the saved selections.
+    private void prefillCascade() {
+        if (universitiesLoaded) {
+            selectByName(viewEditProfile.spEditUniversity, universityNames, uUniversity);
+        }
+        if (universitiesLoaded && departmentsLoaded) {
+            // Filter departments by the selected university, then pick the saved one.
+            String uniId = null;
+            int uPos = viewEditProfile.spEditUniversity.getSelectedItemPosition();
+            if (uPos > 0 && (uPos - 1) < universityList.size()) {
+                uniId = universityList.get(uPos - 1).getUniversity_id();
+            }
+            filterDepartments(uniId);
+        }
+    }
+
+    private void selectByName(Spinner sp, List<String> names, String value) {
+        if (value == null || value.trim().isEmpty()) return;
+        for (int i = 0; i < names.size(); i++) {
+            if (value.trim().equalsIgnoreCase(names.get(i).trim())) {
+                sp.setSelection(i);
+                return;
+            }
         }
     }
 
@@ -241,10 +398,21 @@ public class EditProfileActivity extends AppCompatActivity {
         jsObj.addProperty("email", sendEmail);
         jsObj.addProperty("password", sendPass);
         jsObj.addProperty("phone", sendPhone);
-        // Academic fields (source of truth for My Results).
+        // University -> Department (= Branch) -> College from the cascade.
+        int uPos = viewEditProfile.spEditUniversity.getSelectedItemPosition();
+        if (uPos > 0 && (uPos - 1) < universityList.size()) {
+            jsObj.addProperty("university", universityList.get(uPos - 1).getUniversity_name());
+        }
+        int dPos = viewEditProfile.spEditDepartment.getSelectedItemPosition();
+        if (dPos > 0 && (dPos - 1) < departmentFiltered.size()) {
+            jsObj.addProperty("department_id", departmentFiltered.get(dPos - 1).getDepartment_id());
+        }
+        int cPos = viewEditProfile.spEditCollege.getSelectedItemPosition();
+        if (cPos > 0 && (cPos - 1) < collegeList.size()) {
+            jsObj.addProperty("college", collegeList.get(cPos - 1).getCollege_name());
+        }
+        // Extras used by My Results.
         jsObj.addProperty("rollnumber", viewEditProfile.edtRoll.getText().toString().trim());
-        jsObj.addProperty("branch", resolveSpinnerValue(viewEditProfile.spProfileBranch,
-                viewEditProfile.edtBranchOther, R.array.result_branch_entries));
         jsObj.addProperty("regulation", resolveSpinnerValue(viewEditProfile.spProfileRegulation,
                 viewEditProfile.edtRegulationOther, R.array.result_regulation_entries));
         jsObj.addProperty("degree", resolveSpinnerValue(viewEditProfile.spProfileDegree,

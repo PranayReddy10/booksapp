@@ -222,46 +222,6 @@
                     android:importantForAutofill="no"
                     tools:ignore="RtlSymmetry" />
 
-                <!-- Branch (dropdown + Others) -->
-                <TextView
-                    style="@style/txt_OpenSansRomanBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_15px"
-                    android:layout_marginBottom="@dimen/_5px"
-                    android:text="@string/result_branch_label"
-                    android:textColor="@color/gray_trans_99"
-                    android:textSize="@dimen/_14sp" />
-
-                <Spinner
-                    android:id="@+id/spProfileBranch"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_50px"
-                    android:background="@drawable/rectangle_bg_white_border"
-                    android:paddingStart="@dimen/_14px"
-                    android:paddingEnd="@dimen/_10px"
-                    tools:ignore="RtlSymmetry" />
-
-                <EditText
-                    android:id="@+id/edtBranchOther"
-                    style="@style/txt_OpenSansRomanBold"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_8px"
-                    android:background="@drawable/rectangle_bg_white_border"
-                    android:minHeight="@dimen/_50px"
-                    android:gravity="center_vertical"
-                    android:hint="@string/result_other_hint"
-                    android:inputType="textCapWords"
-                    android:paddingStart="@dimen/_20px"
-                    android:paddingEnd="@dimen/_20px"
-                    android:textColor="@color/gray"
-                    android:textColorHint="@color/edt_profile_text"
-                    android:textSize="@dimen/_15sp"
-                    android:visibility="gone"
-                    android:importantForAutofill="no"
-                    tools:ignore="RtlSymmetry" />
-
                 <!-- Regulation (dropdown + Others) -->
                 <TextView
                     style="@style/txt_OpenSansRomanBold"
@@ -358,22 +318,14 @@
                         android:textColor="@color/gray_trans_99"
                         android:textSize="@dimen/_14sp" />
 
-                    <TextView
-                        android:id="@+id/tvUniversityValue"
-                        style="@style/txt_OpenSansRomanBold"
+                    <Spinner
+                        android:id="@+id/spEditUniversity"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="@dimen/_50px"
                         android:background="@drawable/rectangle_bg_white_border"
-                        android:minHeight="@dimen/_50px"
-                        android:gravity="center_vertical"
-                        android:paddingStart="@dimen/_20px"
-                        android:paddingEnd="@dimen/_20px"
-                        android:paddingTop="@dimen/_12px"
-                        android:paddingBottom="@dimen/_12px"
-                        android:textColor="@color/gray"
-                        android:textSize="@dimen/_15sp"
-                        tools:ignore="RtlSymmetry"
-                        tools:text="JNTUH" />
+                        android:paddingStart="@dimen/_14px"
+                        android:paddingEnd="@dimen/_10px"
+                        tools:ignore="RtlSymmetry" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -393,22 +345,14 @@
                         android:textColor="@color/gray_trans_99"
                         android:textSize="@dimen/_14sp" />
 
-                    <TextView
-                        android:id="@+id/tvDepartmentValue"
-                        style="@style/txt_OpenSansRomanBold"
+                    <Spinner
+                        android:id="@+id/spEditDepartment"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="@dimen/_50px"
                         android:background="@drawable/rectangle_bg_white_border"
-                        android:minHeight="@dimen/_50px"
-                        android:gravity="center_vertical"
-                        android:paddingStart="@dimen/_20px"
-                        android:paddingEnd="@dimen/_20px"
-                        android:paddingTop="@dimen/_12px"
-                        android:paddingBottom="@dimen/_12px"
-                        android:textColor="@color/gray"
-                        android:textSize="@dimen/_15sp"
-                        tools:ignore="RtlSymmetry"
-                        tools:text="CSE" />
+                        android:paddingStart="@dimen/_14px"
+                        android:paddingEnd="@dimen/_10px"
+                        tools:ignore="RtlSymmetry" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -428,22 +372,14 @@
                         android:textColor="@color/gray_trans_99"
                         android:textSize="@dimen/_14sp" />
 
-                    <TextView
-                        android:id="@+id/tvCollegeValue"
-                        style="@style/txt_OpenSansRomanBold"
+                    <Spinner
+                        android:id="@+id/spEditCollege"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="@dimen/_50px"
                         android:background="@drawable/rectangle_bg_white_border"
-                        android:minHeight="@dimen/_50px"
-                        android:gravity="center_vertical"
-                        android:paddingStart="@dimen/_20px"
-                        android:paddingEnd="@dimen/_20px"
-                        android:paddingTop="@dimen/_12px"
-                        android:paddingBottom="@dimen/_12px"
-                        android:textColor="@color/gray"
-                        android:textSize="@dimen/_15sp"
-                        tools:ignore="RtlSymmetry"
-                        tools:text="University College of Engineering" />
+                        android:paddingStart="@dimen/_14px"
+                        android:paddingEnd="@dimen/_10px"
+                        tools:ignore="RtlSymmetry" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -514,41 +450,6 @@
                         android:textSize="@dimen/_15sp"
                         tools:ignore="RtlSymmetry"
                         tools:text="Male" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/llRollRow"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_15px"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-
-                    <TextView
-                        style="@style/txt_OpenSansRomanBold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/_5px"
-                        android:text="@string/lbl_roll_number"
-                        android:textColor="@color/gray_trans_99"
-                        android:textSize="@dimen/_14sp" />
-
-                    <TextView
-                        android:id="@+id/tvRollValue"
-                        style="@style/txt_OpenSansRomanBold"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/rectangle_bg_white_border"
-                        android:minHeight="@dimen/_50px"
-                        android:gravity="center_vertical"
-                        android:paddingStart="@dimen/_20px"
-                        android:paddingEnd="@dimen/_20px"
-                        android:paddingTop="@dimen/_12px"
-                        android:paddingBottom="@dimen/_12px"
-                        android:textColor="@color/gray"
-                        android:textSize="@dimen/_15sp"
-                        tools:ignore="RtlSymmetry"
-                        tools:text="21H51A0512" />
                 </LinearLayout>
 
                 <androidx.appcompat.widget.AppCompatButton
