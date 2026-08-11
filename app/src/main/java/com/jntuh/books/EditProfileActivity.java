@@ -67,6 +67,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private final List<String> collegeNames = new ArrayList<>();
     private ArrayAdapter<String> universityAdapter, departmentAdapter, collegeAdapter;
     private boolean universitiesLoaded = false, departmentsLoaded = false;
+    private boolean suppressUniListener = false;
     boolean isProfile = false;
     ProgressDialog progressDialog;
     String imageProfile;
@@ -193,6 +194,11 @@ public class EditProfileActivity extends AppCompatActivity {
                     universityId = universityList.get(position - 1).getUniversity_id();
                 }
                 filterDepartments(universityId);
+                // When the user (not prefill) changes university, clear the saved
+                // department so it doesn't wrongly re-select under a new list.
+                if (!suppressUniListener) {
+                    uDepartment = null;
+                }
             }
             @Override public void onNothingSelected(AdapterView<?> parent) { }
         });
@@ -281,7 +287,9 @@ public class EditProfileActivity extends AppCompatActivity {
     // Once both universities + departments are loaded, prefill the saved selections.
     private void prefillCascade() {
         if (universitiesLoaded) {
+            suppressUniListener = true;
             selectByName(viewEditProfile.spEditUniversity, universityNames, uUniversity);
+            suppressUniListener = false;
         }
         if (universitiesLoaded && departmentsLoaded) {
             // Filter departments by the selected university, then pick the saved one.
@@ -291,6 +299,8 @@ public class EditProfileActivity extends AppCompatActivity {
                 uniId = universityList.get(uPos - 1).getUniversity_id();
             }
             filterDepartments(uniId);
+            // Ensure the saved department is selected after the list is built.
+            selectByName(viewEditProfile.spEditDepartment, departmentNames, uDepartment);
         }
     }
 

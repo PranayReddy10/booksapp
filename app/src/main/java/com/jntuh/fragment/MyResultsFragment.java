@@ -94,11 +94,8 @@ public class MyResultsFragment extends Fragment {
     }
 
     private void openEditor() {
-        if (current != null && current.getLocked() == 1) {
-            // Locked -> never allow edit; just refresh the read-only view.
-            loadResult();
-            return;
-        }
+        // Always open the editor. Locked (verified) semesters render read-only
+        // inside it, but the student can still add NEW semesters.
         Intent i = new Intent(requireActivity(), EditResultActivity.class);
         if (current != null && current.getHas_result() == 1) {
             i.putExtra(EditResultActivity.EXTRA_HAS_RESULT, true);
@@ -180,8 +177,9 @@ public class MyResultsFragment extends Fragment {
 
         v.pillVerified.setVisibility(item.getVerified() == 1 ? View.VISIBLE : View.GONE);
         v.bannerLocked.setVisibility(locked ? View.VISIBLE : View.GONE);
-        // Edit controls hidden when locked (single source of truth = locked).
-        v.btnEditResult.setVisibility(locked ? View.GONE : View.VISIBLE);
+        // Keep the edit entry point available even when everything is locked,
+        // because the student can still ADD a new (unlocked) semester.
+        v.btnEditResult.setVisibility(View.VISIBLE);
 
         semesters.clear();
         if (item.getSemesters() != null) semesters.addAll(item.getSemesters());

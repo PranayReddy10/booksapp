@@ -257,7 +257,12 @@ public class ProfileFragment extends Fragment {
         viewProfile.tvProfileName.setText(profileUpdate.getName());
         itemUser.setName(profileUpdate.getName());
         itemUser.setPhone(profileUpdate.getPhone());
-
+        // Re-fetch the full profile so ALL edited fields (university, department,
+        // college, roll, regulation, degree) refresh in the cache and the UI,
+        // not just name/phone.
+        if (method != null && method.isNetworkAvailable()) {
+            userProfile();
+        }
     }
 
     public void profileMenuDialog() {

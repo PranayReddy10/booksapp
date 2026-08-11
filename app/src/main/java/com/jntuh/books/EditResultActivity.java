@@ -107,7 +107,7 @@ public class EditResultActivity extends AppCompatActivity {
                     pDegree = nn(u.getDegree());
                     pName = nn(u.getName());
                 }
-                boolean complete = !pRoll.isEmpty() && !pBranch.isEmpty() && !pRegulation.isEmpty();
+                boolean complete = !pRoll.isEmpty() && !pBranch.isEmpty();
                 if (!complete) {
                     showBlocker(true);
                     return;
@@ -166,15 +166,15 @@ public class EditResultActivity extends AppCompatActivity {
                         && !resp.body().getResultItems().isEmpty()) {
                     item = resp.body().getResultItems().get(0);
                 }
-                if (item != null && item.getLocked() == 1) {
-                    // Defence in depth: never edit a locked record.
-                    Toast.makeText(EditResultActivity.this,
-                            getString(R.string.result_locked_banner), Toast.LENGTH_LONG).show();
-                    finish();
-                    return;
-                }
                 if (item != null && item.getHas_result() == 1) {
                     prefill(item);
+                    // If literally every semester is locked, there's nothing to
+                    // edit in place — but the user can still ADD a new semester,
+                    // so we keep the editor open and just show a hint.
+                    if (item.getLocked() == 1) {
+                        Toast.makeText(EditResultActivity.this,
+                                getString(R.string.result_sem_locked_note), Toast.LENGTH_LONG).show();
+                    }
                 } else {
                     addSemester(null);
                 }
