@@ -60,7 +60,7 @@
 
         <TextView
             android:id="@+id/tvSubCredits"
-            android:layout_width="44dp"
+            android:layout_width="56dp"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textColor="@color/gray"

@@ -412,7 +412,7 @@
 
     <!-- Column headers -->
     <string name="result_col_subject">Subject</string>
-    <string name="result_col_cr">Cr</string>
+    <string name="result_col_cr">Credits</string>
     <string name="result_col_gr">Gr</string>
     <string name="result_col_pts">Pts</string>
 

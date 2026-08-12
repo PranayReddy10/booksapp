@@ -145,7 +145,7 @@
                     android:fontFamily="@font/opensansromanbold" />
 
                 <TextView
-                    android:layout_width="44dp"
+                    android:layout_width="56dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="@string/result_col_cr"

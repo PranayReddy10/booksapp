@@ -29,11 +29,16 @@ public final class GradeUtil {
     }
 
     /** grade points = credits x grade value. Null if either is missing/invalid. */
+    /**
+     * JNTUH "Grade Point (Gi)" = the grade value only (A+ -> 9), NOT multiplied
+     * by credits. This is what the memo shows per subject and what the Pts column
+     * displays. The credit-weighting (Gi x Ci) happens only inside SGPA/CGPA.
+     * The credits parameter is kept for call-site compatibility but unused.
+     */
     public static Double gradePoints(String grade, Double credits) {
-        if (credits == null) return null;
         Integer v = gradeValue(grade);
         if (v == null) return null;
-        return credits * v;
+        return (double) v;
     }
 
     /** F / Ab count as a backlog. */
