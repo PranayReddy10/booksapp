@@ -20,6 +20,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.jntuh.books.databinding.ActivityMainBinding;
 import com.jntuh.fragment.MediaExploreFragment;
+import com.jntuh.fragment.ShopFragment;
 import com.jntuh.fragment.CategoryFragment;
 import com.jntuh.fragment.HomeFragment;
 import com.jntuh.fragment.LatestFragment;
@@ -57,9 +58,9 @@ public class MainActivity extends AppCompatActivity {
         versionCode = BuildConfig.VERSION_CODE;
 
         fragmentManager = getSupportFragmentManager();
-        linearLayouts = new LinearLayout[]{viewMain.bottomNav.frameHome, viewMain.bottomNav.frameLatest, viewMain.bottomNav.frameCat, viewMain.bottomNav.frameAuthor, viewMain.bottomNav.frameProfile};
-        imageViews = new ImageView[]{viewMain.bottomNav.imageHome, viewMain.bottomNav.imageLatest, viewMain.bottomNav.imageCat, viewMain.bottomNav.imageAuthor, viewMain.bottomNav.imageProfile};
-        textViews = new TextView[]{viewMain.bottomNav.tvHome, viewMain.bottomNav.tvLatest, viewMain.bottomNav.tvCat, viewMain.bottomNav.tvAuthor, viewMain.bottomNav.tvProfile};
+        linearLayouts = new LinearLayout[]{viewMain.bottomNav.frameHome, viewMain.bottomNav.frameLatest, viewMain.bottomNav.frameCat, viewMain.bottomNav.frameShop, viewMain.bottomNav.frameAuthor, viewMain.bottomNav.frameProfile};
+        imageViews = new ImageView[]{viewMain.bottomNav.imageHome, viewMain.bottomNav.imageLatest, viewMain.bottomNav.imageCat, viewMain.bottomNav.imageShop, viewMain.bottomNav.imageAuthor, viewMain.bottomNav.imageProfile};
+        textViews = new TextView[]{viewMain.bottomNav.tvHome, viewMain.bottomNav.tvLatest, viewMain.bottomNav.tvCat, viewMain.bottomNav.tvShop, viewMain.bottomNav.tvAuthor, viewMain.bottomNav.tvProfile};
 
         NotificationTiramisu.takePermission(this);
 
@@ -126,8 +127,18 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
-        viewMain.bottomNav.frameAuthor.setOnClickListener(v -> {
+        viewMain.bottomNav.frameShop.setOnClickListener(v -> {
             selectBottomNav(3);
+            // Shop page: hide both upload FABs (browse-only).
+            viewMain.fabUpload.hide();
+            viewMain.fabFeed.hide();
+            viewMain.toolbarMain.toolbarToolbar.setVisibility(View.GONE);
+            ShopFragment shopFragment = new ShopFragment();
+            loadFrag(shopFragment, "", fragmentManager);
+        });
+
+        viewMain.bottomNav.frameAuthor.setOnClickListener(v -> {
+            selectBottomNav(4);
             // Feed page: no "Upload Books" here — show the "Upload Feed" button instead.
             viewMain.fabUpload.hide();
             viewMain.fabFeed.show();
@@ -162,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void profileFragment(boolean isContinue, int pos) {
-        selectBottomNav(4);
+        selectBottomNav(5);
         // Hide the global Upload / Feed FABs on the Profile page.
         viewMain.fabUpload.hide();
         viewMain.fabFeed.hide();

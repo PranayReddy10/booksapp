@@ -94,6 +94,8 @@
         <activity android:name="com.jntuh.books.MyUploadsActivity" />
         <activity android:name="com.jntuh.books.MediaFeedActivity" />
         <activity android:name="com.jntuh.books.MediaUploadActivity" />
+        <activity android:name="com.jntuh.books.ShopProductDetailActivity" />
+        <activity android:name="com.jntuh.books.ShopWebActivity" />
         <activity android:name="com.jntuh.books.MyMediaActivity" />
         <activity android:name="com.jntuh.books.MediaCommentsActivity" />
         <activity android:name="com.jntuh.books.MediaNotificationActivity" />

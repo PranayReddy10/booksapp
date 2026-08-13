@@ -37,6 +37,9 @@ import com.jntuh.response.MediaNotificationListRP;
 import com.jntuh.response.ResultRP;
 import com.jntuh.response.ResultSaveRP;
 import com.jntuh.response.ReportCardRP;
+import com.jntuh.response.ShopCategoryRP;
+import com.jntuh.response.ShopProductRP;
+import com.jntuh.response.ShopLinksRP;
 import com.google.gson.JsonObject;
 
 import okhttp3.MultipartBody;
@@ -384,4 +387,21 @@ public interface ApiInterface {
     @POST("report_generate")
     @FormUrlEncoded
     Call<ReportCardRP> generateReportCard(@Field("data") String data);
+
+    // ---- Shop (MadeForU WooCommerce proxy) ----
+    @POST("shop_categories")
+    @FormUrlEncoded
+    Call<ShopCategoryRP> getShopCategories(@Field("data") String data);
+
+    @POST("shop_products")
+    @FormUrlEncoded
+    Call<ShopProductRP> getShopProducts(@Field("data") String data);
+
+    @POST("shop_product_detail")
+    @FormUrlEncoded
+    Call<ShopProductRP> getShopProductDetail(@Field("data") String data);
+
+    @POST("shop_links")
+    @FormUrlEncoded
+    Call<ShopLinksRP> getShopLinks(@Field("data") String data);
 }

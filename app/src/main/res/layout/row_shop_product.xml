@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="6dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/bg_shop_product_card"
+        android:foreground="?attr/selectableItemBackground"
+        android:padding="0dp"
+        android:clipToOutline="true">
+
+        <ImageView
+            android:id="@+id/ivProduct"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:background="@color/card_view_bg"
+            android:minHeight="120dp"
+            tools:src="@color/card_view_bg"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/tvProductName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:textColor="@color/gray"
+            android:textSize="12sp"
+            android:fontFamily="@font/opensansromansemibold"
+            tools:text="Personalized Coffee Mug with Photo" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="10dp">
+
+            <TextView
+                android:id="@+id/tvPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/gray"
+                android:textSize="14sp"
+                android:fontFamily="@font/opensansromanextrabold"
+                tools:text="₹299" />
+
+            <TextView
+                android:id="@+id/tvRegularPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:textColor="@color/gray_2"
+                android:textSize="11sp"
+                android:fontFamily="@font/opensansromansemibold"
+                tools:text="₹399" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvDiscount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/bg_shop_discount"
+        android:paddingHorizontal="7dp"
+        android:paddingVertical="3dp"
+        android:textColor="@color/white"
+        android:textSize="10sp"
+        android:fontFamily="@font/opensansromanbold"
+        android:visibility="gone"
+        tools:text="-25%"
+        tools:visibility="visible" />
+</FrameLayout>

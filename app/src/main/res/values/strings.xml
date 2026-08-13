@@ -338,6 +338,15 @@
     <string name="bottom_home">Home</string>
     <string name="bottom_latest">Latest</string>
     <string name="bottom_cat">Category</string>
+    <string name="bottom_shop">Shop</string>
+    <string name="shop_title">Shop</string>
+    <string name="shop_buy_now">Buy / Personalise</string>
+    <string name="shop_track_order">Track Order</string>
+    <string name="shop_all">All</string>
+    <string name="shop_empty">No products found</string>
+    <string name="shop_out_of_stock">Out of stock</string>
+    <string name="shop_view_details">View details</string>
+    <string name="shop_open_web">Opening the website to personalise and checkout…</string>
     <string name="bottom_author">Author</string>
     <string name="bottom_profile">Profile</string>
 
