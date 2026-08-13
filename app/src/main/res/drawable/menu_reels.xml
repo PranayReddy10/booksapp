@@ -1,0 +1,34 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="27dp"
+    android:height="25dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+  <!-- rounded frame -->
+  <path
+      android:pathData="M3,7A4,4 0,0 1,7 3H17A4,4 0,0 1,21 7V17A4,4 0,0 1,17 21H7A4,4 0,0 1,3 17Z"
+      android:fillColor="#00000000"
+      android:strokeColor="#F97F68"
+      android:strokeWidth="1.7"
+      android:strokeLineJoin="round" />
+  <!-- diagonal film line -->
+  <path
+      android:pathData="M9,3L12.5,9"
+      android:strokeColor="#F97F68"
+      android:strokeWidth="1.7"
+      android:strokeLineCap="round" />
+  <path
+      android:pathData="M15,3L18.5,9"
+      android:strokeColor="#F97F68"
+      android:strokeWidth="1.7"
+      android:strokeLineCap="round" />
+  <!-- top strip divider -->
+  <path
+      android:pathData="M3.2,9H21"
+      android:strokeColor="#F97F68"
+      android:strokeWidth="1.7"
+      android:strokeLineCap="round" />
+  <!-- play triangle -->
+  <path
+      android:pathData="M10.5,12.3V17.7L15,15Z"
+      android:fillColor="#F97F68" />
+</vector>

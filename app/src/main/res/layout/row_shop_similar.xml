@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="140dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginEnd="10dp"
+    android:layout_marginBottom="8dp"
+    android:background="@drawable/bg_shop_product_card"
+    android:foreground="?attr/selectableItemBackground"
+    android:clipToOutline="true">
+
+    <ImageView
+        android:id="@+id/ivSimilar"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:scaleType="centerCrop"
+        android:background="@color/card_view_bg"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/tvSimilarName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:minLines="2"
+        android:textColor="@color/gray"
+        android:textSize="11sp"
+        android:fontFamily="@font/opensansromansemibold"
+        tools:text="Personalized Photo Mug" />
+
+    <TextView
+        android:id="@+id/tvSimilarPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="10dp"
+        android:textColor="@color/app_bg_orange"
+        android:textSize="13sp"
+        android:fontFamily="@font/opensansromanextrabold"
+        tools:text="₹299" />
+</LinearLayout>

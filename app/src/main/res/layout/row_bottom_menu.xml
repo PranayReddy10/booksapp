@@ -14,8 +14,8 @@
         android:layout_centerVertical="true"
         android:gravity="center"
         android:orientation="horizontal"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
         android:weightSum="6">
 
         <LinearLayout
@@ -164,9 +164,9 @@
                 android:layout_marginStart="@dimen/_6px"
                 android:layout_marginEnd="@dimen/_6px"
                 android:scaleType="fitXY"
-                android:src="@drawable/menu_feed"
+                android:src="@drawable/menu_reels"
                 tools:ignore="ContentDescription"
-                tools:src="@drawable/menu_feed" />
+                tools:src="@drawable/menu_reels" />
 
             <TextView
                 android:id="@+id/tvAuthor"

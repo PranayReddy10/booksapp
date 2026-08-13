@@ -73,7 +73,7 @@ public class ShopWebActivity extends AppCompatActivity {
         binding.toolbarMain.tvToolbarTitle.setText(title == null ? getString(R.string.shop_title) : title);
         binding.toolbarMain.ivSearch.setVisibility(View.GONE);
         binding.toolbarMain.imageFilter.setVisibility(View.GONE);
-        binding.toolbarMain.imageArrowBack.setOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
+        binding.toolbarMain.imageArrowBack.setOnClickListener(v -> handleBack());
 
         WebSettings s = binding.webView.getSettings();
         s.setJavaScriptEnabled(true);
@@ -141,28 +141,73 @@ public class ShopWebActivity extends AppCompatActivity {
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                if (binding.webView.canGoBack()) {
-                    binding.webView.goBack();
-                } else {
-                    setEnabled(false);
-                    getOnBackPressedDispatcher().onBackPressed();
-                }
+                handleBack();
             }
         });
 
         binding.webView.loadUrl(url);
     }
 
+    /**
+     * Walk back through web history one page at a time; only leave the screen
+     * when there's genuinely nowhere left to go back to. Uses copyBackForwardList
+     * so redirect-only entries don't strand the user.
+     */
+    private void handleBack() {
+        if (binding != null && binding.webView.canGoBack()) {
+            binding.webView.goBack();
+        } else {
+            finish();
+        }
+    }
+
     /** Return true if we handled the URL (i.e. WebView should NOT load it). */
     private boolean handleUrl(String url) {
         if (url == null) return false;
+
+        // Normal web pages load in the WebView.
         if (url.startsWith("http://") || url.startsWith("https://")) {
-            return false; // let the WebView load site pages normally
+            return false;
         }
-        // upi:, tel:, mailto:, whatsapp:, intent: -> hand to the system.
+
+        // Razorpay's UPI flow uses intent:// URLs to launch GPay/PhonePe/Paytm.
+        // These MUST be parsed with parseUri(URI_INTENT_SCHEME), not ACTION_VIEW,
+        // or UPI apps won't open (and Razorpay then hides the UPI option).
+        if (url.startsWith("intent://")) {
+            try {
+                Intent intent = Intent.parseUri(url, Intent.URI_INTENT_SCHEME);
+                if (intent != null) {
+                    // Prefer the app the intent names; else fall back to browser_fallback_url.
+                    if (getPackageManager().resolveActivity(intent, 0) != null) {
+                        startActivity(intent);
+                        return true;
+                    }
+                    String fallback = intent.getStringExtra("browser_fallback_url");
+                    if (fallback != null && !fallback.isEmpty()) {
+                        binding.webView.loadUrl(fallback);
+                        return true;
+                    }
+                    // Last resort: try to open the app's Play Store page.
+                    String pkg = intent.getPackage();
+                    if (pkg != null && !pkg.isEmpty()) {
+                        startActivity(new Intent(Intent.ACTION_VIEW,
+                                Uri.parse("market://details?id=" + pkg)));
+                        return true;
+                    }
+                }
+            } catch (Exception ignored) {
+            }
+            return true;
+        }
+
+        // Direct UPI / payment-app deep links (upi:, tez:, phonepe:, paytmmp:,
+        // gpay:, etc.) and other non-web schemes (tel:, mailto:, whatsapp:).
         try {
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
         } catch (Exception ignored) {
+            // No app to handle it — ignore rather than crash.
         }
         return true;
     }

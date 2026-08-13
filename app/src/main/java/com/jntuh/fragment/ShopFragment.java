@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.google.gson.Gson;
@@ -56,6 +57,12 @@ public class ShopFragment extends Fragment {
     private String currentCategoryId = null; // null = All
     private String trackUrl = null;
 
+    // Infinite scroll state.
+    private int currentPage = 1;
+    private boolean isLoading = false;
+    private boolean hasMore = true;
+    private static final int PAGE_SIZE = 20;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentShopBinding.inflate(inflater, container, false);
@@ -65,7 +72,7 @@ public class ShopFragment extends Fragment {
         categoryAdapter = new ShopCategoryAdapter(requireActivity(), categories, (category, position) -> {
             categoryAdapter.setSelected(position);
             currentCategoryId = category.getId(); // null for the "All" chip
-            loadProducts();
+            resetAndLoad();
         });
         binding.rvShopCategories.setLayoutManager(
                 new LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false));
@@ -76,6 +83,7 @@ public class ShopFragment extends Fragment {
             Intent i = new Intent(requireActivity(), ShopProductDetailActivity.class);
             i.putExtra("product_id", product.getId());
             i.putExtra("buy_url", product.getBuy_url());
+            i.putExtra("category_id", currentCategoryId);
             startActivity(i);
         });
         StaggeredGridLayoutManager glm =
@@ -84,18 +92,42 @@ public class ShopFragment extends Fragment {
         binding.rvShopProducts.setLayoutManager(glm);
         binding.rvShopProducts.setAdapter(productAdapter);
 
+        // Infinite scroll: load the next page as the user nears the end.
+        binding.rvShopProducts.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView rv, int dx, int dy) {
+                if (dy <= 0 || isLoading || !hasMore || binding == null) return;
+                StaggeredGridLayoutManager lm = (StaggeredGridLayoutManager) rv.getLayoutManager();
+                if (lm == null) return;
+                int total = lm.getItemCount();
+                int[] lastPositions = lm.findLastVisibleItemPositions(null);
+                int lastVisible = 0;
+                for (int p : lastPositions) { lastVisible = Math.max(lastVisible, p); }
+                if (lastVisible >= total - 4) {
+                    loadProducts(false); // append next page
+                }
+            }
+        });
+
         binding.swipeShop.setOnRefreshListener(() -> {
             loadCategories();
-            loadProducts();
+            resetAndLoad();
         });
 
         binding.btnTrackOrder.setOnClickListener(v -> openTrackOrder());
 
         loadShopLinks();
         loadCategories();
-        loadProducts();
+        resetAndLoad();
 
         return binding.getRoot();
+    }
+
+    /** Reset to page 1 (category change / refresh / first load). */
+    private void resetAndLoad() {
+        currentPage = 1;
+        hasMore = true;
+        loadProducts(true);
     }
 
     private String signedBody(JsonObject extra) {
@@ -137,15 +169,20 @@ public class ShopFragment extends Fragment {
         });
     }
 
-    private void loadProducts() {
-        if (binding == null) return;
-        if (products.isEmpty()) binding.progressShop.setVisibility(View.VISIBLE);
+    private void loadProducts(final boolean reset) {
+        if (binding == null || isLoading) return;
+        isLoading = true;
+
+        if (reset && products.isEmpty()) binding.progressShop.setVisibility(View.VISIBLE);
         binding.llShopEmpty.setVisibility(View.GONE);
+
+        final int pageToLoad = reset ? 1 : currentPage + 1;
 
         JsonObject extra = new JsonObject();
         if (currentCategoryId != null && !currentCategoryId.isEmpty()) {
             extra.addProperty("category", currentCategoryId);
         }
+        extra.addProperty("page", pageToLoad);
 
         ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
         Call<ShopProductRP> call = api.getShopProducts(signedBody(extra));
@@ -153,21 +190,37 @@ public class ShopFragment extends Fragment {
             @Override
             public void onResponse(@NotNull Call<ShopProductRP> call, @NotNull Response<ShopProductRP> response) {
                 if (getActivity() == null || binding == null) return;
+                isLoading = false;
                 binding.progressShop.setVisibility(View.GONE);
                 binding.swipeShop.setRefreshing(false);
-                products.clear();
+
+                List<ShopProduct> incoming = null;
                 ShopProductRP body = response.body();
-                if (body != null && "1".equals(body.getSuccess()) && body.getProducts() != null) {
-                    products.addAll(body.getProducts());
+                if (body != null && "1".equals(body.getSuccess())) {
+                    incoming = body.getProducts();
                 }
+
+                if (reset) {
+                    products.clear();
+                }
+                int added = 0;
+                if (incoming != null && !incoming.isEmpty()) {
+                    products.addAll(incoming);
+                    added = incoming.size();
+                    currentPage = pageToLoad;
+                }
+                // If we got a full page, assume there may be more.
+                hasMore = (added >= PAGE_SIZE);
+
                 productAdapter.notifyDataSetChanged();
                 binding.llShopEmpty.setVisibility(products.isEmpty() ? View.VISIBLE : View.GONE);
-                binding.rvShopProducts.scrollToPosition(0);
+                if (reset) binding.rvShopProducts.scrollToPosition(0);
             }
 
             @Override
             public void onFailure(@NotNull Call<ShopProductRP> call, @NotNull Throwable t) {
                 if (getActivity() == null || binding == null) return;
+                isLoading = false;
                 binding.progressShop.setVisibility(View.GONE);
                 binding.swipeShop.setRefreshing(false);
                 binding.llShopEmpty.setVisibility(products.isEmpty() ? View.VISIBLE : View.GONE);

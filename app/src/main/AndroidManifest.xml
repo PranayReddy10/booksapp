@@ -7,6 +7,25 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
+    <!-- Let the WebView / Razorpay detect installed UPI & payment apps (Android 11+
+         package visibility). Without this, UPI options are hidden in the WebView. -->
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="upi" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="https" />
+        </intent>
+        <package android:name="com.google.android.apps.nbu.paisa.user" /> <!-- Google Pay -->
+        <package android:name="com.phonepe.app" />                        <!-- PhonePe -->
+        <package android:name="net.one97.paytm" />                        <!-- Paytm -->
+        <package android:name="in.org.npci.upiapp" />                     <!-- BHIM -->
+        <package android:name="com.whatsapp" />                           <!-- WhatsApp (UPI + chat) -->
+        <package android:name="com.amazon.mShop.android.shopping" />      <!-- Amazon Pay -->
+    </queries>
+
     <application
         android:name="com.jntuh.util.MyApplication"
         android:allowBackup="true"

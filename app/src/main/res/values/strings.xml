@@ -340,7 +340,11 @@
     <string name="bottom_cat">Category</string>
     <string name="bottom_shop">Shop</string>
     <string name="shop_title">Shop</string>
-    <string name="shop_buy_now">Buy / Personalise</string>
+    <string name="shop_buy_now">Personalise &amp; Buy</string>
+    <string name="shop_bulk_whatsapp">Bulk order? Chat on WhatsApp</string>
+    <string name="shop_similar">Similar Products</string>
+    <string name="shop_personalise_note">Upload your photos and choose options on the next step, then pay securely.</string>
+    <string name="shop_whatsapp_number">919381024794</string>
     <string name="shop_track_order">Track Order</string>
     <string name="shop_all">All</string>
     <string name="shop_empty">No products found</string>

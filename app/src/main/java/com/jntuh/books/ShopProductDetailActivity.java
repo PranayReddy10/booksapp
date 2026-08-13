@@ -2,15 +2,18 @@ package com.jntuh.books;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.jntuh.adapter.ShopImageAdapter;
+import com.jntuh.adapter.ShopSimilarAdapter;
 import com.jntuh.books.databinding.ActivityShopProductDetailBinding;
 import com.jntuh.item.ShopProduct;
 import com.jntuh.response.ShopProductRP;
@@ -40,7 +43,11 @@ public class ShopProductDetailActivity extends AppCompatActivity {
 
     private String productId;
     private String buyUrl;
+    private String categoryId;
+    private String productName = "";
     private final List<String> images = new ArrayList<>();
+    private final List<ShopProduct> similar = new ArrayList<>();
+    private ShopSimilarAdapter similarAdapter;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -53,6 +60,7 @@ public class ShopProductDetailActivity extends AppCompatActivity {
 
         productId = getIntent().getStringExtra("product_id");
         buyUrl = getIntent().getStringExtra("buy_url");
+        categoryId = getIntent().getStringExtra("category_id");
 
         binding.toolbarMain.tvToolbarTitle.setText(getString(R.string.shop_title));
         binding.toolbarMain.ivSearch.setVisibility(View.GONE);
@@ -60,6 +68,7 @@ public class ShopProductDetailActivity extends AppCompatActivity {
         binding.toolbarMain.imageArrowBack.setOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
 
         binding.btnBuyNow.setOnClickListener(v -> openBuy());
+        binding.btnBulkWhatsapp.setOnClickListener(v -> openWhatsAppBulk());
 
         binding.vpImages.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
@@ -68,7 +77,53 @@ public class ShopProductDetailActivity extends AppCompatActivity {
             }
         });
 
+        // Similar products (horizontal).
+        similarAdapter = new ShopSimilarAdapter(this, similar, product -> {
+            Intent i = new Intent(this, ShopProductDetailActivity.class);
+            i.putExtra("product_id", product.getId());
+            i.putExtra("buy_url", product.getBuy_url());
+            i.putExtra("category_id", categoryId);
+            startActivity(i);
+        });
+        binding.rvSimilar.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        binding.rvSimilar.setAdapter(similarAdapter);
+
         loadDetail();
+        loadSimilar();
+    }
+
+    private void loadSimilar() {
+        JsonObject jsObj = (JsonObject) new Gson().toJsonTree(new API(this));
+        if (method.getIsLogin()) jsObj.addProperty("user_id", method.getUserId());
+        if (categoryId != null && !categoryId.isEmpty()) {
+            jsObj.addProperty("category", categoryId);
+        }
+
+        ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
+        Call<ShopProductRP> call = api.getShopProducts(API.toBase64(jsObj.toString()));
+        call.enqueue(new Callback<ShopProductRP>() {
+            @Override
+            public void onResponse(@NotNull Call<ShopProductRP> call, @NotNull Response<ShopProductRP> response) {
+                if (isFinishing() || binding == null) return;
+                ShopProductRP body = response.body();
+                if (body != null && "1".equals(body.getSuccess()) && body.getProducts() != null) {
+                    similar.clear();
+                    for (ShopProduct p : body.getProducts()) {
+                        // Exclude the product we're currently viewing.
+                        if (p.getId() != null && p.getId().equals(productId)) continue;
+                        similar.add(p);
+                        if (similar.size() >= 10) break;
+                    }
+                    similarAdapter.notifyDataSetChanged();
+                    binding.llSimilar.setVisibility(similar.isEmpty() ? View.GONE : View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<ShopProductRP> call, @NotNull Throwable t) {
+                // Silent: similar products are a nice-to-have.
+            }
+        });
     }
 
     private void updateCounter(int position) {
@@ -82,6 +137,7 @@ public class ShopProductDetailActivity extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     private void bind(ShopProduct p) {
+        productName = p.getName() == null ? "" : p.getName();
         binding.tvDetailName.setText(p.getName());
         String cur = p.getCurrency();
         binding.tvDetailPrice.setText(cur + (p.getPrice() == null ? "" : p.getPrice()));
@@ -92,8 +148,24 @@ public class ShopProductDetailActivity extends AppCompatActivity {
             binding.tvDetailRegular.setText(cur + p.getRegular_price());
             binding.tvDetailRegular.setPaintFlags(
                     binding.tvDetailRegular.getPaintFlags() | android.graphics.Paint.STRIKE_THRU_TEXT_FLAG);
+
+            // "Save ₹X" badge.
+            try {
+                double reg = Double.parseDouble(p.getRegular_price());
+                double sale = Double.parseDouble(p.getPrice());
+                if (reg > sale) {
+                    long saved = Math.round(reg - sale);
+                    binding.tvSaveBadge.setVisibility(View.VISIBLE);
+                    binding.tvSaveBadge.setText("Save " + cur + saved);
+                } else {
+                    binding.tvSaveBadge.setVisibility(View.GONE);
+                }
+            } catch (NumberFormatException e) {
+                binding.tvSaveBadge.setVisibility(View.GONE);
+            }
         } else {
             binding.tvDetailRegular.setVisibility(View.GONE);
+            binding.tvSaveBadge.setVisibility(View.GONE);
         }
 
         if (p.getDiscount() != null && !p.getDiscount().isEmpty()) {
@@ -158,5 +230,26 @@ public class ShopProductDetailActivity extends AppCompatActivity {
         i.putExtra("url", url);
         i.putExtra("title", getString(R.string.shop_buy_now));
         startActivity(i);
+    }
+
+    /** Opens WhatsApp chat to the store number, prefilled with this product. */
+    private void openWhatsAppBulk() {
+        String number = getString(R.string.shop_whatsapp_number);
+        String msg = "Hi! I'd like a bulk order for: " + productName;
+        if (buyUrl != null && !buyUrl.isEmpty()) {
+            msg += "\n" + buyUrl;
+        }
+        String url = "https://wa.me/" + number + "?text=" + Uri.encode(msg);
+        try {
+            Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(i);
+        } catch (Exception e) {
+            // If WhatsApp isn't installed, open wa.me in a browser/WebView.
+            Intent i = new Intent(this, ShopWebActivity.class);
+            i.putExtra("url", url);
+            i.putExtra("title", getString(R.string.shop_bulk_whatsapp));
+            startActivity(i);
+        }
     }
 }
