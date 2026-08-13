@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
@@ -13,6 +14,9 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import androidx.activity.OnBackPressedCallback;
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.jntuh.books.databinding.ActivityShopWebBinding;
@@ -29,6 +33,29 @@ import com.jntuh.util.Method;
 public class ShopWebActivity extends AppCompatActivity {
 
     private ActivityShopWebBinding binding;
+
+    // For <input type="file"> in the WebView (photo personalisation on the site).
+    private ValueCallback<Uri[]> filePathCallback;
+    private final ActivityResultLauncher<Intent> fileChooserLauncher =
+            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                    (ActivityResult result) -> {
+                        if (filePathCallback == null) return;
+                        Uri[] results = null;
+                        if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                            Intent data = result.getData();
+                            if (data.getClipData() != null) {
+                                int count = data.getClipData().getItemCount();
+                                results = new Uri[count];
+                                for (int i = 0; i < count; i++) {
+                                    results[i] = data.getClipData().getItemAt(i).getUri();
+                                }
+                            } else if (data.getData() != null) {
+                                results = new Uri[]{data.getData()};
+                            }
+                        }
+                        filePathCallback.onReceiveValue(results);
+                        filePathCallback = null;
+                    });
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override
@@ -69,6 +96,27 @@ public class ShopWebActivity extends AppCompatActivity {
                 } else {
                     binding.webProgress.setVisibility(View.GONE);
                 }
+            }
+
+            // Enables the site's "upload your photo" fields to open the picker.
+            @Override
+            public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> callback,
+                                             FileChooserParams params) {
+                if (filePathCallback != null) {
+                    filePathCallback.onReceiveValue(null);
+                }
+                filePathCallback = callback;
+                try {
+                    Intent intent = params.createIntent();
+                    intent.addCategory(Intent.CATEGORY_OPENABLE);
+                    // Allow multiple + any image; the site decides what it accepts.
+                    intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                    fileChooserLauncher.launch(Intent.createChooser(intent, "Select"));
+                } catch (Exception e) {
+                    filePathCallback = null;
+                    return false;
+                }
+                return true;
             }
         });
 
