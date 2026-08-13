@@ -56,10 +56,9 @@
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="@dimen/_20px"
         android:layout_marginBottom="@dimen/_12px"
-        android:contentDescription="@string/lbl_feed"
+        android:contentDescription="@string/lbl_upload_feed"
         app:backgroundTint="@color/orange"
-        app:fabSize="mini"
-        app:srcCompat="@android:drawable/ic_menu_slideshow"
+        app:srcCompat="@drawable/ic_upload_book"
         app:tint="@color/white"
         app:elevation="6dp" />
 

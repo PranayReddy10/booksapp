@@ -81,6 +81,9 @@ public class MainActivity extends AppCompatActivity {
 
         loadFrag(homeFragment, "", fragmentManager);
         viewMain.toolbarMain.toolbarToolbar.setVisibility(View.GONE);
+        // Home is the default tab: Upload Books visible, Upload Feed hidden.
+        viewMain.fabUpload.show();
+        viewMain.fabFeed.hide();
 
         // Deep-link from the feed menu: open the Profile tab directly.
         if (getIntent() != null && getIntent().getBooleanExtra("openProfile", false)) {
@@ -96,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
         viewMain.bottomNav.frameHome.setOnClickListener(v -> {
             selectBottomNav(0);
             viewMain.fabUpload.show();
-            viewMain.fabFeed.show();
+            viewMain.fabFeed.hide();
             viewMain.toolbarMain.toolbarToolbar.setVisibility(View.GONE);
             HomeFragment homeFragment1 = new HomeFragment();
             homeFragment1.setOnItemClickListener(position -> profileFragment(true, 0));
@@ -107,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
         viewMain.bottomNav.frameLatest.setOnClickListener(v -> {
             selectBottomNav(1);
             viewMain.fabUpload.show();
-            viewMain.fabFeed.show();
+            viewMain.fabFeed.hide();
             viewMain.toolbarMain.toolbarToolbar.setVisibility(View.GONE);
             LatestFragment latestFragment = new LatestFragment();
             loadFrag(latestFragment, "", fragmentManager);
@@ -116,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
         viewMain.bottomNav.frameCat.setOnClickListener(v -> {
             selectBottomNav(2);
             viewMain.fabUpload.show();
-            viewMain.fabFeed.show();
+            viewMain.fabFeed.hide();
             viewMain.toolbarMain.toolbarToolbar.setVisibility(View.GONE);
             CategoryFragment categoryFragment = new CategoryFragment();
             loadFrag(categoryFragment, "", fragmentManager);
@@ -125,7 +128,8 @@ public class MainActivity extends AppCompatActivity {
 
         viewMain.bottomNav.frameAuthor.setOnClickListener(v -> {
             selectBottomNav(3);
-            viewMain.fabUpload.show();
+            // Feed page: no "Upload Books" here — show the "Upload Feed" button instead.
+            viewMain.fabUpload.hide();
             viewMain.fabFeed.show();
             viewMain.toolbarMain.toolbarToolbar.setVisibility(View.GONE);
             MediaExploreFragment mediaExploreFragment = new MediaExploreFragment();
@@ -145,8 +149,15 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // Feed is public to browse; uploading from inside it requires login.
-        viewMain.fabFeed.setOnClickListener(v ->
-                startActivity(new Intent(MainActivity.this, MediaFeedActivity.class)));
+        // Feed page's "Upload Feed" button: browse is public, uploading needs login.
+        viewMain.fabFeed.setOnClickListener(v -> {
+            if (method.getIsLogin()) {
+                startActivity(new Intent(MainActivity.this, MediaUploadActivity.class));
+            } else {
+                Toast.makeText(MainActivity.this, getString(R.string.login_require), Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            }
+        });
 
     }
 
