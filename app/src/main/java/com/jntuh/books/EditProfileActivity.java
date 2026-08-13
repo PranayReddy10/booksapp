@@ -68,6 +68,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private ArrayAdapter<String> universityAdapter, departmentAdapter, collegeAdapter;
     private boolean universitiesLoaded = false, departmentsLoaded = false;
     private boolean suppressUniListener = false;
+    private String savedDepartment = null; // captured once; never nulled by the listener
     boolean isProfile = false;
     ProgressDialog progressDialog;
     String imageProfile;
@@ -95,6 +96,7 @@ public class EditProfileActivity extends AppCompatActivity {
         uType = intent.getStringExtra("uType");
         uUniversity = intent.getStringExtra("uUniversity");
         uDepartment = intent.getStringExtra("uDepartment");
+        savedDepartment = uDepartment; // stable copy for prefill
         uCollege = intent.getStringExtra("uCollege");
         uGender = intent.getStringExtra("uGender");
         uYear = intent.getStringExtra("uYear");
@@ -280,35 +282,37 @@ public class EditProfileActivity extends AppCompatActivity {
         departmentNames.add(getString(R.string.lbl_select_department));
         for (DepartmentList d : departmentFiltered) departmentNames.add(d.getDepartment_name());
         departmentAdapter.notifyDataSetChanged();
-        // Re-apply the saved department selection within the filtered list.
-        selectByName(viewEditProfile.spEditDepartment, departmentNames, uDepartment);
+        // Re-apply the saved department selection within the (re)built list.
+        selectByName(viewEditProfile.spEditDepartment, departmentNames, savedDepartment);
     }
 
     // Once both universities + departments are loaded, prefill the saved selections.
     private void prefillCascade() {
+        // Suppress the university listener for the ENTIRE prefill so its async
+        // firing can't null out the saved department mid-way.
+        suppressUniListener = true;
         if (universitiesLoaded) {
-            suppressUniListener = true;
             selectByName(viewEditProfile.spEditUniversity, universityNames, uUniversity);
-            suppressUniListener = false;
         }
         if (universitiesLoaded && departmentsLoaded) {
-            // Filter departments by the selected university, then pick the saved one.
             String uniId = null;
             int uPos = viewEditProfile.spEditUniversity.getSelectedItemPosition();
             if (uPos > 0 && (uPos - 1) < universityList.size()) {
                 uniId = universityList.get(uPos - 1).getUniversity_id();
             }
             filterDepartments(uniId);
-            selectByName(viewEditProfile.spEditDepartment, departmentNames, uDepartment);
-            // Fallback: if the saved department isn't in the filtered list (e.g.
-            // the university name didn't match), show ALL departments so it can
-            // still be selected and displayed.
-            if (uDepartment != null && !uDepartment.trim().isEmpty()
+            selectByName(viewEditProfile.spEditDepartment, departmentNames, savedDepartment);
+            // Fallback: saved department not in the filtered list -> show ALL and pick it.
+            if (savedDepartment != null && !savedDepartment.trim().isEmpty()
                     && viewEditProfile.spEditDepartment.getSelectedItemPosition() == 0) {
                 filterDepartments(null);
-                selectByName(viewEditProfile.spEditDepartment, departmentNames, uDepartment);
+                selectByName(viewEditProfile.spEditDepartment, departmentNames, savedDepartment);
             }
         }
+        // Release the guard after the current message loop so any queued
+        // onItemSelected from the programmatic selection above runs while still
+        // suppressed (won't clear the saved department).
+        viewEditProfile.spEditUniversity.post(() -> suppressUniListener = false);
     }
 
     private void selectByName(Spinner sp, List<String> names, String value) {

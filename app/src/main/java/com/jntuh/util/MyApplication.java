@@ -29,6 +29,8 @@ import com.google.android.gms.auth.api.signin.internal.SignInHubActivity;
 import com.onesignal.OneSignal;
 import com.onesignal.notifications.INotificationClickEvent;
 import com.onesignal.notifications.INotificationClickListener;
+import com.onesignal.notifications.INotificationLifecycleListener;
+import com.onesignal.notifications.INotificationWillDisplayEvent;
 
 
 import org.json.JSONException;
@@ -70,13 +72,21 @@ public class MyApplication extends Application implements Application.ActivityLi
         StrictMode.setVmPolicy(builder.build());
         builder.detectFileUriExposure();
 
-        // FIXME(notifications): the App ID below had an INVALID character ('v' in
-        // "4v82" — not a hex digit), so OneSignal never initialized and push stopped
-        // working. Replace the whole string with the exact App ID from your OneSignal
-        // dashboard (Settings -> Keys & IDs -> OneSignal App ID). It is a UUID with
-        // only 0-9 and a-f. Likely "4f82" but CONFIRM from the dashboard.
         OneSignal.initWithContext(this, "eae192d0-74ef-4b78-ba41-bd6d43aa28bf");
         OneSignal.getNotifications().addClickListener(new NotificationExtenderExample());
+
+        // Ensure pushes are shown even when the app is in the FOREGROUND. In
+        // OneSignal SDK 5 a foreground notification fires onWillDisplay; if no
+        // listener explicitly displays it, some devices show nothing. We display
+        // it (no preventDefault) so it always appears. Background/closed pushes
+        // are shown by the OS automatically and are unaffected.
+        OneSignal.getNotifications().addForegroundLifecycleListener(new INotificationLifecycleListener() {
+            @Override
+            public void onWillDisplay(@NonNull INotificationWillDisplayEvent event) {
+                // Do NOT call preventDefault(); let it display in the tray.
+                event.getNotification().display();
+            }
+        });
 
     }
 
