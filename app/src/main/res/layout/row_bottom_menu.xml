@@ -14,9 +14,9 @@
         android:layout_centerVertical="true"
         android:gravity="center"
         android:orientation="horizontal"
-        android:paddingTop="14dp"
-        android:paddingBottom="14dp"
-        android:weightSum="5">
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:weightSum="6">
 
         <LinearLayout
             android:id="@+id/frameHome"
