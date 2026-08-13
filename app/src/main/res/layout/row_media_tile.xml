@@ -18,9 +18,10 @@
         <ImageView
             android:id="@+id/ivTile"
             android:layout_width="match_parent"
-            android:layout_height="220dp"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
             android:background="@color/card_view_bg"
-            android:scaleType="centerCrop"
+            android:scaleType="fitCenter"
             tools:ignore="ContentDescription" />
 
         <!-- Media-type badge, top-left (photo/video/link glyph like the reference grid) -->

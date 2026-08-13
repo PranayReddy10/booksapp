@@ -32,9 +32,6 @@ public class MediaTileAdapter extends RecyclerView.Adapter<MediaTileAdapter.View
     private final List<MediaItem> items;
     private final OnTileClickListener listener;
 
-    // A few heights (in dp) to give the grid a staggered, Pinterest-like rhythm.
-    private static final int[] TILE_HEIGHTS = {180, 220, 260, 200, 240};
-
     public MediaTileAdapter(Activity activity, List<MediaItem> items, OnTileClickListener listener) {
         this.activity = activity;
         this.items = items;
@@ -52,11 +49,11 @@ public class MediaTileAdapter extends RecyclerView.Adapter<MediaTileAdapter.View
     public void onBindViewHolder(@NotNull ViewHolder holder, int position) {
         MediaItem item = items.get(position);
 
-        // Staggered height, stable per position.
-        int hDp = TILE_HEIGHTS[Math.abs(position) % TILE_HEIGHTS.length];
-        int hPx = Math.round(activity.getResources().getDisplayMetrics().density * hDp);
+        // Let each tile size itself to the image's natural aspect ratio
+        // (ivTile is wrap_content + adjustViewBounds + fitCenter), so posters
+        // and infographics are shown fully instead of being cropped/zoomed.
         ViewGroup.LayoutParams lp = holder.binding.ivTile.getLayoutParams();
-        lp.height = hPx;
+        lp.height = ViewGroup.LayoutParams.WRAP_CONTENT;
         holder.binding.ivTile.setLayoutParams(lp);
 
         boolean isVideo = "video".equalsIgnoreCase(item.getMedia_type());
