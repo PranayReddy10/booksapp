@@ -107,6 +107,21 @@
     <string name="lbl_auth_headline">Your campus library, in your pocket</string>
     <string name="lbl_auth_sub">Books, results and updates for your university.</string>
 
+    <string name="lbl_pass_req">Password*</string>
+    <string name="lbl_phone_req">Phone*</string>
+    <string name="lbl_roll_req">Roll Number*</string>
+    <string name="lbl_university_req">University*</string>
+    <string name="lbl_department_req">Department*</string>
+    <string name="lbl_college_req">College*</string>
+    <string name="lbl_gender_req">Gender*</string>
+    <string name="please_enter_phone">Please enter phone number</string>
+    <string name="please_enter_roll">Please enter roll number</string>
+
+    <string name="lbl_step_1">1</string>
+    <string name="lbl_step_2">2</string>
+    <string name="lbl_step_3">3</string>
+    <string name="lbl_complete_profile_why">These decide which books, results and updates you see.</string>
+
     <!-- Registration steps -->
     <string name="lbl_step_of">%1$d / %2$d</string>
     <string name="lbl_continue">Continue</string>

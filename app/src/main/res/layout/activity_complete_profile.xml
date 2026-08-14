@@ -1,77 +1,307 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- Completing a profile is enrolment, not a settings form: it says why the details
+     are needed, shows the three campus choices as numbered steps on one card, and
+     ends in a single action. Matches the registration flow's look. -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_auth_mesh"
-    android:fillViewport="true">
+    android:background="@color/app_bg">
 
+    <!-- ===== Heading ===== -->
     <LinearLayout
+        android:id="@+id/llCompleteHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="@dimen/_24px">
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="@dimen/_20px"
+        android:layout_marginTop="@dimen/_40px"
+        android:layout_marginEnd="@dimen/_20px"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:background="@drawable/bg_reg_badge">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_result_school"
+                app:tint="@color/app_bg_orange"
+                tools:ignore="ContentDescription" />
+        </FrameLayout>
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_40px"
+            android:layout_marginTop="@dimen/_15px"
+            android:fontFamily="@font/opensansromanextrabold"
             android:text="@string/lbl_complete_profile"
-            android:textColor="@color/auth_text_primary"
-            android:textSize="@dimen/_26sp"
-            android:textStyle="bold" />
+            android:textColor="@color/gray_2"
+            android:textSize="@dimen/_24sp" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_6px"
+            android:fontFamily="@font/opensansromansemibold"
             android:text="@string/lbl_complete_profile_sub"
-            android:textColor="@color/auth_text_secondary"
-            android:textSize="@dimen/_14sp" />
+            android:textColor="@color/home_by_author"
+            android:textSize="@dimen/_15sp" />
+    </LinearLayout>
 
-        <Spinner
-            android:id="@+id/spUniversity"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_28px"
-            android:background="@drawable/bg_auth_field"
-            android:padding="@dimen/_6px" />
-
-        <Spinner
-            android:id="@+id/spDepartment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_16px"
-            android:background="@drawable/bg_auth_field"
-            android:padding="@dimen/_6px" />
-
-        <Spinner
-            android:id="@+id/spCollege"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_16px"
-            android:background="@drawable/bg_auth_field"
-            android:padding="@dimen/_6px" />
-
-        <Button
-            android:id="@+id/btnSaveProfile"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_32px"
-            android:background="@drawable/bg_auth_cta"
-            android:padding="@dimen/_14px"
-            android:text="@string/lbl_continue"
-            android:textAllCaps="false"
-            android:textColor="@color/auth_text_primary"
-            android:textSize="@dimen/_16sp"
-            tools:ignore="ButtonStyle" />
+    <!-- ===== Action ===== -->
+    <LinearLayout
+        android:id="@+id/llCompleteActions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="@dimen/_20px"
+        android:layout_marginEnd="@dimen/_20px"
+        android:layout_marginBottom="@dimen/_20px"
+        android:orientation="vertical">
 
         <ProgressBar
             android:id="@+id/progressComplete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/_16px"
+            android:layout_marginBottom="@dimen/_12px"
+            android:theme="@style/ProgressBar"
             android:visibility="gone" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnSaveProfile"
+            style="@style/txtOpenSansRomanBold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_auth_cta"
+            android:gravity="center"
+            android:paddingTop="@dimen/_16px"
+            android:paddingBottom="@dimen/_16px"
+            android:singleLine="true"
+            android:text="@string/lbl_continue"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_16sp" />
     </LinearLayout>
-</ScrollView>
+
+    <!-- ===== Campus choices ===== -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/llCompleteActions"
+        android:layout_below="@+id/llCompleteHeader"
+        android:clipToPadding="false"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20px"
+            android:layout_marginTop="@dimen/_20px"
+            android:layout_marginEnd="@dimen/_20px"
+            android:layout_marginBottom="@dimen/_20px"
+            android:background="@drawable/bg_reg_card"
+            android:orientation="vertical"
+            android:padding="@dimen/_20px">
+
+            <!-- 1. University -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/txt_OpenSansRomanBold"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:background="@drawable/bg_reg_badge"
+                    android:gravity="center"
+                    android:text="@string/lbl_step_1"
+                    android:textColor="@color/app_bg_orange"
+                    android:textSize="@dimen/_12sp" />
+
+                <TextView
+                    style="@style/txtOpenSansRomanSemiBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10px"
+                    android:text="@string/lbl_university_req"
+                    android:textColor="@color/home_by_author"
+                    android:textSize="@dimen/_13sp" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8px"
+                android:background="@drawable/bg_reg_field"
+                android:minHeight="@dimen/_55px">
+
+                <Spinner
+                    android:id="@+id/spUniversity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:paddingStart="@dimen/_16px"
+                    android:paddingEnd="@dimen/_40px"
+                    android:spinnerMode="dropdown"
+                    tools:ignore="RtlSymmetry" />
+
+                <ImageView
+                    android:layout_width="@dimen/_20px"
+                    android:layout_height="@dimen/_20px"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/_16px"
+                    android:src="@drawable/img_arrow_dropdown"
+                    app:tint="@color/home_by_author"
+                    tools:ignore="ContentDescription" />
+            </RelativeLayout>
+
+            <!-- 2. Department -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_18px"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/txt_OpenSansRomanBold"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:background="@drawable/bg_reg_badge"
+                    android:gravity="center"
+                    android:text="@string/lbl_step_2"
+                    android:textColor="@color/app_bg_orange"
+                    android:textSize="@dimen/_12sp" />
+
+                <TextView
+                    style="@style/txtOpenSansRomanSemiBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10px"
+                    android:text="@string/lbl_department_req"
+                    android:textColor="@color/home_by_author"
+                    android:textSize="@dimen/_13sp" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8px"
+                android:background="@drawable/bg_reg_field"
+                android:minHeight="@dimen/_55px">
+
+                <Spinner
+                    android:id="@+id/spDepartment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:paddingStart="@dimen/_16px"
+                    android:paddingEnd="@dimen/_40px"
+                    android:spinnerMode="dropdown"
+                    tools:ignore="RtlSymmetry" />
+
+                <ImageView
+                    android:layout_width="@dimen/_20px"
+                    android:layout_height="@dimen/_20px"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/_16px"
+                    android:src="@drawable/img_arrow_dropdown"
+                    app:tint="@color/home_by_author"
+                    tools:ignore="ContentDescription" />
+            </RelativeLayout>
+
+            <!-- 3. College -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_18px"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/txt_OpenSansRomanBold"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:background="@drawable/bg_reg_badge"
+                    android:gravity="center"
+                    android:text="@string/lbl_step_3"
+                    android:textColor="@color/app_bg_orange"
+                    android:textSize="@dimen/_12sp" />
+
+                <TextView
+                    style="@style/txtOpenSansRomanSemiBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10px"
+                    android:text="@string/lbl_college_req"
+                    android:textColor="@color/home_by_author"
+                    android:textSize="@dimen/_13sp" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8px"
+                android:background="@drawable/bg_reg_field"
+                android:minHeight="@dimen/_55px">
+
+                <Spinner
+                    android:id="@+id/spCollege"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:paddingStart="@dimen/_16px"
+                    android:paddingEnd="@dimen/_40px"
+                    android:spinnerMode="dropdown"
+                    tools:ignore="RtlSymmetry" />
+
+                <ImageView
+                    android:layout_width="@dimen/_20px"
+                    android:layout_height="@dimen/_20px"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/_16px"
+                    android:src="@drawable/img_arrow_dropdown"
+                    app:tint="@color/home_by_author"
+                    tools:ignore="ContentDescription" />
+            </RelativeLayout>
+
+            <!-- Why we ask -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20px"
+                android:background="@drawable/bg_feed_pill"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/_12px">
+
+                <ImageView
+                    android:layout_width="@dimen/_20px"
+                    android:layout_height="@dimen/_20px"
+                    android:src="@drawable/ic_feed_book"
+                    app:tint="@color/app_bg_orange"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    style="@style/txtOpenSansRomanSemiBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10px"
+                    android:text="@string/lbl_complete_profile_why"
+                    android:textColor="@color/gray_2"
+                    android:textSize="@dimen/_13sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</RelativeLayout>

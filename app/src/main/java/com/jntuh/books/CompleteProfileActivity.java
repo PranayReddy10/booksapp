@@ -78,17 +78,17 @@ public class CompleteProfileActivity extends AppCompatActivity {
 
     private void setupSpinners() {
         universityNames.add(getString(R.string.lbl_select_university));
-        universityAdapter = new ArrayAdapter<>(this, R.layout.row_spinner_item_auth, universityNames);
+        universityAdapter = new ArrayAdapter<>(this, R.layout.row_spinner_item_light, universityNames);
         universityAdapter.setDropDownViewResource(R.layout.row_spinner_dropdown_item);
         binding.spUniversity.setAdapter(universityAdapter);
 
         departmentNames.add(getString(R.string.lbl_select_department));
-        departmentAdapter = new ArrayAdapter<>(this, R.layout.row_spinner_item_auth, departmentNames);
+        departmentAdapter = new ArrayAdapter<>(this, R.layout.row_spinner_item_light, departmentNames);
         departmentAdapter.setDropDownViewResource(R.layout.row_spinner_dropdown_item);
         binding.spDepartment.setAdapter(departmentAdapter);
 
         collegeNames.add(getString(R.string.lbl_select_college));
-        collegeAdapter = new ArrayAdapter<>(this, R.layout.row_spinner_item_auth, collegeNames);
+        collegeAdapter = new ArrayAdapter<>(this, R.layout.row_spinner_item_light, collegeNames);
         collegeAdapter.setDropDownViewResource(R.layout.row_spinner_dropdown_item);
         binding.spCollege.setAdapter(collegeAdapter);
 
