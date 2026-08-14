@@ -169,4 +169,15 @@
     <color name="filter_unselect_text">#FFFFFF</color>
 
     <color name="bg_status_bar">#141414</color>
+
+    <!-- Reels feed (social card layout) -->
+    <color name="feed_screen_bg">#101012</color>
+    <color name="feed_card_bg">#1C1C1F</color>
+    <color name="feed_name">#FFFFFF</color>
+    <color name="feed_meta">#A0A0B0</color>
+    <color name="feed_icon">#EDEDED</color>
+    <color name="feed_divider">#2E2E34</color>
+    <color name="feed_media_bg">#262629</color>
+    <color name="feed_caption">#D6D6DE</color>
+    <color name="feed_pill_bg">#26F97F68</color>
 </resources>
