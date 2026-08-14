@@ -191,4 +191,15 @@
     <color name="result_verified_green">#2E7D32</color>
     <color name="result_backlog_red">#C62828</color>
     <color name="result_brand_blue">#0D47A1</color>
+
+    <!-- Reels feed (social card layout) -->
+    <color name="feed_screen_bg">#F6F6F8</color>
+    <color name="feed_card_bg">#FFFFFF</color>
+    <color name="feed_name">#2F2E41</color>
+    <color name="feed_meta">#8E8DA3</color>
+    <color name="feed_icon">#2F2E41</color>
+    <color name="feed_divider">#E8E8EE</color>
+    <color name="feed_media_bg">#F0F0F4</color>
+    <color name="feed_caption">#4E4B66</color>
+    <color name="feed_pill_bg">#14F97F68</color>
 </resources>

@@ -103,6 +103,11 @@
     <string name="confirm_delete_media">Delete this post?</string>
     <string name="lbl_admin">Admin</string>
 
+    <!-- Reels feed filters -->
+    <string name="lbl_filter_all">All</string>
+    <string name="lbl_filter_photos">Photos</string>
+    <string name="lbl_filter_videos">Videos</string>
+
     <!-- Media interactions -->
     <string name="lbl_follow">Follow</string>
     <string name="lbl_open_link">Open link</string>
