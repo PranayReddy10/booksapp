@@ -103,6 +103,9 @@
     <string name="confirm_delete_media">Delete this post?</string>
     <string name="lbl_admin">Admin</string>
 
+    <string name="lbl_my_profile">My Profile</string>
+    <string name="lbl_edit_profile_short">Edit</string>
+
     <!-- Auth -->
     <string name="lbl_auth_headline">Your campus library, in your pocket</string>
     <string name="lbl_auth_sub">Books, results and updates for your university.</string>

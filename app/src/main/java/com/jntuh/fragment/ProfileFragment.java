@@ -114,6 +114,12 @@ public class ProfileFragment extends Fragment {
                 viewProfile.llNoData.clNoDataFound.setVisibility(View.GONE);
             }
 
+            // Shelves that used to hide in the overflow sheet.
+            viewProfile.llProfDownloads.setOnClickListener(v -> openLibrary("isDown"));
+            viewProfile.llProfSaved.setOnClickListener(v -> openLibrary("isFav"));
+            viewProfile.llProfEdit.setOnClickListener(v ->
+                    startActivity(new Intent(requireActivity(), EditProfileActivity.class)));
+
             setupViewPager(viewProfile.vpTab);
             new TabLayoutMediator(viewProfile.tabLayout, viewProfile.vpTab, (tab, position) -> {
                 if (position == 0) {
@@ -138,6 +144,12 @@ public class ProfileFragment extends Fragment {
 
         }
         return viewProfile.getRoot();
+    }
+
+    /** Downloads ("isDown") and favourites ("isFav") share one screen. */
+    private void openLibrary(String mode) {
+        startActivity(new Intent(requireActivity(), DownloadActivity.class)
+                .putExtra("isDown", mode));
     }
 
     private void setupViewPager(final ViewPager2 viewPager) {
