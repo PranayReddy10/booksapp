@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Campus motif behind the auth hero: a stack of books, an open book and a
+     graduation cap, drawn faintly so the headline stays the loudest thing. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="360dp"
+    android:height="220dp"
+    android:viewportWidth="360"
+    android:viewportHeight="220"
+    android:alpha="0.22">
+
+    <!-- graduation cap -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M70,44 L124,66 L70,88 L16,66 Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M40,78 L40,104 C40,112 100,112 100,104 L100,78 L70,90 Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M122,68 L126,68 L126,108 L122,108 Z" />
+
+    <!-- open book -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M186,150 C206,138 232,138 250,148 L250,196 C232,186 206,186 186,198 Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M254,148 C272,138 298,138 318,150 L318,198 C298,186 272,186 254,196 Z" />
+
+    <!-- stacked books -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M244,44 L328,44 L328,60 L244,60 Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M252,66 L336,66 L336,82 L252,82 Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M240,88 L324,88 L324,104 L240,104 Z" />
+
+    <!-- pencil -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M40,150 L52,138 L112,198 L100,210 Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M30,160 L46,176 L28,182 Z" />
+</vector>

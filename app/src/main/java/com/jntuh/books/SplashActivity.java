@@ -242,6 +242,15 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void callActivity() {
+        // Login is mandatory: anyone not signed in goes to the login screen,
+        // whatever route (deep link included) brought them here.
+        if (!method.getIsLogin()) {
+            Intent login = new Intent(getApplicationContext(), LoginActivity.class);
+            login.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(login);
+            finishAffinity();
+            return;
+        }
         switch (type) {
             case "category":
                 Intent intentSubCat = new Intent(SplashActivity.this, SubCategoryActivity.class);

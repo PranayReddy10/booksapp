@@ -103,8 +103,12 @@
     <string name="confirm_delete_media">Delete this post?</string>
     <string name="lbl_admin">Admin</string>
 
+    <!-- Auth -->
+    <string name="lbl_auth_headline">Your campus library, in your pocket</string>
+    <string name="lbl_auth_sub">Books, results and updates for your university.</string>
+
     <!-- Registration steps -->
-    <string name="lbl_step_of">Step %1$d of %2$d</string>
+    <string name="lbl_step_of">%1$d / %2$d</string>
     <string name="lbl_continue">Continue</string>
     <string name="lbl_back">Back</string>
     <string name="lbl_create_account">Create account</string>
