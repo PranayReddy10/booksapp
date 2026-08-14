@@ -1,4 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Registration as a four-step flow rather than one long form: each step asks for
+     one kind of thing, a progress rail shows how far along you are, and the last
+     step summarises what you entered before the account is created. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,131 +11,242 @@
     android:background="@drawable/bg_auth_mesh"
     android:orientation="vertical">
 
-    <androidx.core.widget.NestedScrollView
+    <RelativeLayout
+        android:id="@+id/linearColumnellipsesix"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:layout_height="match_parent">
 
-        <RelativeLayout
-            android:id="@+id/linearColumnellipsesix"
+        <ImageView
+            android:id="@+id/authBlobViolet"
+            android:layout_width="@dimen/_250px"
+            android:layout_height="@dimen/_250px"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="-60dp"
+            android:layout_marginTop="-40dp"
+            android:src="@drawable/bg_auth_blob_violet"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/authBlobPink"
+            android:layout_width="@dimen/_250px"
+            android:layout_height="@dimen/_250px"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="-70dp"
+            android:layout_marginEnd="-70dp"
+            android:src="@drawable/bg_auth_blob_pink"
+            tools:ignore="ContentDescription" />
+
+        <!-- ===== Step header ===== -->
+        <LinearLayout
+            android:id="@+id/linearWelcomeBack"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_horizontal"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="@dimen/_30px"
+            android:layout_marginTop="@dimen/_50px"
+            android:layout_marginEnd="@dimen/_30px"
             android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/authBlobViolet"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginTop="30dp"
-                android:layout_marginStart="-50dp"
-                android:src="@drawable/bg_auth_blob_violet"
-                tools:ignore="ContentDescription" />
+            <!-- Progress rail: one segment per step -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-            <ImageView
-                android:id="@+id/authBlobPink"
-                android:layout_width="180dp"
-                android:layout_height="180dp"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="-50dp"
-                android:src="@drawable/bg_auth_blob_pink"
-                tools:ignore="ContentDescription" />
+                <View
+                    android:id="@+id/vRegProgress1"
+                    android:layout_width="0dp"
+                    android:layout_height="4dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_reg_progress_on" />
+
+                <View
+                    android:id="@+id/vRegProgress2"
+                    android:layout_width="0dp"
+                    android:layout_height="4dp"
+                    android:layout_marginStart="@dimen/_6px"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_reg_progress_off" />
+
+                <View
+                    android:id="@+id/vRegProgress3"
+                    android:layout_width="0dp"
+                    android:layout_height="4dp"
+                    android:layout_marginStart="@dimen/_6px"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_reg_progress_off" />
+
+                <View
+                    android:id="@+id/vRegProgress4"
+                    android:layout_width="0dp"
+                    android:layout_height="4dp"
+                    android:layout_marginStart="@dimen/_6px"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_reg_progress_off" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvRegStepCount"
+                style="@style/txtOpenSansRomanSemiBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20px"
+                android:singleLine="true"
+                android:textColor="@color/auth_text_hint"
+                android:textSize="@dimen/_14sp"
+                tools:text="Step 1 of 4" />
+
+            <TextView
+                android:id="@+id/txtWelcomeBack"
+                style="@style/txt_OpenSansRomanExtraBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5px"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="@string/lbl_reg_step1_title"
+                android:textColor="@color/auth_text_primary"
+                android:textSize="@dimen/_26sp"
+                tools:text="What should we call you?" />
+
+            <TextView
+                android:id="@+id/txtLetsLoginA"
+                style="@style/txt_OpenSansRomanBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5px"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="@string/lbl_reg_step1_sub"
+                android:textColor="@color/auth_text_secondary"
+                android:textSize="@dimen/_16sp"
+                tools:text="This is the name other readers will see." />
+        </LinearLayout>
+
+        <!-- ===== Bottom action bar ===== -->
+        <LinearLayout
+            android:id="@+id/llRegActions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="@dimen/_30px"
+            android:layout_marginEnd="@dimen/_30px"
+            android:layout_marginBottom="@dimen/_20px"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
 
             <LinearLayout
-                android:id="@+id/linearLoginScreen"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-                <RelativeLayout
-                    android:id="@+id/frameStackemail"
+                <TextView
+                    android:id="@+id/btnRegBack"
+                    style="@style/txt_OpenSansRomanBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_reg_back_btn"
+                    android:gravity="center"
+                    android:paddingStart="@dimen/_25px"
+                    android:paddingTop="@dimen/_16px"
+                    android:paddingEnd="@dimen/_25px"
+                    android:paddingBottom="@dimen/_16px"
+                    android:singleLine="true"
+                    android:text="@string/lbl_back"
+                    android:textColor="@color/auth_text_secondary"
+                    android:visibility="invisible"
+                    tools:visibility="visible" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnRegister"
+                    style="@style/txtOpenSansRomanBold"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10px"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_auth_cta"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:paddingTop="@dimen/_16px"
+                    android:paddingBottom="@dimen/_16px"
+                    android:singleLine="true"
+                    android:text="@string/lbl_continue"
+                    android:textAllCaps="false"
+                    android:textColor="@color/auth_text_primary"
+                    tools:text="Continue" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/_15px"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/txtConfirmation"
+                    style="@style/txt_OpenSansRomanBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_10px"
+                    android:singleLine="true"
+                    android:text="@string/msg_already_have_acc"
+                    android:textColor="@color/auth_text_secondary"
+                    android:textSize="@dimen/_15sp" />
+
+                <TextView
+                    android:id="@+id/tvRegLogIn"
+                    style="@style/txt_OpenSansRomanBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:text="@string/reg_log_in"
+                    android:textColor="@color/orange"
+                    android:textSize="@dimen/_15sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- ===== Steps ===== -->
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/llRegActions"
+            android:layout_below="@+id/linearWelcomeBack"
+            android:clipToPadding="false"
+            android:fillViewport="true">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/linearLoginFild"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="start">
-
-                    <RelativeLayout
-                        android:id="@+id/frameStackellipsesix"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="top|start"
-                        android:layout_marginBottom="@dimen/_10px"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:id="@+id/imageEllipseSix"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_300px"
-                            android:layout_gravity="start"
-                            android:layout_marginEnd="@dimen/_30px"
-                            android:scaleType="fitXY"
-                            android:visibility="gone"
-                            android:src="@drawable/img_ellipse_login"
-                            tools:ignore="ContentDescription"
-                            tools:src="@drawable/img_ellipse_login" />
+                    android:layout_marginStart="@dimen/_30px"
+                    android:layout_marginTop="@dimen/_20px"
+                    android:layout_marginEnd="@dimen/_30px"
+                    android:layout_marginBottom="@dimen/_20px"
+                    android:orientation="vertical">
 
                         <LinearLayout
-                            android:id="@+id/linearWelcomeBack"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="top|start"
-                            android:layout_marginStart="@dimen/_30px"
-                            android:layout_marginTop="@dimen/_70px"
-                            android:layout_marginEnd="@dimen/_30px"
-                            android:layout_marginBottom="@dimen/_30px"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/txtWelcomeBack"
-                                style="@style/txt_OpenSansExtraBold"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:ellipsize="end"
-                                android:singleLine="true"
-                                android:text="@string/lbl_sign_up"
-                                android:textColor="@color/auth_text_primary"
-                                android:textSize="@dimen/_30sp"
-                                tools:text="@string/lbl_sign_up" />
-
-                            <TextView
-                                android:id="@+id/txtLetsLoginA"
-                                style="@style/txt_OpenSansRomanBold"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/_5px"
-                                android:layout_marginEnd="@dimen/_10px"
-                                android:ellipsize="end"
-                                android:lineSpacingExtra="@dimen/_1px"
-                                android:singleLine="true"
-                                android:text="@string/lbl_let_sing_up"
-                                android:textColor="@color/auth_text_secondary"
-                                android:textSize="@dimen/_16sp"
-                                tools:text="@string/lbl_let_sing_up" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/linearLoginFild"
+                            android:id="@+id/llRegStep1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/linearWelcomeBack"
-                            android:layout_marginStart="@dimen/_30px"
-                            android:layout_marginTop="@dimen/_50px"
-                            android:layout_marginEnd="@dimen/_30px"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:visibility="visible">
 
                             <EditText
                                 android:id="@+id/edtRegName"
                                 style="@style/edtBoxRoundedOutline"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_15px"
                                 android:background="@drawable/bg_auth_field"
                                 android:ellipsize="end"
                                 android:hint="@string/lbl_name"
-                                android:textCursorDrawable="@drawable/cursor"
                                 android:inputType="text"
                                 android:lineSpacingExtra="@dimen/_1px"
                                 android:paddingStart="@dimen/_20px"
@@ -142,7 +256,131 @@
                                 android:singleLine="true"
                                 android:textColor="@color/auth_text_primary"
                                 android:textColorHint="@color/auth_text_hint"
+                                android:textCursorDrawable="@drawable/cursor"
                                 tools:ignore="Autofill" />
+                            <!-- Gender as tappable choices; the spinner below stays as the
+                                 value holder so the screen's existing logic is unchanged. -->
+                            <LinearLayout
+                                android:id="@+id/llGenderMale"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_20px"
+                                android:background="?attr/selectableItemBackground"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <FrameLayout
+                                    android:id="@+id/ivGenderMaleDisc"
+                                    android:layout_width="96dp"
+                                    android:layout_height="96dp"
+                                    android:background="@drawable/bg_gender_circle">
+
+                                    <ImageView
+                                        android:id="@+id/ivGenderMale"
+                                        android:layout_width="40dp"
+                                        android:layout_height="40dp"
+                                        android:layout_gravity="center"
+                                        android:src="@drawable/ic_gender_male"
+                                        app:tint="@color/auth_text_primary"
+                                        tools:ignore="ContentDescription" />
+                                </FrameLayout>
+
+                                <TextView
+                                    android:id="@+id/ivGenderMaleLabel"
+                                    style="@style/txt_OpenSansRomanBold"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/_8px"
+                                    android:text="@string/lbl_gender_male"
+                                    android:textColor="@color/auth_text_secondary"
+                                    android:textSize="@dimen/_15sp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/llGenderFemale"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_16px"
+                                android:background="?attr/selectableItemBackground"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <FrameLayout
+                                    android:id="@+id/ivGenderFemaleDisc"
+                                    android:layout_width="96dp"
+                                    android:layout_height="96dp"
+                                    android:background="@drawable/bg_gender_circle">
+
+                                    <ImageView
+                                        android:id="@+id/ivGenderFemale"
+                                        android:layout_width="40dp"
+                                        android:layout_height="40dp"
+                                        android:layout_gravity="center"
+                                        android:src="@drawable/ic_gender_female"
+                                        app:tint="@color/auth_text_primary"
+                                        tools:ignore="ContentDescription" />
+                                </FrameLayout>
+
+                                <TextView
+                                    android:id="@+id/ivGenderFemaleLabel"
+                                    style="@style/txt_OpenSansRomanBold"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/_8px"
+                                    android:text="@string/lbl_gender_female"
+                                    android:textColor="@color/auth_text_secondary"
+                                    android:textSize="@dimen/_15sp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/llGenderOther"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_16px"
+                                android:background="?attr/selectableItemBackground"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <FrameLayout
+                                    android:id="@+id/ivGenderOtherDisc"
+                                    android:layout_width="96dp"
+                                    android:layout_height="96dp"
+                                    android:background="@drawable/bg_gender_circle">
+
+                                    <ImageView
+                                        android:id="@+id/ivGenderOther"
+                                        android:layout_width="40dp"
+                                        android:layout_height="40dp"
+                                        android:layout_gravity="center"
+                                        android:src="@drawable/ic_gender_other"
+                                        app:tint="@color/auth_text_primary"
+                                        tools:ignore="ContentDescription" />
+                                </FrameLayout>
+
+                                <TextView
+                                    android:id="@+id/ivGenderOtherLabel"
+                                    style="@style/txt_OpenSansRomanBold"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/_8px"
+                                    android:text="@string/lbl_gender_other"
+                                    android:textColor="@color/auth_text_secondary"
+                                    android:textSize="@dimen/_15sp" />
+                            </LinearLayout>
+
+                            <Spinner
+                                android:id="@+id/spRegGender"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:visibility="gone" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/llRegStep2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:visibility="gone">
 
                             <EditText
                                 android:id="@+id/edtRegEmail"
@@ -152,7 +390,6 @@
                                 android:layout_marginTop="@dimen/_15px"
                                 android:background="@drawable/bg_auth_field"
                                 android:ellipsize="end"
-                                android:textCursorDrawable="@drawable/cursor"
                                 android:hint="@string/lbl_email"
                                 android:inputType="textEmailAddress"
                                 android:lineSpacingExtra="@dimen/_1px"
@@ -163,29 +400,8 @@
                                 android:singleLine="true"
                                 android:textColor="@color/auth_text_primary"
                                 android:textColorHint="@color/auth_text_hint"
-                                tools:ignore="Autofill" />
-
-                            <EditText
-                                android:id="@+id/edtRegPass"
-                                style="@style/edtBoxRoundedOutline"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/_15px"
-                                android:background="@drawable/bg_auth_field"
-                                android:ellipsize="end"
-                                android:hint="@string/lbl_pass"
                                 android:textCursorDrawable="@drawable/cursor"
-                                android:inputType="textPassword"
-                                android:lineSpacingExtra="@dimen/_1px"
-                                android:paddingStart="@dimen/_20px"
-                                android:paddingTop="@dimen/_18px"
-                                android:paddingEnd="@dimen/_30px"
-                                android:paddingBottom="@dimen/_18px"
-                                android:singleLine="true"
-                                android:textColor="@color/auth_text_primary"
-                                android:textColorHint="@color/auth_text_hint"
                                 tools:ignore="Autofill" />
-
                             <EditText
                                 android:id="@+id/edtRegPhone"
                                 style="@style/edtBoxRoundedOutline"
@@ -195,7 +411,6 @@
                                 android:background="@drawable/bg_auth_field"
                                 android:ellipsize="end"
                                 android:hint="@string/lbl_phone"
-                                android:textCursorDrawable="@drawable/cursor"
                                 android:inputType="phone"
                                 android:lineSpacingExtra="@dimen/_1px"
                                 android:paddingStart="@dimen/_20px"
@@ -205,9 +420,37 @@
                                 android:singleLine="true"
                                 android:textColor="@color/auth_text_primary"
                                 android:textColorHint="@color/auth_text_hint"
+                                android:textCursorDrawable="@drawable/cursor"
                                 tools:ignore="Autofill" />
+                            <EditText
+                                android:id="@+id/edtRegPass"
+                                style="@style/edtBoxRoundedOutline"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_15px"
+                                android:background="@drawable/bg_auth_field"
+                                android:ellipsize="end"
+                                android:hint="@string/lbl_pass"
+                                android:inputType="textPassword"
+                                android:lineSpacingExtra="@dimen/_1px"
+                                android:paddingStart="@dimen/_20px"
+                                android:paddingTop="@dimen/_18px"
+                                android:paddingEnd="@dimen/_30px"
+                                android:paddingBottom="@dimen/_18px"
+                                android:singleLine="true"
+                                android:textColor="@color/auth_text_primary"
+                                android:textColorHint="@color/auth_text_hint"
+                                android:textCursorDrawable="@drawable/cursor"
+                                tools:ignore="Autofill" />
+                        </LinearLayout>
 
-                            <!-- University -->
+                        <LinearLayout
+                            android:id="@+id/llRegStep3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
                             <TextView
                                 style="@style/txt_OpenSansRomanBold"
                                 android:layout_width="wrap_content"
@@ -229,23 +472,21 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_centerVertical="true"
-                                    android:layout_toStartOf="@+id/ivRegUniversityArrow"
-                                    android:paddingStart="@dimen/_16px"
-                                    android:paddingEnd="@dimen/_5px"
+                                    android:paddingStart="@dimen/_15px"
+                                    android:paddingEnd="@dimen/_40px"
+                                    android:spinnerMode="dropdown"
                                     tools:ignore="RtlSymmetry" />
 
                                 <ImageView
                                     android:id="@+id/ivRegUniversityArrow"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_width="@dimen/_20px"
+                                    android:layout_height="@dimen/_20px"
                                     android:layout_alignParentEnd="true"
                                     android:layout_centerVertical="true"
-                                    android:layout_marginEnd="@dimen/_16px"
+                                    android:layout_marginEnd="@dimen/_15px"
                                     android:src="@drawable/img_arrow_dropdown"
                                     tools:ignore="ContentDescription" />
                             </RelativeLayout>
-
-                            <!-- Department (cascades from university) -->
                             <TextView
                                 style="@style/txt_OpenSansRomanBold"
                                 android:layout_width="wrap_content"
@@ -267,23 +508,21 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_centerVertical="true"
-                                    android:layout_toStartOf="@+id/ivRegDepartmentArrow"
-                                    android:paddingStart="@dimen/_16px"
-                                    android:paddingEnd="@dimen/_5px"
+                                    android:paddingStart="@dimen/_15px"
+                                    android:paddingEnd="@dimen/_40px"
+                                    android:spinnerMode="dropdown"
                                     tools:ignore="RtlSymmetry" />
 
                                 <ImageView
                                     android:id="@+id/ivRegDepartmentArrow"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_width="@dimen/_20px"
+                                    android:layout_height="@dimen/_20px"
                                     android:layout_alignParentEnd="true"
                                     android:layout_centerVertical="true"
-                                    android:layout_marginEnd="@dimen/_16px"
+                                    android:layout_marginEnd="@dimen/_15px"
                                     android:src="@drawable/img_arrow_dropdown"
                                     tools:ignore="ContentDescription" />
                             </RelativeLayout>
-
-                            <!-- College -->
                             <TextView
                                 style="@style/txt_OpenSansRomanBold"
                                 android:layout_width="wrap_content"
@@ -305,80 +544,30 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_centerVertical="true"
-                                    android:layout_toStartOf="@+id/ivRegCollegeArrow"
-                                    android:paddingStart="@dimen/_16px"
-                                    android:paddingEnd="@dimen/_5px"
+                                    android:paddingStart="@dimen/_15px"
+                                    android:paddingEnd="@dimen/_40px"
+                                    android:spinnerMode="dropdown"
                                     tools:ignore="RtlSymmetry" />
 
                                 <ImageView
                                     android:id="@+id/ivRegCollegeArrow"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_width="@dimen/_20px"
+                                    android:layout_height="@dimen/_20px"
                                     android:layout_alignParentEnd="true"
                                     android:layout_centerVertical="true"
-                                    android:layout_marginEnd="@dimen/_16px"
+                                    android:layout_marginEnd="@dimen/_15px"
                                     android:src="@drawable/img_arrow_dropdown"
                                     tools:ignore="ContentDescription" />
                             </RelativeLayout>
-
-                            <!-- Gender -->
-                            <TextView
-                                style="@style/txt_OpenSansRomanBold"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/_15px"
-                                android:layout_marginBottom="@dimen/_5px"
-                                android:text="@string/lbl_gender"
-                                android:textColor="@color/auth_text_secondary"
-                                android:textSize="@dimen/_14sp" />
-
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/bg_auth_field"
-                                android:minHeight="@dimen/_55px">
-
-                                <Spinner
-                                    android:id="@+id/spRegGender"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerVertical="true"
-                                    android:layout_toStartOf="@+id/ivRegGenderArrow"
-                                    android:paddingStart="@dimen/_16px"
-                                    android:paddingEnd="@dimen/_5px"
-                                    tools:ignore="RtlSymmetry" />
-
-                                <ImageView
-                                    android:id="@+id/ivRegGenderArrow"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentEnd="true"
-                                    android:layout_centerVertical="true"
-                                    android:layout_marginEnd="@dimen/_16px"
-                                    android:src="@drawable/img_arrow_dropdown"
-                                    tools:ignore="ContentDescription" />
-                            </RelativeLayout>
-
-                            <!-- Roll number -->
-                            <TextView
-                                style="@style/txt_OpenSansRomanBold"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/_15px"
-                                android:layout_marginBottom="@dimen/_5px"
-                                android:text="@string/lbl_roll_number"
-                                android:textColor="@color/auth_text_secondary"
-                                android:textSize="@dimen/_14sp" />
-
                             <EditText
                                 android:id="@+id/edtRegRoll"
                                 style="@style/edtBoxRoundedOutline"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_15px"
                                 android:background="@drawable/bg_auth_field"
                                 android:ellipsize="end"
                                 android:hint="@string/lbl_roll_number"
-                                android:textCursorDrawable="@drawable/cursor"
                                 android:inputType="text"
                                 android:lineSpacingExtra="@dimen/_1px"
                                 android:paddingStart="@dimen/_20px"
@@ -388,158 +577,83 @@
                                 android:singleLine="true"
                                 android:textColor="@color/auth_text_primary"
                                 android:textColorHint="@color/auth_text_hint"
+                                android:textCursorDrawable="@drawable/cursor"
                                 tools:ignore="Autofill" />
-
                         </LinearLayout>
-                    </RelativeLayout>
-
-
-                </RelativeLayout>
-
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnRegister"
-                    style="@style/txtOpenSansRomanBold"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_30px"
-                    android:layout_marginTop="@dimen/_20px"
-                    android:layout_marginEnd="@dimen/_30px"
-                    android:background="@drawable/bg_auth_cta"
-                    android:ellipsize="end"
-                    android:gravity="center"
-                    android:lineSpacingExtra="@dimen/_1px"
-                    android:paddingStart="@dimen/_30px"
-                    android:paddingTop="@dimen/_16px"
-                    android:paddingEnd="@dimen/_30px"
-                    android:paddingBottom="@dimen/_16px"
-                    android:singleLine="true"
-                    android:text="@string/lbl_register"
-                    android:textAllCaps="false"
-                    android:textColor="@color/auth_text_primary"
-                    tools:text="@string/lbl_register" />
-
-                <RelativeLayout
-                    android:id="@+id/linearRowPolicy"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_30px"
-                    android:layout_marginTop="@dimen/_20px"
-                    android:layout_marginEnd="@dimen/_30px"
-                    android:orientation="horizontal">
-
-                    <cn.refactor.library.SmoothCheckBox
-                        android:id="@+id/cbRegPrivacyTerms"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_centerVertical="true"
-                        android:layout_marginTop="@dimen/_5px"
-                        android:layout_marginBottom="@dimen/_2px"
-                        app:color_checked="@color/check_box_check_bg_login"
-                        app:color_tick="@color/check_box_tick_login"
-                        app:color_unchecked="@color/check_box_bg_login"
-                        app:color_unchecked_stroke="@color/check_box_circle_login" />
-
-                    <TextView
-                        android:id="@+id/txtPrivacyText"
-                        style="@style/txt_OpenSansRomanBold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/_5px"
-                        android:layout_marginTop="@dimen/_5px"
-                        android:layout_marginBottom="@dimen/_2px"
-                        android:layout_toEndOf="@+id/cbRegPrivacyTerms"
-                        android:layout_weight="0.46"
-                        android:ellipsize="end"
-                        android:lineSpacingExtra="@dimen/_1px"
-                        android:singleLine="true"
-                        android:text="@string/msg_by_signing_up_y"
-                        android:textColor="@color/auth_text_secondary"
-                        android:textSize="@dimen/_14sp"
-                        tools:text="@string/msg_by_signing_up_y" />
-
-                    <TextView
-                        android:id="@+id/tvRegPrivacyTerms"
-                        style="@style/txt_OpenSansRomanBold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/_5px"
-                        android:layout_marginTop="@dimen/_5px"
-                        android:layout_marginBottom="@dimen/_2px"
-                        android:layout_toEndOf="@+id/txtPrivacyText"
-                        android:layout_weight="0.46"
-                        android:ellipsize="end"
-                        android:lineSpacingExtra="@dimen/_1px"
-                        android:singleLine="true"
-                        android:text="@string/msg_by_signing_up_policy"
-                        android:textColor="@color/orange"
-                        android:textSize="@dimen/_14sp"
-                        tools:text="@string/msg_by_signing_up_policy" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/frameStackellipseeight"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="bottom">
-
-                    <ImageView
-                        android:id="@+id/imageEllipseEight"
-                        android:layout_width="@dimen/_250px"
-                        android:layout_height="@dimen/_120px"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="-50dp"
-                        android:layout_marginBottom="-50dp"
-                        android:scaleType="fitXY"
-                        android:visibility="gone"
-                        android:src="@drawable/img_ellipse_login_bottom"
-                        tools:ignore="ContentDescription"
-                        tools:src="@drawable/img_ellipse_login_bottom" />
-
+                    <!-- Step 4 — review + terms -->
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:id="@+id/llRegStep4"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_centerHorizontal="true"
-                        android:orientation="horizontal">
+                        android:orientation="vertical"
+                        android:visibility="gone">
 
-                        <TextView
-                            android:id="@+id/txtConfirmation"
-                            style="@style/txt_OpenSansRomanBold"
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="top|start"
-                            android:layout_marginTop="@dimen/_50px"
-                            android:layout_marginEnd="@dimen/_10px"
-                            android:layout_marginBottom="@dimen/_50px"
-                            android:lineSpacingExtra="@dimen/_1px"
-                            android:singleLine="true"
-                            android:text="@string/msg_already_have_acc"
-                            android:textColor="@color/auth_text_secondary"
-                            android:textSize="@dimen/_17sp"
-                            tools:text="@string/msg_already_have_acc" />
+                            android:layout_marginTop="@dimen/_15px"
+                            android:background="@drawable/bg_auth_field"
+                            android:orientation="vertical"
+                            android:padding="@dimen/_20px">
 
-                        <TextView
-                            android:id="@+id/tvRegLogIn"
-                            style="@style/txt_OpenSansRomanBold"
-                            android:layout_width="wrap_content"
+                            <TextView
+                                android:id="@+id/tvRegSummary"
+                                style="@style/txtOpenSansRomanSemiBold"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:lineSpacingExtra="@dimen/_6px"
+                                android:textColor="@color/auth_text_secondary"
+                                android:textSize="@dimen/_15sp"
+                                tools:text="Name\nEmail\nCollege" />
+                        </LinearLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/linearRowPolicy"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_50px"
-                            android:layout_marginEnd="@dimen/_10px"
-                            android:layout_marginBottom="@dimen/_50px"
-                            android:lineSpacingExtra="@dimen/_1px"
-                            android:singleLine="true"
-                            android:text="@string/reg_log_in"
-                            android:textColor="@color/orange"
-                            android:textSize="@dimen/_17sp"
-                            tools:text="@string/reg_log_in" />
+                            android:layout_marginTop="@dimen/_20px">
+
+                            <cn.refactor.library.SmoothCheckBox
+                                android:id="@+id/cbRegPrivacyTerms"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:layout_centerVertical="true"
+                                app:color_checked="@color/check_box_check_bg_login"
+                                app:color_tick="@color/check_box_tick_login"
+                                app:color_unchecked="@color/check_box_bg_login"
+                                app:color_unchecked_stroke="@color/check_box_circle_login" />
+
+                            <TextView
+                                android:id="@+id/txtPrivacyText"
+                                style="@style/txt_OpenSansRomanBold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginStart="@dimen/_10px"
+                                android:layout_toEndOf="@+id/cbRegPrivacyTerms"
+                                android:ellipsize="end"
+                                android:singleLine="true"
+                                android:text="@string/msg_by_signing_up_y"
+                                android:textColor="@color/auth_text_secondary"
+                                android:textSize="@dimen/_14sp" />
+
+                            <TextView
+                                android:id="@+id/tvRegPrivacyTerms"
+                                style="@style/txt_OpenSansRomanBold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginStart="@dimen/_5px"
+                                android:layout_toEndOf="@+id/txtPrivacyText"
+                                android:ellipsize="end"
+                                android:singleLine="true"
+                                android:text="@string/msg_by_signing_up_policy"
+                                android:textColor="@color/orange"
+                                android:textSize="@dimen/_14sp" />
+                        </RelativeLayout>
                     </LinearLayout>
-                </RelativeLayout>
-            </LinearLayout>
-
-        </RelativeLayout>
-    </androidx.core.widget.NestedScrollView>
+                </LinearLayout>
+            </RelativeLayout>
+        </androidx.core.widget.NestedScrollView>
+    </RelativeLayout>
 </LinearLayout>

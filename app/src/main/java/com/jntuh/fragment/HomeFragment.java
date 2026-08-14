@@ -24,13 +24,12 @@ import com.jntuh.books.BookDetailsActivity;
 import com.jntuh.books.DownloadActivity;
 import com.jntuh.books.LoginActivity;
 import com.jntuh.books.MainActivity;
-import com.jntuh.books.MyMediaActivity;
 import com.jntuh.books.MyUploadsActivity;
 import com.jntuh.books.BookListBySubCatActivity;
 import com.jntuh.books.R;
+import com.jntuh.books.SearchBookActivity;
 import com.jntuh.books.SettingsActivity;
 import com.jntuh.books.TrendingBookActivity;
-import com.jntuh.books.UploadBookActivity;
 import com.jntuh.books.databinding.FragmentHomeBinding;
 import com.jntuh.response.HomeRP;
 import com.jntuh.rest.ApiClient;
@@ -73,7 +72,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
 
-        StatusBarUtil.setStatusBar(requireActivity(), "");
+        StatusBarUtil.setStatusBar(requireActivity(), "home");
 
         viewHome = FragmentHomeBinding.inflate(inflater, container, false);
         method = new Method(requireActivity());
@@ -333,30 +332,27 @@ public class HomeFragment extends Fragment {
     }
 
     /**
-     * The quick-access grid and the tools chips: one tap from home to every
-     * destination the app has, including the ones that used to sit behind the
-     * profile screen's overflow menu.
+     * The quick-access grid: one tap from home to every destination the app has,
+     * including the ones that used to sit behind the profile screen's overflow menu.
      */
     private void bindQuickAccess() {
-        // Grid — browse the catalogue.
+        // Row 1 — browse the catalogue.
         viewHome.llQaCategories.setOnClickListener(v -> openNavTab(2));
-        viewHome.llQaLatest.setOnClickListener(v -> openNavTab(1));
         viewHome.llQaTrending.setOnClickListener(v ->
                 startActivity(new Intent(requireActivity(), TrendingBookActivity.class)));
         viewHome.llQaReels.setOnClickListener(v -> openNavTab(4));
 
-        // Grid — the student's own things.
+        // Row 2 — the student's own library.
         viewHome.llQaShop.setOnClickListener(v -> openNavTab(3));
         viewHome.llQaResults.setOnClickListener(v -> openProfileTab(0));
         viewHome.llQaDownloads.setOnClickListener(v -> openLibrary("isDown"));
         viewHome.llQaSaved.setOnClickListener(v -> openLibrary("isFav"));
 
-        // Chips — creator + subscription tools, all login-gated.
-        viewHome.tvToolUploadBook.setOnClickListener(v -> requireLoginThen(UploadBookActivity.class));
-        viewHome.tvToolMyUploads.setOnClickListener(v -> requireLoginThen(MyUploadsActivity.class));
-        viewHome.tvToolMyMedia.setOnClickListener(v -> requireLoginThen(MyMediaActivity.class));
-        viewHome.tvToolSubscription.setOnClickListener(v -> openProfileTab(3));
-        viewHome.tvToolRent.setOnClickListener(v -> openProfileTab(4));
+        viewHome.llQaMyBooks.setOnClickListener(v -> requireLoginThen(MyUploadsActivity.class));
+
+        // Filter button beside the search field opens the dedicated search screen.
+        viewHome.ivHomeFilter.setOnClickListener(v ->
+                startActivity(new Intent(requireActivity(), SearchBookActivity.class)));
     }
 
     /** "See all" on each rail, pointing at the full screen for that section. */

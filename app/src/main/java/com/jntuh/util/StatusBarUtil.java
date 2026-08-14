@@ -19,6 +19,8 @@ public class StatusBarUtil {
         Drawable background;
         if(activityName.isEmpty()) {
             background = ContextCompat.getDrawable(activity, R.drawable.status_bar);
+        } else if(activityName.equalsIgnoreCase("home")) {
+            background = ContextCompat.getDrawable(activity, R.drawable.status_bar_home);
         } else if(activityName.equalsIgnoreCase("profile")) {
             background = ContextCompat.getDrawable(activity, R.drawable.status_bar_profile);
         } else if(activityName.equalsIgnoreCase("payment")) {

@@ -54,6 +54,9 @@ public class RegisterActivity extends AppCompatActivity {
 
     private final String[] genders = {"", "Male", "Female", "Other"};
 
+    private static final int LAST_STEP = 4;
+    private int currentStep = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,7 +87,34 @@ public class RegisterActivity extends AppCompatActivity {
         // Privacy/terms is pre-selected by default.
         viewRegisterBinding.cbRegPrivacyTerms.setChecked(true, false);
 
-        viewRegisterBinding.btnRegister.setOnClickListener(v -> form());
+        // The primary button advances through the steps and only submits on the last one.
+        viewRegisterBinding.btnRegister.setOnClickListener(v -> {
+            if (currentStep < LAST_STEP) {
+                if (validateStep(currentStep)) showStep(currentStep + 1);
+            } else {
+                form();
+            }
+        });
+
+        viewRegisterBinding.btnRegBack.setOnClickListener(v -> {
+            if (currentStep > 1) showStep(currentStep - 1);
+        });
+
+        getOnBackPressedDispatcher().addCallback(this,
+                new androidx.activity.OnBackPressedCallback(true) {
+                    @Override
+                    public void handleOnBackPressed() {
+                        // Back walks the wizard backwards before it leaves the screen.
+                        if (currentStep > 1) {
+                            showStep(currentStep - 1);
+                        } else {
+                            setEnabled(false);
+                            getOnBackPressedDispatcher().onBackPressed();
+                        }
+                    }
+                });
+
+        showStep(1);
 
         viewRegisterBinding.tvRegLogIn.setOnClickListener(v -> {
             Intent intent_login = new Intent(RegisterActivity.this, LoginActivity.class);
@@ -128,6 +158,13 @@ public class RegisterActivity extends AppCompatActivity {
         genderAdapter = new ArrayAdapter<>(this, R.layout.row_spinner_item_auth, genderLabels);
         genderAdapter.setDropDownViewResource(R.layout.row_spinner_dropdown_item);
         viewRegisterBinding.spRegGender.setAdapter(genderAdapter);
+
+        // Gender is picked from the three cards; the (hidden) spinner keeps holding the
+        // value so validation and submission read it exactly as before.
+        viewRegisterBinding.llGenderMale.setOnClickListener(v -> selectGender(1));
+        viewRegisterBinding.llGenderFemale.setOnClickListener(v -> selectGender(2));
+        viewRegisterBinding.llGenderOther.setOnClickListener(v -> selectGender(3));
+        paintGender();
 
         // Long lists get a searchable dialog on tap (gender stays a normal spinner).
         com.jntuh.util.SearchableSpinner.attach(viewRegisterBinding.spRegUniversity, getString(R.string.lbl_select_university));
@@ -255,11 +292,182 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
+    // ---- Gender choice ----
+
+    private void selectGender(int spinnerPosition) {
+        viewRegisterBinding.spRegGender.setSelection(spinnerPosition);
+        paintGender();
+    }
+
+    /** Fill the chosen disc with the brand colour and leave the others neutral. */
+    private void paintGender() {
+        int selected = viewRegisterBinding.spRegGender.getSelectedItemPosition();
+        paintGenderChoice(viewRegisterBinding.ivGenderMaleDisc, viewRegisterBinding.ivGenderMale,
+                viewRegisterBinding.ivGenderMaleLabel, selected == 1);
+        paintGenderChoice(viewRegisterBinding.ivGenderFemaleDisc, viewRegisterBinding.ivGenderFemale,
+                viewRegisterBinding.ivGenderFemaleLabel, selected == 2);
+        paintGenderChoice(viewRegisterBinding.ivGenderOtherDisc, viewRegisterBinding.ivGenderOther,
+                viewRegisterBinding.ivGenderOtherLabel, selected == 3);
+    }
+
+    private void paintGenderChoice(View disc, android.widget.ImageView icon,
+                                   android.widget.TextView label, boolean selected) {
+        disc.setBackgroundResource(selected
+                ? R.drawable.bg_gender_circle_selected : R.drawable.bg_gender_circle);
+        icon.setColorFilter(androidx.core.content.ContextCompat.getColor(this,
+                selected ? R.color.white : R.color.auth_text_secondary));
+        label.setTextColor(androidx.core.content.ContextCompat.getColor(this,
+                selected ? R.color.auth_text_primary : R.color.auth_text_secondary));
+    }
+
+    // ---- Step flow ----
+
+    /** Swap to a step: its fields, its heading, the progress rail and the button label. */
+    private void showStep(int step) {
+        currentStep = step;
+
+        viewRegisterBinding.llRegStep1.setVisibility(step == 1 ? View.VISIBLE : View.GONE);
+        viewRegisterBinding.llRegStep2.setVisibility(step == 2 ? View.VISIBLE : View.GONE);
+        viewRegisterBinding.llRegStep3.setVisibility(step == 3 ? View.VISIBLE : View.GONE);
+        viewRegisterBinding.llRegStep4.setVisibility(step == 4 ? View.VISIBLE : View.GONE);
+
+        int titleRes, subRes;
+        if (step == 1) {
+            titleRes = R.string.lbl_reg_step1_title;
+            subRes = R.string.lbl_reg_step1_sub;
+        } else if (step == 2) {
+            titleRes = R.string.lbl_reg_step2_title;
+            subRes = R.string.lbl_reg_step2_sub;
+        } else if (step == 3) {
+            titleRes = R.string.lbl_reg_step3_title;
+            subRes = R.string.lbl_reg_step3_sub;
+        } else {
+            titleRes = R.string.lbl_reg_step4_title;
+            subRes = R.string.lbl_reg_step4_sub;
+        }
+        viewRegisterBinding.txtWelcomeBack.setText(getString(titleRes));
+        viewRegisterBinding.txtLetsLoginA.setText(getString(subRes));
+        viewRegisterBinding.tvRegStepCount.setText(getString(R.string.lbl_step_of, step, LAST_STEP));
+
+        paintProgress(step);
+
+        viewRegisterBinding.btnRegBack.setVisibility(step == 1 ? View.INVISIBLE : View.VISIBLE);
+        viewRegisterBinding.btnRegister.setText(
+                getString(step == LAST_STEP ? R.string.lbl_create_account : R.string.lbl_continue));
+
+        if (step == LAST_STEP) buildSummary();
+    }
+
+    private void paintProgress(int step) {
+        View[] segments = {
+                viewRegisterBinding.vRegProgress1,
+                viewRegisterBinding.vRegProgress2,
+                viewRegisterBinding.vRegProgress3,
+                viewRegisterBinding.vRegProgress4
+        };
+        for (int i = 0; i < segments.length; i++) {
+            segments[i].setBackgroundResource(i < step
+                    ? R.drawable.bg_reg_progress_on : R.drawable.bg_reg_progress_off);
+        }
+    }
+
+    /** What the last step shows back to the user before they commit. */
+    private void buildSummary() {
+        StringBuilder sb = new StringBuilder();
+        appendSummary(sb, getString(R.string.lbl_name), viewRegisterBinding.edtRegName.getText().toString());
+        appendSummary(sb, getString(R.string.lbl_email), viewRegisterBinding.edtRegEmail.getText().toString());
+        appendSummary(sb, getString(R.string.lbl_phone), viewRegisterBinding.edtRegPhone.getText().toString());
+
+        int uPos = viewRegisterBinding.spRegUniversity.getSelectedItemPosition();
+        if (uPos > 0) {
+            appendSummary(sb, getString(R.string.lbl_university),
+                    universityList.get(uPos - 1).getUniversity_name());
+        }
+        int cPos = viewRegisterBinding.spRegCollege.getSelectedItemPosition();
+        if (cPos > 0) {
+            appendSummary(sb, getString(R.string.lbl_college), collegeList.get(cPos - 1).getCollege_name());
+        }
+        appendSummary(sb, getString(R.string.lbl_roll_number),
+                viewRegisterBinding.edtRegRoll.getText().toString());
+
+        viewRegisterBinding.tvRegSummary.setText(sb.toString().trim());
+    }
+
+    private void appendSummary(StringBuilder sb, String label, String value) {
+        if (value == null || value.trim().isEmpty()) return;
+        sb.append(getString(R.string.lbl_summary_line, label, value.trim())).append("\n");
+    }
+
+    /** Per-step checks, so a mistake is caught on the step that owns the field. */
+    private boolean validateStep(int step) {
+        if (step == 1) {
+            String name = viewRegisterBinding.edtRegName.getText().toString();
+            if (name.trim().isEmpty()) {
+                viewRegisterBinding.edtRegName.requestFocus();
+                viewRegisterBinding.edtRegName.setError(getString(R.string.please_enter_name));
+                return false;
+            }
+            if (viewRegisterBinding.spRegGender.getSelectedItemPosition() <= 0) {
+                Toast.makeText(this, getString(R.string.please_select_gender), Toast.LENGTH_SHORT).show();
+                return false;
+            }
+            return true;
+        }
+
+        if (step == 2) {
+            String email = viewRegisterBinding.edtRegEmail.getText().toString();
+            if (email.isEmpty() || !isValidMail(email)) {
+                viewRegisterBinding.edtRegEmail.requestFocus();
+                viewRegisterBinding.edtRegEmail.setError(getString(R.string.please_enter_email));
+                return false;
+            }
+            if (viewRegisterBinding.edtRegPass.getText().toString().isEmpty()) {
+                viewRegisterBinding.edtRegPass.requestFocus();
+                viewRegisterBinding.edtRegPass.setError(getString(R.string.please_enter_password));
+                return false;
+            }
+            return true;
+        }
+
+        if (step == 3) {
+            if (viewRegisterBinding.spRegUniversity.getSelectedItemPosition() <= 0) {
+                Toast.makeText(this, getString(R.string.please_select_university), Toast.LENGTH_SHORT).show();
+                return false;
+            }
+            if (viewRegisterBinding.spRegDepartment.getSelectedItemPosition() <= 0) {
+                Toast.makeText(this, getString(R.string.please_select_department), Toast.LENGTH_SHORT).show();
+                return false;
+            }
+            if (viewRegisterBinding.spRegCollege.getSelectedItemPosition() <= 0) {
+                Toast.makeText(this, getString(R.string.please_select_college), Toast.LENGTH_SHORT).show();
+                return false;
+            }
+            return true;
+        }
+
+        return true;
+    }
+
     private boolean isValidMail(String email) {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
     public void form() {
+
+        viewRegisterBinding.edtRegName.setError(null);
+        viewRegisterBinding.edtRegEmail.setError(null);
+        viewRegisterBinding.edtRegPass.setError(null);
+        viewRegisterBinding.edtRegPhone.setError(null);
+
+        // Re-run each step's checks; anything missing sends the user back to the
+        // step that owns it rather than failing silently on a hidden field.
+        for (int step = 1; step < LAST_STEP; step++) {
+            if (!validateStep(step)) {
+                showStep(step);
+                validateStep(step);
+                return;
+            }
+        }
 
         String name = viewRegisterBinding.edtRegName.getText().toString();
         String email = viewRegisterBinding.edtRegEmail.getText().toString();
@@ -272,48 +480,24 @@ public class RegisterActivity extends AppCompatActivity {
         int cPos = viewRegisterBinding.spRegCollege.getSelectedItemPosition();
         int gPos = viewRegisterBinding.spRegGender.getSelectedItemPosition();
 
-        viewRegisterBinding.edtRegName.setError(null);
-        viewRegisterBinding.edtRegEmail.setError(null);
-        viewRegisterBinding.edtRegPass.setError(null);
-        viewRegisterBinding.edtRegPhone.setError(null);
+        viewRegisterBinding.edtRegName.clearFocus();
+        viewRegisterBinding.edtRegEmail.clearFocus();
+        viewRegisterBinding.edtRegPass.clearFocus();
 
-        if (name.equals("") || name.isEmpty()) {
-            viewRegisterBinding.edtRegName.requestFocus();
-            viewRegisterBinding.edtRegName.setError(getResources().getString(R.string.please_enter_name));
-        } else if (!isValidMail(email) || email.isEmpty()) {
-            viewRegisterBinding.edtRegEmail.requestFocus();
-            viewRegisterBinding.edtRegEmail.setError(getResources().getString(R.string.please_enter_email));
-        } else if (password.equals("") || password.isEmpty()) {
-            viewRegisterBinding.edtRegPass.requestFocus();
-            viewRegisterBinding.edtRegPass.setError(getResources().getString(R.string.please_enter_password));
-        } else if (uPos <= 0) {
-            Toast.makeText(this, getString(R.string.please_select_university), Toast.LENGTH_SHORT).show();
-        } else if (dPos <= 0) {
-            Toast.makeText(this, getString(R.string.please_select_department), Toast.LENGTH_SHORT).show();
-        } else if (cPos <= 0) {
-            Toast.makeText(this, getString(R.string.please_select_college), Toast.LENGTH_SHORT).show();
-        } else if (gPos <= 0) {
-            Toast.makeText(this, getString(R.string.please_select_gender), Toast.LENGTH_SHORT).show();
-        } else {
-            viewRegisterBinding.edtRegName.clearFocus();
-            viewRegisterBinding.edtRegEmail.clearFocus();
-            viewRegisterBinding.edtRegPass.clearFocus();
+        String universityName = universityList.get(uPos - 1).getUniversity_name();
+        String departmentId = departmentListFiltered.get(dPos - 1).getDepartment_id();
+        String collegeName = collegeList.get(cPos - 1).getCollege_name();
+        String gender = genders[gPos];
 
-            String universityName = universityList.get(uPos - 1).getUniversity_name();
-            String departmentId = departmentListFiltered.get(dPos - 1).getDepartment_id();
-            String collegeName = collegeList.get(cPos - 1).getCollege_name();
-            String gender = genders[gPos];
-
-            if (viewRegisterBinding.cbRegPrivacyTerms.isChecked()) {
-                if (method.isNetworkAvailable()) {
-                    register(name, email, password, phoneNo, universityName, departmentId, collegeName, gender, rollNo);
-                } else {
-                    method.alertBox(getResources().getString(R.string.internet_connection));
-                }
-            } else {
-                Toast.makeText(RegisterActivity.this, getString(R.string.please_accept), Toast.LENGTH_SHORT).show();
-            }
+        if (!viewRegisterBinding.cbRegPrivacyTerms.isChecked()) {
+            Toast.makeText(RegisterActivity.this, getString(R.string.please_accept), Toast.LENGTH_SHORT).show();
+            return;
         }
+        if (!method.isNetworkAvailable()) {
+            method.alertBox(getResources().getString(R.string.internet_connection));
+            return;
+        }
+        register(name, email, password, phoneNo, universityName, departmentId, collegeName, gender, rollNo);
     }
 
     public void register(String sendName, String sendEmail, String sendPassword, String sendPhone,

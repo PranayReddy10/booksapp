@@ -29,6 +29,7 @@ import com.jntuh.rest.ApiClient;
 import com.jntuh.rest.ApiInterface;
 import com.jntuh.util.API;
 import com.jntuh.util.Method;
+import com.jntuh.util.StatusBarUtil;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -66,6 +67,7 @@ public class ShopFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentShopBinding.inflate(inflater, container, false);
+        StatusBarUtil.setStatusBar(requireActivity(), "");
         method = new Method(requireActivity());
 
         // Category chips (horizontal).

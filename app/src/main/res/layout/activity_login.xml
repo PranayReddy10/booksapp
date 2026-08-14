@@ -1,487 +1,339 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Login as a hero + sheet: the headline sits on the mesh background, and the form
+     rides in a white sheet anchored to the bottom of the screen. -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_auth_mesh"
-    android:orientation="vertical" >
+    android:background="@drawable/bg_auth_mesh">
 
+    <ImageView
+        android:id="@+id/authBlobTeal"
+        android:layout_width="@dimen/_250px"
+        android:layout_height="@dimen/_250px"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="-60dp"
+        android:layout_marginTop="-40dp"
+        android:src="@drawable/bg_auth_blob_teal"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/authBlobViolet"
+        android:layout_width="@dimen/_250px"
+        android:layout_height="@dimen/_250px"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="-70dp"
+        android:layout_marginEnd="-70dp"
+        android:src="@drawable/bg_auth_blob_violet"
+        tools:ignore="ContentDescription" />
+
+    <!-- ===== Hero ===== -->
+    <TextView
+        android:id="@+id/btnSkip"
+        style="@style/txt_OpenSansRomanBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="@dimen/_50px"
+        android:layout_marginEnd="@dimen/_20px"
+        android:background="?attr/selectableItemBackground"
+        android:padding="@dimen/_8px"
+        android:text="@string/lbl_skip"
+        android:textColor="@color/auth_text_secondary"
+        android:textSize="@dimen/_16sp" />
+
+    <TextView
+        android:id="@+id/txtWelcomeBack"
+        style="@style/txt_OpenSansRomanExtraBold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnSkip"
+        android:layout_marginStart="@dimen/_30px"
+        android:layout_marginTop="@dimen/_20px"
+        android:layout_marginEnd="@dimen/_30px"
+        android:text="@string/lbl_welcome_back"
+        android:textColor="@color/auth_text_primary"
+        android:textSize="@dimen/_26sp" />
+
+    <!-- ===== Form sheet ===== -->
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="@dimen/_120px"
+        android:background="@drawable/bg_auth_sheet"
+        android:clipToPadding="false"
+        android:paddingStart="@dimen/_25px"
+        android:paddingTop="@dimen/_25px"
+        android:paddingEnd="@dimen/_25px"
+        android:paddingBottom="@dimen/_20px">
 
-        <RelativeLayout
-            android:id="@+id/linearColumnellipsesix"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_horizontal"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/authBlobTeal"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="40dp"
-                android:layout_marginEnd="-40dp"
-                android:src="@drawable/bg_auth_blob_teal"
-                tools:ignore="ContentDescription" />
-
-            <ImageView
-                android:id="@+id/authBlobViolet"
-                android:layout_width="180dp"
-                android:layout_height="180dp"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="-40dp"
-                android:layout_marginBottom="120dp"
-                android:src="@drawable/bg_auth_blob_violet"
-                tools:ignore="ContentDescription" />
+            <TextView
+                style="@style/txt_OpenSansRomanExtraBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/lbl_log_in"
+                android:textColor="@color/gray_2"
+                android:textSize="@dimen/_24sp" />
 
             <LinearLayout
-                android:id="@+id/linearLoginScreen"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/_5px"
+                android:orientation="horizontal">
 
-                <RelativeLayout
-                    android:id="@+id/frameStackemail"
-                    android:layout_width="match_parent"
+                <TextView
+                    style="@style/txtOpenSansRomanSemiBold"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="start">
+                    android:layout_marginEnd="@dimen/_5px"
+                    android:text="@string/msg_don_t_have_an_a"
+                    android:textColor="@color/home_by_author"
+                    android:textSize="@dimen/_14sp" />
 
-                    <RelativeLayout
-                        android:id="@+id/frameStackellipsesix"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="top|start"
-                        android:layout_marginBottom="@dimen/_10px"
-                        android:orientation="vertical">
-
-                        <androidx.appcompat.widget.AppCompatButton
-                            android:visibility="gone"
-                            android:id="@+id/btnSkip"
-                            style="@style/btnSolidRoundedSkip"
-                            android:layout_width="@dimen/_70px"
-                            android:layout_height="@dimen/_30px"
-                            android:layout_alignParentEnd="true"
-                            android:layout_marginStart="@dimen/_10px"
-                            android:layout_marginTop="@dimen/_50px"
-                            android:layout_marginEnd="@dimen/_20px"
-                            android:layout_marginBottom="@dimen/_10px"
-                            android:ellipsize="end"
-                            android:gravity="center"
-                            android:paddingStart="@dimen/_15px"
-                            android:paddingTop="@dimen/_5px"
-                            android:paddingEnd="@dimen/_15px"
-                            android:paddingBottom="@dimen/_5px"
-                            android:singleLine="true"
-                            android:text="@string/lbl_skip"
-                            android:textAllCaps="false"
-                            tools:text="@string/lbl_skip" />
-
-                        <ImageView
-                            android:id="@+id/imageEllipseSix"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_300px"
-                            android:layout_gravity="start"
-                            android:layout_marginEnd="@dimen/_30px"
-                            android:scaleType="fitXY"
-                            android:visibility="gone"
-                            android:src="@drawable/img_ellipse_login"
-                            tools:ignore="ContentDescription"
-                            tools:src="@drawable/img_ellipse_login" />
-
-                        <LinearLayout
-                            android:id="@+id/linearWelcomeBack"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="top|start"
-                            android:layout_marginStart="@dimen/_30px"
-                            android:layout_marginTop="@dimen/_70px"
-                            android:layout_marginEnd="@dimen/_30px"
-                            android:layout_marginBottom="@dimen/_30px"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/txtWelcomeBack"
-                                style="@style/txt_OpenSansExtraBold"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:ellipsize="end"
-                                android:singleLine="true"
-                                android:text="@string/lbl_welcome_back"
-                                android:textColor="@color/auth_text_primary"
-                                android:textSize="@dimen/_30sp"
-                                tools:text="@string/lbl_welcome_back" />
-
-                            <TextView
-                                android:id="@+id/txtLetsLoginA"
-                                style="@style/txt_OpenSansRomanBold"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/_5px"
-                                android:layout_marginEnd="@dimen/_10px"
-                                android:ellipsize="end"
-                                android:lineSpacingExtra="@dimen/_1px"
-                                android:singleLine="true"
-                                android:text="@string/lbl_let_s_log_in_a"
-                                android:textColor="@color/auth_text_secondary"
-                                android:textSize="@dimen/_16sp"
-                                tools:text="@string/lbl_let_s_log_in_a" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/linearLoginFild"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/linearWelcomeBack"
-                            android:layout_marginStart="@dimen/_30px"
-                            android:layout_marginTop="@dimen/_50px"
-                            android:layout_marginEnd="@dimen/_30px"
-                            android:orientation="vertical">
-
-                            <EditText
-                                android:id="@+id/edtEmail"
-                                style="@style/edtBoxRoundedOutline"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/bg_auth_field"
-                                android:ellipsize="end"
-                                android:hint="@string/lbl_email"
-                                android:inputType="textEmailAddress"
-                                android:lineSpacingExtra="@dimen/_1px"
-                                android:paddingStart="@dimen/_20px"
-                                android:paddingTop="@dimen/_18px"
-                                android:paddingEnd="@dimen/_30px"
-                                android:paddingBottom="@dimen/_18px"
-                                android:singleLine="true"
-                                android:textColor="@color/auth_text_primary"
-                                android:textColorHint="@color/auth_text_hint"
-                                android:textCursorDrawable="@drawable/cursor"
-                                tools:ignore="Autofill" />
-
-                            <com.google.android.material.textfield.TextInputLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/_15px"
-                                android:textCursorDrawable="@drawable/cursor"
-                                app:boxStrokeWidth="0dp"
-                                app:boxStrokeWidthFocused="0dp"
-                                app:hintAnimationEnabled="false"
-                                app:hintEnabled="false"
-                                app:passwordToggleEnabled="true">
-
-                                <EditText
-                                    android:id="@+id/edtPass"
-                                    style="@style/edtBoxRoundedOutline"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:background="@drawable/bg_auth_field"
-                                    android:ellipsize="end"
-                                    android:hint="@string/lbl_pass"
-                                    android:inputType="textPassword"
-                                    android:lineSpacingExtra="@dimen/_1px"
-                                    android:paddingStart="@dimen/_20px"
-                                    android:paddingTop="@dimen/_18px"
-                                    android:paddingEnd="@dimen/_30px"
-                                    android:paddingBottom="@dimen/_18px"
-                                    android:singleLine="true"
-                                    android:textColor="@color/auth_text_primary"
-                                    android:textColorHint="@color/auth_text_hint"
-                                    android:textCursorDrawable="@drawable/cursor"
-                                    tools:ignore="Autofill" />
-                            </com.google.android.material.textfield.TextInputLayout>
-
-                        </LinearLayout>
-                    </RelativeLayout>
-
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/linearRowrememberme"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/tvSignUp"
+                    style="@style/txt_OpenSansRomanBold"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_30px"
-                    android:layout_marginTop="@dimen/_10px"
-                    android:layout_marginEnd="@dimen/_30px"
-                    android:orientation="horizontal">
-
-                    <cn.refactor.library.SmoothCheckBox
-                        android:id="@+id/cbRemMe"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_centerVertical="true"
-                        android:layout_marginTop="@dimen/_5px"
-                        android:layout_marginBottom="@dimen/_2px"
-                        app:color_checked="@color/check_box_check_bg_login"
-                        app:color_tick="@color/check_box_tick_login"
-                        app:color_unchecked="@color/check_box_bg_login"
-                        app:color_unchecked_stroke="@color/check_box_circle_login" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_toStartOf="@+id/tvForgotPassword"
-                        android:layout_toEndOf="@+id/cbRemMe"
-                        android:gravity="start"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/txtMe"
-                            style="@style/txt_OpenSansRomanBold"
-                            android:layout_width="wrap_content"
-                            android:layout_height="0dp"
-                            android:layout_marginStart="@dimen/_5px"
-                            android:layout_marginTop="@dimen/_5px"
-                            android:layout_marginBottom="@dimen/_2px"
-                            android:layout_weight="0.46"
-                            android:ellipsize="end"
-                            android:lineSpacingExtra="@dimen/_1px"
-                            android:singleLine="true"
-                            android:text="@string/lbl_remember_me"
-                            android:textColor="@color/auth_text_secondary"
-                            android:textSize="@dimen/_15sp"
-                            tools:text="@string/lbl_remember_me" />
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/tvForgotPassword"
-                        style="@style/txt_OpenSansRomanBold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginTop="@dimen/_5px"
-                        android:layout_marginBottom="@dimen/_2px"
-                        android:ellipsize="end"
-                        android:lineSpacingExtra="@dimen/_1px"
-                        android:singleLine="true"
-                        android:text="@string/msg_forgot_password"
-                        android:textColor="@color/auth_text_secondary"
-                        android:textSize="@dimen/_15sp"
-                        tools:text="@string/msg_forgot_password" />
-                </RelativeLayout>
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnLogIn"
-                    style="@style/txtOpenSansRomanBold"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_30px"
-                    android:layout_marginTop="@dimen/_20px"
-                    android:layout_marginEnd="@dimen/_30px"
-                    android:background="@drawable/bg_auth_cta"
-                    android:ellipsize="end"
-                    android:gravity="center"
-                    android:lineSpacingExtra="@dimen/_1px"
-                    android:paddingStart="@dimen/_30px"
-                    android:paddingTop="@dimen/_16px"
-                    android:paddingEnd="@dimen/_30px"
-                    android:paddingBottom="@dimen/_16px"
-                    android:singleLine="true"
-                    android:text="@string/lbl_log_in"
-                    android:textAllCaps="false"
-                    android:textColor="@color/auth_text_primary"
-                    tools:text="@string/lbl_log_in" />
-
-                <RelativeLayout
-                    android:id="@+id/linearRowPolicy"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_30px"
-                    android:layout_marginTop="@dimen/_15px"
-                    android:layout_marginEnd="@dimen/_30px"
-                    android:orientation="horizontal">
-
-                    <cn.refactor.library.SmoothCheckBox
-                        android:id="@+id/cbPrivacyTerms"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_centerVertical="true"
-                        android:layout_marginTop="@dimen/_5px"
-                        android:layout_marginBottom="@dimen/_2px"
-                        app:color_checked="@color/check_box_check_bg_login"
-                        app:color_tick="@color/check_box_tick_login"
-                        app:color_unchecked="@color/check_box_bg_login"
-                        app:color_unchecked_stroke="@color/check_box_circle_login" />
-
-                    <TextView
-                        android:id="@+id/txtPrivacyText"
-                        style="@style/txt_OpenSansRomanBold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/_5px"
-                        android:layout_marginTop="@dimen/_5px"
-                        android:layout_marginBottom="@dimen/_2px"
-                        android:layout_toEndOf="@+id/cbPrivacyTerms"
-                        android:ellipsize="end"
-                        android:lineSpacingExtra="@dimen/_1px"
-                        android:singleLine="true"
-                        android:text="@string/msg_by_signing_in_y"
-                        android:textColor="@color/auth_text_secondary"
-                        android:textSize="@dimen/_14sp"
-                        tools:text="@string/msg_by_signing_in_y" />
-
-                    <TextView
-                        android:id="@+id/tvPrivacyTerms"
-                        style="@style/txt_OpenSansRomanBold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/_5px"
-                        android:layout_marginTop="@dimen/_5px"
-                        android:layout_marginBottom="@dimen/_2px"
-                        android:layout_toEndOf="@+id/txtPrivacyText"
-                        android:ellipsize="end"
-                        android:lineSpacingExtra="@dimen/_1px"
-                        android:singleLine="true"
-                        android:text="@string/msg_by_signing_up_policy"
-                        android:textColor="@color/orange"
-                        android:textSize="@dimen/_14sp"
-                        tools:text="@string/msg_by_signing_up_policy" />
-                </RelativeLayout>
-
-                <LinearLayout
-                    android:id="@+id/linearColumnorcontinuewit"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_30px"
-                    android:layout_marginTop="@dimen/_50px"
-                    android:layout_marginEnd="@dimen/_30px"
-                    android:gravity="center_horizontal"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/txtOrcontinuewit"
-                        style="@style/txt_OpenSansRomanBold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:ellipsize="end"
-                        android:lineSpacingExtra="@dimen/_1px"
-                        android:singleLine="true"
-                        android:text="@string/msg_or_continue_with"
-                        android:textColor="@color/auth_text_secondary"
-                        android:textSize="@dimen/_15sp"
-                        tools:text="@string/msg_or_continue_with" />
-
-                    <LinearLayout
-                        android:id="@+id/linearRowfacebook"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_20px"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:id="@+id/llGoogle"
-                            style="@style/SocialBtnStyleWhite_1"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:orientation="horizontal">
-
-                            <ImageView
-                                android:id="@+id/imageGoogle"
-                                android:layout_width="@dimen/_25px"
-                                android:layout_height="@dimen/_25px"
-                                android:layout_gravity="center"
-                                android:layout_marginTop="@dimen/_18px"
-                                android:layout_marginBottom="@dimen/_18px"
-                                android:scaleType="fitXY"
-                                android:src="@drawable/img_google"
-                                tools:ignore="ContentDescription"
-                                tools:src="@drawable/img_google" />
-
-                            <TextView
-                                android:id="@+id/txtGoogleOne"
-                                style="@style/txt_OpenSansRomanBold"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_marginStart="@dimen/_15px"
-                                android:layout_marginTop="@dimen/_18px"
-                                android:layout_marginBottom="@dimen/_18px"
-                                android:textSize="@dimen/_18sp"
-                                android:textColor="@color/social_login_text"
-                                android:ellipsize="end"
-                                android:lineSpacingExtra="@dimen/_1px"
-                                android:singleLine="true"
-                                android:text="@string/lbl_google"
-                                tools:text="@string/lbl_google" />
-                        </LinearLayout>
-                    </LinearLayout>
-                </LinearLayout>
-
-                <RelativeLayout
-                    android:id="@+id/frameStackellipseeight"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="bottom">
-
-                    <ImageView
-                        android:id="@+id/imageEllipseEight"
-                        android:layout_width="@dimen/_250px"
-                        android:layout_height="@dimen/_120px"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="-50dp"
-                        android:layout_marginBottom="-50dp"
-                        android:scaleType="fitXY"
-                        android:visibility="gone"
-                        android:src="@drawable/img_ellipse_login_bottom"
-                        tools:ignore="ContentDescription"
-                        tools:src="@drawable/img_ellipse_login_bottom" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_centerHorizontal="true"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/txtConfirmation"
-                            style="@style/txt_OpenSansRomanBold"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="top|start"
-                            android:layout_marginTop="@dimen/_30px"
-                            android:layout_marginEnd="@dimen/_10px"
-                            android:layout_marginBottom="@dimen/_50px"
-                            android:lineSpacingExtra="@dimen/_1px"
-                            android:singleLine="true"
-                            android:text="@string/msg_don_t_have_an_a"
-                            android:textColor="@color/auth_text_secondary"
-                            android:textSize="@dimen/_17sp"
-                            tools:text="@string/msg_don_t_have_an_a" />
-
-                        <TextView
-                            android:id="@+id/tvSignUp"
-                            style="@style/txt_OpenSansRomanBold"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_30px"
-                            android:layout_marginEnd="@dimen/_10px"
-                            android:layout_marginBottom="@dimen/_50px"
-                            android:lineSpacingExtra="@dimen/_1px"
-                            android:singleLine="true"
-                            android:text="@string/lbl_sign_up"
-                            android:textColor="@color/orange"
-                            android:textSize="@dimen/_17sp"
-                            tools:text="@string/lbl_sign_up" />
-                    </LinearLayout>
-                </RelativeLayout>
+                    android:text="@string/lbl_sign_up"
+                    android:textColor="@color/app_bg_orange"
+                    android:textSize="@dimen/_14sp" />
             </LinearLayout>
 
-        </RelativeLayout>
+            <!-- Email -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20px"
+                android:background="@drawable/bg_auth_input"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/_16px"
+                android:paddingEnd="@dimen/_16px">
+
+                <ImageView
+                    android:layout_width="@dimen/_20px"
+                    android:layout_height="@dimen/_20px"
+                    android:src="@drawable/img_mail"
+                    app:tint="@color/home_by_author"
+                    tools:ignore="ContentDescription" />
+
+                <EditText
+                    android:id="@+id/edtEmail"
+                    style="@style/txt_PoppinsMedium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10px"
+                    android:background="@android:color/transparent"
+                    android:ellipsize="end"
+                    android:hint="@string/lbl_email"
+                    android:inputType="textEmailAddress"
+                    android:paddingTop="@dimen/_16px"
+                    android:paddingBottom="@dimen/_16px"
+                    android:singleLine="true"
+                    android:textColor="@color/gray_2"
+                    android:textColorHint="@color/gray_edt_hint_text"
+                    android:textCursorDrawable="@drawable/cursor"
+                    android:textSize="@dimen/_15sp"
+                    tools:ignore="Autofill" />
+            </LinearLayout>
+
+            <!-- Password -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_12px"
+                android:background="@drawable/bg_auth_input"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/_16px"
+                android:paddingEnd="@dimen/_16px">
+
+                <ImageView
+                    android:layout_width="@dimen/_20px"
+                    android:layout_height="@dimen/_20px"
+                    android:src="@drawable/img_premium_lock"
+                    app:tint="@color/home_by_author"
+                    tools:ignore="ContentDescription" />
+
+                <EditText
+                    android:id="@+id/edtPass"
+                    style="@style/txt_PoppinsMedium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10px"
+                    android:background="@android:color/transparent"
+                    android:ellipsize="end"
+                    android:hint="@string/lbl_pass"
+                    android:inputType="textPassword"
+                    android:paddingTop="@dimen/_16px"
+                    android:paddingBottom="@dimen/_16px"
+                    android:singleLine="true"
+                    android:textColor="@color/gray_2"
+                    android:textColorHint="@color/gray_edt_hint_text"
+                    android:textCursorDrawable="@drawable/cursor"
+                    android:textSize="@dimen/_15sp"
+                    tools:ignore="Autofill" />
+            </LinearLayout>
+
+            <!-- Remember me / forgot -->
+            <RelativeLayout
+                android:id="@+id/linearRowrememberme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_16px">
+
+                <cn.refactor.library.SmoothCheckBox
+                    android:id="@+id/cbRemMe"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    app:color_checked="@color/check_box_check_bg_login"
+                    app:color_tick="@color/check_box_tick_login"
+                    app:color_unchecked="@color/check_box_bg_login"
+                    app:color_unchecked_stroke="@color/check_box_circle_login" />
+
+                <TextView
+                    android:id="@+id/txtMe"
+                    style="@style/txtOpenSansRomanSemiBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/_10px"
+                    android:layout_toEndOf="@+id/cbRemMe"
+                    android:text="@string/lbl_remember_me"
+                    android:textColor="@color/home_by_author"
+                    android:textSize="@dimen/_14sp" />
+
+                <TextView
+                    android:id="@+id/tvForgotPassword"
+                    style="@style/txt_OpenSansRomanBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:background="?attr/selectableItemBackground"
+                    android:text="@string/msg_forgot_password"
+                    android:textColor="@color/app_bg_orange"
+                    android:textSize="@dimen/_14sp" />
+            </RelativeLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnLogIn"
+                style="@style/txtOpenSansRomanBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20px"
+                android:background="@drawable/bg_auth_cta"
+                android:gravity="center"
+                android:paddingTop="@dimen/_16px"
+                android:paddingBottom="@dimen/_16px"
+                android:singleLine="true"
+                android:text="@string/lbl_log_in"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_16sp" />
+
+            <!-- Terms -->
+            <RelativeLayout
+                android:id="@+id/linearRowPolicy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/_16px">
+
+                <cn.refactor.library.SmoothCheckBox
+                    android:id="@+id/cbPrivacyTerms"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    app:color_checked="@color/check_box_check_bg_login"
+                    app:color_tick="@color/check_box_tick_login"
+                    app:color_unchecked="@color/check_box_bg_login"
+                    app:color_unchecked_stroke="@color/check_box_circle_login" />
+
+                <TextView
+                    android:id="@+id/txtPrivacyText"
+                    style="@style/txtOpenSansRomanSemiBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/_8px"
+                    android:layout_toEndOf="@+id/cbPrivacyTerms"
+                    android:singleLine="true"
+                    android:text="@string/msg_by_signing_in_y"
+                    android:textColor="@color/home_by_author"
+                    android:textSize="@dimen/_13sp" />
+
+                <TextView
+                    android:id="@+id/tvPrivacyTerms"
+                    style="@style/txt_OpenSansRomanBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/_4px"
+                    android:layout_toEndOf="@+id/txtPrivacyText"
+                    android:singleLine="true"
+                    android:text="@string/msg_by_signing_up_policy"
+                    android:textColor="@color/app_bg_orange"
+                    android:textSize="@dimen/_13sp" />
+            </RelativeLayout>
+
+            <!-- Or continue with -->
+            <TextView
+                android:id="@+id/txtOrcontinuewit"
+                style="@style/txtOpenSansRomanSemiBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/_20px"
+                android:text="@string/msg_or_continue_with"
+                android:textColor="@color/home_by_author"
+                android:textSize="@dimen/_14sp" />
+
+            <LinearLayout
+                android:id="@+id/llGoogle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_12px"
+                android:background="@drawable/bg_auth_social"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingTop="@dimen/_14px"
+                android:paddingBottom="@dimen/_14px">
+
+                <ImageView
+                    android:id="@+id/imageGoogle"
+                    android:layout_width="@dimen/_20px"
+                    android:layout_height="@dimen/_20px"
+                    android:src="@drawable/img_google"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:id="@+id/txtGoogleOne"
+                    style="@style/txt_OpenSansRomanBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10px"
+                    android:text="@string/lbl_google"
+                    android:textColor="@color/gray_2"
+                    android:textSize="@dimen/_15sp" />
+            </LinearLayout>
+        </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-</LinearLayout>
+</RelativeLayout>

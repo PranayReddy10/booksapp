@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.jntuh.books.R;
 import com.jntuh.books.databinding.RowContinueHomeBinding;
 import com.jntuh.item.HomeContent;
 import com.jntuh.util.AdInterstitialAds;
@@ -37,19 +38,27 @@ public class ContinueHomeAdapter extends RecyclerView.Adapter<ContinueHomeAdapte
     @Override
     public void onBindViewHolder(@NotNull ViewHolder holder, final int position) {
 
-         holder.rowContinueHomeBinding.tvHomeConTitle.setText(homeContentsContinue.get(position).getPostTitle());
+        HomeContent item = homeContentsContinue.get(position);
+
+        holder.rowContinueHomeBinding.tvHomeConTitle.setText(item.getPostTitle());
+
+        // Author line, when the book carries one.
+        if (item.getAuthor_list() != null && !item.getAuthor_list().isEmpty()) {
+            holder.rowContinueHomeBinding.tvHomeConAuthor.setVisibility(View.VISIBLE);
+            holder.rowContinueHomeBinding.tvHomeConAuthor.setText(
+                    activity.getString(R.string.by_author, item.getAuthor_list().get(0).getAuthor_name()));
+        } else {
+            holder.rowContinueHomeBinding.tvHomeConAuthor.setVisibility(View.GONE);
+        }
 
 
         com.jntuh.util.CoverHelper.bind(holder.rowContinueHomeBinding.ivHomeCont,
-                homeContentsContinue.get(position).getPostImage(),
-                homeContentsContinue.get(position).getPostTitle(), null);
+                item.getPostImage(), item.getPostTitle(), null);
 
-        holder.rowContinueHomeBinding.llContinueHome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AdInterstitialAds.ShowInterstitialAds(activity,holder.getBindingAdapterPosition(),onClick);
-            }
-        });
+        View.OnClickListener open = v ->
+                AdInterstitialAds.ShowInterstitialAds(activity, holder.getBindingAdapterPosition(), onClick);
+        holder.rowContinueHomeBinding.llContinueHome.setOnClickListener(open);
+        holder.rowContinueHomeBinding.btnHomeConResume.setOnClickListener(open);
 
     }
 

@@ -170,6 +170,17 @@
 
     <color name="bg_status_bar">#141414</color>
 
+    <!-- Home (warm reading palette) -->
+    <color name="home_screen_bg">#121212</color>
+    <color name="home_surface">#1C1C1F</color>
+    <color name="home_title">#FFFFFF</color>
+    <color name="home_muted">#A8A2A0</color>
+    <color name="home_pill_bg">#2A2A2E</color>
+    <color name="home_grad_top">#1A1614</color>
+    <color name="home_grad_bottom">#121212</color>
+    <color name="home_cover_bg">#2A2A2E</color>
+    <color name="home_scrim">#99000000</color>
+
     <!-- Reels feed (social card layout) -->
     <color name="feed_screen_bg">#101012</color>
     <color name="feed_card_bg">#1C1C1F</color>
