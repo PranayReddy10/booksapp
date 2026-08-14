@@ -103,6 +103,21 @@
     <string name="confirm_delete_media">Delete this post?</string>
     <string name="lbl_admin">Admin</string>
 
+    <!-- Registration steps -->
+    <string name="lbl_step_of">Step %1$d of %2$d</string>
+    <string name="lbl_continue">Continue</string>
+    <string name="lbl_back">Back</string>
+    <string name="lbl_create_account">Create account</string>
+    <string name="lbl_reg_step1_title">What should we call you?</string>
+    <string name="lbl_reg_step1_sub">Your name and gender, so we can set up your profile.</string>
+    <string name="lbl_reg_step2_title">How do we reach you?</string>
+    <string name="lbl_reg_step2_sub">You will sign in with these details.</string>
+    <string name="lbl_reg_step3_title">Where do you study?</string>
+    <string name="lbl_reg_step3_sub">This decides which books and results you see.</string>
+    <string name="lbl_reg_step4_title">Almost there</string>
+    <string name="lbl_reg_step4_sub">Check your details and create your account.</string>
+    <string name="lbl_summary_line">%1$s: %2$s</string>
+
     <!-- Home screen -->
     <string name="lbl_see_all">See all</string>
     <string name="lbl_view_all">View All</string>
