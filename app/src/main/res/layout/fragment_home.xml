@@ -269,6 +269,7 @@
                         android:paddingTop="@dimen/_16px"
                         android:paddingBottom="@dimen/_16px">
 
+                        <!-- Row 1: browse -->
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -305,41 +306,6 @@
                                     android:ellipsize="end"
                                     android:singleLine="true"
                                     android:text="@string/lbl_qa_categories"
-                                    android:textColor="@color/home_title"
-                                    android:textSize="@dimen/_12sp" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:id="@+id/llQaLatest"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:background="?attr/selectableItemBackground"
-                                android:gravity="center"
-                                android:orientation="vertical">
-
-                                <FrameLayout
-                                    android:layout_width="52dp"
-                                    android:layout_height="52dp"
-                                    android:background="@drawable/bg_quick_tile">
-
-                                    <ImageView
-                                        android:layout_width="26dp"
-                                        android:layout_height="26dp"
-                                        android:layout_gravity="center"
-                                        android:src="@drawable/menu_latest"
-                                        app:tint="@color/app_bg_orange"
-                                        tools:ignore="ContentDescription" />
-                                </FrameLayout>
-
-                                <TextView
-                                    style="@style/txtOpenSansRomanSemiBold"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/_8px"
-                                    android:ellipsize="end"
-                                    android:singleLine="true"
-                                    android:text="@string/lbl_qa_latest"
                                     android:textColor="@color/home_title"
                                     android:textSize="@dimen/_12sp" />
                             </LinearLayout>
@@ -413,13 +379,6 @@
                                     android:textColor="@color/home_title"
                                     android:textSize="@dimen/_12sp" />
                             </LinearLayout>
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_16px"
-                            android:orientation="horizontal">
 
                             <LinearLayout
                                 android:id="@+id/llQaShop"
@@ -455,6 +414,14 @@
                                     android:textColor="@color/home_title"
                                     android:textSize="@dimen/_12sp" />
                             </LinearLayout>
+                        </LinearLayout>
+
+                        <!-- Row 2: your library -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_16px"
+                            android:orientation="horizontal">
 
                             <LinearLayout
                                 android:id="@+id/llQaResults"
@@ -560,48 +527,6 @@
                                     android:textColor="@color/home_title"
                                     android:textSize="@dimen/_12sp" />
                             </LinearLayout>
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_16px"
-                            android:orientation="horizontal">
-
-                            <LinearLayout
-                                android:id="@+id/llQaUpload"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:background="?attr/selectableItemBackground"
-                                android:gravity="center"
-                                android:orientation="vertical">
-
-                                <FrameLayout
-                                    android:layout_width="52dp"
-                                    android:layout_height="52dp"
-                                    android:background="@drawable/bg_quick_tile">
-
-                                    <ImageView
-                                        android:layout_width="26dp"
-                                        android:layout_height="26dp"
-                                        android:layout_gravity="center"
-                                        android:src="@drawable/ic_upload_book"
-                                        app:tint="@color/app_bg_orange"
-                                        tools:ignore="ContentDescription" />
-                                </FrameLayout>
-
-                                <TextView
-                                    style="@style/txtOpenSansRomanSemiBold"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/_8px"
-                                    android:ellipsize="end"
-                                    android:singleLine="true"
-                                    android:text="@string/lbl_qa_upload"
-                                    android:textColor="@color/home_title"
-                                    android:textSize="@dimen/_12sp" />
-                            </LinearLayout>
 
                             <LinearLayout
                                 android:id="@+id/llQaMyBooks"
@@ -634,76 +559,6 @@
                                     android:ellipsize="end"
                                     android:singleLine="true"
                                     android:text="@string/lbl_qa_my_books"
-                                    android:textColor="@color/home_title"
-                                    android:textSize="@dimen/_12sp" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:id="@+id/llQaPlans"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:background="?attr/selectableItemBackground"
-                                android:gravity="center"
-                                android:orientation="vertical">
-
-                                <FrameLayout
-                                    android:layout_width="52dp"
-                                    android:layout_height="52dp"
-                                    android:background="@drawable/bg_quick_tile">
-
-                                    <ImageView
-                                        android:layout_width="26dp"
-                                        android:layout_height="26dp"
-                                        android:layout_gravity="center"
-                                        android:src="@drawable/img_premium_lock"
-                                        app:tint="@color/app_bg_orange"
-                                        tools:ignore="ContentDescription" />
-                                </FrameLayout>
-
-                                <TextView
-                                    style="@style/txtOpenSansRomanSemiBold"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/_8px"
-                                    android:ellipsize="end"
-                                    android:singleLine="true"
-                                    android:text="@string/lbl_qa_plans"
-                                    android:textColor="@color/home_title"
-                                    android:textSize="@dimen/_12sp" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:id="@+id/llQaRent"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:background="?attr/selectableItemBackground"
-                                android:gravity="center"
-                                android:orientation="vertical">
-
-                                <FrameLayout
-                                    android:layout_width="52dp"
-                                    android:layout_height="52dp"
-                                    android:background="@drawable/bg_quick_tile">
-
-                                    <ImageView
-                                        android:layout_width="26dp"
-                                        android:layout_height="26dp"
-                                        android:layout_gravity="center"
-                                        android:src="@drawable/ic_rent"
-                                        app:tint="@color/app_bg_orange"
-                                        tools:ignore="ContentDescription" />
-                                </FrameLayout>
-
-                                <TextView
-                                    style="@style/txtOpenSansRomanSemiBold"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/_8px"
-                                    android:ellipsize="end"
-                                    android:singleLine="true"
-                                    android:text="@string/lbl_qa_rent"
                                     android:textColor="@color/home_title"
                                     android:textSize="@dimen/_12sp" />
                             </LinearLayout>

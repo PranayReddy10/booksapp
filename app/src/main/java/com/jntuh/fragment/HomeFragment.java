@@ -30,7 +30,6 @@ import com.jntuh.books.R;
 import com.jntuh.books.SearchBookActivity;
 import com.jntuh.books.SettingsActivity;
 import com.jntuh.books.TrendingBookActivity;
-import com.jntuh.books.UploadBookActivity;
 import com.jntuh.books.databinding.FragmentHomeBinding;
 import com.jntuh.response.HomeRP;
 import com.jntuh.rest.ApiClient;
@@ -73,7 +72,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
 
-        StatusBarUtil.setStatusBar(requireActivity(), "");
+        StatusBarUtil.setStatusBar(requireActivity(), "home");
 
         viewHome = FragmentHomeBinding.inflate(inflater, container, false);
         method = new Method(requireActivity());
@@ -339,7 +338,6 @@ public class HomeFragment extends Fragment {
     private void bindQuickAccess() {
         // Row 1 — browse the catalogue.
         viewHome.llQaCategories.setOnClickListener(v -> openNavTab(2));
-        viewHome.llQaLatest.setOnClickListener(v -> openNavTab(1));
         viewHome.llQaTrending.setOnClickListener(v ->
                 startActivity(new Intent(requireActivity(), TrendingBookActivity.class)));
         viewHome.llQaReels.setOnClickListener(v -> openNavTab(4));
@@ -350,11 +348,7 @@ public class HomeFragment extends Fragment {
         viewHome.llQaDownloads.setOnClickListener(v -> openLibrary("isDown"));
         viewHome.llQaSaved.setOnClickListener(v -> openLibrary("isFav"));
 
-        // Row 3 — contributing and paying, all login-gated where it matters.
-        viewHome.llQaUpload.setOnClickListener(v -> requireLoginThen(UploadBookActivity.class));
         viewHome.llQaMyBooks.setOnClickListener(v -> requireLoginThen(MyUploadsActivity.class));
-        viewHome.llQaPlans.setOnClickListener(v -> openProfileTab(3));
-        viewHome.llQaRent.setOnClickListener(v -> openProfileTab(4));
 
         // Filter button beside the search field opens the dedicated search screen.
         viewHome.ivHomeFilter.setOnClickListener(v ->

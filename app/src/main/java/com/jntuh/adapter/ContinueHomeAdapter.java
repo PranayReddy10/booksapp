@@ -51,16 +51,6 @@ public class ContinueHomeAdapter extends RecyclerView.Adapter<ContinueHomeAdapte
             holder.rowContinueHomeBinding.tvHomeConAuthor.setVisibility(View.GONE);
         }
 
-        // Where the reader stopped. The feed carries the page reached but not the
-        // book's length, so this is a page marker rather than a percentage.
-        String page = item.getPage_num();
-        if (page != null && !page.trim().isEmpty()) {
-            holder.rowContinueHomeBinding.tvHomeConPage.setVisibility(View.VISIBLE);
-            holder.rowContinueHomeBinding.tvHomeConPage.setText(
-                    activity.getString(R.string.lbl_page_num, page.trim()));
-        } else {
-            holder.rowContinueHomeBinding.tvHomeConPage.setVisibility(View.INVISIBLE);
-        }
 
         com.jntuh.util.CoverHelper.bind(holder.rowContinueHomeBinding.ivHomeCont,
                 item.getPostImage(), item.getPostTitle(), null);

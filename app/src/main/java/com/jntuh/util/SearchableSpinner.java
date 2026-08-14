@@ -5,12 +5,17 @@ import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 
 import com.jntuh.books.R;
 
@@ -74,9 +79,36 @@ public final class SearchableSpinner {
         final List<Integer> shownIndexes = new ArrayList<>();
         for (int i = 0; i < allLabels.size(); i++) shownIndexes.add(i);
 
+        // Rows paint their own selected state (outline + check), so the picker reads
+        // as a choice list rather than a plain dropdown.
         final ArrayAdapter<String> listAdapter =
-                new ArrayAdapter<>(ctx, R.layout.row_searchable_item, R.id.tvItem, shownLabels);
+                new ArrayAdapter<String>(ctx, R.layout.row_searchable_item, R.id.tvItem, shownLabels) {
+                    @NonNull
+                    @Override
+                    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
+                        View row = super.getView(position, convertView, parent);
+                        boolean selected = position < shownIndexes.size()
+                                && shownIndexes.get(position) == spinner.getSelectedItemPosition();
+
+                        View rowBg = row.findViewById(R.id.llItemRow);
+                        if (rowBg != null) {
+                            rowBg.setBackgroundResource(selected
+                                    ? R.drawable.bg_picker_row_selected : R.drawable.bg_picker_row);
+                        }
+                        View check = row.findViewById(R.id.ivItemCheck);
+                        if (check != null) {
+                            check.setVisibility(selected ? View.VISIBLE : View.INVISIBLE);
+                        }
+                        TextView label = row.findViewById(R.id.tvItem);
+                        if (label != null) {
+                            label.setTextColor(ContextCompat.getColor(ctx,
+                                    selected ? R.color.app_bg_orange : R.color.gray_2));
+                        }
+                        return row;
+                    }
+                };
         listView.setAdapter(listAdapter);
+        listView.setDivider(null);
 
         etSearch.addTextChangedListener(new TextWatcher() {
             @Override public void beforeTextChanged(CharSequence s, int a, int b, int c) { }

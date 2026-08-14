@@ -35,6 +35,7 @@ import com.jntuh.util.API;
 import com.jntuh.util.Constant;
 import com.jntuh.util.MediaFeedHandoff;
 import com.jntuh.util.Method;
+import com.jntuh.util.StatusBarUtil;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
@@ -73,6 +74,7 @@ public class MediaExploreFragment extends Fragment implements MediaPostAdapter.L
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentMediaExploreBinding.inflate(inflater, container, false);
+        StatusBarUtil.setStatusBar(requireActivity(), "");
         method = new Method(requireActivity());
 
         binding.progressExplore.setVisibility(View.GONE);

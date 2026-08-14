@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Unselected option row in a searchable picker. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="@color/card_view_bg" />
+    <corners android:radius="14dp" />
+    <stroke android:width="1dp" android:color="@color/detail_line" />
+</shape>

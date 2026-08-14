@@ -258,42 +258,121 @@
                                 android:textColorHint="@color/auth_text_hint"
                                 android:textCursorDrawable="@drawable/cursor"
                                 tools:ignore="Autofill" />
-                            <TextView
-                                style="@style/txt_OpenSansRomanBold"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/_15px"
-                                android:layout_marginBottom="@dimen/_5px"
-                                android:text="@string/lbl_gender"
-                                android:textColor="@color/auth_text_secondary"
-                                android:textSize="@dimen/_14sp" />
-
-                            <RelativeLayout
+                            <!-- Gender as tappable choices; the spinner below stays as the
+                                 value holder so the screen's existing logic is unchanged. -->
+                            <LinearLayout
+                                android:id="@+id/llGenderMale"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:background="@drawable/bg_auth_field"
-                                android:minHeight="@dimen/_55px">
+                                android:layout_marginTop="@dimen/_20px"
+                                android:background="?attr/selectableItemBackground"
+                                android:gravity="center"
+                                android:orientation="vertical">
 
-                                <Spinner
-                                    android:id="@+id/spRegGender"
-                                    android:layout_width="match_parent"
+                                <FrameLayout
+                                    android:id="@+id/ivGenderMaleDisc"
+                                    android:layout_width="96dp"
+                                    android:layout_height="96dp"
+                                    android:background="@drawable/bg_gender_circle">
+
+                                    <ImageView
+                                        android:id="@+id/ivGenderMale"
+                                        android:layout_width="40dp"
+                                        android:layout_height="40dp"
+                                        android:layout_gravity="center"
+                                        android:src="@drawable/ic_gender_male"
+                                        app:tint="@color/auth_text_primary"
+                                        tools:ignore="ContentDescription" />
+                                </FrameLayout>
+
+                                <TextView
+                                    android:id="@+id/ivGenderMaleLabel"
+                                    style="@style/txt_OpenSansRomanBold"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_centerVertical="true"
-                                    android:paddingStart="@dimen/_15px"
-                                    android:paddingEnd="@dimen/_40px"
-                                    android:spinnerMode="dropdown"
-                                    tools:ignore="RtlSymmetry" />
+                                    android:layout_marginTop="@dimen/_8px"
+                                    android:text="@string/lbl_gender_male"
+                                    android:textColor="@color/auth_text_secondary"
+                                    android:textSize="@dimen/_15sp" />
+                            </LinearLayout>
 
-                                <ImageView
-                                    android:id="@+id/ivRegGenderArrow"
-                                    android:layout_width="@dimen/_20px"
-                                    android:layout_height="@dimen/_20px"
-                                    android:layout_alignParentEnd="true"
-                                    android:layout_centerVertical="true"
-                                    android:layout_marginEnd="@dimen/_15px"
-                                    android:src="@drawable/img_arrow_dropdown"
-                                    tools:ignore="ContentDescription" />
-                            </RelativeLayout>
+                            <LinearLayout
+                                android:id="@+id/llGenderFemale"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_16px"
+                                android:background="?attr/selectableItemBackground"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <FrameLayout
+                                    android:id="@+id/ivGenderFemaleDisc"
+                                    android:layout_width="96dp"
+                                    android:layout_height="96dp"
+                                    android:background="@drawable/bg_gender_circle">
+
+                                    <ImageView
+                                        android:id="@+id/ivGenderFemale"
+                                        android:layout_width="40dp"
+                                        android:layout_height="40dp"
+                                        android:layout_gravity="center"
+                                        android:src="@drawable/ic_gender_female"
+                                        app:tint="@color/auth_text_primary"
+                                        tools:ignore="ContentDescription" />
+                                </FrameLayout>
+
+                                <TextView
+                                    android:id="@+id/ivGenderFemaleLabel"
+                                    style="@style/txt_OpenSansRomanBold"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/_8px"
+                                    android:text="@string/lbl_gender_female"
+                                    android:textColor="@color/auth_text_secondary"
+                                    android:textSize="@dimen/_15sp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/llGenderOther"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_16px"
+                                android:background="?attr/selectableItemBackground"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <FrameLayout
+                                    android:id="@+id/ivGenderOtherDisc"
+                                    android:layout_width="96dp"
+                                    android:layout_height="96dp"
+                                    android:background="@drawable/bg_gender_circle">
+
+                                    <ImageView
+                                        android:id="@+id/ivGenderOther"
+                                        android:layout_width="40dp"
+                                        android:layout_height="40dp"
+                                        android:layout_gravity="center"
+                                        android:src="@drawable/ic_gender_other"
+                                        app:tint="@color/auth_text_primary"
+                                        tools:ignore="ContentDescription" />
+                                </FrameLayout>
+
+                                <TextView
+                                    android:id="@+id/ivGenderOtherLabel"
+                                    style="@style/txt_OpenSansRomanBold"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/_8px"
+                                    android:text="@string/lbl_gender_other"
+                                    android:textColor="@color/auth_text_secondary"
+                                    android:textSize="@dimen/_15sp" />
+                            </LinearLayout>
+
+                            <Spinner
+                                android:id="@+id/spRegGender"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:visibility="gone" />
                         </LinearLayout>
 
                         <LinearLayout

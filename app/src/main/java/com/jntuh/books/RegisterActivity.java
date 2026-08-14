@@ -159,6 +159,13 @@ public class RegisterActivity extends AppCompatActivity {
         genderAdapter.setDropDownViewResource(R.layout.row_spinner_dropdown_item);
         viewRegisterBinding.spRegGender.setAdapter(genderAdapter);
 
+        // Gender is picked from the three cards; the (hidden) spinner keeps holding the
+        // value so validation and submission read it exactly as before.
+        viewRegisterBinding.llGenderMale.setOnClickListener(v -> selectGender(1));
+        viewRegisterBinding.llGenderFemale.setOnClickListener(v -> selectGender(2));
+        viewRegisterBinding.llGenderOther.setOnClickListener(v -> selectGender(3));
+        paintGender();
+
         // Long lists get a searchable dialog on tap (gender stays a normal spinner).
         com.jntuh.util.SearchableSpinner.attach(viewRegisterBinding.spRegUniversity, getString(R.string.lbl_select_university));
         com.jntuh.util.SearchableSpinner.attach(viewRegisterBinding.spRegDepartment, getString(R.string.lbl_select_department));
@@ -283,6 +290,34 @@ public class RegisterActivity extends AppCompatActivity {
                 Log.e("fail", t.toString());
             }
         });
+    }
+
+    // ---- Gender choice ----
+
+    private void selectGender(int spinnerPosition) {
+        viewRegisterBinding.spRegGender.setSelection(spinnerPosition);
+        paintGender();
+    }
+
+    /** Fill the chosen disc with the brand colour and leave the others neutral. */
+    private void paintGender() {
+        int selected = viewRegisterBinding.spRegGender.getSelectedItemPosition();
+        paintGenderChoice(viewRegisterBinding.ivGenderMaleDisc, viewRegisterBinding.ivGenderMale,
+                viewRegisterBinding.ivGenderMaleLabel, selected == 1);
+        paintGenderChoice(viewRegisterBinding.ivGenderFemaleDisc, viewRegisterBinding.ivGenderFemale,
+                viewRegisterBinding.ivGenderFemaleLabel, selected == 2);
+        paintGenderChoice(viewRegisterBinding.ivGenderOtherDisc, viewRegisterBinding.ivGenderOther,
+                viewRegisterBinding.ivGenderOtherLabel, selected == 3);
+    }
+
+    private void paintGenderChoice(View disc, android.widget.ImageView icon,
+                                   android.widget.TextView label, boolean selected) {
+        disc.setBackgroundResource(selected
+                ? R.drawable.bg_gender_circle_selected : R.drawable.bg_gender_circle);
+        icon.setColorFilter(androidx.core.content.ContextCompat.getColor(this,
+                selected ? R.color.white : R.color.auth_text_secondary));
+        label.setTextColor(androidx.core.content.ContextCompat.getColor(this,
+                selected ? R.color.auth_text_primary : R.color.auth_text_secondary));
     }
 
     // ---- Step flow ----
