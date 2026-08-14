@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Home is organised into four bands so every feature has one obvious place:
-       1. Identity   — greeting, avatar, community links, settings
-       2. Find       — search pill
-       3. Jump to    — quick-access grid + "more tools" chips (the whole app in one screen)
-       4. Browse     — featured / continue / trending / latest / community / API sections -->
+<!-- Home, in reading order:
+       1. Identity      — avatar, greeting, community links, settings
+       2. Find          — search pill + filter
+       3. Featured      — the cover carousel, first thing on the page
+       4. Quick access  — every destination the app has, in one grid
+       5. Browse        — continue / trending / latest / community / API sections -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/app_bg"
+    android:background="@drawable/bg_home_gradient"
     tools:context="com.jntuh.books.MainActivity">
 
     <ProgressBar
@@ -34,7 +35,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <!-- ===== 1. Identity band ===== -->
+        <!-- ===== 1. Identity ===== -->
         <RelativeLayout
             android:id="@+id/linearRowebookapp"
             android:layout_width="match_parent"
@@ -50,7 +51,7 @@
                 android:layout_height="42dp"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                app:cardBackgroundColor="@color/deep_orange_bg"
+                app:cardBackgroundColor="@color/home_pill_bg"
                 app:cardCornerRadius="21dp"
                 app:cardElevation="0dp">
 
@@ -81,7 +82,7 @@
                     android:ellipsize="end"
                     android:singleLine="true"
                     android:text="@string/lbl_greet_evening"
-                    android:textColor="@color/feed_meta"
+                    android:textColor="@color/home_muted"
                     android:textSize="@dimen/_12sp"
                     tools:text="Good evening" />
 
@@ -93,7 +94,7 @@
                     android:ellipsize="end"
                     android:singleLine="true"
                     android:text="@string/lbl_ebook_app"
-                    android:textColor="@color/gray_2"
+                    android:textColor="@color/home_title"
                     android:textSize="@dimen/_19sp"
                     tools:text="JNTU books" />
             </LinearLayout>
@@ -147,57 +148,108 @@
                 android:layout_marginBottom="@dimen/_10px"
                 android:orientation="vertical">
 
-                <!-- ===== 2. Find band ===== -->
-                <RelativeLayout
+                <!-- ===== 2. Find ===== -->
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_16px"
                     android:layout_marginEnd="@dimen/_16px"
-                    android:background="@drawable/bg_home_search">
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_home_search">
+
+                        <ImageView
+                            android:id="@+id/imageHomeSearch"
+                            android:layout_width="@dimen/_20px"
+                            android:layout_height="@dimen/_20px"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginEnd="@dimen/_18px"
+                            android:contentDescription="@string/app_name"
+                            android:src="@drawable/img_search" />
+
+                        <EditText
+                            android:id="@+id/edtHomeSearch"
+                            style="@style/txt_PoppinsMedium"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_toStartOf="@+id/imageHomeSearch"
+                            android:background="@android:color/transparent"
+                            android:ellipsize="end"
+                            android:hint="@string/lbl_search_here"
+                            android:imeOptions="actionDone"
+                            android:inputType="text"
+                            android:paddingStart="@dimen/_18px"
+                            android:paddingTop="@dimen/_14px"
+                            android:paddingEnd="@dimen/_10px"
+                            android:paddingBottom="@dimen/_14px"
+                            android:singleLine="true"
+                            android:textColor="@color/home_title"
+                            android:textColorHint="@color/home_muted"
+                            android:textCursorDrawable="@drawable/cursor"
+                            android:textSize="@dimen/_15sp"
+                            tools:ignore="Autofill" />
+                    </RelativeLayout>
 
                     <ImageView
-                        android:id="@+id/imageHomeSearch"
-                        android:layout_width="@dimen/_20px"
-                        android:layout_height="@dimen/_20px"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginEnd="@dimen/_18px"
-                        android:contentDescription="@string/app_name"
-                        android:src="@drawable/img_search" />
+                        android:id="@+id/ivHomeFilter"
+                        android:layout_width="52dp"
+                        android:layout_height="52dp"
+                        android:layout_marginStart="@dimen/_10px"
+                        android:background="@drawable/bg_home_filter_btn"
+                        android:padding="@dimen/_14px"
+                        android:src="@drawable/ic_home_filter"
+                        app:tint="@color/white"
+                        tools:ignore="ContentDescription" />
+                </LinearLayout>
 
-                    <EditText
-                        android:id="@+id/edtHomeSearch"
-                        style="@style/txt_PoppinsMedium"
+                <!-- ===== 3. Featured ===== -->
+                <TextView
+                    android:id="@+id/tvHomeFeature"
+                    style="@style/txt_InterBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_16px"
+                    android:layout_marginTop="@dimen/_20px"
+                    android:layout_marginEnd="@dimen/_16px"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="@string/lbl_featured"
+                    android:textColor="@color/home_title"
+                    android:textSize="@dimen/_18sp" />
+
+                <LinearLayout
+                    android:id="@+id/llFeature"
+                    style="@style/groupStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_180px"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginTop="@dimen/_10px"
+                    android:layout_marginEnd="7dp"
+                    android:orientation="vertical">
+
+                    <com.jntuh.util.EnchantedViewPager
+                        android:id="@+id/vpFeatureHome"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_toStartOf="@+id/imageHomeSearch"
-                        android:background="@android:color/transparent"
-                        android:ellipsize="end"
-                        android:hint="@string/lbl_search_here"
-                        android:imeOptions="actionDone"
-                        android:inputType="text"
-                        android:paddingStart="@dimen/_18px"
-                        android:paddingTop="@dimen/_14px"
-                        android:paddingEnd="@dimen/_10px"
-                        android:paddingBottom="@dimen/_14px"
-                        android:singleLine="true"
-                        android:textColor="@color/gray_2"
-                        android:textColorHint="@color/home_search_text"
-                        android:textCursorDrawable="@drawable/cursor"
-                        android:textSize="@dimen/_15sp"
-                        tools:ignore="Autofill" />
-                </RelativeLayout>
+                        android:layout_height="@dimen/_180px" />
+                </LinearLayout>
 
-                <!-- ===== 3. Jump-to band: every destination in one grid ===== -->
+                <!-- ===== 4. Quick access ===== -->
                 <TextView
                     style="@style/txt_InterBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_16px"
-                    android:layout_marginTop="@dimen/_18px"
+                    android:layout_marginTop="@dimen/_20px"
                     android:text="@string/lbl_quick_access"
-                    android:textColor="@color/gray_2"
+                    android:textColor="@color/home_title"
                     android:textSize="@dimen/_18sp" />
 
                 <com.google.android.material.card.MaterialCardView
@@ -206,7 +258,7 @@
                     android:layout_marginStart="@dimen/_16px"
                     android:layout_marginTop="@dimen/_10px"
                     android:layout_marginEnd="@dimen/_16px"
-                    app:cardBackgroundColor="@color/card_view_bg"
+                    app:cardBackgroundColor="@color/home_surface"
                     app:cardCornerRadius="20dp"
                     app:cardElevation="2dp">
 
@@ -217,7 +269,6 @@
                         android:paddingTop="@dimen/_16px"
                         android:paddingBottom="@dimen/_16px">
 
-                        <!-- Row 1: browse the catalogue -->
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -251,8 +302,10 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/_8px"
+                                    android:ellipsize="end"
+                                    android:singleLine="true"
                                     android:text="@string/lbl_qa_categories"
-                                    android:textColor="@color/gray_2"
+                                    android:textColor="@color/home_title"
                                     android:textSize="@dimen/_12sp" />
                             </LinearLayout>
 
@@ -284,8 +337,10 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/_8px"
+                                    android:ellipsize="end"
+                                    android:singleLine="true"
                                     android:text="@string/lbl_qa_latest"
-                                    android:textColor="@color/gray_2"
+                                    android:textColor="@color/home_title"
                                     android:textSize="@dimen/_12sp" />
                             </LinearLayout>
 
@@ -317,8 +372,10 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/_8px"
+                                    android:ellipsize="end"
+                                    android:singleLine="true"
                                     android:text="@string/lbl_qa_trending"
-                                    android:textColor="@color/gray_2"
+                                    android:textColor="@color/home_title"
                                     android:textSize="@dimen/_12sp" />
                             </LinearLayout>
 
@@ -350,13 +407,14 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/_8px"
+                                    android:ellipsize="end"
+                                    android:singleLine="true"
                                     android:text="@string/lbl_qa_reels"
-                                    android:textColor="@color/gray_2"
+                                    android:textColor="@color/home_title"
                                     android:textSize="@dimen/_12sp" />
                             </LinearLayout>
                         </LinearLayout>
 
-                        <!-- Row 2: the student's own stuff -->
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -391,8 +449,10 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/_8px"
+                                    android:ellipsize="end"
+                                    android:singleLine="true"
                                     android:text="@string/lbl_qa_shop"
-                                    android:textColor="@color/gray_2"
+                                    android:textColor="@color/home_title"
                                     android:textSize="@dimen/_12sp" />
                             </LinearLayout>
 
@@ -424,8 +484,10 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/_8px"
+                                    android:ellipsize="end"
+                                    android:singleLine="true"
                                     android:text="@string/lbl_qa_results"
-                                    android:textColor="@color/gray_2"
+                                    android:textColor="@color/home_title"
                                     android:textSize="@dimen/_12sp" />
                             </LinearLayout>
 
@@ -457,8 +519,10 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/_8px"
+                                    android:ellipsize="end"
+                                    android:singleLine="true"
                                     android:text="@string/lbl_qa_downloads"
-                                    android:textColor="@color/gray_2"
+                                    android:textColor="@color/home_title"
                                     android:textSize="@dimen/_12sp" />
                             </LinearLayout>
 
@@ -490,167 +554,164 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/_8px"
+                                    android:ellipsize="end"
+                                    android:singleLine="true"
                                     android:text="@string/lbl_qa_saved"
-                                    android:textColor="@color/gray_2"
+                                    android:textColor="@color/home_title"
+                                    android:textSize="@dimen/_12sp" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_16px"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:id="@+id/llQaUpload"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:background="?attr/selectableItemBackground"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <FrameLayout
+                                    android:layout_width="52dp"
+                                    android:layout_height="52dp"
+                                    android:background="@drawable/bg_quick_tile">
+
+                                    <ImageView
+                                        android:layout_width="26dp"
+                                        android:layout_height="26dp"
+                                        android:layout_gravity="center"
+                                        android:src="@drawable/ic_upload_book"
+                                        app:tint="@color/app_bg_orange"
+                                        tools:ignore="ContentDescription" />
+                                </FrameLayout>
+
+                                <TextView
+                                    style="@style/txtOpenSansRomanSemiBold"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/_8px"
+                                    android:ellipsize="end"
+                                    android:singleLine="true"
+                                    android:text="@string/lbl_qa_upload"
+                                    android:textColor="@color/home_title"
+                                    android:textSize="@dimen/_12sp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/llQaMyBooks"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:background="?attr/selectableItemBackground"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <FrameLayout
+                                    android:layout_width="52dp"
+                                    android:layout_height="52dp"
+                                    android:background="@drawable/bg_quick_tile">
+
+                                    <ImageView
+                                        android:layout_width="26dp"
+                                        android:layout_height="26dp"
+                                        android:layout_gravity="center"
+                                        android:src="@drawable/img_read_book"
+                                        app:tint="@color/app_bg_orange"
+                                        tools:ignore="ContentDescription" />
+                                </FrameLayout>
+
+                                <TextView
+                                    style="@style/txtOpenSansRomanSemiBold"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/_8px"
+                                    android:ellipsize="end"
+                                    android:singleLine="true"
+                                    android:text="@string/lbl_qa_my_books"
+                                    android:textColor="@color/home_title"
+                                    android:textSize="@dimen/_12sp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/llQaPlans"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:background="?attr/selectableItemBackground"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <FrameLayout
+                                    android:layout_width="52dp"
+                                    android:layout_height="52dp"
+                                    android:background="@drawable/bg_quick_tile">
+
+                                    <ImageView
+                                        android:layout_width="26dp"
+                                        android:layout_height="26dp"
+                                        android:layout_gravity="center"
+                                        android:src="@drawable/img_premium_lock"
+                                        app:tint="@color/app_bg_orange"
+                                        tools:ignore="ContentDescription" />
+                                </FrameLayout>
+
+                                <TextView
+                                    style="@style/txtOpenSansRomanSemiBold"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/_8px"
+                                    android:ellipsize="end"
+                                    android:singleLine="true"
+                                    android:text="@string/lbl_qa_plans"
+                                    android:textColor="@color/home_title"
+                                    android:textSize="@dimen/_12sp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/llQaRent"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:background="?attr/selectableItemBackground"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <FrameLayout
+                                    android:layout_width="52dp"
+                                    android:layout_height="52dp"
+                                    android:background="@drawable/bg_quick_tile">
+
+                                    <ImageView
+                                        android:layout_width="26dp"
+                                        android:layout_height="26dp"
+                                        android:layout_gravity="center"
+                                        android:src="@drawable/ic_rent"
+                                        app:tint="@color/app_bg_orange"
+                                        tools:ignore="ContentDescription" />
+                                </FrameLayout>
+
+                                <TextView
+                                    style="@style/txtOpenSansRomanSemiBold"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/_8px"
+                                    android:ellipsize="end"
+                                    android:singleLine="true"
+                                    android:text="@string/lbl_qa_rent"
+                                    android:textColor="@color/home_title"
                                     android:textSize="@dimen/_12sp" />
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
-                <!-- Secondary tools: everything that used to hide behind the profile menu -->
-                <TextView
-                    style="@style/txt_InterBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_16px"
-                    android:layout_marginTop="@dimen/_18px"
-                    android:text="@string/lbl_more_tools"
-                    android:textColor="@color/gray_2"
-                    android:textSize="@dimen/_18sp" />
-
-                <HorizontalScrollView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10px"
-                    android:paddingStart="@dimen/_16px"
-                    android:paddingEnd="@dimen/_16px"
-                    android:scrollbars="none">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/tvToolUploadBook"
-                            style="@style/txt_OpenSansRomanBold"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/bg_feed_chip_normal"
-                            android:drawableStart="@drawable/ic_upload_book"
-                            android:drawablePadding="8dp"
-                            android:gravity="center_vertical"
-                            android:paddingStart="@dimen/_14px"
-                            android:paddingTop="@dimen/_10px"
-                            android:paddingEnd="@dimen/_16px"
-                            android:paddingBottom="@dimen/_10px"
-                            android:text="@string/lbl_upload_book"
-                            android:textColor="@color/gray_2"
-                            android:textSize="@dimen/_13sp"
-                            app:drawableTint="@color/app_bg_orange" />
-
-                        <TextView
-                            android:id="@+id/tvToolMyUploads"
-                            style="@style/txt_OpenSansRomanBold"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/_8px"
-                            android:background="@drawable/bg_feed_chip_normal"
-                            android:drawableStart="@drawable/img_read_book"
-                            android:drawablePadding="8dp"
-                            android:gravity="center_vertical"
-                            android:paddingStart="@dimen/_14px"
-                            android:paddingTop="@dimen/_10px"
-                            android:paddingEnd="@dimen/_16px"
-                            android:paddingBottom="@dimen/_10px"
-                            android:text="@string/lbl_my_uploads"
-                            android:textColor="@color/gray_2"
-                            android:textSize="@dimen/_13sp"
-                            app:drawableTint="@color/app_bg_orange" />
-
-                        <TextView
-                            android:id="@+id/tvToolMyMedia"
-                            style="@style/txt_OpenSansRomanBold"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/_8px"
-                            android:background="@drawable/bg_feed_chip_normal"
-                            android:drawableStart="@drawable/menu_reels"
-                            android:drawablePadding="8dp"
-                            android:gravity="center_vertical"
-                            android:paddingStart="@dimen/_14px"
-                            android:paddingTop="@dimen/_10px"
-                            android:paddingEnd="@dimen/_16px"
-                            android:paddingBottom="@dimen/_10px"
-                            android:text="@string/lbl_my_media"
-                            android:textColor="@color/gray_2"
-                            android:textSize="@dimen/_13sp"
-                            app:drawableTint="@color/app_bg_orange" />
-
-                        <TextView
-                            android:id="@+id/tvToolSubscription"
-                            style="@style/txt_OpenSansRomanBold"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/_8px"
-                            android:background="@drawable/bg_feed_chip_normal"
-                            android:drawableStart="@drawable/img_premium_lock"
-                            android:drawablePadding="8dp"
-                            android:gravity="center_vertical"
-                            android:paddingStart="@dimen/_14px"
-                            android:paddingTop="@dimen/_10px"
-                            android:paddingEnd="@dimen/_16px"
-                            android:paddingBottom="@dimen/_10px"
-                            android:text="@string/tab_subs"
-                            android:textColor="@color/gray_2"
-                            android:textSize="@dimen/_13sp"
-                            app:drawableTint="@color/app_bg_orange" />
-
-                        <TextView
-                            android:id="@+id/tvToolRent"
-                            style="@style/txt_OpenSansRomanBold"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/_8px"
-                            android:background="@drawable/bg_feed_chip_normal"
-                            android:drawableStart="@drawable/ic_rent"
-                            android:drawablePadding="8dp"
-                            android:gravity="center_vertical"
-                            android:paddingStart="@dimen/_14px"
-                            android:paddingTop="@dimen/_10px"
-                            android:paddingEnd="@dimen/_16px"
-                            android:paddingBottom="@dimen/_10px"
-                            android:text="@string/tab_rent"
-                            android:textColor="@color/gray_2"
-                            android:textSize="@dimen/_13sp"
-                            app:drawableTint="@color/app_bg_orange" />
-                    </LinearLayout>
-                </HorizontalScrollView>
-
-                <!-- ===== 4. Browse band ===== -->
-
-                <!-- Featured -->
-                <TextView
-                    android:id="@+id/tvHomeFeature"
-                    style="@style/txt_InterBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_16px"
-                    android:layout_marginTop="@dimen/_20px"
-                    android:layout_marginEnd="@dimen/_16px"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:text="@string/lbl_featured"
-                    android:textColor="@color/gray_2"
-                    android:textSize="@dimen/_18sp" />
-
-                <LinearLayout
-                    android:id="@+id/llFeature"
-                    style="@style/groupStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_180px"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginStart="7dp"
-                    android:layout_marginTop="@dimen/_10px"
-                    android:layout_marginEnd="7dp"
-                    android:orientation="vertical">
-
-                    <com.jntuh.util.EnchantedViewPager
-                        android:id="@+id/vpFeatureHome"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_180px" />
-                </LinearLayout>
+                <!-- ===== 5. Browse ===== -->
 
                 <!-- Continue reading -->
                 <RelativeLayout
@@ -672,7 +733,7 @@
                         android:ellipsize="end"
                         android:singleLine="true"
                         android:text="@string/msg_continue_reading"
-                        android:textColor="@color/gray_2"
+                        android:textColor="@color/home_title"
                         android:textSize="@dimen/_18sp" />
 
                     <TextView
@@ -682,15 +743,12 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginEnd="@dimen/_12px"
+                        android:layout_marginEnd="@dimen/_16px"
                         android:background="?attr/selectableItemBackground"
-                        android:drawableEnd="@drawable/ic_home_chevron"
-                        android:gravity="center_vertical"
                         android:padding="@dimen/_4px"
-                        android:text="@string/lbl_see_all"
+                        android:text="@string/lbl_view_all"
                         android:textColor="@color/app_bg_orange"
-                        android:textSize="@dimen/_13sp"
-                        app:drawableTint="@color/app_bg_orange" />
+                        android:textSize="@dimen/_13sp" />
                 </RelativeLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -699,7 +757,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clipToPadding="false"
-                    android:paddingStart="@dimen/_10px"
+                    android:paddingStart="@dimen/_16px"
                     android:paddingEnd="@dimen/_10px" />
 
                 <!-- Trending -->
@@ -722,7 +780,7 @@
                         android:ellipsize="end"
                         android:singleLine="true"
                         android:text="@string/lbl_trending"
-                        android:textColor="@color/gray_2"
+                        android:textColor="@color/home_title"
                         android:textSize="@dimen/_18sp" />
 
                     <TextView
@@ -732,15 +790,12 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginEnd="@dimen/_12px"
+                        android:layout_marginEnd="@dimen/_16px"
                         android:background="?attr/selectableItemBackground"
-                        android:drawableEnd="@drawable/ic_home_chevron"
-                        android:gravity="center_vertical"
                         android:padding="@dimen/_4px"
-                        android:text="@string/lbl_see_all"
+                        android:text="@string/lbl_view_all"
                         android:textColor="@color/app_bg_orange"
-                        android:textSize="@dimen/_13sp"
-                        app:drawableTint="@color/app_bg_orange" />
+                        android:textSize="@dimen/_13sp" />
                 </RelativeLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -749,7 +804,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clipToPadding="false"
-                    android:paddingStart="@dimen/_10px"
+                    android:paddingStart="@dimen/_16px"
                     android:paddingEnd="@dimen/_10px" />
 
                 <!-- Latest -->
@@ -772,7 +827,7 @@
                         android:ellipsize="end"
                         android:singleLine="true"
                         android:text="@string/lbl_latest_books"
-                        android:textColor="@color/gray_2"
+                        android:textColor="@color/home_title"
                         android:textSize="@dimen/_18sp" />
 
                     <TextView
@@ -782,15 +837,12 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginEnd="@dimen/_12px"
+                        android:layout_marginEnd="@dimen/_16px"
                         android:background="?attr/selectableItemBackground"
-                        android:drawableEnd="@drawable/ic_home_chevron"
-                        android:gravity="center_vertical"
                         android:padding="@dimen/_4px"
-                        android:text="@string/lbl_see_all"
+                        android:text="@string/lbl_view_all"
                         android:textColor="@color/app_bg_orange"
-                        android:textSize="@dimen/_13sp"
-                        app:drawableTint="@color/app_bg_orange" />
+                        android:textSize="@dimen/_13sp" />
                 </RelativeLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -799,7 +851,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clipToPadding="false"
-                    android:paddingStart="@dimen/_10px"
+                    android:paddingStart="@dimen/_16px"
                     android:paddingEnd="@dimen/_10px" />
 
                 <!-- Community (reels) -->
@@ -822,7 +874,7 @@
                         android:ellipsize="end"
                         android:singleLine="true"
                         android:text="@string/lbl_from_community"
-                        android:textColor="@color/gray_2"
+                        android:textColor="@color/home_title"
                         android:textSize="@dimen/_18sp" />
 
                     <TextView
@@ -832,15 +884,12 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginEnd="@dimen/_12px"
+                        android:layout_marginEnd="@dimen/_16px"
                         android:background="?attr/selectableItemBackground"
-                        android:drawableEnd="@drawable/ic_home_chevron"
-                        android:gravity="center_vertical"
                         android:padding="@dimen/_4px"
-                        android:text="@string/lbl_see_all"
+                        android:text="@string/lbl_view_all"
                         android:textColor="@color/app_bg_orange"
-                        android:textSize="@dimen/_13sp"
-                        app:drawableTint="@color/app_bg_orange" />
+                        android:textSize="@dimen/_13sp" />
                 </RelativeLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -850,7 +899,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/_10px"
                     android:clipToPadding="false"
-                    android:paddingStart="@dimen/_10px"
+                    android:paddingStart="@dimen/_16px"
                     android:paddingEnd="@dimen/_10px" />
 
                 <!-- Server-driven sections -->

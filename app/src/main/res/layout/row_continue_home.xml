@@ -1,43 +1,104 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Continue reading: a wide card with the cover, where the reader left off,
+     and a Resume action — instead of a bare cover thumbnail. -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:id="@+id/llContinueHome"
-        android:layout_width="wrap_content"
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:layout_marginEnd="@dimen/_8px"
-        android:orientation="vertical">
+        android:layout_marginEnd="@dimen/_12px"
+        android:layout_marginBottom="@dimen/_5px"
+        app:cardBackgroundColor="@color/home_surface"
+        app:cardCornerRadius="18dp"
+        app:cardElevation="2dp">
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/ivHomeCont"
-            android:layout_width="@dimen/_100px"
-            android:layout_height="@dimen/_150px"
-            android:layout_marginEnd="@dimen/_2px"
-            android:gravity="center_horizontal"
-            android:scaleType="fitXY"
-            android:src="@drawable/placeholder_portable"
-            app:shapeAppearanceOverlay="@style/CornerRadiusImageContinue"
-            tools:ignore="ContentDescription"
-            tools:src="@drawable/placeholder_portable" />
-
-        <TextView
-            android:id="@+id/tvHomeConTitle"
-            style="@style/txtOpenSansRomanSemiBold"
+        <LinearLayout
+            android:id="@+id/llContinueHome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10px"
-            android:ellipsize="end"
-            android:textSize="@dimen/_14sp"
-            android:textColor="@color/home_text_sub"
-            android:gravity="start"
-            android:singleLine="true"
-            android:text="@string/app_name"
-            tools:text="@string/app_name" />
-    </LinearLayout>
+            android:background="?attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/_12px">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/ivHomeCont"
+                android:layout_width="66dp"
+                android:layout_height="94dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/placeholder_portable"
+                app:shapeAppearanceOverlay="@style/CornerRadiusImageContinue"
+                tools:ignore="ContentDescription" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_12px"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvHomeConTitle"
+                    style="@style/txt_OpenSansRomanBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:text="@string/app_name"
+                    android:textColor="@color/home_title"
+                    android:textSize="@dimen/_15sp"
+                    tools:text="An Unfinished Love Story" />
+
+                <TextView
+                    android:id="@+id/tvHomeConAuthor"
+                    style="@style/txtOpenSansRomanSemiBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_2px"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:textColor="@color/home_muted"
+                    android:textSize="@dimen/_12sp"
+                    tools:text="by Doris Kearns" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10px"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tvHomeConPage"
+                        style="@style/txtOpenSansRomanSemiBold"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:textColor="@color/home_muted"
+                        android:textSize="@dimen/_12sp"
+                        tools:text="Page 45" />
+
+                    <TextView
+                        android:id="@+id/btnHomeConResume"
+                        style="@style/txt_OpenSansRomanBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_home_filter_btn"
+                        android:paddingStart="@dimen/_16px"
+                        android:paddingTop="@dimen/_6px"
+                        android:paddingEnd="@dimen/_16px"
+                        android:paddingBottom="@dimen/_6px"
+                        android:text="@string/lbl_resume"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_12sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 </RelativeLayout>

@@ -192,6 +192,17 @@
     <color name="result_backlog_red">#C62828</color>
     <color name="result_brand_blue">#0D47A1</color>
 
+    <!-- Home (warm reading palette) -->
+    <color name="home_screen_bg">#FBF4EC</color>
+    <color name="home_surface">#FFFFFF</color>
+    <color name="home_title">#3A2A18</color>
+    <color name="home_muted">#8A7B6B</color>
+    <color name="home_pill_bg">#F0E5D8</color>
+    <color name="home_grad_top">#FDF0E2</color>
+    <color name="home_grad_bottom">#FBF7F2</color>
+    <color name="home_cover_bg">#EFE4D6</color>
+    <color name="home_scrim">#99000000</color>
+
     <!-- Reels feed (social card layout) -->
     <color name="feed_screen_bg">#F6F6F8</color>
     <color name="feed_card_bg">#FFFFFF</color>
