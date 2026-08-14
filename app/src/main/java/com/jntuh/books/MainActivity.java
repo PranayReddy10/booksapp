@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
 
         selectBottomNav(0);
         HomeFragment homeFragment = new HomeFragment();
-        homeFragment.setOnItemClickListener(position -> profileFragment(true, 0));
+        homeFragment.setOnItemClickListener(position -> profileFragment(true, position));
 
         loadFrag(homeFragment, "", fragmentManager);
         viewMain.toolbarMain.toolbarToolbar.setVisibility(View.GONE);
@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
             viewMain.fabFeed.hide();
             viewMain.toolbarMain.toolbarToolbar.setVisibility(View.GONE);
             HomeFragment homeFragment1 = new HomeFragment();
-            homeFragment1.setOnItemClickListener(position -> profileFragment(true, 0));
+            homeFragment1.setOnItemClickListener(position -> profileFragment(true, position));
             loadFrag(homeFragment1, "", fragmentManager);
 
         });
@@ -170,6 +170,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    /**
+     * Open a bottom-nav destination from elsewhere (the home quick-access grid).
+     * Delegates to the tab's own click wiring so FABs, toolbar and highlight stay in sync.
+     */
+    public void openNavTab(int position) {
+        if (position >= 0 && position < linearLayouts.length) {
+            linearLayouts[position].performClick();
+        }
+    }
+
+    /** Open the profile screen focused on one of its tabs (results, subscription, rent…). */
+    public void openProfileTab(int tabPosition) {
+        profileFragment(true, tabPosition);
     }
 
     private void profileFragment(boolean isContinue, int pos) {

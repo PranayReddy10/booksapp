@@ -15,17 +15,22 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.jntuh.adapter.ContinueHomeAdapter;
 import com.jntuh.adapter.HomeSectionAdapter;
 import com.jntuh.adapter.SliderAdapter;
 import com.jntuh.adapter.TrendingHomeAdapter;
 import com.jntuh.books.BookDetailsActivity;
+import com.jntuh.books.DownloadActivity;
+import com.jntuh.books.LoginActivity;
 import com.jntuh.books.MainActivity;
-import com.jntuh.books.MediaFeedActivity;
+import com.jntuh.books.MyMediaActivity;
+import com.jntuh.books.MyUploadsActivity;
 import com.jntuh.books.BookListBySubCatActivity;
 import com.jntuh.books.R;
 import com.jntuh.books.SettingsActivity;
 import com.jntuh.books.TrendingBookActivity;
+import com.jntuh.books.UploadBookActivity;
 import com.jntuh.books.databinding.FragmentHomeBinding;
 import com.jntuh.response.HomeRP;
 import com.jntuh.rest.ApiClient;
@@ -39,6 +44,7 @@ import com.google.gson.JsonObject;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -119,6 +125,10 @@ public class HomeFragment extends Fragment {
             Intent intentSetting = new Intent(requireActivity(), SettingsActivity.class);
             startActivity(intentSetting);
         });
+
+        bindGreeting();
+        bindQuickAccess();
+        bindSectionLinks();
 
         viewHome.ibWhatsapp.setOnClickListener(v -> openLink("https://www.whatsapp.com/channel/0029Vb5uthA7NoZyvanZPr1J"));
         viewHome.ibInstagram.setOnClickListener(v -> openLink("https://www.instagram.com/jntu_books_updates/"));
@@ -226,11 +236,6 @@ public class HomeFragment extends Fragment {
                                         startActivity(intentDetail);
                                     });
 
-                                    viewHome.ivHomeContinue.setOnClickListener(v -> {
-                                        //int pos=0;
-                                        onClickPos.position(0);
-                                    });
-
                                 } else {
                                     viewHome.rlConSection.setVisibility(View.GONE);
                                     viewHome.rvContBook.setVisibility(View.GONE);
@@ -243,11 +248,6 @@ public class HomeFragment extends Fragment {
                                         Intent intentDetail = new Intent(requireActivity(), BookDetailsActivity.class);
                                         intentDetail.putExtra("BOOK_ID", homeRP.getEbookApp().getTrending_books().get(position).getPostId());
                                         startActivity(intentDetail);
-                                    });
-
-                                    viewHome.ivHomeTrendBook.setOnClickListener(v -> {
-                                        Intent intentSubCat = new Intent(requireActivity(), TrendingBookActivity.class);
-                                        startActivity(intentSubCat);
                                     });
                                 } else {
                                     viewHome.rlTrendSection.setVisibility(View.GONE);
@@ -265,10 +265,6 @@ public class HomeFragment extends Fragment {
                                         d.putExtra("BOOK_ID", homeRP.getEbookApp().getLatest_books().get(position).getPostId());
                                         startActivity(d);
                                     });
-                                    viewHome.ivHomeLatestArrow.setOnClickListener(v ->
-                                            startActivity(new Intent(requireActivity(), MainActivity.class)
-                                                    .putExtra("openLatest", true)
-                                                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)));
                                 } else {
                                     viewHome.rlLatestHeader.setVisibility(View.GONE);
                                     viewHome.rvHomeLatestBook.setVisibility(View.GONE);
@@ -280,8 +276,6 @@ public class HomeFragment extends Fragment {
                                     com.jntuh.adapter.HomeFeedAdapter feedAdapter =
                                             new com.jntuh.adapter.HomeFeedAdapter(getActivity(), homeRP.getEbookApp().getFeed_posts());
                                     viewHome.rvHomeFeed.setAdapter(feedAdapter);
-                                    viewHome.ivHomeFeedArrow.setOnClickListener(v ->
-                                            startActivity(new Intent(requireActivity(), MediaFeedActivity.class)));
                                 } else {
                                     viewHome.rlFeedHeader.setVisibility(View.GONE);
                                     viewHome.rvHomeFeed.setVisibility(View.GONE);
@@ -312,6 +306,97 @@ public class HomeFragment extends Fragment {
                     method.alertBox(getResources().getString(R.string.failed_try_again));
                 }
             });
+        }
+    }
+
+    /** Time-of-day greeting, personalised once the user is logged in. */
+    private void bindGreeting() {
+        int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+        String greeting = getString(hour < 12 ? R.string.lbl_greet_morning
+                : hour < 17 ? R.string.lbl_greet_afternoon
+                : R.string.lbl_greet_evening);
+
+        String name = method.getIsLogin() ? method.getUserName() : null;
+        viewHome.tvHomeGreeting.setText(
+                (name != null && !name.trim().isEmpty())
+                        ? getString(R.string.lbl_greet_named, greeting, name.trim())
+                        : greeting);
+
+        String image = method.getIsLogin() ? method.getUserImage() : null;
+        if (image != null && !image.trim().isEmpty()) {
+            Glide.with(requireActivity().getApplicationContext())
+                    .load(image)
+                    .placeholder(R.drawable.img_user)
+                    .into(viewHome.ivHomeAvatar);
+        }
+        viewHome.cvHomeAvatar.setOnClickListener(v -> openProfileTab(0));
+    }
+
+    /**
+     * The quick-access grid and the tools chips: one tap from home to every
+     * destination the app has, including the ones that used to sit behind the
+     * profile screen's overflow menu.
+     */
+    private void bindQuickAccess() {
+        // Grid — browse the catalogue.
+        viewHome.llQaCategories.setOnClickListener(v -> openNavTab(2));
+        viewHome.llQaLatest.setOnClickListener(v -> openNavTab(1));
+        viewHome.llQaTrending.setOnClickListener(v ->
+                startActivity(new Intent(requireActivity(), TrendingBookActivity.class)));
+        viewHome.llQaReels.setOnClickListener(v -> openNavTab(4));
+
+        // Grid — the student's own things.
+        viewHome.llQaShop.setOnClickListener(v -> openNavTab(3));
+        viewHome.llQaResults.setOnClickListener(v -> openProfileTab(0));
+        viewHome.llQaDownloads.setOnClickListener(v -> openLibrary("isDown"));
+        viewHome.llQaSaved.setOnClickListener(v -> openLibrary("isFav"));
+
+        // Chips — creator + subscription tools, all login-gated.
+        viewHome.tvToolUploadBook.setOnClickListener(v -> requireLoginThen(UploadBookActivity.class));
+        viewHome.tvToolMyUploads.setOnClickListener(v -> requireLoginThen(MyUploadsActivity.class));
+        viewHome.tvToolMyMedia.setOnClickListener(v -> requireLoginThen(MyMediaActivity.class));
+        viewHome.tvToolSubscription.setOnClickListener(v -> openProfileTab(3));
+        viewHome.tvToolRent.setOnClickListener(v -> openProfileTab(4));
+    }
+
+    /** "See all" on each rail, pointing at the full screen for that section. */
+    private void bindSectionLinks() {
+        // Continue reading lives on the profile's "Continue Book" tab.
+        viewHome.tvSeeAllContinue.setOnClickListener(v -> {
+            if (onClickPos != null) onClickPos.position(1);
+        });
+        viewHome.tvSeeAllTrending.setOnClickListener(v ->
+                startActivity(new Intent(requireActivity(), TrendingBookActivity.class)));
+        viewHome.tvSeeAllLatest.setOnClickListener(v -> openNavTab(1));
+        viewHome.tvSeeAllFeed.setOnClickListener(v -> openNavTab(4));
+    }
+
+    /** Switch the host's bottom navigation, reusing its own tab wiring. */
+    private void openNavTab(int position) {
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) getActivity()).openNavTab(position);
+        }
+    }
+
+    /** Open the profile screen focused on one of its tabs (results, subscription, rent…). */
+    private void openProfileTab(int tabPosition) {
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) getActivity()).openProfileTab(tabPosition);
+        }
+    }
+
+    /** Downloads ("isDown") and favourites ("isFav") share one screen. */
+    private void openLibrary(String mode) {
+        startActivity(new Intent(requireActivity(), DownloadActivity.class)
+                .putExtra("isDown", mode));
+    }
+
+    private void requireLoginThen(Class<?> target) {
+        if (method.getIsLogin()) {
+            startActivity(new Intent(requireActivity(), target));
+        } else {
+            Toast.makeText(requireActivity(), getString(R.string.login_require), Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(requireActivity(), LoginActivity.class));
         }
     }
 

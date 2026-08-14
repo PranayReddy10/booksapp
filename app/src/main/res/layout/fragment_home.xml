@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Home is organised into four bands so every feature has one obvious place:
+       1. Identity   — greeting, avatar, community links, settings
+       2. Find       — search pill
+       3. Jump to    — quick-access grid + "more tools" chips (the whole app in one screen)
+       4. Browse     — featured / continue / trending / latest / community / API sections -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -25,48 +31,82 @@
     <LinearLayout
         android:id="@+id/llHomeMain"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <!-- ===== 1. Identity band ===== -->
         <RelativeLayout
             android:id="@+id/linearRowebookapp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_10px"
-            android:layout_marginTop="@dimen/_10px"
-            android:layout_marginEnd="@dimen/_10px"
-            android:orientation="horizontal">
+            android:paddingStart="@dimen/_16px"
+            android:paddingTop="@dimen/_12px"
+            android:paddingEnd="@dimen/_12px"
+            android:paddingBottom="@dimen/_10px">
 
-            <TextView
-                android:id="@+id/txtEbookApp"
-                style="@style/txt_OpenSansRomanExtraBold"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvHomeAvatar"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                app:cardBackgroundColor="@color/deep_orange_bg"
+                app:cardCornerRadius="21dp"
+                app:cardElevation="0dp">
+
+                <ImageView
+                    android:id="@+id/ivHomeAvatar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/img_user"
+                    tools:ignore="ContentDescription" />
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:id="@+id/llHomeGreeting"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_gravity="start|center"
-                android:ellipsize="end"
-                android:gravity="center|start"
                 android:layout_centerVertical="true"
-                android:singleLine="true"
-                android:text="@string/lbl_ebook_app"
-                android:textColor="@color/gray_2"
-                android:textSize="@dimen/_24sp"
-                android:layout_toStartOf="@+id/ibSetting"
-                tools:text="@string/lbl_ebook_app" />
+                android:layout_marginStart="@dimen/_10px"
+                android:layout_toEndOf="@+id/cvHomeAvatar"
+                android:layout_toStartOf="@+id/ibWhatsapp"
+                android:orientation="vertical">
 
-            <ImageButton
-                android:id="@+id/ibSetting"
+                <TextView
+                    android:id="@+id/tvHomeGreeting"
+                    style="@style/txtOpenSansRomanSemiBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="@string/lbl_greet_evening"
+                    android:textColor="@color/feed_meta"
+                    android:textSize="@dimen/_12sp"
+                    tools:text="Good evening" />
+
+                <TextView
+                    android:id="@+id/txtEbookApp"
+                    style="@style/txt_OpenSansRomanExtraBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="@string/lbl_ebook_app"
+                    android:textColor="@color/gray_2"
+                    android:textSize="@dimen/_19sp"
+                    tools:text="JNTU books" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/ibWhatsapp"
                 android:layout_width="@dimen/_40px"
                 android:layout_height="@dimen/_40px"
-                android:layout_gravity="center|end"
                 android:layout_centerVertical="true"
-                android:layout_alignParentEnd="true"
-                android:background="@drawable/rectangle_bg_setting_home"
-                android:gravity="center|end"
-                android:paddingHorizontal="@dimen/_10px"
-                android:paddingVertical="@dimen/_10px"
-                android:scaleType="fitCenter"
-                android:src="@drawable/img_setting"
+                android:layout_toStartOf="@+id/ibInstagram"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="@dimen/_8px"
+                android:src="@drawable/ic_whatsapp"
                 tools:ignore="ContentDescription" />
 
             <ImageView
@@ -75,22 +115,21 @@
                 android:layout_height="@dimen/_40px"
                 android:layout_centerVertical="true"
                 android:layout_toStartOf="@+id/ibSetting"
-                android:layout_marginEnd="@dimen/_6px"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:padding="@dimen/_8px"
                 android:src="@drawable/ic_instagram"
                 tools:ignore="ContentDescription" />
 
-            <ImageView
-                android:id="@+id/ibWhatsapp"
+            <ImageButton
+                android:id="@+id/ibSetting"
                 android:layout_width="@dimen/_40px"
                 android:layout_height="@dimen/_40px"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:layout_toStartOf="@+id/ibInstagram"
-                android:layout_marginEnd="@dimen/_2px"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:padding="@dimen/_8px"
-                android:src="@drawable/ic_whatsapp"
+                android:background="@drawable/rectangle_bg_setting_home"
+                android:padding="@dimen/_10px"
+                android:scaleType="fitCenter"
+                android:src="@drawable/img_setting"
                 tools:ignore="ContentDescription" />
         </RelativeLayout>
 
@@ -98,25 +137,33 @@
             android:id="@+id/scrollViewScrollview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/_10px"
             android:clipToPadding="false"
-            android:fillViewport="true"
-            android:gravity="start">
+            android:fillViewport="true">
 
             <LinearLayout
                 android:id="@+id/linearHomeScreen"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/_10px"
-                android:gravity="start"
                 android:orientation="vertical">
 
+                <!-- ===== 2. Find band ===== -->
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10px"
-                    android:layout_marginEnd="@dimen/_10px"
-                    android:background="@drawable/rectangle_bg_search_home">
+                    android:layout_marginStart="@dimen/_16px"
+                    android:layout_marginEnd="@dimen/_16px"
+                    android:background="@drawable/bg_home_search">
+
+                    <ImageView
+                        android:id="@+id/imageHomeSearch"
+                        android:layout_width="@dimen/_20px"
+                        android:layout_height="@dimen/_20px"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="@dimen/_18px"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/img_search" />
 
                     <EditText
                         android:id="@+id/edtHomeSearch"
@@ -130,45 +177,463 @@
                         android:hint="@string/lbl_search_here"
                         android:imeOptions="actionDone"
                         android:inputType="text"
-                        android:lineSpacingExtra="@dimen/_1px"
-                        android:paddingStart="@dimen/_15px"
-                        android:paddingTop="@dimen/_12px"
+                        android:paddingStart="@dimen/_18px"
+                        android:paddingTop="@dimen/_14px"
                         android:paddingEnd="@dimen/_10px"
-                        android:paddingBottom="@dimen/_12px"
+                        android:paddingBottom="@dimen/_14px"
                         android:singleLine="true"
-                        android:textColor="@color/home_search_text"
+                        android:textColor="@color/gray_2"
                         android:textColorHint="@color/home_search_text"
                         android:textCursorDrawable="@drawable/cursor"
                         android:textSize="@dimen/_15sp"
                         tools:ignore="Autofill" />
-
-                    <ImageView
-                        android:id="@+id/imageHomeSearch"
-                        android:layout_width="@dimen/_20px"
-                        android:layout_height="@dimen/_20px"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginEnd="@dimen/_15px"
-                        android:contentDescription="@string/app_name"
-                        android:src="@drawable/img_search" />
-
                 </RelativeLayout>
 
+                <!-- ===== 3. Jump-to band: every destination in one grid ===== -->
+                <TextView
+                    style="@style/txt_InterBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_16px"
+                    android:layout_marginTop="@dimen/_18px"
+                    android:text="@string/lbl_quick_access"
+                    android:textColor="@color/gray_2"
+                    android:textSize="@dimen/_18sp" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_16px"
+                    android:layout_marginTop="@dimen/_10px"
+                    android:layout_marginEnd="@dimen/_16px"
+                    app:cardBackgroundColor="@color/card_view_bg"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="2dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingTop="@dimen/_16px"
+                        android:paddingBottom="@dimen/_16px">
+
+                        <!-- Row 1: browse the catalogue -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:id="@+id/llQaCategories"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:background="?attr/selectableItemBackground"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <FrameLayout
+                                    android:layout_width="52dp"
+                                    android:layout_height="52dp"
+                                    android:background="@drawable/bg_quick_tile">
+
+                                    <ImageView
+                                        android:layout_width="26dp"
+                                        android:layout_height="26dp"
+                                        android:layout_gravity="center"
+                                        android:src="@drawable/menu_cat"
+                                        app:tint="@color/app_bg_orange"
+                                        tools:ignore="ContentDescription" />
+                                </FrameLayout>
+
+                                <TextView
+                                    style="@style/txtOpenSansRomanSemiBold"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/_8px"
+                                    android:text="@string/lbl_qa_categories"
+                                    android:textColor="@color/gray_2"
+                                    android:textSize="@dimen/_12sp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/llQaLatest"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:background="?attr/selectableItemBackground"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <FrameLayout
+                                    android:layout_width="52dp"
+                                    android:layout_height="52dp"
+                                    android:background="@drawable/bg_quick_tile">
+
+                                    <ImageView
+                                        android:layout_width="26dp"
+                                        android:layout_height="26dp"
+                                        android:layout_gravity="center"
+                                        android:src="@drawable/menu_latest"
+                                        app:tint="@color/app_bg_orange"
+                                        tools:ignore="ContentDescription" />
+                                </FrameLayout>
+
+                                <TextView
+                                    style="@style/txtOpenSansRomanSemiBold"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/_8px"
+                                    android:text="@string/lbl_qa_latest"
+                                    android:textColor="@color/gray_2"
+                                    android:textSize="@dimen/_12sp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/llQaTrending"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:background="?attr/selectableItemBackground"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <FrameLayout
+                                    android:layout_width="52dp"
+                                    android:layout_height="52dp"
+                                    android:background="@drawable/bg_quick_tile">
+
+                                    <ImageView
+                                        android:layout_width="26dp"
+                                        android:layout_height="26dp"
+                                        android:layout_gravity="center"
+                                        android:src="@drawable/img_star"
+                                        app:tint="@color/app_bg_orange"
+                                        tools:ignore="ContentDescription" />
+                                </FrameLayout>
+
+                                <TextView
+                                    style="@style/txtOpenSansRomanSemiBold"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/_8px"
+                                    android:text="@string/lbl_qa_trending"
+                                    android:textColor="@color/gray_2"
+                                    android:textSize="@dimen/_12sp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/llQaReels"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:background="?attr/selectableItemBackground"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <FrameLayout
+                                    android:layout_width="52dp"
+                                    android:layout_height="52dp"
+                                    android:background="@drawable/bg_quick_tile">
+
+                                    <ImageView
+                                        android:layout_width="26dp"
+                                        android:layout_height="26dp"
+                                        android:layout_gravity="center"
+                                        android:src="@drawable/menu_reels"
+                                        app:tint="@color/app_bg_orange"
+                                        tools:ignore="ContentDescription" />
+                                </FrameLayout>
+
+                                <TextView
+                                    style="@style/txtOpenSansRomanSemiBold"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/_8px"
+                                    android:text="@string/lbl_qa_reels"
+                                    android:textColor="@color/gray_2"
+                                    android:textSize="@dimen/_12sp" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <!-- Row 2: the student's own stuff -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_16px"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:id="@+id/llQaShop"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:background="?attr/selectableItemBackground"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <FrameLayout
+                                    android:layout_width="52dp"
+                                    android:layout_height="52dp"
+                                    android:background="@drawable/bg_quick_tile">
+
+                                    <ImageView
+                                        android:layout_width="26dp"
+                                        android:layout_height="26dp"
+                                        android:layout_gravity="center"
+                                        android:src="@drawable/menu_shop"
+                                        app:tint="@color/app_bg_orange"
+                                        tools:ignore="ContentDescription" />
+                                </FrameLayout>
+
+                                <TextView
+                                    style="@style/txtOpenSansRomanSemiBold"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/_8px"
+                                    android:text="@string/lbl_qa_shop"
+                                    android:textColor="@color/gray_2"
+                                    android:textSize="@dimen/_12sp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/llQaResults"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:background="?attr/selectableItemBackground"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <FrameLayout
+                                    android:layout_width="52dp"
+                                    android:layout_height="52dp"
+                                    android:background="@drawable/bg_quick_tile">
+
+                                    <ImageView
+                                        android:layout_width="26dp"
+                                        android:layout_height="26dp"
+                                        android:layout_gravity="center"
+                                        android:src="@drawable/ic_result_school"
+                                        app:tint="@color/app_bg_orange"
+                                        tools:ignore="ContentDescription" />
+                                </FrameLayout>
+
+                                <TextView
+                                    style="@style/txtOpenSansRomanSemiBold"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/_8px"
+                                    android:text="@string/lbl_qa_results"
+                                    android:textColor="@color/gray_2"
+                                    android:textSize="@dimen/_12sp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/llQaDownloads"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:background="?attr/selectableItemBackground"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <FrameLayout
+                                    android:layout_width="52dp"
+                                    android:layout_height="52dp"
+                                    android:background="@drawable/bg_quick_tile">
+
+                                    <ImageView
+                                        android:layout_width="26dp"
+                                        android:layout_height="26dp"
+                                        android:layout_gravity="center"
+                                        android:src="@drawable/img_download"
+                                        app:tint="@color/app_bg_orange"
+                                        tools:ignore="ContentDescription" />
+                                </FrameLayout>
+
+                                <TextView
+                                    style="@style/txtOpenSansRomanSemiBold"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/_8px"
+                                    android:text="@string/lbl_qa_downloads"
+                                    android:textColor="@color/gray_2"
+                                    android:textSize="@dimen/_12sp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/llQaSaved"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:background="?attr/selectableItemBackground"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <FrameLayout
+                                    android:layout_width="52dp"
+                                    android:layout_height="52dp"
+                                    android:background="@drawable/bg_quick_tile">
+
+                                    <ImageView
+                                        android:layout_width="26dp"
+                                        android:layout_height="26dp"
+                                        android:layout_gravity="center"
+                                        android:src="@drawable/img_fav"
+                                        app:tint="@color/app_bg_orange"
+                                        tools:ignore="ContentDescription" />
+                                </FrameLayout>
+
+                                <TextView
+                                    style="@style/txtOpenSansRomanSemiBold"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/_8px"
+                                    android:text="@string/lbl_qa_saved"
+                                    android:textColor="@color/gray_2"
+                                    android:textSize="@dimen/_12sp" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Secondary tools: everything that used to hide behind the profile menu -->
+                <TextView
+                    style="@style/txt_InterBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_16px"
+                    android:layout_marginTop="@dimen/_18px"
+                    android:text="@string/lbl_more_tools"
+                    android:textColor="@color/gray_2"
+                    android:textSize="@dimen/_18sp" />
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10px"
+                    android:paddingStart="@dimen/_16px"
+                    android:paddingEnd="@dimen/_16px"
+                    android:scrollbars="none">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tvToolUploadBook"
+                            style="@style/txt_OpenSansRomanBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bg_feed_chip_normal"
+                            android:drawableStart="@drawable/ic_upload_book"
+                            android:drawablePadding="8dp"
+                            android:gravity="center_vertical"
+                            android:paddingStart="@dimen/_14px"
+                            android:paddingTop="@dimen/_10px"
+                            android:paddingEnd="@dimen/_16px"
+                            android:paddingBottom="@dimen/_10px"
+                            android:text="@string/lbl_upload_book"
+                            android:textColor="@color/gray_2"
+                            android:textSize="@dimen/_13sp"
+                            app:drawableTint="@color/app_bg_orange" />
+
+                        <TextView
+                            android:id="@+id/tvToolMyUploads"
+                            style="@style/txt_OpenSansRomanBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_8px"
+                            android:background="@drawable/bg_feed_chip_normal"
+                            android:drawableStart="@drawable/img_read_book"
+                            android:drawablePadding="8dp"
+                            android:gravity="center_vertical"
+                            android:paddingStart="@dimen/_14px"
+                            android:paddingTop="@dimen/_10px"
+                            android:paddingEnd="@dimen/_16px"
+                            android:paddingBottom="@dimen/_10px"
+                            android:text="@string/lbl_my_uploads"
+                            android:textColor="@color/gray_2"
+                            android:textSize="@dimen/_13sp"
+                            app:drawableTint="@color/app_bg_orange" />
+
+                        <TextView
+                            android:id="@+id/tvToolMyMedia"
+                            style="@style/txt_OpenSansRomanBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_8px"
+                            android:background="@drawable/bg_feed_chip_normal"
+                            android:drawableStart="@drawable/menu_reels"
+                            android:drawablePadding="8dp"
+                            android:gravity="center_vertical"
+                            android:paddingStart="@dimen/_14px"
+                            android:paddingTop="@dimen/_10px"
+                            android:paddingEnd="@dimen/_16px"
+                            android:paddingBottom="@dimen/_10px"
+                            android:text="@string/lbl_my_media"
+                            android:textColor="@color/gray_2"
+                            android:textSize="@dimen/_13sp"
+                            app:drawableTint="@color/app_bg_orange" />
+
+                        <TextView
+                            android:id="@+id/tvToolSubscription"
+                            style="@style/txt_OpenSansRomanBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_8px"
+                            android:background="@drawable/bg_feed_chip_normal"
+                            android:drawableStart="@drawable/img_premium_lock"
+                            android:drawablePadding="8dp"
+                            android:gravity="center_vertical"
+                            android:paddingStart="@dimen/_14px"
+                            android:paddingTop="@dimen/_10px"
+                            android:paddingEnd="@dimen/_16px"
+                            android:paddingBottom="@dimen/_10px"
+                            android:text="@string/tab_subs"
+                            android:textColor="@color/gray_2"
+                            android:textSize="@dimen/_13sp"
+                            app:drawableTint="@color/app_bg_orange" />
+
+                        <TextView
+                            android:id="@+id/tvToolRent"
+                            style="@style/txt_OpenSansRomanBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_8px"
+                            android:background="@drawable/bg_feed_chip_normal"
+                            android:drawableStart="@drawable/ic_rent"
+                            android:drawablePadding="8dp"
+                            android:gravity="center_vertical"
+                            android:paddingStart="@dimen/_14px"
+                            android:paddingTop="@dimen/_10px"
+                            android:paddingEnd="@dimen/_16px"
+                            android:paddingBottom="@dimen/_10px"
+                            android:text="@string/tab_rent"
+                            android:textColor="@color/gray_2"
+                            android:textSize="@dimen/_13sp"
+                            app:drawableTint="@color/app_bg_orange" />
+                    </LinearLayout>
+                </HorizontalScrollView>
+
+                <!-- ===== 4. Browse band ===== -->
+
+                <!-- Featured -->
                 <TextView
                     android:id="@+id/tvHomeFeature"
                     style="@style/txt_InterBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10px"
-                    android:visibility="gone"
-                    android:layout_marginTop="@dimen/_15px"
-                    android:layout_marginEnd="@dimen/_10px"
+                    android:layout_marginStart="@dimen/_16px"
+                    android:layout_marginTop="@dimen/_20px"
+                    android:layout_marginEnd="@dimen/_16px"
                     android:ellipsize="end"
                     android:singleLine="true"
                     android:text="@string/lbl_featured"
                     android:textColor="@color/gray_2"
-                    android:textSize="@dimen/_19sp"
-                    tools:text="@string/lbl_featured" />
+                    android:textSize="@dimen/_18sp" />
 
                 <LinearLayout
                     android:id="@+id/llFeature"
@@ -177,7 +642,7 @@
                     android:layout_height="@dimen/_180px"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginStart="7dp"
-                    android:layout_marginTop="@dimen/_15px"
+                    android:layout_marginTop="@dimen/_10px"
                     android:layout_marginEnd="7dp"
                     android:orientation="vertical">
 
@@ -185,9 +650,9 @@
                         android:id="@+id/vpFeatureHome"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_180px" />
-
                 </LinearLayout>
 
+                <!-- Continue reading -->
                 <RelativeLayout
                     android:id="@+id/rlConSection"
                     android:layout_width="match_parent"
@@ -195,41 +660,37 @@
                     android:layout_marginTop="@dimen/_20px"
                     android:layout_marginBottom="@dimen/_10px">
 
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/tvHomeConBook"
+                        style="@style/txt_InterBold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
-                        android:layout_toStartOf="@+id/ivHomeContinue"
-                        android:gravity="start"
-                        android:orientation="vertical">
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/_16px"
+                        android:layout_toStartOf="@+id/tvSeeAllContinue"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="@string/msg_continue_reading"
+                        android:textColor="@color/gray_2"
+                        android:textSize="@dimen/_18sp" />
 
-                        <TextView
-                            android:id="@+id/tvHomeConBook"
-                            style="@style/txt_InterBold"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/_10px"
-                            android:layout_marginEnd="@dimen/_10px"
-                            android:ellipsize="end"
-                            android:singleLine="true"
-                            android:text="@string/msg_continue_reading"
-                            android:textColor="@color/gray_2"
-                            android:textSize="@dimen/_19sp"
-                            tools:text="@string/msg_continue_reading" />
-                    </LinearLayout>
-
-                    <ImageView
-                        android:id="@+id/ivHomeContinue"
-                        android:layout_width="17dp"
-                        android:layout_height="13dp"
+                    <TextView
+                        android:id="@+id/tvSeeAllContinue"
+                        style="@style/txt_OpenSansRomanBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/_20px"
-                        android:layout_marginEnd="@dimen/_20px"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/img_arrow_home_deep_orange"
-                        tools:ignore="ContentDescription"
-                        tools:src="@drawable/img_arrow_home_deep_orange" />
+                        android:layout_marginEnd="@dimen/_12px"
+                        android:background="?attr/selectableItemBackground"
+                        android:drawableEnd="@drawable/ic_home_chevron"
+                        android:gravity="center_vertical"
+                        android:padding="@dimen/_4px"
+                        android:text="@string/lbl_see_all"
+                        android:textColor="@color/app_bg_orange"
+                        android:textSize="@dimen/_13sp"
+                        app:drawableTint="@color/app_bg_orange" />
                 </RelativeLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -241,6 +702,7 @@
                     android:paddingStart="@dimen/_10px"
                     android:paddingEnd="@dimen/_10px" />
 
+                <!-- Trending -->
                 <RelativeLayout
                     android:id="@+id/rlTrendSection"
                     android:layout_width="match_parent"
@@ -248,42 +710,37 @@
                     android:layout_marginTop="@dimen/_20px"
                     android:layout_marginBottom="@dimen/_10px">
 
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/tvHomeTrendBook"
+                        style="@style/txt_InterBold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
-                        android:layout_toStartOf="@+id/ivHomeTrendBook"
-                        android:gravity="start"
-                        android:orientation="vertical">
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/_16px"
+                        android:layout_toStartOf="@+id/tvSeeAllTrending"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="@string/lbl_trending"
+                        android:textColor="@color/gray_2"
+                        android:textSize="@dimen/_18sp" />
 
-                        <TextView
-                            android:id="@+id/tvHomeTrendBook"
-                            style="@style/txt_InterBold"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/_10px"
-                            android:layout_marginEnd="@dimen/_10px"
-                            android:ellipsize="end"
-                            android:gravity="center|start"
-                            android:singleLine="true"
-                            android:text="@string/lbl_trending"
-                            android:textColor="@color/gray_2"
-                            android:textSize="@dimen/_19sp"
-                            tools:text="@string/lbl_trending" />
-                    </LinearLayout>
-
-                    <ImageView
-                        android:id="@+id/ivHomeTrendBook"
-                        android:layout_width="17dp"
-                        android:layout_height="13dp"
+                    <TextView
+                        android:id="@+id/tvSeeAllTrending"
+                        style="@style/txt_OpenSansRomanBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/_10px"
-                        android:layout_marginEnd="@dimen/_10px"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/img_arrow_home_deep_orange"
-                        tools:ignore="ContentDescription"
-                        tools:src="@drawable/img_arrow_home_deep_orange" />
+                        android:layout_marginEnd="@dimen/_12px"
+                        android:background="?attr/selectableItemBackground"
+                        android:drawableEnd="@drawable/ic_home_chevron"
+                        android:gravity="center_vertical"
+                        android:padding="@dimen/_4px"
+                        android:text="@string/lbl_see_all"
+                        android:textColor="@color/app_bg_orange"
+                        android:textSize="@dimen/_13sp"
+                        app:drawableTint="@color/app_bg_orange" />
                 </RelativeLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -295,14 +752,13 @@
                     android:paddingStart="@dimen/_10px"
                     android:paddingEnd="@dimen/_10px" />
 
-
-
-                <!-- Latest Books -->
+                <!-- Latest -->
                 <RelativeLayout
                     android:id="@+id/rlLatestHeader"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10px">
+                    android:layout_marginTop="@dimen/_20px"
+                    android:layout_marginBottom="@dimen/_10px">
 
                     <TextView
                         android:id="@+id/tvHomeLatestBook"
@@ -311,25 +767,30 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/_10px"
-                        android:layout_marginEnd="@dimen/_10px"
+                        android:layout_marginStart="@dimen/_16px"
+                        android:layout_toStartOf="@+id/tvSeeAllLatest"
                         android:ellipsize="end"
                         android:singleLine="true"
                         android:text="@string/lbl_latest_books"
                         android:textColor="@color/gray_2"
-                        android:textSize="@dimen/_19sp" />
+                        android:textSize="@dimen/_18sp" />
 
-                    <ImageView
-                        android:id="@+id/ivHomeLatestArrow"
-                        android:layout_width="17dp"
-                        android:layout_height="13dp"
+                    <TextView
+                        android:id="@+id/tvSeeAllLatest"
+                        style="@style/txt_OpenSansRomanBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/_10px"
-                        android:layout_marginEnd="@dimen/_10px"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/img_arrow_home_deep_orange"
-                        tools:ignore="ContentDescription" />
+                        android:layout_marginEnd="@dimen/_12px"
+                        android:background="?attr/selectableItemBackground"
+                        android:drawableEnd="@drawable/ic_home_chevron"
+                        android:gravity="center_vertical"
+                        android:padding="@dimen/_4px"
+                        android:text="@string/lbl_see_all"
+                        android:textColor="@color/app_bg_orange"
+                        android:textSize="@dimen/_13sp"
+                        app:drawableTint="@color/app_bg_orange" />
                 </RelativeLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -341,12 +802,13 @@
                     android:paddingStart="@dimen/_10px"
                     android:paddingEnd="@dimen/_10px" />
 
-                <!-- Feed -->
+                <!-- Community (reels) -->
                 <RelativeLayout
                     android:id="@+id/rlFeedHeader"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10px">
+                    android:layout_marginTop="@dimen/_20px"
+                    android:layout_marginBottom="@dimen/_10px">
 
                     <TextView
                         android:id="@+id/tvHomeFeed"
@@ -355,25 +817,30 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/_10px"
-                        android:layout_marginEnd="@dimen/_10px"
+                        android:layout_marginStart="@dimen/_16px"
+                        android:layout_toStartOf="@+id/tvSeeAllFeed"
                         android:ellipsize="end"
                         android:singleLine="true"
-                        android:text="@string/lbl_feed"
+                        android:text="@string/lbl_from_community"
                         android:textColor="@color/gray_2"
-                        android:textSize="@dimen/_19sp" />
+                        android:textSize="@dimen/_18sp" />
 
-                    <ImageView
-                        android:id="@+id/ivHomeFeedArrow"
-                        android:layout_width="17dp"
-                        android:layout_height="13dp"
+                    <TextView
+                        android:id="@+id/tvSeeAllFeed"
+                        style="@style/txt_OpenSansRomanBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/_10px"
-                        android:layout_marginEnd="@dimen/_10px"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/img_arrow_home_deep_orange"
-                        tools:ignore="ContentDescription" />
+                        android:layout_marginEnd="@dimen/_12px"
+                        android:background="?attr/selectableItemBackground"
+                        android:drawableEnd="@drawable/ic_home_chevron"
+                        android:gravity="center_vertical"
+                        android:padding="@dimen/_4px"
+                        android:text="@string/lbl_see_all"
+                        android:textColor="@color/app_bg_orange"
+                        android:textSize="@dimen/_13sp"
+                        app:drawableTint="@color/app_bg_orange" />
                 </RelativeLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -381,21 +848,19 @@
                     style="@style/groupStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_10px"
                     android:clipToPadding="false"
                     android:paddingStart="@dimen/_10px"
-                    android:paddingEnd="@dimen/_10px"
-                    android:layout_marginBottom="@dimen/_10px" />
+                    android:paddingEnd="@dimen/_10px" />
 
+                <!-- Server-driven sections -->
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvHomeSec"
                     style="@style/groupStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clipToPadding="false" />
-
-
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
     </LinearLayout>
-
 </RelativeLayout>
