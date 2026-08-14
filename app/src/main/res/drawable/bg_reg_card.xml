@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The card each enrolment step's fields sit in. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="@color/card_view_bg" />
+    <corners android:radius="24dp" />
+</shape>

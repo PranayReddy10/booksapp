@@ -100,13 +100,6 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intentPage);
         });
 
-        viewLoginBinding.btnSkip.setOnClickListener(v -> {
-            Intent intent_skip = new Intent(LoginActivity.this, MainActivity.class);
-            intent_skip.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent_skip);
-            finishAffinity();
-        });
-
         viewLoginBinding.tvSignUp.setOnClickListener(v -> {
             Intent intent_register = new Intent(LoginActivity.this, RegisterActivity.class);
             intent_register.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

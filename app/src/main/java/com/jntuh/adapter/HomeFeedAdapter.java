@@ -51,6 +51,15 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<HomeFeedAdapter.ViewHo
                 || "video".equalsIgnoreCase(item.getMedia_type());
         holder.binding.ivHomeFeedPlay.setVisibility(isVideo ? View.VISIBLE : View.GONE);
 
+        // Caption over the scrim; hidden when the post has no title.
+        String title = item.getTitle();
+        if (title != null && !title.trim().isEmpty()) {
+            holder.binding.tvHomeFeedTitle.setVisibility(View.VISIBLE);
+            holder.binding.tvHomeFeedTitle.setText(title.trim());
+        } else {
+            holder.binding.tvHomeFeedTitle.setVisibility(View.GONE);
+        }
+
         holder.binding.getRoot().setOnClickListener(v -> {
             // Open the full-screen feed viewer at this post.
             Intent i = new Intent(activity, MediaFeedActivity.class);

@@ -1,90 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Registration as a four-step flow rather than one long form: each step asks for
-     one kind of thing, a progress rail shows how far along you are, and the last
-     step summarises what you entered before the account is created. -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- Enrolment, not a form dump: one card per step on the app's own warm background,
+     with a badge and heading that say what this step is for, a progress rail, and a
+     single primary action. -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_auth_mesh"
-    android:orientation="vertical">
+    android:background="@color/app_bg">
 
-    <RelativeLayout
-        android:id="@+id/linearColumnellipsesix"
+    <!-- ===== Header: back, progress, step badge and heading ===== -->
+    <LinearLayout
+        android:id="@+id/linearWelcomeBack"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="@dimen/_20px"
+        android:layout_marginTop="@dimen/_40px"
+        android:layout_marginEnd="@dimen/_20px"
+        android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/authBlobViolet"
-            android:layout_width="@dimen/_250px"
-            android:layout_height="@dimen/_250px"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="-60dp"
-            android:layout_marginTop="-40dp"
-            android:src="@drawable/bg_auth_blob_violet"
-            tools:ignore="ContentDescription" />
-
-        <ImageView
-            android:id="@+id/authBlobPink"
-            android:layout_width="@dimen/_250px"
-            android:layout_height="@dimen/_250px"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="-70dp"
-            android:layout_marginEnd="-70dp"
-            android:src="@drawable/bg_auth_blob_pink"
-            tools:ignore="ContentDescription" />
-
-        <!-- ===== Step header ===== -->
-        <LinearLayout
-            android:id="@+id/linearWelcomeBack"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="@dimen/_30px"
-            android:layout_marginTop="@dimen/_50px"
-            android:layout_marginEnd="@dimen/_30px"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
-            <!-- Progress rail: one segment per step -->
+            <ImageView
+                android:id="@+id/btnRegBack"
+                android:layout_width="@dimen/_40px"
+                android:layout_height="@dimen/_40px"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/bg_reg_back_btn"
+                android:padding="@dimen/_8px"
+                android:src="@drawable/ic_reg_back"
+                app:tint="@color/gray_2"
+                tools:ignore="ContentDescription" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/_16px"
+                android:layout_toEndOf="@+id/btnRegBack"
+                android:layout_toStartOf="@+id/tvRegStepCount"
                 android:orientation="horizontal">
 
-                <View
-                    android:id="@+id/vRegProgress1"
-                    android:layout_width="0dp"
-                    android:layout_height="4dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_reg_progress_on" />
+            <View
+                android:id="@+id/vRegProgress1"
+                android:layout_width="0dp"
+                android:layout_height="5dp"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:background="@drawable/bg_reg_progress_on" />
 
-                <View
-                    android:id="@+id/vRegProgress2"
-                    android:layout_width="0dp"
-                    android:layout_height="4dp"
-                    android:layout_marginStart="@dimen/_6px"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_reg_progress_off" />
+            <View
+                android:id="@+id/vRegProgress2"
+                android:layout_width="0dp"
+                android:layout_height="5dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/_6px"
+                android:layout_weight="1"
+                android:background="@drawable/bg_reg_progress_off" />
 
-                <View
-                    android:id="@+id/vRegProgress3"
-                    android:layout_width="0dp"
-                    android:layout_height="4dp"
-                    android:layout_marginStart="@dimen/_6px"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_reg_progress_off" />
+            <View
+                android:id="@+id/vRegProgress3"
+                android:layout_width="0dp"
+                android:layout_height="5dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/_6px"
+                android:layout_weight="1"
+                android:background="@drawable/bg_reg_progress_off" />
 
-                <View
-                    android:id="@+id/vRegProgress4"
-                    android:layout_width="0dp"
-                    android:layout_height="4dp"
-                    android:layout_marginStart="@dimen/_6px"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_reg_progress_off" />
+            <View
+                android:id="@+id/vRegProgress4"
+                android:layout_width="0dp"
+                android:layout_height="5dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/_6px"
+                android:layout_weight="1"
+                android:background="@drawable/bg_reg_progress_off" />
             </LinearLayout>
 
             <TextView
@@ -92,196 +87,214 @@
                 style="@style/txtOpenSansRomanSemiBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_20px"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/_12px"
                 android:singleLine="true"
-                android:textColor="@color/auth_text_hint"
-                android:textSize="@dimen/_14sp"
-                tools:text="Step 1 of 4" />
+                android:textColor="@color/home_by_author"
+                android:textSize="@dimen/_13sp"
+                tools:text="1 / 4" />
+        </RelativeLayout>
 
-            <TextView
-                android:id="@+id/txtWelcomeBack"
-                style="@style/txt_OpenSansRomanExtraBold"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5px"
-                android:ellipsize="end"
-                android:singleLine="true"
-                android:text="@string/lbl_reg_step1_title"
-                android:textColor="@color/auth_text_primary"
-                android:textSize="@dimen/_26sp"
-                tools:text="What should we call you?" />
+        <FrameLayout
+            android:id="@+id/flRegBadge"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginTop="@dimen/_25px"
+            android:background="@drawable/bg_reg_badge">
 
-            <TextView
-                android:id="@+id/txtLetsLoginA"
-                style="@style/txt_OpenSansRomanBold"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5px"
-                android:ellipsize="end"
-                android:maxLines="2"
-                android:text="@string/lbl_reg_step1_sub"
-                android:textColor="@color/auth_text_secondary"
-                android:textSize="@dimen/_16sp"
-                tools:text="This is the name other readers will see." />
-        </LinearLayout>
+            <ImageView
+                android:id="@+id/ivRegStepIcon"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_reg_person"
+                app:tint="@color/app_bg_orange"
+                tools:ignore="ContentDescription" />
+        </FrameLayout>
 
-        <!-- ===== Bottom action bar ===== -->
-        <LinearLayout
-            android:id="@+id/llRegActions"
+        <TextView
+            android:id="@+id/txtWelcomeBack"
+            style="@style/txt_OpenSansRomanExtraBold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="@dimen/_30px"
-            android:layout_marginEnd="@dimen/_30px"
-            android:layout_marginBottom="@dimen/_20px"
-            android:gravity="center_vertical"
-            android:orientation="vertical">
+            android:layout_marginTop="@dimen/_15px"
+            android:text="@string/lbl_reg_step1_title"
+            android:textColor="@color/gray_2"
+            android:textSize="@dimen/_24sp"
+            tools:text="What should we call you?" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+        <TextView
+            android:id="@+id/txtLetsLoginA"
+            style="@style/txtOpenSansRomanSemiBold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_6px"
+            android:maxLines="2"
+            android:text="@string/lbl_reg_step1_sub"
+            android:textColor="@color/home_by_author"
+            android:textSize="@dimen/_15sp" />
+    </LinearLayout>
 
-                <TextView
-                    android:id="@+id/btnRegBack"
-                    style="@style/txt_OpenSansRomanBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_reg_back_btn"
-                    android:gravity="center"
-                    android:paddingStart="@dimen/_25px"
-                    android:paddingTop="@dimen/_16px"
-                    android:paddingEnd="@dimen/_25px"
-                    android:paddingBottom="@dimen/_16px"
-                    android:singleLine="true"
-                    android:text="@string/lbl_back"
-                    android:textColor="@color/auth_text_secondary"
-                    android:visibility="invisible"
-                    tools:visibility="visible" />
+    <!-- ===== Bottom action ===== -->
+    <LinearLayout
+        android:id="@+id/llRegActions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="@dimen/_20px"
+        android:layout_marginEnd="@dimen/_20px"
+        android:layout_marginBottom="@dimen/_20px"
+        android:orientation="vertical">
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnRegister"
-                    style="@style/txtOpenSansRomanBold"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10px"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_auth_cta"
-                    android:ellipsize="end"
-                    android:gravity="center"
-                    android:paddingTop="@dimen/_16px"
-                    android:paddingBottom="@dimen/_16px"
-                    android:singleLine="true"
-                    android:text="@string/lbl_continue"
-                    android:textAllCaps="false"
-                    android:textColor="@color/auth_text_primary"
-                    tools:text="Continue" />
-            </LinearLayout>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnRegister"
+            style="@style/txtOpenSansRomanBold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_auth_cta"
+            android:gravity="center"
+            android:paddingTop="@dimen/_16px"
+            android:paddingBottom="@dimen/_16px"
+            android:singleLine="true"
+            android:text="@string/lbl_continue"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_16sp" />
 
-            <LinearLayout
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/_15px"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txtConfirmation"
+                style="@style/txtOpenSansRomanSemiBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/_15px"
-                android:orientation="horizontal">
+                android:layout_marginEnd="@dimen/_8px"
+                android:singleLine="true"
+                android:text="@string/msg_already_have_acc"
+                android:textColor="@color/home_by_author"
+                android:textSize="@dimen/_14sp" />
 
-                <TextView
-                    android:id="@+id/txtConfirmation"
-                    style="@style/txt_OpenSansRomanBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/_10px"
-                    android:singleLine="true"
-                    android:text="@string/msg_already_have_acc"
-                    android:textColor="@color/auth_text_secondary"
-                    android:textSize="@dimen/_15sp" />
-
-                <TextView
-                    android:id="@+id/tvRegLogIn"
-                    style="@style/txt_OpenSansRomanBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:singleLine="true"
-                    android:text="@string/reg_log_in"
-                    android:textColor="@color/orange"
-                    android:textSize="@dimen/_15sp" />
-            </LinearLayout>
+            <TextView
+                android:id="@+id/tvRegLogIn"
+                style="@style/txt_OpenSansRomanBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:text="@string/reg_log_in"
+                android:textColor="@color/app_bg_orange"
+                android:textSize="@dimen/_14sp" />
         </LinearLayout>
+    </LinearLayout>
 
-        <!-- ===== Steps ===== -->
-        <androidx.core.widget.NestedScrollView
+    <!-- ===== Step card ===== -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/llRegActions"
+        android:layout_below="@+id/linearWelcomeBack"
+        android:clipToPadding="false"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:id="@+id/linearLoginFild"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@+id/llRegActions"
-            android:layout_below="@+id/linearWelcomeBack"
-            android:clipToPadding="false"
-            android:fillViewport="true">
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20px"
+            android:layout_marginTop="@dimen/_20px"
+            android:layout_marginEnd="@dimen/_20px"
+            android:layout_marginBottom="@dimen/_20px"
+            android:background="@drawable/bg_reg_card"
+            android:orientation="vertical"
+            android:padding="@dimen/_20px">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <LinearLayout
-                    android:id="@+id/linearLoginFild"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_30px"
-                    android:layout_marginTop="@dimen/_20px"
-                    android:layout_marginEnd="@dimen/_30px"
-                    android:layout_marginBottom="@dimen/_20px"
-                    android:orientation="vertical">
+                    <LinearLayout
+                        android:id="@+id/llRegStep1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
                         <LinearLayout
-                            android:id="@+id/llRegStep1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:visibility="visible">
+                            android:layout_marginTop="@dimen/_4px"
+                            android:background="@drawable/bg_reg_field"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingStart="@dimen/_16px"
+                            android:paddingEnd="@dimen/_16px">
+
+                            <ImageView
+                                android:layout_width="@dimen/_20px"
+                                android:layout_height="@dimen/_20px"
+                                android:src="@drawable/ic_reg_person"
+                                app:tint="@color/app_bg_orange"
+                                tools:ignore="ContentDescription" />
 
                             <EditText
                                 android:id="@+id/edtRegName"
-                                style="@style/edtBoxRoundedOutline"
+                                style="@style/txt_PoppinsMedium"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/_15px"
-                                android:background="@drawable/bg_auth_field"
+                                android:layout_marginStart="@dimen/_12px"
+                                android:background="@android:color/transparent"
                                 android:ellipsize="end"
                                 android:hint="@string/lbl_name"
                                 android:inputType="text"
-                                android:lineSpacingExtra="@dimen/_1px"
-                                android:paddingStart="@dimen/_20px"
-                                android:paddingTop="@dimen/_18px"
-                                android:paddingEnd="@dimen/_30px"
-                                android:paddingBottom="@dimen/_18px"
+                                android:paddingTop="@dimen/_16px"
+                                android:paddingBottom="@dimen/_16px"
                                 android:singleLine="true"
-                                android:textColor="@color/auth_text_primary"
-                                android:textColorHint="@color/auth_text_hint"
+                                android:textColor="@color/gray_2"
+                                android:textColorHint="@color/gray_edt_hint_text"
                                 android:textCursorDrawable="@drawable/cursor"
+                                android:textSize="@dimen/_15sp"
                                 tools:ignore="Autofill" />
-                            <!-- Gender as tappable choices; the spinner below stays as the
-                                 value holder so the screen's existing logic is unchanged. -->
+                        </LinearLayout>
+
+                        <TextView
+                            style="@style/txtOpenSansRomanSemiBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_4px"
+                            android:layout_marginTop="@dimen/_20px"
+                            android:text="@string/lbl_gender"
+                            android:textColor="@color/home_by_author"
+                            android:textSize="@dimen/_13sp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_10px"
+                            android:orientation="horizontal">
+
                             <LinearLayout
                                 android:id="@+id/llGenderMale"
-                                android:layout_width="match_parent"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/_20px"
+                                android:layout_marginStart="@dimen/_2px"
+                                android:layout_weight="1"
                                 android:background="?attr/selectableItemBackground"
                                 android:gravity="center"
                                 android:orientation="vertical">
 
                                 <FrameLayout
                                     android:id="@+id/ivGenderMaleDisc"
-                                    android:layout_width="96dp"
-                                    android:layout_height="96dp"
+                                    android:layout_width="72dp"
+                                    android:layout_height="72dp"
                                     android:background="@drawable/bg_gender_circle">
 
                                     <ImageView
                                         android:id="@+id/ivGenderMale"
-                                        android:layout_width="40dp"
-                                        android:layout_height="40dp"
+                                        android:layout_width="32dp"
+                                        android:layout_height="32dp"
                                         android:layout_gravity="center"
                                         android:src="@drawable/ic_gender_male"
-                                        app:tint="@color/auth_text_primary"
+                                        app:tint="@color/home_by_author"
                                         tools:ignore="ContentDescription" />
                                 </FrameLayout>
 
@@ -292,32 +305,33 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/_8px"
                                     android:text="@string/lbl_gender_male"
-                                    android:textColor="@color/auth_text_secondary"
-                                    android:textSize="@dimen/_15sp" />
+                                    android:textColor="@color/home_by_author"
+                                    android:textSize="@dimen/_14sp" />
                             </LinearLayout>
 
                             <LinearLayout
                                 android:id="@+id/llGenderFemale"
-                                android:layout_width="match_parent"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/_16px"
+                                android:layout_marginStart="@dimen/_8px"
+                                android:layout_weight="1"
                                 android:background="?attr/selectableItemBackground"
                                 android:gravity="center"
                                 android:orientation="vertical">
 
                                 <FrameLayout
                                     android:id="@+id/ivGenderFemaleDisc"
-                                    android:layout_width="96dp"
-                                    android:layout_height="96dp"
+                                    android:layout_width="72dp"
+                                    android:layout_height="72dp"
                                     android:background="@drawable/bg_gender_circle">
 
                                     <ImageView
                                         android:id="@+id/ivGenderFemale"
-                                        android:layout_width="40dp"
-                                        android:layout_height="40dp"
+                                        android:layout_width="32dp"
+                                        android:layout_height="32dp"
                                         android:layout_gravity="center"
                                         android:src="@drawable/ic_gender_female"
-                                        app:tint="@color/auth_text_primary"
+                                        app:tint="@color/home_by_author"
                                         tools:ignore="ContentDescription" />
                                 </FrameLayout>
 
@@ -328,32 +342,33 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/_8px"
                                     android:text="@string/lbl_gender_female"
-                                    android:textColor="@color/auth_text_secondary"
-                                    android:textSize="@dimen/_15sp" />
+                                    android:textColor="@color/home_by_author"
+                                    android:textSize="@dimen/_14sp" />
                             </LinearLayout>
 
                             <LinearLayout
                                 android:id="@+id/llGenderOther"
-                                android:layout_width="match_parent"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/_16px"
+                                android:layout_marginStart="@dimen/_8px"
+                                android:layout_weight="1"
                                 android:background="?attr/selectableItemBackground"
                                 android:gravity="center"
                                 android:orientation="vertical">
 
                                 <FrameLayout
                                     android:id="@+id/ivGenderOtherDisc"
-                                    android:layout_width="96dp"
-                                    android:layout_height="96dp"
+                                    android:layout_width="72dp"
+                                    android:layout_height="72dp"
                                     android:background="@drawable/bg_gender_circle">
 
                                     <ImageView
                                         android:id="@+id/ivGenderOther"
-                                        android:layout_width="40dp"
-                                        android:layout_height="40dp"
+                                        android:layout_width="32dp"
+                                        android:layout_height="32dp"
                                         android:layout_gravity="center"
                                         android:src="@drawable/ic_gender_other"
-                                        app:tint="@color/auth_text_primary"
+                                        app:tint="@color/home_by_author"
                                         tools:ignore="ContentDescription" />
                                 </FrameLayout>
 
@@ -364,225 +379,20 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/_8px"
                                     android:text="@string/lbl_gender_other"
-                                    android:textColor="@color/auth_text_secondary"
-                                    android:textSize="@dimen/_15sp" />
+                                    android:textColor="@color/home_by_author"
+                                    android:textSize="@dimen/_14sp" />
                             </LinearLayout>
-
-                            <Spinner
-                                android:id="@+id/spRegGender"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:visibility="gone" />
                         </LinearLayout>
 
-                        <LinearLayout
-                            android:id="@+id/llRegStep2"
+                        <Spinner
+                            android:id="@+id/spRegGender"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:visibility="gone">
+                            android:visibility="gone" />
+                    </LinearLayout>
 
-                            <EditText
-                                android:id="@+id/edtRegEmail"
-                                style="@style/edtBoxRoundedOutline"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/_15px"
-                                android:background="@drawable/bg_auth_field"
-                                android:ellipsize="end"
-                                android:hint="@string/lbl_email"
-                                android:inputType="textEmailAddress"
-                                android:lineSpacingExtra="@dimen/_1px"
-                                android:paddingStart="@dimen/_20px"
-                                android:paddingTop="@dimen/_18px"
-                                android:paddingEnd="@dimen/_30px"
-                                android:paddingBottom="@dimen/_18px"
-                                android:singleLine="true"
-                                android:textColor="@color/auth_text_primary"
-                                android:textColorHint="@color/auth_text_hint"
-                                android:textCursorDrawable="@drawable/cursor"
-                                tools:ignore="Autofill" />
-                            <EditText
-                                android:id="@+id/edtRegPhone"
-                                style="@style/edtBoxRoundedOutline"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/_15px"
-                                android:background="@drawable/bg_auth_field"
-                                android:ellipsize="end"
-                                android:hint="@string/lbl_phone"
-                                android:inputType="phone"
-                                android:lineSpacingExtra="@dimen/_1px"
-                                android:paddingStart="@dimen/_20px"
-                                android:paddingTop="@dimen/_18px"
-                                android:paddingEnd="@dimen/_30px"
-                                android:paddingBottom="@dimen/_18px"
-                                android:singleLine="true"
-                                android:textColor="@color/auth_text_primary"
-                                android:textColorHint="@color/auth_text_hint"
-                                android:textCursorDrawable="@drawable/cursor"
-                                tools:ignore="Autofill" />
-                            <EditText
-                                android:id="@+id/edtRegPass"
-                                style="@style/edtBoxRoundedOutline"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/_15px"
-                                android:background="@drawable/bg_auth_field"
-                                android:ellipsize="end"
-                                android:hint="@string/lbl_pass"
-                                android:inputType="textPassword"
-                                android:lineSpacingExtra="@dimen/_1px"
-                                android:paddingStart="@dimen/_20px"
-                                android:paddingTop="@dimen/_18px"
-                                android:paddingEnd="@dimen/_30px"
-                                android:paddingBottom="@dimen/_18px"
-                                android:singleLine="true"
-                                android:textColor="@color/auth_text_primary"
-                                android:textColorHint="@color/auth_text_hint"
-                                android:textCursorDrawable="@drawable/cursor"
-                                tools:ignore="Autofill" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/llRegStep3"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:visibility="gone">
-
-                            <TextView
-                                style="@style/txt_OpenSansRomanBold"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/_15px"
-                                android:layout_marginBottom="@dimen/_5px"
-                                android:text="@string/lbl_university"
-                                android:textColor="@color/auth_text_secondary"
-                                android:textSize="@dimen/_14sp" />
-
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/bg_auth_field"
-                                android:minHeight="@dimen/_55px">
-
-                                <Spinner
-                                    android:id="@+id/spRegUniversity"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerVertical="true"
-                                    android:paddingStart="@dimen/_15px"
-                                    android:paddingEnd="@dimen/_40px"
-                                    android:spinnerMode="dropdown"
-                                    tools:ignore="RtlSymmetry" />
-
-                                <ImageView
-                                    android:id="@+id/ivRegUniversityArrow"
-                                    android:layout_width="@dimen/_20px"
-                                    android:layout_height="@dimen/_20px"
-                                    android:layout_alignParentEnd="true"
-                                    android:layout_centerVertical="true"
-                                    android:layout_marginEnd="@dimen/_15px"
-                                    android:src="@drawable/img_arrow_dropdown"
-                                    tools:ignore="ContentDescription" />
-                            </RelativeLayout>
-                            <TextView
-                                style="@style/txt_OpenSansRomanBold"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/_15px"
-                                android:layout_marginBottom="@dimen/_5px"
-                                android:text="@string/lbl_department"
-                                android:textColor="@color/auth_text_secondary"
-                                android:textSize="@dimen/_14sp" />
-
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/bg_auth_field"
-                                android:minHeight="@dimen/_55px">
-
-                                <Spinner
-                                    android:id="@+id/spRegDepartment"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerVertical="true"
-                                    android:paddingStart="@dimen/_15px"
-                                    android:paddingEnd="@dimen/_40px"
-                                    android:spinnerMode="dropdown"
-                                    tools:ignore="RtlSymmetry" />
-
-                                <ImageView
-                                    android:id="@+id/ivRegDepartmentArrow"
-                                    android:layout_width="@dimen/_20px"
-                                    android:layout_height="@dimen/_20px"
-                                    android:layout_alignParentEnd="true"
-                                    android:layout_centerVertical="true"
-                                    android:layout_marginEnd="@dimen/_15px"
-                                    android:src="@drawable/img_arrow_dropdown"
-                                    tools:ignore="ContentDescription" />
-                            </RelativeLayout>
-                            <TextView
-                                style="@style/txt_OpenSansRomanBold"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/_15px"
-                                android:layout_marginBottom="@dimen/_5px"
-                                android:text="@string/lbl_college"
-                                android:textColor="@color/auth_text_secondary"
-                                android:textSize="@dimen/_14sp" />
-
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/bg_auth_field"
-                                android:minHeight="@dimen/_55px">
-
-                                <Spinner
-                                    android:id="@+id/spRegCollege"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerVertical="true"
-                                    android:paddingStart="@dimen/_15px"
-                                    android:paddingEnd="@dimen/_40px"
-                                    android:spinnerMode="dropdown"
-                                    tools:ignore="RtlSymmetry" />
-
-                                <ImageView
-                                    android:id="@+id/ivRegCollegeArrow"
-                                    android:layout_width="@dimen/_20px"
-                                    android:layout_height="@dimen/_20px"
-                                    android:layout_alignParentEnd="true"
-                                    android:layout_centerVertical="true"
-                                    android:layout_marginEnd="@dimen/_15px"
-                                    android:src="@drawable/img_arrow_dropdown"
-                                    tools:ignore="ContentDescription" />
-                            </RelativeLayout>
-                            <EditText
-                                android:id="@+id/edtRegRoll"
-                                style="@style/edtBoxRoundedOutline"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/_15px"
-                                android:background="@drawable/bg_auth_field"
-                                android:ellipsize="end"
-                                android:hint="@string/lbl_roll_number"
-                                android:inputType="text"
-                                android:lineSpacingExtra="@dimen/_1px"
-                                android:paddingStart="@dimen/_20px"
-                                android:paddingTop="@dimen/_18px"
-                                android:paddingEnd="@dimen/_30px"
-                                android:paddingBottom="@dimen/_18px"
-                                android:singleLine="true"
-                                android:textColor="@color/auth_text_primary"
-                                android:textColorHint="@color/auth_text_hint"
-                                android:textCursorDrawable="@drawable/cursor"
-                                tools:ignore="Autofill" />
-                        </LinearLayout>
-                    <!-- Step 4 — review + terms -->
                     <LinearLayout
-                        android:id="@+id/llRegStep4"
+                        android:id="@+id/llRegStep2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
@@ -591,21 +401,295 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_15px"
-                            android:background="@drawable/bg_auth_field"
-                            android:orientation="vertical"
-                            android:padding="@dimen/_20px">
+                            android:layout_marginTop="@dimen/_4px"
+                            android:background="@drawable/bg_reg_field"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingStart="@dimen/_16px"
+                            android:paddingEnd="@dimen/_16px">
 
-                            <TextView
-                                android:id="@+id/tvRegSummary"
-                                style="@style/txtOpenSansRomanSemiBold"
+                            <ImageView
+                                android:layout_width="@dimen/_20px"
+                                android:layout_height="@dimen/_20px"
+                                android:src="@drawable/ic_reg_mail"
+                                app:tint="@color/app_bg_orange"
+                                tools:ignore="ContentDescription" />
+
+                            <EditText
+                                android:id="@+id/edtRegEmail"
+                                style="@style/txt_PoppinsMedium"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:lineSpacingExtra="@dimen/_6px"
-                                android:textColor="@color/auth_text_secondary"
+                                android:layout_marginStart="@dimen/_12px"
+                                android:background="@android:color/transparent"
+                                android:ellipsize="end"
+                                android:hint="@string/lbl_email"
+                                android:inputType="textEmailAddress"
+                                android:paddingTop="@dimen/_16px"
+                                android:paddingBottom="@dimen/_16px"
+                                android:singleLine="true"
+                                android:textColor="@color/gray_2"
+                                android:textColorHint="@color/gray_edt_hint_text"
+                                android:textCursorDrawable="@drawable/cursor"
                                 android:textSize="@dimen/_15sp"
-                                tools:text="Name\nEmail\nCollege" />
+                                tools:ignore="Autofill" />
                         </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_14px"
+                            android:background="@drawable/bg_reg_field"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingStart="@dimen/_16px"
+                            android:paddingEnd="@dimen/_16px">
+
+                            <ImageView
+                                android:layout_width="@dimen/_20px"
+                                android:layout_height="@dimen/_20px"
+                                android:src="@drawable/ic_reg_phone"
+                                app:tint="@color/app_bg_orange"
+                                tools:ignore="ContentDescription" />
+
+                            <EditText
+                                android:id="@+id/edtRegPhone"
+                                style="@style/txt_PoppinsMedium"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_12px"
+                                android:background="@android:color/transparent"
+                                android:ellipsize="end"
+                                android:hint="@string/lbl_phone"
+                                android:inputType="phone"
+                                android:paddingTop="@dimen/_16px"
+                                android:paddingBottom="@dimen/_16px"
+                                android:singleLine="true"
+                                android:textColor="@color/gray_2"
+                                android:textColorHint="@color/gray_edt_hint_text"
+                                android:textCursorDrawable="@drawable/cursor"
+                                android:textSize="@dimen/_15sp"
+                                tools:ignore="Autofill" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_14px"
+                            android:background="@drawable/bg_reg_field"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingStart="@dimen/_16px"
+                            android:paddingEnd="@dimen/_16px">
+
+                            <ImageView
+                                android:layout_width="@dimen/_20px"
+                                android:layout_height="@dimen/_20px"
+                                android:src="@drawable/ic_reg_lock"
+                                app:tint="@color/app_bg_orange"
+                                tools:ignore="ContentDescription" />
+
+                            <EditText
+                                android:id="@+id/edtRegPass"
+                                style="@style/txt_PoppinsMedium"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_12px"
+                                android:background="@android:color/transparent"
+                                android:ellipsize="end"
+                                android:hint="@string/lbl_pass"
+                                android:inputType="textPassword"
+                                android:paddingTop="@dimen/_16px"
+                                android:paddingBottom="@dimen/_16px"
+                                android:singleLine="true"
+                                android:textColor="@color/gray_2"
+                                android:textColorHint="@color/gray_edt_hint_text"
+                                android:textCursorDrawable="@drawable/cursor"
+                                android:textSize="@dimen/_15sp"
+                                tools:ignore="Autofill" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llRegStep3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <TextView
+                            style="@style/txtOpenSansRomanSemiBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_4px"
+                            android:layout_marginTop="@dimen/_4px"
+                            android:text="@string/lbl_university"
+                            android:textColor="@color/home_by_author"
+                            android:textSize="@dimen/_13sp" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_6px"
+                            android:background="@drawable/bg_reg_field"
+                            android:minHeight="@dimen/_55px">
+
+                            <Spinner
+                                android:id="@+id/spRegUniversity"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:paddingStart="@dimen/_16px"
+                                android:paddingEnd="@dimen/_40px"
+                                android:spinnerMode="dropdown"
+                                tools:ignore="RtlSymmetry" />
+
+                            <ImageView
+                                android:id="@+id/ivRegUniversityArrow"
+                                android:layout_width="@dimen/_20px"
+                                android:layout_height="@dimen/_20px"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginEnd="@dimen/_16px"
+                                android:src="@drawable/img_arrow_dropdown"
+                                app:tint="@color/home_by_author"
+                                tools:ignore="ContentDescription" />
+                        </RelativeLayout>
+
+                        <TextView
+                            style="@style/txtOpenSansRomanSemiBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_4px"
+                            android:layout_marginTop="@dimen/_14px"
+                            android:text="@string/lbl_department"
+                            android:textColor="@color/home_by_author"
+                            android:textSize="@dimen/_13sp" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_6px"
+                            android:background="@drawable/bg_reg_field"
+                            android:minHeight="@dimen/_55px">
+
+                            <Spinner
+                                android:id="@+id/spRegDepartment"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:paddingStart="@dimen/_16px"
+                                android:paddingEnd="@dimen/_40px"
+                                android:spinnerMode="dropdown"
+                                tools:ignore="RtlSymmetry" />
+
+                            <ImageView
+                                android:id="@+id/ivRegDepartmentArrow"
+                                android:layout_width="@dimen/_20px"
+                                android:layout_height="@dimen/_20px"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginEnd="@dimen/_16px"
+                                android:src="@drawable/img_arrow_dropdown"
+                                app:tint="@color/home_by_author"
+                                tools:ignore="ContentDescription" />
+                        </RelativeLayout>
+
+                        <TextView
+                            style="@style/txtOpenSansRomanSemiBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_4px"
+                            android:layout_marginTop="@dimen/_14px"
+                            android:text="@string/lbl_college"
+                            android:textColor="@color/home_by_author"
+                            android:textSize="@dimen/_13sp" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_6px"
+                            android:background="@drawable/bg_reg_field"
+                            android:minHeight="@dimen/_55px">
+
+                            <Spinner
+                                android:id="@+id/spRegCollege"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:paddingStart="@dimen/_16px"
+                                android:paddingEnd="@dimen/_40px"
+                                android:spinnerMode="dropdown"
+                                tools:ignore="RtlSymmetry" />
+
+                            <ImageView
+                                android:id="@+id/ivRegCollegeArrow"
+                                android:layout_width="@dimen/_20px"
+                                android:layout_height="@dimen/_20px"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginEnd="@dimen/_16px"
+                                android:src="@drawable/img_arrow_dropdown"
+                                app:tint="@color/home_by_author"
+                                tools:ignore="ContentDescription" />
+                        </RelativeLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_18px"
+                            android:background="@drawable/bg_reg_field"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingStart="@dimen/_16px"
+                            android:paddingEnd="@dimen/_16px">
+
+                            <ImageView
+                                android:layout_width="@dimen/_20px"
+                                android:layout_height="@dimen/_20px"
+                                android:src="@drawable/ic_reg_badge_id"
+                                app:tint="@color/app_bg_orange"
+                                tools:ignore="ContentDescription" />
+
+                            <EditText
+                                android:id="@+id/edtRegRoll"
+                                style="@style/txt_PoppinsMedium"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_12px"
+                                android:background="@android:color/transparent"
+                                android:ellipsize="end"
+                                android:hint="@string/lbl_roll_number"
+                                android:inputType="text"
+                                android:paddingTop="@dimen/_16px"
+                                android:paddingBottom="@dimen/_16px"
+                                android:singleLine="true"
+                                android:textColor="@color/gray_2"
+                                android:textColorHint="@color/gray_edt_hint_text"
+                                android:textCursorDrawable="@drawable/cursor"
+                                android:textSize="@dimen/_15sp"
+                                tools:ignore="Autofill" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llRegStep4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/tvRegSummary"
+                            style="@style/txtOpenSansRomanSemiBold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bg_reg_field"
+                            android:lineSpacingExtra="@dimen/_6px"
+                            android:padding="@dimen/_16px"
+                            android:textColor="@color/gray_2"
+                            android:textSize="@dimen/_15sp"
+                            tools:text="Name: Pranay" />
 
                         <RelativeLayout
                             android:id="@+id/linearRowPolicy"
@@ -615,8 +699,8 @@
 
                             <cn.refactor.library.SmoothCheckBox
                                 android:id="@+id/cbRegPrivacyTerms"
-                                android:layout_width="25dp"
-                                android:layout_height="25dp"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
                                 android:layout_centerVertical="true"
                                 app:color_checked="@color/check_box_check_bg_login"
                                 app:color_tick="@color/check_box_tick_login"
@@ -625,17 +709,16 @@
 
                             <TextView
                                 android:id="@+id/txtPrivacyText"
-                                style="@style/txt_OpenSansRomanBold"
+                                style="@style/txtOpenSansRomanSemiBold"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerVertical="true"
                                 android:layout_marginStart="@dimen/_10px"
                                 android:layout_toEndOf="@+id/cbRegPrivacyTerms"
-                                android:ellipsize="end"
                                 android:singleLine="true"
                                 android:text="@string/msg_by_signing_up_y"
-                                android:textColor="@color/auth_text_secondary"
-                                android:textSize="@dimen/_14sp" />
+                                android:textColor="@color/home_by_author"
+                                android:textSize="@dimen/_13sp" />
 
                             <TextView
                                 android:id="@+id/tvRegPrivacyTerms"
@@ -645,15 +728,12 @@
                                 android:layout_centerVertical="true"
                                 android:layout_marginStart="@dimen/_5px"
                                 android:layout_toEndOf="@+id/txtPrivacyText"
-                                android:ellipsize="end"
                                 android:singleLine="true"
                                 android:text="@string/msg_by_signing_up_policy"
-                                android:textColor="@color/orange"
-                                android:textSize="@dimen/_14sp" />
+                                android:textColor="@color/app_bg_orange"
+                                android:textSize="@dimen/_13sp" />
                         </RelativeLayout>
                     </LinearLayout>
-                </LinearLayout>
-            </RelativeLayout>
-        </androidx.core.widget.NestedScrollView>
-    </RelativeLayout>
-</LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</RelativeLayout>

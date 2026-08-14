@@ -65,10 +65,6 @@ public class RegisterActivity extends AppCompatActivity {
         View view = viewRegisterBinding.getRoot();
         setContentView(view);
 
-        // Ambient drift for the mesh background blobs.
-        com.jntuh.util.AuthAnimator.floatView(viewRegisterBinding.authBlobViolet, 40f, 45f, 5000);
-        com.jntuh.util.AuthAnimator.floatView(viewRegisterBinding.authBlobPink, -35f, 30f, 4300);
-
         method = new Method(this);
         method.forceRTLIfSupported();
         progressDialog = new ProgressDialog(this, R.style.MyAlertDialogStyle);
@@ -315,9 +311,9 @@ public class RegisterActivity extends AppCompatActivity {
         disc.setBackgroundResource(selected
                 ? R.drawable.bg_gender_circle_selected : R.drawable.bg_gender_circle);
         icon.setColorFilter(androidx.core.content.ContextCompat.getColor(this,
-                selected ? R.color.white : R.color.auth_text_secondary));
+                selected ? R.color.white : R.color.home_by_author));
         label.setTextColor(androidx.core.content.ContextCompat.getColor(this,
-                selected ? R.color.auth_text_primary : R.color.auth_text_secondary));
+                selected ? R.color.app_bg_orange : R.color.home_by_author));
     }
 
     // ---- Step flow ----
@@ -345,6 +341,17 @@ public class RegisterActivity extends AppCompatActivity {
             titleRes = R.string.lbl_reg_step4_title;
             subRes = R.string.lbl_reg_step4_sub;
         }
+        int iconRes;
+        if (step == 1) {
+            iconRes = R.drawable.ic_reg_person;
+        } else if (step == 2) {
+            iconRes = R.drawable.ic_reg_mail;
+        } else if (step == 3) {
+            iconRes = R.drawable.ic_result_school;
+        } else {
+            iconRes = R.drawable.ic_picker_check;
+        }
+        viewRegisterBinding.ivRegStepIcon.setImageResource(iconRes);
         viewRegisterBinding.txtWelcomeBack.setText(getString(titleRes));
         viewRegisterBinding.txtLetsLoginA.setText(getString(subRes));
         viewRegisterBinding.tvRegStepCount.setText(getString(R.string.lbl_step_of, step, LAST_STEP));

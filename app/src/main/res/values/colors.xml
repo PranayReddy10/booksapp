@@ -20,7 +20,7 @@
     <color name="status_pending">#F5A623</color>
     <color name="status_approved">#2E9E5B</color>
     <color name="status_rejected">#D0021B</color>
-    <color name="app_bg">#f9f9f9</color>
+    <color name="app_bg">#FBF4EC</color>
     <color name="app_bg_orange">#F97F68</color>
     <color name="app_bg_white">#ffffff</color>
     <color name="cursor_color">#4e4b66</color>
@@ -172,7 +172,7 @@
     <color name="filter_unselect_box">#FFFFFFFF</color>
     <color name="filter_unselect_text">#4e4b66</color>
 
-    <color name="bg_status_bar">#f9f9f9</color>
+    <color name="bg_status_bar">#FDF0E2</color>
     <!-- Auth (Mesh) screens -->
     <color name="auth_bg_base">#141428</color>
     <color name="auth_bg_base2">#1B1B34</color>
@@ -204,7 +204,7 @@
     <color name="home_scrim">#99000000</color>
 
     <!-- Reels feed (social card layout) -->
-    <color name="feed_screen_bg">#F6F6F8</color>
+    <color name="feed_screen_bg">#FBF4EC</color>
     <color name="feed_card_bg">#FFFFFF</color>
     <color name="feed_name">#2F2E41</color>
     <color name="feed_meta">#8E8DA3</color>
