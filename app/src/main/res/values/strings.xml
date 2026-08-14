@@ -103,6 +103,24 @@
     <string name="confirm_delete_media">Delete this post?</string>
     <string name="lbl_admin">Admin</string>
 
+    <!-- Home screen -->
+    <string name="lbl_see_all">See all</string>
+    <string name="lbl_greet_morning">Good morning</string>
+    <string name="lbl_greet_afternoon">Good afternoon</string>
+    <string name="lbl_greet_evening">Good evening</string>
+    <string name="lbl_greet_named">%1$s, %2$s</string>
+    <string name="lbl_quick_access">Quick access</string>
+    <string name="lbl_more_tools">More tools</string>
+    <string name="lbl_qa_categories">Categories</string>
+    <string name="lbl_qa_latest">Latest</string>
+    <string name="lbl_qa_trending">Trending</string>
+    <string name="lbl_qa_reels">Reels</string>
+    <string name="lbl_qa_shop">Shop</string>
+    <string name="lbl_qa_results">Results</string>
+    <string name="lbl_qa_downloads">Downloads</string>
+    <string name="lbl_qa_saved">Saved</string>
+    <string name="lbl_from_community">From the community</string>
+
     <!-- Reels feed filters -->
     <string name="lbl_filter_all">All</string>
     <string name="lbl_filter_photos">Photos</string>
