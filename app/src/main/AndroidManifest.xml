@@ -111,6 +111,7 @@
         <activity android:name="com.jntuh.books.DownloadActivity" />
         <activity android:name="com.jntuh.books.UploadBookActivity" />
         <activity android:name="com.jntuh.books.MyUploadsActivity" />
+        <activity android:name="com.jntuh.books.ProfileSectionActivity" />
         <activity android:name="com.jntuh.books.MediaFeedActivity" />
         <activity android:name="com.jntuh.books.MediaUploadActivity" />
         <activity android:name="com.jntuh.books.ShopProductDetailActivity" />

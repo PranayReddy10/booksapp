@@ -105,6 +105,73 @@ public class EditProfileActivity extends AppCompatActivity {
         uRegulation = intent.getStringExtra("uRegulation");
         uDegree = intent.getStringExtra("uDegree");
 
+        // Callers that already hold the profile pass it in as extras. Callers that
+        // don't (the profile shortcut, "Complete profile" on results) get an empty
+        // screen unless we fetch it ourselves, so do that before populating.
+        if (uId == null || uId.trim().isEmpty()) {
+            fetchProfileThenPopulate();
+        } else {
+            populateProfile();
+        }
+    }
+
+    /** Pull the signed-in user's profile, then fill the form with it. */
+    private void fetchProfileThenPopulate() {
+        if (!method.isNetworkAvailable()) {
+            method.alertBox(getString(R.string.internet_connection));
+            populateProfile();
+            return;
+        }
+
+        com.google.gson.JsonObject jsObj =
+                (com.google.gson.JsonObject) new com.google.gson.Gson().toJsonTree(new com.jntuh.util.API(this));
+        jsObj.addProperty("user_id", method.getUserId());
+        com.jntuh.rest.ApiClient.getClient().create(com.jntuh.rest.ApiInterface.class)
+                .getProfileData(com.jntuh.util.API.toBase64(jsObj.toString()))
+                .enqueue(new retrofit2.Callback<com.jntuh.response.LoginRP>() {
+                    @Override
+                    public void onResponse(@NotNull retrofit2.Call<com.jntuh.response.LoginRP> call,
+                                           @NotNull retrofit2.Response<com.jntuh.response.LoginRP> response) {
+                        try {
+                            com.jntuh.response.LoginRP body = response.body();
+                            if (body != null && "1".equals(body.getSuccess())
+                                    && body.getItemUserList() != null && !body.getItemUserList().isEmpty()) {
+                                com.jntuh.response.LoginRP.ItemUser user = body.getItemUserList().get(0);
+                                uId = user.getUser_id();
+                                uName = user.getName();
+                                uEmail = user.getEmail();
+                                uUsername = user.getUsername();
+                                uImage = user.getUser_image();
+                                uPhone = user.getPhone();
+                                uType = method.getUserType();
+                                uUniversity = user.getUniversity();
+                                uDepartment = user.getDepartment();
+                                savedDepartment = uDepartment; // stable copy for prefill
+                                uCollege = user.getCollege();
+                                uGender = user.getGender();
+                                uYear = user.getYear();
+                                uRoll = user.getRollnumber();
+                                uBranch = user.getBranch();
+                                uRegulation = user.getRegulation();
+                                uDegree = user.getDegree();
+                            }
+                        } catch (Exception e) {
+                            Log.d("exception_error", e.toString());
+                        }
+                        populateProfile();
+                    }
+
+                    @Override
+                    public void onFailure(@NotNull retrofit2.Call<com.jntuh.response.LoginRP> call,
+                                          @NotNull Throwable t) {
+                        Log.e("fail", t.toString());
+                        populateProfile();
+                    }
+                });
+    }
+
+    /** Fill every field from whatever profile data we ended up with. */
+    private void populateProfile() {
         viewEditProfile.toolbarMain.tvToolbarTitle.setText(getString(R.string.profile_edt_title));
         viewEditProfile.toolbarMain.ivSearch.setVisibility(View.GONE);
         viewEditProfile.toolbarMain.imageFilter.setVisibility(View.GONE);

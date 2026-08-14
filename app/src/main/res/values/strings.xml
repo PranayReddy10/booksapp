@@ -104,6 +104,12 @@
     <string name="lbl_admin">Admin</string>
 
     <string name="lbl_my_profile">My Profile</string>
+    <string name="lbl_your_activity">Your activity</string>
+    <string name="sub_my_results">Semester marks, backlogs and SGPA</string>
+    <string name="sub_continue">Pick up the books you were reading</string>
+    <string name="sub_uploads">Books you shared with the campus</string>
+    <string name="sub_subscription">Your plan and payment history</string>
+    <string name="sub_rent">Books you have on rent</string>
     <string name="lbl_edit_profile_short">Edit</string>
 
     <!-- Auth -->
