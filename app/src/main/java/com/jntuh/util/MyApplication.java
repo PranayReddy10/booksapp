@@ -23,6 +23,7 @@ import com.jntuh.books.PaymentMethodActivity;
 import com.jntuh.books.PlanListActivity;
 import com.jntuh.books.RegisterActivity;
 import com.jntuh.books.SplashActivity;
+import com.jntuh.service.ReminderSweepWorker;
 import com.facebook.ads.AudienceNetworkAds;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.auth.api.signin.internal.SignInHubActivity;
@@ -63,6 +64,11 @@ public class MyApplication extends Application implements Application.ActivityLi
 
         this.registerActivityLifecycleCallbacks(this);
 
+        // Reminder plumbing: channels must exist before the first alarm fires, and the
+        // sweep repairs alarms lost to a force-stop or an OEM battery cull.
+        TaskNotifier.ensureChannels(this);
+        ReminderSweepWorker.schedule(this);
+
         AudienceNetworkAds.initialize(this);
         MobileAds.initialize(this, initializationStatus -> {
         });
@@ -100,6 +106,22 @@ public class MyApplication extends Application implements Application.ActivityLi
     public boolean getNotification() {
         preferences = this.getSharedPreferences(prefName, 0);
         return preferences.getBoolean("IsNotification", true);
+    }
+
+    /**
+     * Tone used by alarm-style task reminders. Empty means "whatever the device uses for
+     * alarms", which is what most students will want.
+     */
+    public void saveAlarmToneUri(String uri) {
+        preferences = this.getSharedPreferences(prefName, 0);
+        Editor editor = preferences.edit();
+        editor.putString("TaskAlarmTone", uri == null ? "" : uri);
+        editor.apply();
+    }
+
+    public String getAlarmToneUri() {
+        preferences = this.getSharedPreferences(prefName, 0);
+        return preferences.getString("TaskAlarmTone", "");
     }
 
     class NotificationExtenderExample implements INotificationClickListener {

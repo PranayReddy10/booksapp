@@ -178,6 +178,15 @@
         <item name="android:windowIsTranslucent">true</item>
     </style>
 
+    <!-- Alarm takeover: always dark and full-bleed, whatever the app theme is, so the
+         screen reads the same at 6am on a light-mode phone. -->
+    <style name="Theme.AlarmRing" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="android:windowBackground">@drawable/bg_alarm_screen</item>
+        <item name="android:statusBarColor">@color/alarm_bg_top</item>
+        <item name="android:navigationBarColor">@color/alarm_bg_bottom</item>
+        <item name="android:windowShowWallpaper">false</item>
+    </style>
+
     <style name="MyAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="android:textColor">@color/dialog_text</item>
         <item name="colorAccent">@color/dialog_progress</item>

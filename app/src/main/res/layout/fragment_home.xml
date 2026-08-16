@@ -563,6 +563,70 @@
                                     android:textSize="@dimen/_12sp" />
                             </LinearLayout>
                         </LinearLayout>
+
+                        <!-- Row 3: reminders. Padded with empty weighted slots so the
+                             tile lines up with the column above it. -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_16px"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:id="@+id/llQaTasks"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:background="?attr/selectableItemBackground"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <FrameLayout
+                                    android:layout_width="52dp"
+                                    android:layout_height="52dp"
+                                    android:background="@drawable/bg_quick_tile">
+
+                                    <ImageView
+                                        android:layout_width="26dp"
+                                        android:layout_height="26dp"
+                                        android:layout_gravity="center"
+                                        android:src="@drawable/ic_task_bell"
+                                        app:tint="@color/app_bg_orange"
+                                        tools:ignore="ContentDescription" />
+
+                                    <!-- Pending-task count, hidden at zero -->
+                                    <TextView
+                                        android:id="@+id/tvQaTasksBadge"
+                                        style="@style/txt_OpenSansRomanExtraBold"
+                                        android:layout_width="18dp"
+                                        android:layout_height="18dp"
+                                        android:layout_gravity="top|end"
+                                        android:background="@drawable/bg_task_badge"
+                                        android:gravity="center"
+                                        android:textColor="@color/white"
+                                        android:textSize="9sp"
+                                        android:visibility="gone"
+                                        tools:text="3"
+                                        tools:visibility="visible" />
+                                </FrameLayout>
+
+                                <TextView
+                                    style="@style/txtOpenSansRomanSemiBold"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/_8px"
+                                    android:ellipsize="end"
+                                    android:singleLine="true"
+                                    android:text="@string/lbl_qa_tasks"
+                                    android:textColor="@color/home_title"
+                                    android:textSize="@dimen/_12sp" />
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="1dp"
+                                android:layout_weight="3" />
+                        </LinearLayout>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 

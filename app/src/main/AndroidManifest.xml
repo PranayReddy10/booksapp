@@ -7,6 +7,19 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
+    <!-- Task reminders.
+         SCHEDULE_EXACT_ALARM (not USE_EXACT_ALARM) is deliberate: USE_EXACT_ALARM is
+         auto-granted but Play restricts it to alarm/clock/calendar apps, so asking the
+         user for it keeps the release reviewable. Reminders degrade to inexact when it
+         is refused rather than failing outright. -->
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
+
     <!-- Let the WebView / Razorpay detect installed UPI & payment apps (Android 11+
          package visibility). Without this, UPI options are hidden in the WebView. -->
     <queries>
@@ -200,6 +213,54 @@
         <!-- My Results feature -->
         <activity android:name="com.jntuh.books.EditResultActivity" />
         <activity android:name="com.jntuh.books.ReportCardActivity" />
+
+        <!-- Tasks & reminders -->
+        <activity
+            android:name="com.jntuh.books.TasksActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name="com.jntuh.books.AddEditTaskActivity"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!-- The alarm takeover. singleInstance so a second alarm replaces the screen
+             instead of stacking, and excluded from recents so a dismissed alarm cannot
+             be resurrected from the task switcher. -->
+        <activity
+            android:name="com.jntuh.books.AlarmRingActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:launchMode="singleInstance"
+            android:showWhenLocked="true"
+            android:taskAffinity=""
+            android:theme="@style/Theme.AlarmRing"
+            android:turnScreenOn="true" />
+
+        <receiver
+            android:name="com.jntuh.service.AlarmReceiver"
+            android:exported="false" />
+
+        <receiver
+            android:name="com.jntuh.service.TaskActionReceiver"
+            android:exported="false" />
+
+        <!-- Alarms do not survive any of these, so each one rebuilds the schedule. -->
+        <receiver
+            android:name="com.jntuh.service.BootReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+                <action android:name="android.intent.action.TIME_SET" />
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name="com.jntuh.service.AlarmSoundService"
+            android:exported="false"
+            android:foregroundServiceType="mediaPlayback" />
 
         <!-- Used to share the generated report card PNG as an image file. -->
         <provider

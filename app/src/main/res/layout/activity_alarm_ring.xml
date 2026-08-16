@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Full-screen alarm. Dark on purpose: this is what a student sees at 6am. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_alarm_screen"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingHorizontal="28dp">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <FrameLayout
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:background="@drawable/bg_task_empty_circle">
+
+        <ImageView
+            android:id="@+id/ivAlarmIcon"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_task_alarm"
+            app:tint="@color/app_bg_orange"
+            tools:ignore="ContentDescription" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/tvAlarmClock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="26dp"
+        android:fontFamily="@font/opensansromanextrabold"
+        android:textColor="@color/alarm_text"
+        android:textSize="52sp"
+        tools:text="6:00 AM" />
+
+    <TextView
+        android:id="@+id/tvAlarmDate"
+        style="@style/txtOpenSansRomanSemiBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:textColor="@color/alarm_text_dim"
+        android:textSize="14sp"
+        tools:text="Sunday, 16 August" />
+
+    <TextView
+        android:id="@+id/tvAlarmCategory"
+        style="@style/txtOpenSansRomanSemiBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/bg_alarm_secondary"
+        android:paddingHorizontal="14dp"
+        android:paddingVertical="5dp"
+        android:textColor="@color/alarm_text"
+        android:textSize="11sp"
+        tools:text="STUDY" />
+
+    <TextView
+        android:id="@+id/tvAlarmTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:fontFamily="@font/opensansromanextrabold"
+        android:gravity="center"
+        android:maxLines="3"
+        android:ellipsize="end"
+        android:textColor="@color/alarm_text"
+        android:textSize="23sp"
+        tools:text="Revise DSA Unit 3" />
+
+    <TextView
+        android:id="@+id/tvAlarmNotes"
+        style="@style/txtOpenSansRomanSemiBold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:maxLines="4"
+        android:ellipsize="end"
+        android:textColor="@color/alarm_text_dim"
+        android:textSize="14sp"
+        android:visibility="gone"
+        tools:text="Trees and graphs, pages 120-160"
+        tools:visibility="visible" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.4" />
+
+    <TextView
+        android:id="@+id/btnAlarmDismiss"
+        android:layout_width="match_parent"
+        android:layout_height="58dp"
+        android:background="@drawable/bg_alarm_dismiss"
+        android:fontFamily="@font/opensansromanextrabold"
+        android:gravity="center"
+        android:text="@string/alarm_dismiss"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="40dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/btnAlarmSnooze"
+            android:layout_width="0dp"
+            android:layout_height="54dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_alarm_secondary"
+            android:fontFamily="@font/opensansromansemibold"
+            android:gravity="center"
+            android:text="@string/alarm_snooze"
+            android:textColor="@color/alarm_text"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/btnAlarmDone"
+            android:layout_width="0dp"
+            android:layout_height="54dp"
+            android:layout_marginStart="12dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_alarm_secondary"
+            android:fontFamily="@font/opensansromansemibold"
+            android:gravity="center"
+            android:text="@string/alarm_done"
+            android:textColor="@color/alarm_text"
+            android:textSize="14sp" />
+    </LinearLayout>
+</LinearLayout>
