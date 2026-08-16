@@ -48,16 +48,30 @@ public class MyMediaAdapter extends RecyclerView.Adapter<MyMediaAdapter.ViewHold
 
         holder.binding.tvMediaTitle.setText(item.getTitle());
 
-        boolean isVideo = "video".equalsIgnoreCase(item.getMedia_type());
-        holder.binding.ivPlayBadge.setVisibility(isVideo ? View.VISIBLE : View.GONE);
-
         // Thumbnail: prefer thumb_url (esp. for videos), fall back to the file itself.
         String thumb = item.getThumb_url();
         String load = (thumb != null && !thumb.isEmpty()) ? thumb : item.getFile_url();
-        Glide.with(activity.getApplicationContext())
-                .load(load)
-                .placeholder(R.color.card_view_bg)
-                .into(holder.binding.ivMediaThumb);
+        boolean hasMedia = load != null && !load.trim().isEmpty();
+
+        boolean isVideo = "video".equalsIgnoreCase(item.getMedia_type());
+        holder.binding.ivPlayBadge.setVisibility(isVideo && hasMedia ? View.VISIBLE : View.GONE);
+
+        if (hasMedia) {
+            holder.binding.ivMediaThumb.setScaleType(android.widget.ImageView.ScaleType.CENTER_CROP);
+            holder.binding.ivMediaThumb.clearColorFilter();
+            Glide.with(activity.getApplicationContext())
+                    .load(load)
+                    .placeholder(R.color.card_view_bg)
+                    .into(holder.binding.ivMediaThumb);
+        } else {
+            // Text post: there is no thumbnail, so mark the tile as written words
+            // instead of leaving an empty grey box.
+            Glide.with(activity.getApplicationContext()).clear(holder.binding.ivMediaThumb);
+            holder.binding.ivMediaThumb.setScaleType(android.widget.ImageView.ScaleType.CENTER_INSIDE);
+            holder.binding.ivMediaThumb.setImageResource(R.drawable.ic_feed_comment_outline);
+            holder.binding.ivMediaThumb.setColorFilter(
+                    ContextCompat.getColor(activity, R.color.app_bg_orange));
+        }
 
         // Status chip: label can be "pending"/"approved"/"rejected" or numeric.
         String raw = item.getUpload_status() == null ? "" : item.getUpload_status().trim().toLowerCase();
