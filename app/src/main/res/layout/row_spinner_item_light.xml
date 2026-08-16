@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Collapsed spinner value on a light card (the auth variant paints white text,
+     which disappears on these backgrounds). -->
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:ellipsize="end"
+    android:fontFamily="@font/opensansromansemibold"
+    android:gravity="center_vertical"
+    android:maxLines="1"
+    android:minHeight="@dimen/_50px"
+    android:paddingStart="@dimen/_4px"
+    android:paddingTop="@dimen/_10px"
+    android:paddingEnd="@dimen/_10px"
+    android:paddingBottom="@dimen/_10px"
+    android:textColor="@color/gray_2"
+    android:textSize="@dimen/_15sp"
+    tools:ignore="RtlSymmetry" />

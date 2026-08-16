@@ -129,19 +129,19 @@ public class RegisterActivity extends AppCompatActivity {
     private void setupSpinners() {
         // University
         universityNames.add(getString(R.string.lbl_select_university));
-        universityAdapter = new ArrayAdapter<>(this, R.layout.row_spinner_item_auth, universityNames);
+        universityAdapter = new ArrayAdapter<>(this, R.layout.row_spinner_item_light, universityNames);
         universityAdapter.setDropDownViewResource(R.layout.row_spinner_dropdown_item);
         viewRegisterBinding.spRegUniversity.setAdapter(universityAdapter);
 
         // Department
         departmentNames.add(getString(R.string.lbl_select_department));
-        departmentAdapter = new ArrayAdapter<>(this, R.layout.row_spinner_item_auth, departmentNames);
+        departmentAdapter = new ArrayAdapter<>(this, R.layout.row_spinner_item_light, departmentNames);
         departmentAdapter.setDropDownViewResource(R.layout.row_spinner_dropdown_item);
         viewRegisterBinding.spRegDepartment.setAdapter(departmentAdapter);
 
         // College
         collegeNames.add(getString(R.string.lbl_select_college));
-        collegeAdapter = new ArrayAdapter<>(this, R.layout.row_spinner_item_auth, collegeNames);
+        collegeAdapter = new ArrayAdapter<>(this, R.layout.row_spinner_item_light, collegeNames);
         collegeAdapter.setDropDownViewResource(R.layout.row_spinner_dropdown_item);
         viewRegisterBinding.spRegCollege.setAdapter(collegeAdapter);
 
@@ -151,7 +151,7 @@ public class RegisterActivity extends AppCompatActivity {
         genderLabels.add(getString(R.string.lbl_gender_male));
         genderLabels.add(getString(R.string.lbl_gender_female));
         genderLabels.add(getString(R.string.lbl_gender_other));
-        genderAdapter = new ArrayAdapter<>(this, R.layout.row_spinner_item_auth, genderLabels);
+        genderAdapter = new ArrayAdapter<>(this, R.layout.row_spinner_item_light, genderLabels);
         genderAdapter.setDropDownViewResource(R.layout.row_spinner_dropdown_item);
         viewRegisterBinding.spRegGender.setAdapter(genderAdapter);
 
@@ -428,6 +428,11 @@ public class RegisterActivity extends AppCompatActivity {
                 viewRegisterBinding.edtRegEmail.setError(getString(R.string.please_enter_email));
                 return false;
             }
+            if (viewRegisterBinding.edtRegPhone.getText().toString().trim().isEmpty()) {
+                viewRegisterBinding.edtRegPhone.requestFocus();
+                viewRegisterBinding.edtRegPhone.setError(getString(R.string.please_enter_phone));
+                return false;
+            }
             if (viewRegisterBinding.edtRegPass.getText().toString().isEmpty()) {
                 viewRegisterBinding.edtRegPass.requestFocus();
                 viewRegisterBinding.edtRegPass.setError(getString(R.string.please_enter_password));
@@ -447,6 +452,11 @@ public class RegisterActivity extends AppCompatActivity {
             }
             if (viewRegisterBinding.spRegCollege.getSelectedItemPosition() <= 0) {
                 Toast.makeText(this, getString(R.string.please_select_college), Toast.LENGTH_SHORT).show();
+                return false;
+            }
+            if (viewRegisterBinding.edtRegRoll.getText().toString().trim().isEmpty()) {
+                viewRegisterBinding.edtRegRoll.requestFocus();
+                viewRegisterBinding.edtRegRoll.setError(getString(R.string.please_enter_roll));
                 return false;
             }
             return true;

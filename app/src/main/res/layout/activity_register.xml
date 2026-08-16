@@ -262,7 +262,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_4px"
                             android:layout_marginTop="@dimen/_20px"
-                            android:text="@string/lbl_gender"
+                            android:text="@string/lbl_gender_req"
                             android:textColor="@color/home_by_author"
                             android:textSize="@dimen/_13sp" />
 
@@ -460,7 +460,7 @@
                                 android:layout_marginStart="@dimen/_12px"
                                 android:background="@android:color/transparent"
                                 android:ellipsize="end"
-                                android:hint="@string/lbl_phone"
+                                android:hint="@string/lbl_phone_req"
                                 android:inputType="phone"
                                 android:paddingTop="@dimen/_16px"
                                 android:paddingBottom="@dimen/_16px"
@@ -497,7 +497,7 @@
                                 android:layout_marginStart="@dimen/_12px"
                                 android:background="@android:color/transparent"
                                 android:ellipsize="end"
-                                android:hint="@string/lbl_pass"
+                                android:hint="@string/lbl_pass_req"
                                 android:inputType="textPassword"
                                 android:paddingTop="@dimen/_16px"
                                 android:paddingBottom="@dimen/_16px"
@@ -523,7 +523,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_4px"
                             android:layout_marginTop="@dimen/_4px"
-                            android:text="@string/lbl_university"
+                            android:text="@string/lbl_university_req"
                             android:textColor="@color/home_by_author"
                             android:textSize="@dimen/_13sp" />
 
@@ -562,7 +562,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_4px"
                             android:layout_marginTop="@dimen/_14px"
-                            android:text="@string/lbl_department"
+                            android:text="@string/lbl_department_req"
                             android:textColor="@color/home_by_author"
                             android:textSize="@dimen/_13sp" />
 
@@ -601,7 +601,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_4px"
                             android:layout_marginTop="@dimen/_14px"
-                            android:text="@string/lbl_college"
+                            android:text="@string/lbl_college_req"
                             android:textColor="@color/home_by_author"
                             android:textSize="@dimen/_13sp" />
 
@@ -659,7 +659,7 @@
                                 android:layout_marginStart="@dimen/_12px"
                                 android:background="@android:color/transparent"
                                 android:ellipsize="end"
-                                android:hint="@string/lbl_roll_number"
+                                android:hint="@string/lbl_roll_req"
                                 android:inputType="text"
                                 android:paddingTop="@dimen/_16px"
                                 android:paddingBottom="@dimen/_16px"

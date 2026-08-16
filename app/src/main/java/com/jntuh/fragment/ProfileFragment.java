@@ -17,15 +17,13 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
-import androidx.viewpager2.adapter.FragmentStateAdapter;
-import androidx.viewpager2.widget.ViewPager2;
 import com.bumptech.glide.Glide;
 import com.jntuh.books.DownloadActivity;
 import com.jntuh.books.EditProfileActivity;
 import com.jntuh.books.LoginActivity;
 import com.jntuh.books.MyUploadsActivity;
+import com.jntuh.books.ProfileSectionActivity;
 import com.jntuh.books.UploadBookActivity;
 import com.jntuh.books.R;
 import com.jntuh.books.databinding.FragmentProfileBinding;
@@ -42,7 +40,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import org.greenrobot.eventbus.Subscribe;
@@ -63,6 +60,8 @@ public class ProfileFragment extends Fragment {
     boolean isContinue = false;
     String imageProfile;
     int movePos;
+    // Deep-linked sections open once, not again on every return to this tab.
+    private boolean sectionOpened = false;
     ProgressDialog progressDialog;
 
     @Override
@@ -114,21 +113,30 @@ public class ProfileFragment extends Fragment {
                 viewProfile.llNoData.clNoDataFound.setVisibility(View.GONE);
             }
 
-            setupViewPager(viewProfile.vpTab);
-            new TabLayoutMediator(viewProfile.tabLayout, viewProfile.vpTab, (tab, position) -> {
-                if (position == 0) {
-                    tab.setText(getString(R.string.tab_my_results));
-                } else if (position == 1) {
-                    tab.setText(getString(R.string.tab_continue));
-                } else if (position == 2) {
-                    tab.setText(getString(R.string.tab_manage_books));
-                } else if (position == 3) {
-                    tab.setText(getString(R.string.tab_subs));
-                } else if (position == 4) {
-                    tab.setText(getString(R.string.tab_rent));
-                }
-            }).attach();
+            // Shelves that used to hide in the overflow sheet.
+            viewProfile.llProfDownloads.setOnClickListener(v -> openLibrary("isDown"));
+            viewProfile.llProfSaved.setOnClickListener(v -> openLibrary("isFav"));
+            viewProfile.llProfEdit.setOnClickListener(v ->
+                    startActivity(new Intent(requireActivity(), EditProfileActivity.class)));
 
+            // A caller asked for a specific section (home's "View all", quick access):
+            // open that page straight away.
+            if (isContinue && !sectionOpened) {
+                sectionOpened = true;
+                openSection(sectionForPosition(movePos));
+            }
+
+            // Each section is its own page now, opened from a row.
+            viewProfile.llSecResults.setOnClickListener(v ->
+                    openSection(ProfileSectionActivity.SECTION_RESULTS));
+            viewProfile.llSecContinue.setOnClickListener(v ->
+                    openSection(ProfileSectionActivity.SECTION_CONTINUE));
+            viewProfile.llSecUploads.setOnClickListener(v ->
+                    openSection(ProfileSectionActivity.SECTION_UPLOADS));
+            viewProfile.llSecSubscription.setOnClickListener(v ->
+                    openSection(ProfileSectionActivity.SECTION_SUBSCRIPTION));
+            viewProfile.llSecRent.setOnClickListener(v ->
+                    openSection(ProfileSectionActivity.SECTION_RENT));
 
             viewProfile.btnLogIn.setOnClickListener(v -> {
                 Intent intentLogin = new Intent(requireActivity(), LoginActivity.class);
@@ -140,40 +148,32 @@ public class ProfileFragment extends Fragment {
         return viewProfile.getRoot();
     }
 
-    private void setupViewPager(final ViewPager2 viewPager) {
-        final ViewPagerAdapter adapter = new ViewPagerAdapter(requireActivity());
-        adapter.addFragment(new MyResultsFragment(), getString(R.string.tab_my_results));
-        adapter.addFragment(new ContinueFragment(), getString(R.string.tab_continue));
-        adapter.addFragment(new ManageBooksFragment(), getString(R.string.tab_manage_books));
-        adapter.addFragment(new DashBoardFragment(), getString(R.string.tab_subs));
-        adapter.addFragment(new RentBookFragment(), getString(R.string.tab_rent));
-        viewPager.setAdapter(adapter);
-        if (isContinue) {
-            viewPager.setCurrentItem(movePos, false);
+    /** Downloads ("isDown") and favourites ("isFav") share one screen. */
+    private void openLibrary(String mode) {
+        startActivity(new Intent(requireActivity(), DownloadActivity.class)
+                .putExtra("isDown", mode));
+    }
+
+    /** Map the legacy tab index used by callers onto a section key. */
+    private String sectionForPosition(int position) {
+        switch (position) {
+            case 1:
+                return ProfileSectionActivity.SECTION_CONTINUE;
+            case 2:
+                return ProfileSectionActivity.SECTION_UPLOADS;
+            case 3:
+                return ProfileSectionActivity.SECTION_SUBSCRIPTION;
+            case 4:
+                return ProfileSectionActivity.SECTION_RENT;
+            default:
+                return ProfileSectionActivity.SECTION_RESULTS;
         }
     }
 
-    class ViewPagerAdapter extends FragmentStateAdapter {
-        final List<Fragment> mFragmentList = new ArrayList<>();
-        final List<String> mFragmentTitleList = new ArrayList<>();
-
-        private ViewPagerAdapter(FragmentActivity activity) {
-            super(activity);
-        }
-
-        private void addFragment(Fragment fragment, String title) {
-            mFragmentList.add(fragment);
-            mFragmentTitleList.add(title);
-        }
-        @NonNull
-        @Override
-        public Fragment createFragment(int position) {
-            return mFragmentList.get(position);
-        }
-        @Override
-        public int getItemCount() {
-            return mFragmentList.size();
-        }
+    /** Open one profile section as a full page. */
+    private void openSection(String section) {
+        startActivity(new Intent(requireActivity(), ProfileSectionActivity.class)
+                .putExtra(ProfileSectionActivity.EXTRA_SECTION, section));
     }
 
     public void userProfile() {

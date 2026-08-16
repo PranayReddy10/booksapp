@@ -75,7 +75,9 @@ public class EditResultActivity extends AppCompatActivity {
         binding.btnAddSemester.setOnClickListener(v -> addSemester(null));
         binding.btnSaveResult.setOnClickListener(v -> save());
         binding.btnGoCompleteProfile.setOnClickListener(v -> {
-            // Route to Profile tab / edit-profile. The user edits there and returns.
+            // Straight to Edit Profile — that's where roll number, branch and
+            // regulation are filled in; this screen reloads when the user returns.
+            startActivity(new Intent(EditResultActivity.this, EditProfileActivity.class));
             finish();
         });
 

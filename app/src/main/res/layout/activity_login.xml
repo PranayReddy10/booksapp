@@ -31,15 +31,6 @@
         android:src="@drawable/bg_auth_blob_violet"
         tools:ignore="ContentDescription" />
 
-    <ImageView
-        android:id="@+id/ivAuthCampus"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_200px"
-        android:layout_alignParentTop="true"
-        android:scaleType="fitXY"
-        android:src="@drawable/bg_auth_campus"
-        tools:ignore="ContentDescription" />
-
     <!-- ===== Hero ===== -->
     <TextView
         android:id="@+id/txtWelcomeBack"
