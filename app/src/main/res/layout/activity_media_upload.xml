@@ -143,48 +143,23 @@
                 tools:ignore="Autofill" />
 
             <!-- Attachment strip: the preview appears once something is picked -->
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_16px"
+                android:scrollbars="none">
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_16px"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <FrameLayout
-                    android:id="@+id/flMediaPreview"
-                    android:layout_width="96dp"
-                    android:layout_height="96dp"
-                    android:visibility="gone"
-                    tools:visibility="visible">
-
-                    <com.google.android.material.card.MaterialCardView
-                        android:layout_width="88dp"
-                        android:layout_height="88dp"
-                        android:layout_gravity="bottom|start"
-                        app:cardBackgroundColor="@color/home_cover_bg"
-                        app:cardCornerRadius="16dp"
-                        app:cardElevation="0dp">
-
-                        <ImageView
-                            android:id="@+id/ivMediaPreview"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:scaleType="centerCrop"
-                            tools:ignore="ContentDescription"
-                            tools:src="@drawable/placeholder_landscape" />
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <ImageView
-                        android:id="@+id/ivRemoveMedia"
-                        android:layout_width="26dp"
-                        android:layout_height="26dp"
-                        android:layout_gravity="top|end"
-                        android:background="@drawable/bg_circle_scrim"
-                        android:padding="5dp"
-                        android:src="@drawable/ic_compose_close"
-                        app:tint="@color/white"
-                        tools:ignore="ContentDescription" />
-                </FrameLayout>
+                <LinearLayout
+                    android:id="@+id/llMediaStrip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" />
 
                 <FrameLayout
                     android:id="@+id/btnPickMedia"
@@ -202,6 +177,7 @@
                         tools:ignore="ContentDescription" />
                 </FrameLayout>
             </LinearLayout>
+            </HorizontalScrollView>
 
             <TextView
                 android:id="@+id/tvMediaName"

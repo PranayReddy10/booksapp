@@ -42,6 +42,8 @@ import com.jntuh.response.ShopProductRP;
 import com.jntuh.response.ShopLinksRP;
 import com.google.gson.JsonObject;
 
+import java.util.List;
+
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -332,6 +334,16 @@ public interface ApiInterface {
     Call<MediaUploadRP> getMediaUploadData(@Part("data") RequestBody data,
                                            @Part MultipartBody.Part mediaFile,
                                            @Part MultipartBody.Part thumbFile);
+
+    /*
+     * Same endpoint, but the caller supplies the file parts itself so a post can
+     * carry several photos: the first is sent as "media_file" (what the server
+     * reads today) and any extras as "media_file[]".
+     */
+    @POST("media_upload")
+    @Multipart
+    Call<MediaUploadRP> getMediaUploadMultiData(@Part("data") RequestBody data,
+                                                @Part List<MultipartBody.Part> files);
 
     //the user's own media posts with moderation status
     @POST("my_uploaded_media")

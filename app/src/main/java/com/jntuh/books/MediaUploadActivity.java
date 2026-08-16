@@ -57,6 +57,13 @@ public class MediaUploadActivity extends AppCompatActivity {
     private static final String KEY_MEDIA = "state_media_path";
     private static final String KEY_MEDIA_NAME = "state_media_name";
     private static final String KEY_IS_VIDEO = "state_is_video";
+    private static final String KEY_MEDIA_LIST = "state_media_list";
+
+    /** Photos a single post may carry. */
+    private static final int MAX_PHOTOS = 6;
+
+    /** Picked photo paths (videos stay single, so this holds at most one). */
+    private final java.util.ArrayList<String> mediaPaths = new java.util.ArrayList<>();
 
     /** Optional: "photo" or "video" — which attachment the picker should offer. */
     public static final String EXTRA_ATTACH_TYPE = "attach_type";
@@ -84,6 +91,8 @@ public class MediaUploadActivity extends AppCompatActivity {
         }
 
         if (savedInstanceState != null) {
+            java.util.ArrayList<String> saved = savedInstanceState.getStringArrayList(KEY_MEDIA_LIST);
+            if (saved != null) mediaPaths.addAll(saved);
             mediaPath = savedInstanceState.getString(KEY_MEDIA, null);
             mediaName = savedInstanceState.getString(KEY_MEDIA_NAME, null);
             isVideo = savedInstanceState.getBoolean(KEY_IS_VIDEO, false);
@@ -108,13 +117,18 @@ public class MediaUploadActivity extends AppCompatActivity {
         });
 
         binding.btnPickMedia.setOnClickListener(v -> {
+            if (!isVideo && mediaPaths.size() >= MAX_PHOTOS) {
+                Toast.makeText(this, getString(R.string.msg_photo_limit, MAX_PHOTOS),
+                        Toast.LENGTH_SHORT).show();
+                return;
+            }
             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
             intent.setType(isVideo ? "video/*" : "image/*");
             intent.addCategory(Intent.CATEGORY_OPENABLE);
+            // Photos can come in batches; a post carries at most one video.
+            if (!isVideo) intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
             mediaPicker.launch(Intent.createChooser(intent, getString(R.string.lbl_pick_media)));
         });
-
-        binding.ivRemoveMedia.setOnClickListener(v -> clearMedia());
 
         binding.btnSubmitMedia.setOnClickListener(v -> validateAndSubmit());
     }
@@ -122,40 +136,45 @@ public class MediaUploadActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
+        outState.putStringArrayList(KEY_MEDIA_LIST, mediaPaths);
         if (mediaPath != null) outState.putString(KEY_MEDIA, mediaPath);
         if (mediaName != null) outState.putString(KEY_MEDIA_NAME, mediaName);
         outState.putBoolean(KEY_IS_VIDEO, isVideo);
     }
 
-    /** Drop the attachment; the post reverts to text only. */
+    /** Drop every attachment; the post reverts to text only. */
     private void clearMedia() {
+        mediaPaths.clear();
         mediaPath = null;
         mediaName = null;
-        binding.flMediaPreview.setVisibility(View.GONE);
-        binding.tvMediaName.setVisibility(View.GONE);
+        renderStrip();
     }
 
     private void restorePreview() {
         binding.rbVideo.setChecked(isVideo);
         binding.rbPhoto.setChecked(!isVideo);
-        if (mediaPath != null && new File(mediaPath).exists()) {
-            binding.flMediaPreview.setVisibility(View.VISIBLE);
-            Glide.with(getApplicationContext()).load(new File(mediaPath))
-                    .into(binding.ivMediaPreview);
+        // Anything the cache lost between sessions is dropped rather than shown broken.
+        for (int i = mediaPaths.size() - 1; i >= 0; i--) {
+            if (!new File(mediaPaths.get(i)).exists()) mediaPaths.remove(i);
         }
-        if (mediaName != null) {
-            binding.tvMediaName.setVisibility(View.VISIBLE);
-            binding.tvMediaName.setText(mediaName);
-        }
+        mediaPath = mediaPaths.isEmpty() ? null : mediaPaths.get(0);
+        renderStrip();
     }
 
     private void registerPicker() {
         mediaPicker = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
-                    if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                        Uri uri = result.getData().getData();
-                        if (uri != null) handlePickedMedia(uri);
+                    if (result.getResultCode() != RESULT_OK || result.getData() == null) return;
+                    Intent data = result.getData();
+                    if (data.getClipData() != null) {
+                        // Multi-select returns a clip; take them in the order picked.
+                        android.content.ClipData clip = data.getClipData();
+                        for (int i = 0; i < clip.getItemCount(); i++) {
+                            handlePickedMedia(clip.getItemAt(i).getUri());
+                        }
+                    } else if (data.getData() != null) {
+                        handlePickedMedia(data.getData());
                     }
                 });
     }
@@ -181,25 +200,67 @@ public class MediaUploadActivity extends AppCompatActivity {
             return;
         }
 
+        if (!isVideo && mediaPaths.size() >= MAX_PHOTOS) {
+            Toast.makeText(this, getString(R.string.msg_photo_limit, MAX_PHOTOS),
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         String copied = copyUriToCache(uri, isVideo ? "video_" : "photo_");
         if (copied != null) {
-            mediaPath = copied;
+            // A video replaces whatever was there; photos accumulate.
+            if (isVideo) mediaPaths.clear();
+            mediaPaths.add(copied);
+            mediaPath = mediaPaths.get(0);
             mediaName = displayName;
-            binding.tvMediaName.setVisibility(View.VISIBLE);
-            binding.tvMediaName.setText(displayName);
-            binding.ivMediaPreview.setVisibility(View.VISIBLE);
-            // Photos preview directly; videos preview via their first frame.
+            renderStrip();
+        }
+    }
+
+    /**
+     * Redraw the attachment strip from the picked paths: a thumbnail each, a remove
+     * button, and a "cover" badge on the first photo (the one feeds show).
+     */
+    private void renderStrip() {
+        binding.llMediaStrip.removeAllViews();
+
+        for (int i = 0; i < mediaPaths.size(); i++) {
+            final String path = mediaPaths.get(i);
+            View tile = getLayoutInflater().inflate(
+                    R.layout.row_compose_media, binding.llMediaStrip, false);
+
+            android.widget.ImageView thumb = tile.findViewById(R.id.ivComposeThumb);
             if (isVideo) {
-                Bitmap frame = firstFrame(mediaPath);
+                Bitmap frame = firstFrame(path);
                 if (frame != null) {
-                    binding.ivMediaPreview.setImageBitmap(frame);
+                    thumb.setImageBitmap(frame);
                 } else {
-                    binding.ivMediaPreview.setImageResource(R.color.card_view_bg);
+                    thumb.setImageResource(R.color.card_view_bg);
                 }
             } else {
-                Glide.with(getApplicationContext()).load(new File(mediaPath))
-                        .into(binding.ivMediaPreview);
+                Glide.with(getApplicationContext()).load(new File(path)).into(thumb);
             }
+
+            // Only a multi-photo post needs to say which one leads.
+            tile.findViewById(R.id.tvComposeCover)
+                    .setVisibility(i == 0 && mediaPaths.size() > 1 ? View.VISIBLE : View.GONE);
+
+            tile.findViewById(R.id.ivComposeRemove).setOnClickListener(v -> {
+                mediaPaths.remove(path);
+                mediaPath = mediaPaths.isEmpty() ? null : mediaPaths.get(0);
+                if (mediaPaths.isEmpty()) mediaName = null;
+                renderStrip();
+            });
+
+            binding.llMediaStrip.addView(tile);
+        }
+
+        // The file name only makes sense for a lone attachment.
+        if (mediaPaths.size() == 1 && mediaName != null) {
+            binding.tvMediaName.setVisibility(View.VISIBLE);
+            binding.tvMediaName.setText(mediaName);
+        } else {
+            binding.tvMediaName.setVisibility(View.GONE);
         }
     }
 
@@ -236,26 +297,28 @@ public class MediaUploadActivity extends AppCompatActivity {
         RequestBody dataBody = RequestBody.create(
                 MediaType.parse("multipart/form-data"), API.toBase64(jsObj.toString()));
 
-        // A text post carries no file; Retrofit omits null parts.
-        MultipartBody.Part mediaPart = null;
-        if (mediaPath != null) {
-            File mediaFile = new File(mediaPath);
-            RequestBody mrb = RequestBody.create(MediaType.parse("multipart/form-data"), mediaFile);
-            mediaPart = MultipartBody.Part.createFormData("media_file", mediaFile.getName(), mrb);
+        // First file goes as "media_file" (what the server reads today); any further
+        // photos ride along as "media_file[]" for a server that understands them.
+        java.util.List<MultipartBody.Part> parts = new java.util.ArrayList<>();
+        for (int i = 0; i < mediaPaths.size(); i++) {
+            File f = new File(mediaPaths.get(i));
+            RequestBody rb = RequestBody.create(MediaType.parse("multipart/form-data"), f);
+            parts.add(MultipartBody.Part.createFormData(
+                    i == 0 ? "media_file" : "media_file[]", f.getName(), rb));
         }
 
         // Optional: generate + attach a thumbnail for videos.
-        MultipartBody.Part thumbPart = null;
         if (isVideo && mediaPath != null) {
             File thumbFile = generateThumbFile(mediaPath);
             if (thumbFile != null) {
                 RequestBody trb = RequestBody.create(MediaType.parse("multipart/form-data"), thumbFile);
-                thumbPart = MultipartBody.Part.createFormData("thumb_file", thumbFile.getName(), trb);
+                parts.add(MultipartBody.Part.createFormData("thumb_file", thumbFile.getName(), trb));
             }
         }
 
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-        Call<MediaUploadRP> call = apiService.getMediaUploadData(dataBody, mediaPart, thumbPart);
+        // A text post sends no file parts at all.
+        Call<MediaUploadRP> call = apiService.getMediaUploadMultiData(dataBody, parts);
         call.enqueue(new Callback<MediaUploadRP>() {
             @Override
             public void onResponse(@NotNull Call<MediaUploadRP> call, @NotNull Response<MediaUploadRP> response) {

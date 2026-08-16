@@ -209,6 +209,38 @@
                         tools:ignore="ContentDescription" />
                 </LinearLayout>
 
+                <!-- ===== 3. Featured ===== -->
+                <TextView
+                    android:id="@+id/tvHomeFeature"
+                    style="@style/txt_InterBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_16px"
+                    android:layout_marginTop="@dimen/_20px"
+                    android:layout_marginEnd="@dimen/_16px"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="@string/lbl_featured"
+                    android:textColor="@color/home_title"
+                    android:textSize="@dimen/_18sp" />
+
+                <LinearLayout
+                    android:id="@+id/llFeature"
+                    style="@style/groupStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_180px"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginTop="@dimen/_10px"
+                    android:layout_marginEnd="7dp"
+                    android:orientation="vertical">
+
+                    <com.jntuh.util.EnchantedViewPager
+                        android:id="@+id/vpFeatureHome"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_180px" />
+                </LinearLayout>
+
                 <!-- ===== Write something ===== -->
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cvHomeComposer"
@@ -364,38 +396,6 @@
                         </LinearLayout>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
-
-                <!-- ===== 3. Featured ===== -->
-                <TextView
-                    android:id="@+id/tvHomeFeature"
-                    style="@style/txt_InterBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_16px"
-                    android:layout_marginTop="@dimen/_20px"
-                    android:layout_marginEnd="@dimen/_16px"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:text="@string/lbl_featured"
-                    android:textColor="@color/home_title"
-                    android:textSize="@dimen/_18sp" />
-
-                <LinearLayout
-                    android:id="@+id/llFeature"
-                    style="@style/groupStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_180px"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginStart="7dp"
-                    android:layout_marginTop="@dimen/_10px"
-                    android:layout_marginEnd="7dp"
-                    android:orientation="vertical">
-
-                    <com.jntuh.util.EnchantedViewPager
-                        android:id="@+id/vpFeatureHome"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_180px" />
-                </LinearLayout>
 
                 <!-- ===== 4. Quick access ===== -->
                 <TextView
