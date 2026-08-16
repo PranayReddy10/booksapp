@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Category pill; the solid colour is tinted per category at bind time. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="@color/task_chip_bg" />
+    <corners android:radius="100dp" />
+</shape>

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- One task card: category rail + title/meta + a tick to complete it. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/llTaskRoot"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginBottom="12dp"
+    android:background="@drawable/bg_task_card"
+    android:elevation="1dp"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingHorizontal="14dp"
+    android:paddingVertical="14dp">
+
+    <!-- Category rail, tinted at bind time -->
+    <View
+        android:id="@+id/viewTaskRail"
+        android:layout_width="4dp"
+        android:layout_height="44dp"
+        android:layout_marginEnd="12dp"
+        android:background="@drawable/bg_task_rail" />
+
+    <FrameLayout
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:layout_marginEnd="12dp"
+        android:background="@drawable/bg_task_empty_circle">
+
+        <ImageView
+            android:id="@+id/ivTaskIcon"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_task_study"
+            app:tint="@color/task_cat_study"
+            tools:ignore="ContentDescription" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvTaskTitle"
+            style="@style/txt_OpenSansRomanExtraBold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textColor="@color/task_title"
+            android:textSize="15sp"
+            tools:text="Revise DSA Unit 3" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/ivTaskClock"
+                android:layout_width="13dp"
+                android:layout_height="13dp"
+                android:src="@drawable/ic_task_clock"
+                app:tint="@color/task_muted"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/tvTaskTime"
+                style="@style/txtOpenSansRomanSemiBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:textColor="@color/task_muted"
+                android:textSize="12sp"
+                tools:text="Today · 8:00 PM" />
+
+            <ImageView
+                android:id="@+id/ivTaskAlarm"
+                android:layout_width="13dp"
+                android:layout_height="13dp"
+                android:layout_marginStart="10dp"
+                android:src="@drawable/ic_task_alarm"
+                android:visibility="gone"
+                app:tint="@color/app_bg_orange"
+                tools:ignore="ContentDescription"
+                tools:visibility="visible" />
+
+            <ImageView
+                android:id="@+id/ivTaskRepeat"
+                android:layout_width="13dp"
+                android:layout_height="13dp"
+                android:layout_marginStart="8dp"
+                android:src="@drawable/ic_task_repeat"
+                android:visibility="gone"
+                app:tint="@color/task_muted"
+                tools:ignore="ContentDescription" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvTaskCategory"
+            style="@style/txtOpenSansRomanSemiBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_task_pill"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="3dp"
+            android:textColor="@color/task_cat_study"
+            android:textSize="10sp"
+            tools:text="STUDY" />
+    </LinearLayout>
+
+    <!-- Tap target to complete / re-open the task -->
+    <FrameLayout
+        android:id="@+id/flTaskDone"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="8dp"
+        android:background="?attr/selectableItemBackgroundBorderless">
+
+        <ImageView
+            android:id="@+id/ivTaskDone"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_task_check"
+            app:tint="@color/task_hairline"
+            tools:ignore="ContentDescription" />
+    </FrameLayout>
+</LinearLayout>

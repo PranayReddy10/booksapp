@@ -213,4 +213,30 @@
     <color name="feed_media_bg">#F0F0F4</color>
     <color name="feed_caption">#4E4B66</color>
     <color name="feed_pill_bg">#14F97F68</color>
+
+    <!-- Tasks & reminders (same warm palette as home) -->
+    <color name="task_screen_bg">#FBF4EC</color>
+    <color name="task_surface">#FFFFFF</color>
+    <color name="task_title">#3A2A18</color>
+    <color name="task_muted">#8A7B6B</color>
+    <color name="task_hairline">#1A3A2A18</color>
+    <color name="task_done">#2E9E5B</color>
+    <color name="task_overdue">#D0021B</color>
+    <color name="task_chip_bg">#F0E5D8</color>
+    <color name="task_progress_track">#26F97F68</color>
+
+    <!-- Category accents -->
+    <color name="task_cat_study">#F97F68</color>
+    <color name="task_cat_exam">#D0021B</color>
+    <color name="task_cat_assignment">#7B61FF</color>
+    <color name="task_cat_reading">#2E9E5B</color>
+    <color name="task_cat_result">#0D47A1</color>
+    <color name="task_cat_other">#8A7B6B</color>
+
+    <!-- Alarm ring screen (dark, so it reads at 6am) -->
+    <color name="alarm_bg_top">#2A1B10</color>
+    <color name="alarm_bg_bottom">#12100E</color>
+    <color name="alarm_text">#FFFFFFFF</color>
+    <color name="alarm_text_dim">#B3FFFFFF</color>
+    <color name="alarm_dismiss">#F97F68</color>
 </resources>

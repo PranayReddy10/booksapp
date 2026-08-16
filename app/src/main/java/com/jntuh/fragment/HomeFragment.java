@@ -29,12 +29,14 @@ import com.jntuh.books.BookListBySubCatActivity;
 import com.jntuh.books.R;
 import com.jntuh.books.SearchBookActivity;
 import com.jntuh.books.SettingsActivity;
+import com.jntuh.books.TasksActivity;
 import com.jntuh.books.TrendingBookActivity;
 import com.jntuh.books.databinding.FragmentHomeBinding;
 import com.jntuh.response.HomeRP;
 import com.jntuh.rest.ApiClient;
 import com.jntuh.rest.ApiInterface;
 import com.jntuh.util.API;
+import com.jntuh.util.DatabaseHandler;
 import com.jntuh.util.Method;
 import com.jntuh.util.OnClick;
 import com.jntuh.util.StatusBarUtil;
@@ -350,6 +352,10 @@ public class HomeFragment extends Fragment {
 
         viewHome.llQaMyBooks.setOnClickListener(v -> requireLoginThen(MyUploadsActivity.class));
 
+        // Row 3 — reminders. Local to the device, so no login gate.
+        viewHome.llQaTasks.setOnClickListener(v ->
+                startActivity(new Intent(requireActivity(), TasksActivity.class)));
+
         // Filter button beside the search field opens the dedicated search screen.
         viewHome.ivHomeFilter.setOnClickListener(v ->
                 startActivity(new Intent(requireActivity(), SearchBookActivity.class)));
@@ -403,6 +409,26 @@ public class HomeFragment extends Fragment {
     private void openLink(String url) {
         try {
             startActivity(new Intent(Intent.ACTION_VIEW, android.net.Uri.parse(url)));
+        } catch (Exception e) {
+            Log.d("exception_error", e.toString());
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        refreshTaskBadge();
+    }
+
+    /** Pending-task count on the quick-access tile, refreshed whenever home is shown. */
+    private void refreshTaskBadge() {
+        if (viewHome == null || !isAdded()) {
+            return;
+        }
+        try {
+            int pending = new DatabaseHandler(requireActivity()).countPending();
+            viewHome.tvQaTasksBadge.setVisibility(pending > 0 ? View.VISIBLE : View.GONE);
+            viewHome.tvQaTasksBadge.setText(pending > 9 ? "9+" : String.valueOf(pending));
         } catch (Exception e) {
             Log.d("exception_error", e.toString());
         }

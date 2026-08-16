@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- One day chip in the horizontal date strip. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/llDateRoot"
+    android:layout_width="56dp"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="10dp"
+    android:background="@drawable/bg_task_date_normal"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingVertical="12dp">
+
+    <TextView
+        android:id="@+id/tvDateDay"
+        style="@style/txt_OpenSansRomanExtraBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/task_title"
+        android:textSize="17sp"
+        tools:text="08" />
+
+    <TextView
+        android:id="@+id/tvDateWeekday"
+        style="@style/txtOpenSansRomanSemiBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:textColor="@color/task_muted"
+        android:textSize="11sp"
+        tools:text="Wed" />
+
+    <!-- Dot shown when that day has at least one task -->
+    <View
+        android:id="@+id/viewDateDot"
+        android:layout_width="5dp"
+        android:layout_height="5dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/bg_task_empty_circle"
+        android:visibility="invisible"
+        tools:visibility="visible" />
+</LinearLayout>
