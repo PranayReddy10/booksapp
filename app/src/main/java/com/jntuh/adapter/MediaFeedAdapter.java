@@ -98,7 +98,20 @@ public class MediaFeedAdapter extends RecyclerView.Adapter<MediaFeedAdapter.View
             b.vBlurScrim.setVisibility(View.GONE);
         }
 
-        if (isVideo) {
+        boolean hasMedia = (isVideo ? item.getFile_url() : bgSrc) != null
+                && !String.valueOf(isVideo ? item.getFile_url() : bgSrc).trim().isEmpty();
+
+        if (!hasMedia) {
+            // Text post: nothing to play or show, so the words fill the screen.
+            b.ivPhoto.setVisibility(View.GONE);
+            b.playerView.setVisibility(View.GONE);
+            b.ivVideoPoster.setVisibility(View.GONE);
+            b.progressVideo.setVisibility(View.GONE);
+            b.tvCaption.setMaxLines(14);
+            b.tvCaption.setTextSize(android.util.TypedValue.COMPLEX_UNIT_SP, 22f);
+        } else if (isVideo) {
+            b.tvCaption.setMaxLines(3);
+            b.tvCaption.setTextSize(android.util.TypedValue.COMPLEX_UNIT_SP, 15f);
             b.ivPhoto.setVisibility(View.GONE);
             b.playerView.setVisibility(View.VISIBLE);
             b.ivVideoPoster.setVisibility(View.VISIBLE);
@@ -107,6 +120,8 @@ public class MediaFeedAdapter extends RecyclerView.Adapter<MediaFeedAdapter.View
                 Glide.with(activity.getApplicationContext()).load(thumb).into(b.ivVideoPoster);
             }
         } else {
+            b.tvCaption.setMaxLines(3);
+            b.tvCaption.setTextSize(android.util.TypedValue.COMPLEX_UNIT_SP, 15f);
             b.playerView.setVisibility(View.GONE);
             b.ivVideoPoster.setVisibility(View.GONE);
             b.progressVideo.setVisibility(View.GONE);
@@ -265,8 +280,11 @@ public class MediaFeedAdapter extends RecyclerView.Adapter<MediaFeedAdapter.View
     }
 
     public boolean isVideo(int position) {
-        return position >= 0 && position < items.size()
-                && "video".equalsIgnoreCase(items.get(position).getMedia_type());
+        if (position < 0 || position >= items.size()) return false;
+        com.jntuh.item.MediaItem it = items.get(position);
+        String url = it.getFile_url();
+        return "video".equalsIgnoreCase(it.getMedia_type())
+                && url != null && !url.trim().isEmpty();
     }
 
     @Override

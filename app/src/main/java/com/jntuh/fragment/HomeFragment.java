@@ -24,6 +24,7 @@ import com.jntuh.books.BookDetailsActivity;
 import com.jntuh.books.DownloadActivity;
 import com.jntuh.books.LoginActivity;
 import com.jntuh.books.MainActivity;
+import com.jntuh.books.MediaUploadActivity;
 import com.jntuh.books.MyUploadsActivity;
 import com.jntuh.books.BookListBySubCatActivity;
 import com.jntuh.books.R;
@@ -128,6 +129,7 @@ public class HomeFragment extends Fragment {
         });
 
         bindGreeting();
+        bindComposer();
         bindQuickAccess();
         bindSectionLinks();
 
@@ -331,6 +333,39 @@ public class HomeFragment extends Fragment {
                     .into(viewHome.ivHomeAvatar);
         }
         viewHome.cvHomeAvatar.setOnClickListener(v -> openProfileTab(0));
+    }
+
+    /**
+     * The composer card: write a post from home. Every entry lands on the same
+     * screen — the photo / video chips only preselect what it will ask for.
+     */
+    private void bindComposer() {
+        String image = method.getIsLogin() ? method.getUserImage() : null;
+        if (image != null && !image.trim().isEmpty()) {
+            Glide.with(requireActivity().getApplicationContext())
+                    .load(image)
+                    .placeholder(R.drawable.img_user)
+                    .into(viewHome.ivComposerAvatar);
+        }
+
+        viewHome.llComposeOpen.setOnClickListener(v -> openComposer(null));
+        viewHome.llComposeText.setOnClickListener(v -> openComposer(null));
+        viewHome.llComposePhoto.setOnClickListener(v -> openComposer("photo"));
+        viewHome.llComposeVideo.setOnClickListener(v -> openComposer("video"));
+    }
+
+    /** Posting needs an account, so the composer is login-gated like uploads. */
+    private void openComposer(String attachType) {
+        if (!method.getIsLogin()) {
+            Toast.makeText(requireActivity(), getString(R.string.login_require), Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(requireActivity(), LoginActivity.class));
+            return;
+        }
+        Intent intent = new Intent(requireActivity(), MediaUploadActivity.class);
+        if (attachType != null) {
+            intent.putExtra(MediaUploadActivity.EXTRA_ATTACH_TYPE, attachType);
+        }
+        startActivity(intent);
     }
 
     /**

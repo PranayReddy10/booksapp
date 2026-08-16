@@ -41,21 +41,34 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<HomeFeedAdapter.ViewHo
 
         String thumb = item.getThumb_url();
         if (thumb == null || thumb.isEmpty()) thumb = item.getFile_url();
-        Glide.with(activity.getApplicationContext())
-                .load(thumb)
-                .placeholder(R.drawable.placeholder_portable)
-                .into(holder.binding.ivHomeFeed);
+        boolean hasMedia = thumb != null && !thumb.trim().isEmpty();
+
+        if (hasMedia) {
+            holder.binding.ivHomeFeed.setVisibility(View.VISIBLE);
+            Glide.with(activity.getApplicationContext())
+                    .load(thumb)
+                    .placeholder(R.drawable.placeholder_portable)
+                    .into(holder.binding.ivHomeFeed);
+        } else {
+            // Text post: no image, so the tile is the words on a tinted card.
+            holder.binding.ivHomeFeed.setVisibility(View.GONE);
+        }
 
         // Play badge for video posts.
         boolean isVideo = "reel".equalsIgnoreCase(item.getMedia_type())
                 || "video".equalsIgnoreCase(item.getMedia_type());
-        holder.binding.ivHomeFeedPlay.setVisibility(isVideo ? View.VISIBLE : View.GONE);
+        holder.binding.ivHomeFeedPlay.setVisibility(isVideo && hasMedia ? View.VISIBLE : View.GONE);
 
         // Caption over the scrim; hidden when the post has no title.
         String title = item.getTitle();
         if (title != null && !title.trim().isEmpty()) {
             holder.binding.tvHomeFeedTitle.setVisibility(View.VISIBLE);
             holder.binding.tvHomeFeedTitle.setText(title.trim());
+            // With no image behind it the text owns the tile.
+            holder.binding.tvHomeFeedTitle.setMaxLines(hasMedia ? 2 : 6);
+            holder.binding.tvHomeFeedTitle.setTextColor(
+                    androidx.core.content.ContextCompat.getColor(activity,
+                            hasMedia ? R.color.white : R.color.gray_2));
         } else {
             holder.binding.tvHomeFeedTitle.setVisibility(View.GONE);
         }

@@ -75,14 +75,23 @@ public class MediaPostAdapter extends RecyclerView.Adapter<MediaPostAdapter.View
         });
 
         // Media — videos show their poster with a play badge, photos the file itself.
+        // A post with neither is a text post: the words carry the card on their own.
         boolean isVideo = "video".equalsIgnoreCase(item.getMedia_type());
         String thumb = item.getThumb_url();
         String load = (thumb != null && !thumb.isEmpty()) ? thumb : item.getFile_url();
-        Glide.with(activity.getApplicationContext())
-                .load(load)
-                .placeholder(R.color.feed_media_bg)
-                .into(b.ivMedia);
-        b.ivPlay.setVisibility(isVideo ? View.VISIBLE : View.GONE);
+        boolean hasMedia = load != null && !load.trim().isEmpty();
+
+        if (hasMedia) {
+            b.cvMedia.setVisibility(View.VISIBLE);
+            Glide.with(activity.getApplicationContext())
+                    .load(load)
+                    .placeholder(R.color.feed_media_bg)
+                    .into(b.ivMedia);
+            b.ivPlay.setVisibility(isVideo ? View.VISIBLE : View.GONE);
+        } else {
+            b.cvMedia.setVisibility(View.GONE);
+            b.ivPlay.setVisibility(View.GONE);
+        }
 
         View.OnClickListener openPost = v -> {
             int pos = holder.getBindingAdapterPosition();
@@ -127,11 +136,13 @@ public class MediaPostAdapter extends RecyclerView.Adapter<MediaPostAdapter.View
             b.llViews.setVisibility(View.GONE);
         }
 
-        // Caption
+        // Caption. Without media it is the post itself, so it gets more room and size.
         String caption = item.getTitle();
         if (caption != null && !caption.trim().isEmpty()) {
             b.tvCaption.setVisibility(View.VISIBLE);
             b.tvCaption.setText(caption);
+            b.tvCaption.setMaxLines(hasMedia ? 2 : 12);
+            b.tvCaption.setTextSize(android.util.TypedValue.COMPLEX_UNIT_SP, hasMedia ? 14f : 17f);
         } else {
             b.tvCaption.setVisibility(View.GONE);
         }

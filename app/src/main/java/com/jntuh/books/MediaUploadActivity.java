@@ -58,6 +58,9 @@ public class MediaUploadActivity extends AppCompatActivity {
     private static final String KEY_MEDIA_NAME = "state_media_name";
     private static final String KEY_IS_VIDEO = "state_is_video";
 
+    /** Optional: "photo" or "video" — which attachment the picker should offer. */
+    public static final String EXTRA_ATTACH_TYPE = "attach_type";
+
     private ActivityResultLauncher<Intent> mediaPicker;
 
     @Override
@@ -70,15 +73,26 @@ public class MediaUploadActivity extends AppCompatActivity {
         method.forceRTLIfSupported();
         progressDialog = new ProgressDialog(this, R.style.MyAlertDialogStyle);
 
-        binding.toolbarMain.tvToolbarTitle.setText(getString(R.string.lbl_upload_media));
-        binding.toolbarMain.ivSearch.setVisibility(View.GONE);
-        binding.toolbarMain.imageFilter.setVisibility(View.GONE);
-        binding.toolbarMain.imageArrowBack.setOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
+        binding.ivComposeClose.setOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
+
+        // The composer shows who is posting, like the feed card it becomes.
+        String avatar = method.getUserImage();
+        if (avatar != null && !avatar.trim().isEmpty()) {
+            Glide.with(getApplicationContext()).load(avatar)
+                    .placeholder(R.drawable.img_user)
+                    .into(binding.ivComposeAvatar);
+        }
 
         if (savedInstanceState != null) {
             mediaPath = savedInstanceState.getString(KEY_MEDIA, null);
             mediaName = savedInstanceState.getString(KEY_MEDIA_NAME, null);
             isVideo = savedInstanceState.getBoolean(KEY_IS_VIDEO, false);
+        }
+
+        // Home's photo / video chips arrive with the type already chosen.
+        String attachType = getIntent().getStringExtra(EXTRA_ATTACH_TYPE);
+        if (savedInstanceState == null && attachType != null) {
+            isVideo = "video".equalsIgnoreCase(attachType);
         }
 
         registerPicker();
@@ -89,10 +103,7 @@ public class MediaUploadActivity extends AppCompatActivity {
             if (nowVideo != isVideo) {
                 // Switching type invalidates any previously picked file.
                 isVideo = nowVideo;
-                mediaPath = null;
-                mediaName = null;
-                binding.ivMediaPreview.setVisibility(View.GONE);
-                binding.tvMediaName.setVisibility(View.GONE);
+                clearMedia();
             }
         });
 
@@ -102,6 +113,8 @@ public class MediaUploadActivity extends AppCompatActivity {
             intent.addCategory(Intent.CATEGORY_OPENABLE);
             mediaPicker.launch(Intent.createChooser(intent, getString(R.string.lbl_pick_media)));
         });
+
+        binding.ivRemoveMedia.setOnClickListener(v -> clearMedia());
 
         binding.btnSubmitMedia.setOnClickListener(v -> validateAndSubmit());
     }
@@ -114,11 +127,19 @@ public class MediaUploadActivity extends AppCompatActivity {
         outState.putBoolean(KEY_IS_VIDEO, isVideo);
     }
 
+    /** Drop the attachment; the post reverts to text only. */
+    private void clearMedia() {
+        mediaPath = null;
+        mediaName = null;
+        binding.flMediaPreview.setVisibility(View.GONE);
+        binding.tvMediaName.setVisibility(View.GONE);
+    }
+
     private void restorePreview() {
         binding.rbVideo.setChecked(isVideo);
         binding.rbPhoto.setChecked(!isVideo);
         if (mediaPath != null && new File(mediaPath).exists()) {
-            binding.ivMediaPreview.setVisibility(View.VISIBLE);
+            binding.flMediaPreview.setVisibility(View.VISIBLE);
             Glide.with(getApplicationContext()).load(new File(mediaPath))
                     .into(binding.ivMediaPreview);
         }
@@ -186,8 +207,10 @@ public class MediaUploadActivity extends AppCompatActivity {
         String title = binding.edtTitle.getText().toString().trim();
         String description = binding.edtDescription.getText().toString().trim();
 
-        if (mediaPath == null) {
-            Toast.makeText(this, getString(R.string.please_pick_media), Toast.LENGTH_SHORT).show();
+        // Text-only posts are allowed; an empty post is not.
+        if (mediaPath == null && description.isEmpty() && title.isEmpty()) {
+            binding.edtDescription.requestFocus();
+            Toast.makeText(this, getString(R.string.please_write_something), Toast.LENGTH_SHORT).show();
             return;
         }
         if (!method.isNetworkAvailable()) {
@@ -204,21 +227,26 @@ public class MediaUploadActivity extends AppCompatActivity {
 
         JsonObject jsObj = (JsonObject) new Gson().toJsonTree(new API(MediaUploadActivity.this));
         jsObj.addProperty("user_id", method.getUserId());
-        jsObj.addProperty("media_type", isVideo ? "video" : "photo");
+        // No attachment → a text post; the server stores it without a file.
+        String mediaType = (mediaPath == null) ? "text" : (isVideo ? "video" : "photo");
+        jsObj.addProperty("media_type", mediaType);
         jsObj.addProperty("title", title);
         jsObj.addProperty("description", description);
 
         RequestBody dataBody = RequestBody.create(
                 MediaType.parse("multipart/form-data"), API.toBase64(jsObj.toString()));
 
-        File mediaFile = new File(mediaPath);
-        RequestBody mrb = RequestBody.create(MediaType.parse("multipart/form-data"), mediaFile);
-        MultipartBody.Part mediaPart =
-                MultipartBody.Part.createFormData("media_file", mediaFile.getName(), mrb);
+        // A text post carries no file; Retrofit omits null parts.
+        MultipartBody.Part mediaPart = null;
+        if (mediaPath != null) {
+            File mediaFile = new File(mediaPath);
+            RequestBody mrb = RequestBody.create(MediaType.parse("multipart/form-data"), mediaFile);
+            mediaPart = MultipartBody.Part.createFormData("media_file", mediaFile.getName(), mrb);
+        }
 
         // Optional: generate + attach a thumbnail for videos.
         MultipartBody.Part thumbPart = null;
-        if (isVideo) {
+        if (isVideo && mediaPath != null) {
             File thumbFile = generateThumbFile(mediaPath);
             if (thumbFile != null) {
                 RequestBody trb = RequestBody.create(MediaType.parse("multipart/form-data"), thumbFile);
