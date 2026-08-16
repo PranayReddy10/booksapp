@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/task_screen_bg">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!-- Toolbar -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/task_surface"
+            android:elevation="3dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="12dp">
+
+            <ImageView
+                android:id="@+id/ivBack"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/task_back"
+                android:padding="9dp"
+                android:src="@drawable/ic_result_back" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/opensansromanextrabold"
+                android:text="@string/task_title_screen"
+                android:textColor="@color/task_title"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:id="@+id/ivTaskSettings"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/task_perm_title"
+                android:padding="10dp"
+                android:src="@drawable/ic_task_bell"
+                app:tint="@color/task_muted" />
+        </LinearLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:fillViewport="true"
+            android:overScrollMode="never">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="90dp">
+
+                <!-- Shown only when the OS is set up to swallow our reminders -->
+                <LinearLayout
+                    android:id="@+id/llPermBanner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="14dp"
+                    android:background="@drawable/bg_task_banner"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="14dp"
+                    android:paddingVertical="12dp"
+                    android:visibility="gone"
+                    tools:visibility="visible">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_task_warning"
+                        app:tint="@color/task_overdue"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        style="@style/txtOpenSansRomanSemiBold"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:text="@string/task_perm_banner"
+                        android:textColor="@color/task_overdue"
+                        android:textSize="12sp" />
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:src="@drawable/ic_task_chevron_right"
+                        app:tint="@color/task_overdue"
+                        tools:ignore="ContentDescription" />
+                </LinearLayout>
+
+                <!-- Daily goal card -->
+                <LinearLayout
+                    android:id="@+id/llGoalCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="14dp"
+                    android:background="@drawable/bg_task_card"
+                    android:elevation="1dp"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="18dp"
+                    android:paddingVertical="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/txt_OpenSansRomanExtraBold"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/task_goal_title"
+                            android:textColor="@color/task_title"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:id="@+id/tvGoalCount"
+                            style="@style/txt_OpenSansRomanExtraBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/app_bg_orange"
+                            android:textSize="15sp"
+                            tools:text="6/10 tasks" />
+                    </LinearLayout>
+
+                    <ProgressBar
+                        android:id="@+id/pbGoal"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="8dp"
+                        android:layout_marginTop="12dp"
+                        android:max="100"
+                        android:progress="60"
+                        android:progressDrawable="@drawable/bg_task_progress" />
+
+                    <TextView
+                        android:id="@+id/tvGoalMsg"
+                        style="@style/txtOpenSansRomanSemiBold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:textColor="@color/task_muted"
+                        android:textSize="12sp"
+                        tools:text="Just 4 tasks to go." />
+
+                    <TextView
+                        android:id="@+id/tvStreak"
+                        style="@style/txtOpenSansRomanSemiBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/bg_task_pill"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="4dp"
+                        android:textColor="@color/app_bg_orange"
+                        android:textSize="11sp"
+                        android:visibility="gone"
+                        tools:text="5 day streak"
+                        tools:visibility="visible" />
+                </LinearLayout>
+
+                <!-- Tabs -->
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tabTasks"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@android:color/transparent"
+                    app:tabGravity="fill"
+                    app:tabIndicatorColor="@color/tab_text_indicator"
+                    app:tabIndicatorFullWidth="false"
+                    app:tabMode="fixed"
+                    app:tabSelectedTextColor="@color/tab_text_select"
+                    app:tabTextColor="@color/tab_text_normal" />
+
+                <!-- Date strip: only meaningful for the Today tab -->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvDates"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:clipToPadding="false"
+                    android:orientation="horizontal"
+                    android:overScrollMode="never"
+                    android:paddingHorizontal="16dp"
+                    tools:listitem="@layout/row_task_date" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvTasks"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:nestedScrollingEnabled="false"
+                    android:overScrollMode="never"
+                    tools:listitem="@layout/row_task" />
+
+                <!-- Empty state -->
+                <LinearLayout
+                    android:id="@+id/llEmpty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="40dp"
+                    android:visibility="gone"
+                    tools:visibility="visible">
+
+                    <FrameLayout
+                        android:layout_width="104dp"
+                        android:layout_height="104dp"
+                        android:background="@drawable/bg_task_empty_circle">
+
+                        <ImageView
+                            android:layout_width="46dp"
+                            android:layout_height="46dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_task_bell"
+                            app:tint="@color/app_bg_orange"
+                            tools:ignore="ContentDescription" />
+                    </FrameLayout>
+
+                    <TextView
+                        android:id="@+id/tvEmptyTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="18dp"
+                        android:fontFamily="@font/opensansromanextrabold"
+                        android:text="@string/task_empty_today"
+                        android:textColor="@color/task_title"
+                        android:textSize="17sp" />
+
+                    <TextView
+                        style="@style/txtOpenSansRomanSemiBold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center"
+                        android:text="@string/task_empty_desc"
+                        android:textColor="@color/task_muted"
+                        android:textSize="13sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/fabAddTask"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="18dp"
+        android:backgroundTint="@color/app_bg_orange"
+        android:text="@string/task_add"
+        android:textColor="@color/white"
+        app:icon="@drawable/ic_task_plus"
+        app:iconTint="@color/white" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

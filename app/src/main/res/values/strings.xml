@@ -628,4 +628,109 @@
     <string name="result_sem_locked_tag">Verified · locked</string>
     <string name="result_from_profile">FROM YOUR PROFILE</string>
     <string name="result_sem_locked_note">Verified semesters are locked. You can still add or edit other semesters.</string>
+
+    <!-- Tasks & reminders -->
+    <string name="lbl_qa_tasks">My Tasks</string>
+    <string name="task_title_screen">My Tasks</string>
+    <string name="task_add">Add task</string>
+    <string name="task_edit">Edit task</string>
+    <string name="task_new">New task</string>
+    <string name="task_back">Back</string>
+    <string name="task_save">Save task</string>
+    <string name="task_delete">Delete</string>
+
+    <string name="task_tab_today">Today</string>
+    <string name="task_tab_upcoming">Upcoming</string>
+    <string name="task_tab_done">Completed</string>
+
+    <string name="task_goal_title">Daily goal</string>
+    <string name="task_goal_progress">%1$d/%2$d tasks</string>
+    <string name="task_goal_all_done">All done for today. Nice work.</string>
+    <string name="task_goal_remaining">Just %1$d to go.</string>
+    <string name="task_goal_none">Nothing due today.</string>
+    <string name="task_streak">%1$d day streak</string>
+
+    <string name="task_empty_today">No tasks for this day</string>
+    <string name="task_empty_upcoming">Nothing scheduled yet</string>
+    <string name="task_empty_done">No completed tasks yet</string>
+    <string name="task_empty_desc">Add a reminder for your next class, assignment or reading session.</string>
+
+    <string name="task_hint_title">What do you need to do?</string>
+    <string name="task_hint_notes">Notes (optional)</string>
+    <string name="task_label_category">Category</string>
+    <string name="task_label_when">Due date &amp; time</string>
+    <string name="task_label_repeat">Repeat</string>
+    <string name="task_label_remind">Remind me</string>
+    <string name="task_label_lead">Alert before</string>
+    <string name="task_label_snooze">Snooze for</string>
+    <string name="task_label_tone">Alarm tone</string>
+    <string name="task_tone_default">Device default alarm</string>
+    <string name="task_tone_pick">Change</string>
+
+    <string name="task_cat_study">Study</string>
+    <string name="task_cat_exam">Exam</string>
+    <string name="task_cat_assignment">Assignment</string>
+    <string name="task_cat_reading">Reading</string>
+    <string name="task_cat_result">Result</string>
+    <string name="task_cat_other">Other</string>
+
+    <string name="task_repeat_once">Once</string>
+    <string name="task_repeat_daily">Daily</string>
+    <string name="task_repeat_weekdays">Weekdays</string>
+    <string name="task_repeat_weekly">Weekly</string>
+    <string name="task_repeat_monthly">Monthly</string>
+
+    <string name="task_remind_none">No reminder</string>
+    <string name="task_remind_notification">Notification</string>
+    <string name="task_remind_alarm">Alarm (full screen + sound)</string>
+
+    <string name="task_lead_none">On time</string>
+    <string name="task_lead_5">5 minutes before</string>
+    <string name="task_lead_15">15 minutes before</string>
+    <string name="task_lead_30">30 minutes before</string>
+    <string name="task_lead_60">1 hour before</string>
+    <string name="task_lead_1440">1 day before</string>
+
+    <string name="task_snooze_5">5 minutes</string>
+    <string name="task_snooze_10">10 minutes</string>
+    <string name="task_snooze_15">15 minutes</string>
+    <string name="task_snooze_30">30 minutes</string>
+
+    <string name="task_action_done">Done</string>
+    <string name="task_action_snooze">Snooze</string>
+    <string name="task_action_dismiss">Dismiss</string>
+    <string name="task_marked_done">Task completed</string>
+    <string name="task_snoozed">Snoozed for %1$d minutes</string>
+    <string name="task_deleted">Task deleted</string>
+    <string name="task_saved">Reminder set</string>
+    <string name="task_saved_no_remind">Task saved</string>
+    <string name="task_need_title">Give the task a title first</string>
+    <string name="task_need_future">Pick a time in the future</string>
+    <string name="task_overdue_tag">Overdue</string>
+    <string name="task_today_tag">Today</string>
+    <string name="task_tomorrow_tag">Tomorrow</string>
+    <string name="task_delete_confirm">Delete this task?</string>
+    <string name="task_delete_confirm_desc">The reminder will be cancelled. This cannot be undone.</string>
+    <string name="task_cancel">Cancel</string>
+
+    <string name="task_channel_reminder">Task reminders</string>
+    <string name="task_channel_reminder_desc">Notifications for your study tasks and deadlines</string>
+    <string name="task_channel_alarm">Task alarms</string>
+    <string name="task_channel_alarm_desc">Full-screen alarms that ring until you dismiss them</string>
+
+    <string name="task_perm_title">Let reminders reach you</string>
+    <string name="task_perm_exact">Allow exact alarms</string>
+    <string name="task_perm_exact_desc">Without this, reminders can arrive minutes late.</string>
+    <string name="task_perm_fullscreen">Allow full-screen alarms</string>
+    <string name="task_perm_fullscreen_desc">Lets an alarm cover the lock screen like a clock app.</string>
+    <string name="task_perm_battery">Battery settings</string>
+    <string name="task_perm_battery_desc">Some phones stop alarms to save power. Exempt this app if reminders go missing.</string>
+    <string name="task_perm_open">Open</string>
+    <string name="task_perm_granted">Allowed</string>
+    <string name="task_perm_later">Not now</string>
+    <string name="task_perm_banner">Reminders may not fire reliably. Tap to fix.</string>
+
+    <string name="alarm_snooze">Snooze</string>
+    <string name="alarm_dismiss">Dismiss</string>
+    <string name="alarm_done">Mark done</string>
 </resources>
