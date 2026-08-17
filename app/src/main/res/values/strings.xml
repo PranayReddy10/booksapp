@@ -527,7 +527,20 @@
 
     <!-- Empty / login states -->
     <string name="result_empty_title">No result yet</string>
-    <string name="result_empty_desc">Add your semester-wise marks and grades to build your CGPA report card.</string>
+    <string name="result_empty_desc">Fetch every semester automatically with your hall ticket number, or add your marks yourself.</string>
+
+    <!-- Auto-fetch from the university results feed -->
+    <string name="result_fetch_auto">Fetch my results</string>
+    <string name="result_enter_manually">Enter manually</string>
+    <string name="result_fetch_hall_title">Your hall ticket number</string>
+    <string name="result_fetch_hall_desc">We will pull all your published semester results from the university.</string>
+    <string name="result_fetch_hall_hint">e.g. 20XX1A0501</string>
+    <string name="result_fetch_working">Fetching your results from the university…</string>
+    <string name="result_fetch_queued">The university feed is still preparing your results. Trying again…</string>
+    <string name="result_fetch_slow">Still fetching. Please try again in a minute, or enter your marks manually.</string>
+    <string name="result_fetch_done">Results fetched successfully</string>
+    <string name="result_fetch_invalid">Enter a valid 10-character hall ticket number</string>
+    <string name="result_fetch_failed">Could not fetch your results. You can enter them manually.</string>
     <string name="result_login_needed">Please log in to view and manage your results.</string>
     <string name="result_report_generating">Generating your report card…</string>
 

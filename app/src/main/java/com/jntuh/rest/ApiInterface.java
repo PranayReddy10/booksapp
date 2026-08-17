@@ -396,6 +396,15 @@ public interface ApiInterface {
     @FormUrlEncoded
     Call<ResultSaveRP> saveResult(@Field("data") String data);
 
+    /**
+     * Pull the student's mark sheet from the university feed by hall ticket.
+     * Answers state = ready | queued | error; "queued" means the upstream is
+     * still scraping, so the caller polls rather than failing.
+     */
+    @POST("result_fetch")
+    @FormUrlEncoded
+    Call<ResultSaveRP> fetchResult(@Field("data") String data);
+
     @POST("report_generate")
     @FormUrlEncoded
     Call<ReportCardRP> generateReportCard(@Field("data") String data);

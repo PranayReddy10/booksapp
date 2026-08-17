@@ -51,6 +51,12 @@ public class MyResultsFragment extends Fragment {
     private SemesterAdapter adapter;
     private ResultItem current;
 
+    /** Auto-fetch polling: the upstream queues a scrape on the first request. */
+    private static final int MAX_FETCH_ATTEMPTS = 4;
+    private static final long FETCH_RETRY_MS = 6000L;
+    private final android.os.Handler retry = new android.os.Handler(android.os.Looper.getMainLooper());
+    private boolean fetching;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         v = FragmentMyResultsBinding.inflate(inflater, container, false);
@@ -70,6 +76,12 @@ public class MyResultsFragment extends Fragment {
         v.btnEditResult.setOnClickListener(view -> openEditor());
         v.btnViewReport.setOnClickListener(view -> openReport());
 
+        // Auto-fetch. From the empty state we don't know the hall ticket yet, so
+        // ask; from the summary card we already have it.
+        v.btnFetchResultAuto.setOnClickListener(view -> askHallTicket());
+        v.btnSyncResult.setOnClickListener(view ->
+                startFetch(current != null ? current.getHall_ticket_no() : null, 1));
+
         showState(State.LOADING);
         if (method.getIsLogin()) {
             if (method.isNetworkAvailable()) {
@@ -88,7 +100,8 @@ public class MyResultsFragment extends Fragment {
     public void onResume() {
         super.onResume();
         // Refresh after returning from the editor so locked/verified stay in sync.
-        if (method != null && method.getIsLogin() && method.isNetworkAvailable() && v != null) {
+        // Skipped mid-fetch, which would otherwise wipe the progress message.
+        if (!fetching && method != null && method.getIsLogin() && method.isNetworkAvailable() && v != null) {
             loadResult();
         }
     }
@@ -110,6 +123,130 @@ public class MyResultsFragment extends Fragment {
             i.putExtra(ReportCardActivity.EXTRA_SHARE_URL, current.getShare_url());
         }
         startActivity(i);
+    }
+
+    /**
+     * The hall ticket is all the university feed needs. The server still prefers
+     * the roll number already on the profile, so what is typed here only matters
+     * the first time.
+     */
+    private void askHallTicket() {
+        if (getActivity() == null) return;
+        if (!method.getIsLogin()) { showState(State.LOGIN); return; }
+        if (!method.isNetworkAvailable()) { method.alertBox(getString(R.string.internet_connection)); return; }
+
+        final android.widget.EditText input = new android.widget.EditText(requireActivity());
+        input.setHint(R.string.result_fetch_hall_hint);
+        input.setSingleLine(true);
+        input.setAllCaps(true);
+        input.setFilters(new android.text.InputFilter[]{new android.text.InputFilter.LengthFilter(10)});
+        if (current != null && current.getHall_ticket_no() != null) {
+            input.setText(current.getHall_ticket_no().trim());
+        }
+
+        int pad = (int) (20 * getResources().getDisplayMetrics().density);
+        android.widget.FrameLayout wrap = new android.widget.FrameLayout(requireActivity());
+        wrap.setPadding(pad, pad / 2, pad, 0);
+        wrap.addView(input);
+
+        new androidx.appcompat.app.AlertDialog.Builder(requireActivity())
+                .setTitle(R.string.result_fetch_hall_title)
+                .setMessage(R.string.result_fetch_hall_desc)
+                .setView(wrap)
+                .setPositiveButton(R.string.result_fetch_auto, (d, w) ->
+                        startFetch(input.getText().toString(), 1))
+                .setNegativeButton(android.R.string.cancel, null)
+                .show();
+    }
+
+    /**
+     * One round of result_fetch. The upstream scrapes the university site on a
+     * cache miss and answers "queued" meanwhile, so a queued reply is retried a
+     * few times before we send the student to the manual editor.
+     */
+    private void startFetch(String hallTicket, int attempt) {
+        if (getActivity() == null || v == null) return;
+
+        String hall = hallTicket == null ? "" : hallTicket.trim().toUpperCase(java.util.Locale.US);
+        if (hall.length() != 10) {
+            method.alertBox(getString(R.string.result_fetch_invalid));
+            return;
+        }
+        if (!method.isNetworkAvailable()) {
+            method.alertBox(getString(R.string.internet_connection));
+            return;
+        }
+
+        fetching = true;
+        setFetchStatus(getString(attempt == 1 ? R.string.result_fetch_working : R.string.result_fetch_queued));
+
+        JsonObject jsObj = (JsonObject) new Gson().toJsonTree(new API(requireActivity()));
+        jsObj.addProperty("user_id", method.getUserId());
+        jsObj.addProperty("hall_ticket_no", hall);
+
+        ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
+        Call<com.jntuh.response.ResultSaveRP> call = api.fetchResult(API.toBase64(jsObj.toString()));
+        call.enqueue(new Callback<com.jntuh.response.ResultSaveRP>() {
+            @Override
+            public void onResponse(@NotNull Call<com.jntuh.response.ResultSaveRP> call,
+                                   @NotNull Response<com.jntuh.response.ResultSaveRP> resp) {
+                if (getActivity() == null || v == null) return;
+
+                com.jntuh.item.SimpleMsg msg = null;
+                com.jntuh.response.ResultSaveRP body = resp.body();
+                if (body != null && body.getEbookApp() != null && !body.getEbookApp().isEmpty()) {
+                    msg = body.getEbookApp().get(0);
+                }
+                if (msg == null) {
+                    finishFetch(getString(R.string.result_fetch_failed));
+                    return;
+                }
+
+                String state = msg.getState() == null ? "" : msg.getState();
+                if ("queued".equals(state)) {
+                    if (attempt < MAX_FETCH_ATTEMPTS) {
+                        setFetchStatus(getString(R.string.result_fetch_queued));
+                        retry.postDelayed(() -> startFetch(hall, attempt + 1), FETCH_RETRY_MS);
+                    } else {
+                        finishFetch(getString(R.string.result_fetch_slow));
+                    }
+                    return;
+                }
+
+                if ("ready".equals(state)) {
+                    fetching = false;
+                    setFetchStatus(null);
+                    method.alertBox(nn(msg.getMsg(), getString(R.string.result_fetch_done)));
+                    loadResult();
+                    return;
+                }
+
+                finishFetch(nn(msg.getMsg(), getString(R.string.result_fetch_failed)));
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<com.jntuh.response.ResultSaveRP> call, @NotNull Throwable t) {
+                if (getActivity() == null || v == null) return;
+                Log.e("result_fetch_fail", t.toString());
+                finishFetch(getString(R.string.result_fetch_failed));
+            }
+        });
+    }
+
+    private void finishFetch(String message) {
+        fetching = false;
+        setFetchStatus(message);
+        // The manual editor stays one tap away underneath.
+    }
+
+    private void setFetchStatus(String text) {
+        if (v == null) return;
+        if (text == null || text.trim().isEmpty()) {
+            v.tvFetchStatus.setVisibility(View.GONE);
+        } else {
+            v.tvFetchStatus.setText(text);
+            v.tvFetchStatus.setVisibility(View.VISIBLE);
+        }
     }
 
     private void loadResult() {
@@ -211,6 +348,8 @@ public class MyResultsFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        retry.removeCallbacksAndMessages(null);
+        fetching = false;
         v = null;
     }
 }

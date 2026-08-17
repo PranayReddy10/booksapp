@@ -22,6 +22,14 @@ public class SimpleMsg implements Serializable {
     @SerializedName("locked")
     private int locked;
 
+    /** result_fetch only: "ready" | "queued" | "error". */
+    @SerializedName("state")
+    private String state;
+
+    /** result_fetch only: 1 when the app should offer the manual editor. */
+    @SerializedName("can_enter_manually")
+    private int can_enter_manually;
+
     public String getResult_id() {
         return result_id;
     }
@@ -52,5 +60,21 @@ public class SimpleMsg implements Serializable {
 
     public void setLocked(int locked) {
         this.locked = locked;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public int getCan_enter_manually() {
+        return can_enter_manually;
+    }
+
+    public void setCan_enter_manually(int can_enter_manually) {
+        this.can_enter_manually = can_enter_manually;
     }
 }

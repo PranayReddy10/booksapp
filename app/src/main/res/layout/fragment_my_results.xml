@@ -2,6 +2,7 @@
 <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/swipeResults"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -287,6 +288,25 @@
                             android:fontFamily="@font/opensansromanbold" />
                     </LinearLayout>
 
+                    <!-- Re-pull from the university feed; unlocked semesters refresh. -->
+                    <LinearLayout
+                        android:id="@+id/btnSyncResult"
+                        android:layout_width="52dp"
+                        android:layout_height="52dp"
+                        android:layout_marginStart="10dp"
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        android:background="@drawable/bg_result_btn_outline"
+                        android:foreground="?attr/selectableItemBackground">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_result_refresh"
+                            app:tint="@color/result_brand_blue"
+                            android:contentDescription="@string/result_fetch_auto" />
+                    </LinearLayout>
+
                     <LinearLayout
                         android:id="@+id/btnEditResult"
                         android:layout_width="52dp"
@@ -370,8 +390,10 @@
                     android:textSize="13sp"
                     android:fontFamily="@font/opensansromansemibold" />
 
+                <!-- Auto-fetch is the primary path: the hall ticket is enough.
+                     Typing six semesters by hand stays available underneath. -->
                 <LinearLayout
-                    android:id="@+id/btnAddResultEmpty"
+                    android:id="@+id/btnFetchResultAuto"
                     android:layout_width="wrap_content"
                     android:layout_height="52dp"
                     android:layout_marginTop="26dp"
@@ -385,14 +407,56 @@
                         android:layout_width="18dp"
                         android:layout_height="18dp"
                         android:layout_marginEnd="8dp"
+                        android:src="@drawable/ic_result_refresh"
+                        app:tint="@color/white"
+                        android:contentDescription="@string/result_fetch_auto" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/result_fetch_auto"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/opensansromanbold" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvFetchStatus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:gravity="center"
+                    android:textColor="@color/gray_2"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/opensansromansemibold"
+                    android:visibility="gone"
+                    tools:text="Fetching your results…"
+                    tools:visibility="visible" />
+
+                <LinearLayout
+                    android:id="@+id/btnAddResultEmpty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="52dp"
+                    android:layout_marginTop="12dp"
+                    android:paddingHorizontal="28dp"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:background="@drawable/bg_result_btn_outline"
+                    android:foreground="?attr/selectableItemBackground">
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:layout_marginEnd="8dp"
                         android:src="@drawable/ic_result_add"
+                        app:tint="@color/result_brand_blue"
                         android:contentDescription="@string/result_add_my_result" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/result_add_my_result"
-                        android:textColor="@color/white"
+                        android:text="@string/result_enter_manually"
+                        android:textColor="@color/result_brand_blue"
                         android:textSize="14sp"
                         android:fontFamily="@font/opensansromanbold" />
                 </LinearLayout>
