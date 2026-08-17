@@ -297,14 +297,14 @@ public class MediaUploadActivity extends AppCompatActivity {
         RequestBody dataBody = RequestBody.create(
                 MediaType.parse("multipart/form-data"), API.toBase64(jsObj.toString()));
 
-        // First file goes as "media_file" (what the server reads today); any further
-        // photos ride along as "media_file[]" for a server that understands them.
+        // Cover goes as "media_file"; the rest as "extra_files[]" — a separate field,
+        // because PHP cannot hold a scalar media_file and media_file[] in one request.
         java.util.List<MultipartBody.Part> parts = new java.util.ArrayList<>();
         for (int i = 0; i < mediaPaths.size(); i++) {
             File f = new File(mediaPaths.get(i));
             RequestBody rb = RequestBody.create(MediaType.parse("multipart/form-data"), f);
             parts.add(MultipartBody.Part.createFormData(
-                    i == 0 ? "media_file" : "media_file[]", f.getName(), rb));
+                    i == 0 ? "media_file" : "extra_files[]", f.getName(), rb));
         }
 
         // Optional: generate + attach a thumbnail for videos.
