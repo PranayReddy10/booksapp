@@ -24,8 +24,8 @@ android {
         applicationId "com.jntuh.books"
         minSdk 23
         targetSdk 35
-        versionCode 42
-        versionName "1.42"
+        versionCode 44
+        versionName "1.44"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

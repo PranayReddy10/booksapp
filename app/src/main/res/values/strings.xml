@@ -197,7 +197,7 @@
     <string name="mark_all_read">Mark all read</string>
     <string name="cant_open_link">Couldn\'t open the link</string>
     <string name="share_via">Share via</string>
-    <string name="please_enter_phone">Please enter phone no</string>
+
 
     <string name="lbl_next">Next</string>
     <string name="intro_title_1">Only Books Can Help You</string>
@@ -473,7 +473,7 @@
     <string name="lbl_view_book_fmt">View book: %1$s</string>
     <string name="lbl_complete_profile">Complete your profile</string>
     <string name="lbl_complete_profile_sub">Select your university, department and college to continue.</string>
-    <string name="lbl_continue">Continue</string>
+
     <string name="lbl_complete_all_fields">Please select all fields to continue</string>
     <string name="lbl_play_video">Play video</string>
     <string name="lbl_home">Home</string>
