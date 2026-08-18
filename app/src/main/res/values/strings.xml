@@ -526,6 +526,7 @@
     <string name="result_col_ext">Ext</string>
     <string name="result_col_total">Total</string>
     <string name="result_from_university">Fetched from the university — read-only</string>
+    <string name="msg_roll_locked">Your hall ticket number is linked to your results and cannot be changed. Contact support if it is wrong.</string>
 
     <!-- Locked -->
     <string name="result_locked_short">Locked</string>

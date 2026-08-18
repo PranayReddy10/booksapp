@@ -198,8 +198,17 @@ public class EditProfileActivity extends AppCompatActivity {
 
         setupCascadeSpinners();
 
-        // Editable extras.
+        // Editable extras. The hall ticket is set once: results are keyed on it,
+        // so changing it would orphan this student's marks. Still enterable while
+        // the account has none, for profiles that predate it being collected.
         if (uRoll != null) viewEditProfile.edtRoll.setText(uRoll);
+        boolean rollLocked = uRoll != null && !uRoll.trim().isEmpty();
+        viewEditProfile.edtRoll.setEnabled(!rollLocked);
+        viewEditProfile.edtRoll.setFocusable(!rollLocked);
+        viewEditProfile.edtRoll.setFocusableInTouchMode(!rollLocked);
+        viewEditProfile.edtRoll.setTextColor(androidx.core.content.ContextCompat.getColor(
+                this, rollLocked ? R.color.gray_trans_99 : R.color.gray));
+        viewEditProfile.tvRollLockedNote.setVisibility(rollLocked ? View.VISIBLE : View.GONE);
         setupAcademicSpinner(viewEditProfile.spProfileRegulation, viewEditProfile.edtRegulationOther,
                 R.array.result_regulation_entries, uRegulation);
         setupAcademicSpinner(viewEditProfile.spProfileDegree, viewEditProfile.edtDegreeOther,
