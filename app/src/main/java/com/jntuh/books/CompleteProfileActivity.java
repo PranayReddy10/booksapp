@@ -228,6 +228,13 @@ public class CompleteProfileActivity extends AppCompatActivity {
             return;
         }
         if (lookupInFlight || roll.equals(lookedUpRoll)) return;
+        // The feed only covers JNTUH; other universities fill this in by hand.
+        int uPos = binding.spUniversity.getSelectedItemPosition();
+        String uni = uPos > 0 ? universityList.get(uPos - 1).getUniversity_name() : "";
+        if (uni == null || !uni.toUpperCase(java.util.Locale.US).contains("JNTU")) {
+            setFetchStatus(getString(R.string.msg_reg_lookup_other_uni));
+            return;
+        }
         if (!method.isNetworkAvailable()) {
             method.alertBox(getString(R.string.internet_connection));
             return;
