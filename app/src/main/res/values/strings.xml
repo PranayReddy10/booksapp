@@ -140,6 +140,7 @@
     <string name="lbl_step_1">1</string>
     <string name="lbl_step_2">2</string>
     <string name="lbl_step_3">3</string>
+    <string name="lbl_step_4">4</string>
     <string name="lbl_complete_profile_why">These decide which books, results and updates you see.</string>
 
     <!-- Registration steps -->
@@ -147,14 +148,26 @@
     <string name="lbl_continue">Continue</string>
     <string name="lbl_back">Back</string>
     <string name="lbl_create_account">Create account</string>
-    <string name="lbl_reg_step1_title">What should we call you?</string>
-    <string name="lbl_reg_step1_sub">Your name and gender, so we can set up your profile.</string>
-    <string name="lbl_reg_step2_title">How do we reach you?</string>
-    <string name="lbl_reg_step2_sub">You will sign in with these details.</string>
+    <string name="lbl_reg_step1_title">Create your account</string>
+    <string name="lbl_reg_step1_sub">You will sign in with this email and password.</string>
+    <string name="lbl_reg_step2_title">A bit about you</string>
+    <string name="lbl_reg_step2_sub">Your gender and phone number.</string>
     <string name="lbl_reg_step3_title">Where do you study?</string>
-    <string name="lbl_reg_step3_sub">This decides which books and results you see.</string>
-    <string name="lbl_reg_step4_title">Almost there</string>
-    <string name="lbl_reg_step4_sub">Check your details and create your account.</string>
+    <string name="lbl_reg_step3_sub">Your university and hall ticket number. We will pull the rest for you.</string>
+    <string name="lbl_reg_step4_title">Your details</string>
+    <string name="lbl_reg_step4_sub">Fetched from the university. Correct anything that looks wrong.</string>
+    <string name="lbl_reg_step5_title">Almost there</string>
+    <string name="lbl_reg_step5_sub">Check your details and create your account.</string>
+
+    <!-- Sign-up fields added for the hall-ticket lookup -->
+    <string name="lbl_reg_confirm_pass">Confirm password *</string>
+    <string name="lbl_reg_father">Father\'s name *</string>
+    <string name="lbl_reg_regulation">Regulation (e.g. R18) *</string>
+    <string name="msg_reg_pass_mismatch">Passwords do not match</string>
+    <string name="msg_reg_looking_up">Looking up your details from the university…</string>
+    <string name="msg_reg_lookup_queued">Still looking. Tap Next again in a moment.</string>
+    <string name="msg_reg_lookup_ok">Details found. Check them on the next step.</string>
+    <string name="msg_reg_lookup_manual">We could not find these details — please type them in.</string>
     <string name="lbl_summary_line">%1$s: %2$s</string>
 
     <!-- Home screen -->

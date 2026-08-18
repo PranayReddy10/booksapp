@@ -66,6 +66,7 @@ public class CompleteProfileActivity extends AppCompatActivity {
         setupSpinners();
 
         binding.btnSaveProfile.setOnClickListener(v -> save());
+        binding.btnCpFetch.setOnClickListener(v -> lookupHallTicket());
 
         if (method.isNetworkAvailable()) {
             loadUniversities();
@@ -208,13 +209,117 @@ public class CompleteProfileActivity extends AppCompatActivity {
         });
     }
 
+    /** Filled by the hall-ticket lookup, sent on save when we have them. */
+    private String fetchedRegulation = "";
+    private String fetchedFather = "";
+    private String lookedUpRoll = "";
+    private boolean lookupInFlight;
+
+    /**
+     * Same lookup the sign-up flow uses: the hall ticket is enough to name the
+     * student, so Google users do not have to type their branch and regulation.
+     * A queued answer means the university feed is still fetching — tap again.
+     */
+    private void lookupHallTicket() {
+        String roll = binding.edtCpRoll.getText().toString().trim().toUpperCase(java.util.Locale.US);
+        if (roll.length() != 10) {
+            binding.edtCpRoll.requestFocus();
+            binding.edtCpRoll.setError(getString(R.string.result_fetch_invalid));
+            return;
+        }
+        if (lookupInFlight || roll.equals(lookedUpRoll)) return;
+        if (!method.isNetworkAvailable()) {
+            method.alertBox(getString(R.string.internet_connection));
+            return;
+        }
+
+        lookupInFlight = true;
+        setFetchStatus(getString(R.string.msg_reg_looking_up));
+
+        JsonObject jsObj = (JsonObject) new Gson().toJsonTree(new API(this));
+        jsObj.addProperty("hall_ticket_no", roll);
+
+        ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
+        api.lookupHallTicket(API.toBase64(jsObj.toString()))
+                .enqueue(new Callback<com.jntuh.response.HallTicketRP>() {
+            @Override
+            public void onResponse(@NotNull Call<com.jntuh.response.HallTicketRP> call,
+                                   @NotNull Response<com.jntuh.response.HallTicketRP> resp) {
+                lookupInFlight = false;
+
+                com.jntuh.item.HallTicketItem item = null;
+                com.jntuh.response.HallTicketRP body = resp.body();
+                if (body != null && body.getEbookApp() != null && !body.getEbookApp().isEmpty()) {
+                    item = body.getEbookApp().get(0);
+                }
+                if (item == null) {
+                    setFetchStatus(getString(R.string.msg_reg_lookup_manual));
+                    return;
+                }
+
+                String state = item.getState() == null ? "" : item.getState();
+                if ("queued".equals(state)) {
+                    setFetchStatus(getString(R.string.msg_reg_lookup_queued));
+                    return;
+                }
+                if (!"ready".equals(state)) {
+                    setFetchStatus(item.getMsg() == null || item.getMsg().trim().isEmpty()
+                            ? getString(R.string.msg_reg_lookup_manual) : item.getMsg());
+                    return;
+                }
+
+                lookedUpRoll = roll;
+                fetchedRegulation = item.getRegulation() == null ? "" : item.getRegulation().trim();
+                fetchedFather = item.getFather_name() == null ? "" : item.getFather_name().trim();
+                selectDepartmentByName(item.getBranch());
+                setFetchStatus(getString(R.string.msg_reg_lookup_ok));
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<com.jntuh.response.HallTicketRP> call, @NotNull Throwable t) {
+                lookupInFlight = false;
+                Log.e("lookup_fail", t.toString());
+                setFetchStatus(getString(R.string.msg_reg_lookup_manual));
+            }
+        });
+    }
+
+    /** Point the department spinner at the fetched branch, if it is in the list. */
+    private void selectDepartmentByName(String branch) {
+        if (branch == null || branch.trim().isEmpty()) return;
+        if (binding.spDepartment.getSelectedItemPosition() > 0) return;
+        for (int i = 0; i < departmentFiltered.size(); i++) {
+            String name = departmentFiltered.get(i).getDepartment_name();
+            if (name != null && name.trim().equalsIgnoreCase(branch.trim())) {
+                binding.spDepartment.setSelection(i + 1);
+                return;
+            }
+        }
+    }
+
+    private void setFetchStatus(String text) {
+        if (text == null || text.trim().isEmpty()) {
+            binding.tvCpFetchStatus.setVisibility(View.GONE);
+        } else {
+            binding.tvCpFetchStatus.setText(text);
+            binding.tvCpFetchStatus.setVisibility(View.VISIBLE);
+        }
+    }
+
     private void save() {
         int uPos = binding.spUniversity.getSelectedItemPosition();
         int dPos = binding.spDepartment.getSelectedItemPosition();
         int cPos = binding.spCollege.getSelectedItemPosition();
 
+        String roll = binding.edtCpRoll.getText().toString().trim().toUpperCase(java.util.Locale.US);
+
         if (uPos <= 0 || dPos <= 0 || cPos <= 0) {
             method.alertBox(getString(R.string.lbl_complete_all_fields));
+            return;
+        }
+        if (roll.length() != 10) {
+            binding.edtCpRoll.requestFocus();
+            binding.edtCpRoll.setError(getString(R.string.result_fetch_invalid));
             return;
         }
 
@@ -238,6 +343,13 @@ public class CompleteProfileActivity extends AppCompatActivity {
         jsObj.addProperty("university", university);
         jsObj.addProperty("department_id", departmentId);
         jsObj.addProperty("college", college);
+        jsObj.addProperty("rollnumber", roll);
+        if (!fetchedRegulation.isEmpty()) {
+            jsObj.addProperty("regulation", fetchedRegulation);
+        }
+        if (!fetchedFather.isEmpty()) {
+            jsObj.addProperty("father_name", fetchedFather);
+        }
 
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
         apiService.getCompleteProfileData(API.toBase64(jsObj.toString())).enqueue(new Callback<EditProfileRP>() {

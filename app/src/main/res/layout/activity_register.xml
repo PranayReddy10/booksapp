@@ -80,6 +80,15 @@
                 android:layout_marginStart="@dimen/_6px"
                 android:layout_weight="1"
                 android:background="@drawable/bg_reg_progress_off" />
+
+            <View
+                android:id="@+id/vRegProgress5"
+                android:layout_width="0dp"
+                android:layout_height="5dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/_6px"
+                android:layout_weight="1"
+                android:background="@drawable/bg_reg_progress_off" />
             </LinearLayout>
 
             <TextView
@@ -232,20 +241,20 @@
                             <ImageView
                                 android:layout_width="@dimen/_20px"
                                 android:layout_height="@dimen/_20px"
-                                android:src="@drawable/ic_reg_person"
+                                android:src="@drawable/ic_reg_mail"
                                 app:tint="@color/app_bg_orange"
                                 tools:ignore="ContentDescription" />
 
                             <EditText
-                                android:id="@+id/edtRegName"
+                                android:id="@+id/edtRegEmail"
                                 style="@style/txt_PoppinsMedium"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/_12px"
                                 android:background="@android:color/transparent"
                                 android:ellipsize="end"
-                                android:hint="@string/lbl_name"
-                                android:inputType="text"
+                                android:hint="@string/lbl_email"
+                                android:inputType="textEmailAddress"
                                 android:paddingTop="@dimen/_16px"
                                 android:paddingBottom="@dimen/_16px"
                                 android:singleLine="true"
@@ -255,6 +264,88 @@
                                 android:textSize="@dimen/_15sp"
                                 tools:ignore="Autofill" />
                         </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_14px"
+                            android:background="@drawable/bg_reg_field"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingStart="@dimen/_16px"
+                            android:paddingEnd="@dimen/_16px">
+
+                            <ImageView
+                                android:layout_width="@dimen/_20px"
+                                android:layout_height="@dimen/_20px"
+                                android:src="@drawable/ic_reg_lock"
+                                app:tint="@color/app_bg_orange"
+                                tools:ignore="ContentDescription" />
+
+                            <EditText
+                                android:id="@+id/edtRegPass"
+                                style="@style/txt_PoppinsMedium"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_12px"
+                                android:background="@android:color/transparent"
+                                android:ellipsize="end"
+                                android:hint="@string/lbl_pass_req"
+                                android:inputType="textPassword"
+                                android:paddingTop="@dimen/_16px"
+                                android:paddingBottom="@dimen/_16px"
+                                android:singleLine="true"
+                                android:textColor="@color/gray_2"
+                                android:textColorHint="@color/gray_edt_hint_text"
+                                android:textCursorDrawable="@drawable/cursor"
+                                android:textSize="@dimen/_15sp"
+                                tools:ignore="Autofill" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_14px"
+                            android:background="@drawable/bg_reg_field"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingStart="@dimen/_16px"
+                            android:paddingEnd="@dimen/_16px">
+
+                            <ImageView
+                                android:layout_width="@dimen/_20px"
+                                android:layout_height="@dimen/_20px"
+                                android:src="@drawable/ic_reg_lock"
+                                app:tint="@color/app_bg_orange"
+                                tools:ignore="ContentDescription" />
+
+                            <EditText
+                                android:id="@+id/edtRegPassConfirm"
+                                style="@style/txt_PoppinsMedium"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_12px"
+                                android:background="@android:color/transparent"
+                                android:ellipsize="end"
+                                android:hint="@string/lbl_reg_confirm_pass"
+                                android:inputType="textPassword"
+                                android:paddingTop="@dimen/_16px"
+                                android:paddingBottom="@dimen/_16px"
+                                android:singleLine="true"
+                                android:textColor="@color/gray_2"
+                                android:textColorHint="@color/gray_edt_hint_text"
+                                android:textCursorDrawable="@drawable/cursor"
+                                android:textSize="@dimen/_15sp"
+                                tools:ignore="Autofill" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llRegStep2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone">
 
                         <TextView
                             style="@style/txtOpenSansRomanSemiBold"
@@ -389,51 +480,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:visibility="gone" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/llRegStep2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:visibility="gone">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_4px"
-                            android:background="@drawable/bg_reg_field"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:paddingStart="@dimen/_16px"
-                            android:paddingEnd="@dimen/_16px">
-
-                            <ImageView
-                                android:layout_width="@dimen/_20px"
-                                android:layout_height="@dimen/_20px"
-                                android:src="@drawable/ic_reg_mail"
-                                app:tint="@color/app_bg_orange"
-                                tools:ignore="ContentDescription" />
-
-                            <EditText
-                                android:id="@+id/edtRegEmail"
-                                style="@style/txt_PoppinsMedium"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/_12px"
-                                android:background="@android:color/transparent"
-                                android:ellipsize="end"
-                                android:hint="@string/lbl_email"
-                                android:inputType="textEmailAddress"
-                                android:paddingTop="@dimen/_16px"
-                                android:paddingBottom="@dimen/_16px"
-                                android:singleLine="true"
-                                android:textColor="@color/gray_2"
-                                android:textColorHint="@color/gray_edt_hint_text"
-                                android:textCursorDrawable="@drawable/cursor"
-                                android:textSize="@dimen/_15sp"
-                                tools:ignore="Autofill" />
-                        </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -462,43 +508,6 @@
                                 android:ellipsize="end"
                                 android:hint="@string/lbl_phone_req"
                                 android:inputType="phone"
-                                android:paddingTop="@dimen/_16px"
-                                android:paddingBottom="@dimen/_16px"
-                                android:singleLine="true"
-                                android:textColor="@color/gray_2"
-                                android:textColorHint="@color/gray_edt_hint_text"
-                                android:textCursorDrawable="@drawable/cursor"
-                                android:textSize="@dimen/_15sp"
-                                tools:ignore="Autofill" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_14px"
-                            android:background="@drawable/bg_reg_field"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:paddingStart="@dimen/_16px"
-                            android:paddingEnd="@dimen/_16px">
-
-                            <ImageView
-                                android:layout_width="@dimen/_20px"
-                                android:layout_height="@dimen/_20px"
-                                android:src="@drawable/ic_reg_lock"
-                                app:tint="@color/app_bg_orange"
-                                tools:ignore="ContentDescription" />
-
-                            <EditText
-                                android:id="@+id/edtRegPass"
-                                style="@style/txt_PoppinsMedium"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/_12px"
-                                android:background="@android:color/transparent"
-                                android:ellipsize="end"
-                                android:hint="@string/lbl_pass_req"
-                                android:inputType="textPassword"
                                 android:paddingTop="@dimen/_16px"
                                 android:paddingBottom="@dimen/_16px"
                                 android:singleLine="true"
@@ -555,6 +564,138 @@
                                 app:tint="@color/home_by_author"
                                 tools:ignore="ContentDescription" />
                         </RelativeLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_18px"
+                            android:background="@drawable/bg_reg_field"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingStart="@dimen/_16px"
+                            android:paddingEnd="@dimen/_16px">
+
+                            <ImageView
+                                android:layout_width="@dimen/_20px"
+                                android:layout_height="@dimen/_20px"
+                                android:src="@drawable/ic_reg_badge_id"
+                                app:tint="@color/app_bg_orange"
+                                tools:ignore="ContentDescription" />
+
+                            <EditText
+                                android:id="@+id/edtRegRoll"
+                                style="@style/txt_PoppinsMedium"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_12px"
+                                android:background="@android:color/transparent"
+                                android:ellipsize="end"
+                                android:hint="@string/lbl_roll_req"
+                                android:inputType="text"
+                                android:paddingTop="@dimen/_16px"
+                                android:paddingBottom="@dimen/_16px"
+                                android:singleLine="true"
+                                android:textColor="@color/gray_2"
+                                android:textColorHint="@color/gray_edt_hint_text"
+                                android:textCursorDrawable="@drawable/cursor"
+                                android:textSize="@dimen/_15sp"
+                                tools:ignore="Autofill" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/tvRegFetchStatus"
+                            style="@style/txtOpenSansRomanSemiBold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_12px"
+                            android:lineSpacingExtra="@dimen/_4px"
+                            android:textColor="@color/home_by_author"
+                            android:textSize="@dimen/_13sp"
+                            android:visibility="gone"
+                            tools:text="Looking up your details…"
+                            tools:visibility="visible" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llRegStep4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_4px"
+                            android:background="@drawable/bg_reg_field"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingStart="@dimen/_16px"
+                            android:paddingEnd="@dimen/_16px">
+
+                            <ImageView
+                                android:layout_width="@dimen/_20px"
+                                android:layout_height="@dimen/_20px"
+                                android:src="@drawable/ic_reg_person"
+                                app:tint="@color/app_bg_orange"
+                                tools:ignore="ContentDescription" />
+
+                            <EditText
+                                android:id="@+id/edtRegName"
+                                style="@style/txt_PoppinsMedium"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_12px"
+                                android:background="@android:color/transparent"
+                                android:ellipsize="end"
+                                android:hint="@string/lbl_name"
+                                android:inputType="text"
+                                android:paddingTop="@dimen/_16px"
+                                android:paddingBottom="@dimen/_16px"
+                                android:singleLine="true"
+                                android:textColor="@color/gray_2"
+                                android:textColorHint="@color/gray_edt_hint_text"
+                                android:textCursorDrawable="@drawable/cursor"
+                                android:textSize="@dimen/_15sp"
+                                tools:ignore="Autofill" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_14px"
+                            android:background="@drawable/bg_reg_field"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingStart="@dimen/_16px"
+                            android:paddingEnd="@dimen/_16px">
+
+                            <ImageView
+                                android:layout_width="@dimen/_20px"
+                                android:layout_height="@dimen/_20px"
+                                android:src="@drawable/ic_reg_person"
+                                app:tint="@color/app_bg_orange"
+                                tools:ignore="ContentDescription" />
+
+                            <EditText
+                                android:id="@+id/edtRegFather"
+                                style="@style/txt_PoppinsMedium"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_12px"
+                                android:background="@android:color/transparent"
+                                android:ellipsize="end"
+                                android:hint="@string/lbl_reg_father"
+                                android:inputType="textPersonName"
+                                android:paddingTop="@dimen/_16px"
+                                android:paddingBottom="@dimen/_16px"
+                                android:singleLine="true"
+                                android:textColor="@color/gray_2"
+                                android:textColorHint="@color/gray_edt_hint_text"
+                                android:textCursorDrawable="@drawable/cursor"
+                                android:textSize="@dimen/_15sp"
+                                tools:ignore="Autofill" />
+                        </LinearLayout>
 
                         <TextView
                             style="@style/txtOpenSansRomanSemiBold"
@@ -637,7 +778,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_18px"
+                            android:layout_marginTop="@dimen/_14px"
                             android:background="@drawable/bg_reg_field"
                             android:gravity="center_vertical"
                             android:orientation="horizontal"
@@ -652,15 +793,15 @@
                                 tools:ignore="ContentDescription" />
 
                             <EditText
-                                android:id="@+id/edtRegRoll"
+                                android:id="@+id/edtRegRegulation"
                                 style="@style/txt_PoppinsMedium"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/_12px"
                                 android:background="@android:color/transparent"
                                 android:ellipsize="end"
-                                android:hint="@string/lbl_roll_req"
-                                android:inputType="text"
+                                android:hint="@string/lbl_reg_regulation"
+                                android:inputType="textCapCharacters"
                                 android:paddingTop="@dimen/_16px"
                                 android:paddingBottom="@dimen/_16px"
                                 android:singleLine="true"
@@ -673,7 +814,7 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/llRegStep4"
+                        android:id="@+id/llRegStep5"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"

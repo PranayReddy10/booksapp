@@ -54,8 +54,12 @@ public class RegisterActivity extends AppCompatActivity {
 
     private final String[] genders = {"", "Male", "Female", "Other"};
 
-    private static final int LAST_STEP = 4;
+    private static final int LAST_STEP = 5;
     private int currentStep = 1;
+
+    /** Hall ticket the lookup last answered for, so Next does not re-ask. */
+    private String lookedUpRoll = "";
+    private boolean lookupInFlight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +89,10 @@ public class RegisterActivity extends AppCompatActivity {
 
         // The primary button advances through the steps and only submits on the last one.
         viewRegisterBinding.btnRegister.setOnClickListener(v -> {
-            if (currentStep < LAST_STEP) {
+            if (currentStep == 3) {
+                // Step 3 owns the hall ticket, so it is where the lookup runs.
+                if (validateStep(3)) lookupThenAdvance();
+            } else if (currentStep < LAST_STEP) {
                 if (validateStep(currentStep)) showStep(currentStep + 1);
             } else {
                 form();
@@ -326,29 +333,28 @@ public class RegisterActivity extends AppCompatActivity {
         viewRegisterBinding.llRegStep2.setVisibility(step == 2 ? View.VISIBLE : View.GONE);
         viewRegisterBinding.llRegStep3.setVisibility(step == 3 ? View.VISIBLE : View.GONE);
         viewRegisterBinding.llRegStep4.setVisibility(step == 4 ? View.VISIBLE : View.GONE);
+        viewRegisterBinding.llRegStep5.setVisibility(step == 5 ? View.VISIBLE : View.GONE);
 
-        int titleRes, subRes;
+        int titleRes, subRes, iconRes;
         if (step == 1) {
             titleRes = R.string.lbl_reg_step1_title;
             subRes = R.string.lbl_reg_step1_sub;
+            iconRes = R.drawable.ic_reg_mail;
         } else if (step == 2) {
             titleRes = R.string.lbl_reg_step2_title;
             subRes = R.string.lbl_reg_step2_sub;
+            iconRes = R.drawable.ic_reg_person;
         } else if (step == 3) {
             titleRes = R.string.lbl_reg_step3_title;
             subRes = R.string.lbl_reg_step3_sub;
-        } else {
+            iconRes = R.drawable.ic_result_school;
+        } else if (step == 4) {
             titleRes = R.string.lbl_reg_step4_title;
             subRes = R.string.lbl_reg_step4_sub;
-        }
-        int iconRes;
-        if (step == 1) {
-            iconRes = R.drawable.ic_reg_person;
-        } else if (step == 2) {
-            iconRes = R.drawable.ic_reg_mail;
-        } else if (step == 3) {
-            iconRes = R.drawable.ic_result_school;
+            iconRes = R.drawable.ic_reg_badge_id;
         } else {
+            titleRes = R.string.lbl_reg_step5_title;
+            subRes = R.string.lbl_reg_step5_sub;
             iconRes = R.drawable.ic_picker_check;
         }
         viewRegisterBinding.ivRegStepIcon.setImageResource(iconRes);
@@ -370,7 +376,8 @@ public class RegisterActivity extends AppCompatActivity {
                 viewRegisterBinding.vRegProgress1,
                 viewRegisterBinding.vRegProgress2,
                 viewRegisterBinding.vRegProgress3,
-                viewRegisterBinding.vRegProgress4
+                viewRegisterBinding.vRegProgress4,
+                viewRegisterBinding.vRegProgress5
         };
         for (int i = 0; i < segments.length; i++) {
             segments[i].setBackgroundResource(i < step
@@ -382,6 +389,7 @@ public class RegisterActivity extends AppCompatActivity {
     private void buildSummary() {
         StringBuilder sb = new StringBuilder();
         appendSummary(sb, getString(R.string.lbl_name), viewRegisterBinding.edtRegName.getText().toString());
+        appendSummary(sb, getString(R.string.lbl_reg_father), viewRegisterBinding.edtRegFather.getText().toString());
         appendSummary(sb, getString(R.string.lbl_email), viewRegisterBinding.edtRegEmail.getText().toString());
         appendSummary(sb, getString(R.string.lbl_phone), viewRegisterBinding.edtRegPhone.getText().toString());
 
@@ -394,8 +402,15 @@ public class RegisterActivity extends AppCompatActivity {
         if (cPos > 0) {
             appendSummary(sb, getString(R.string.lbl_college), collegeList.get(cPos - 1).getCollege_name());
         }
+        int dPos = viewRegisterBinding.spRegDepartment.getSelectedItemPosition();
+        if (dPos > 0) {
+            appendSummary(sb, getString(R.string.lbl_department),
+                    departmentListFiltered.get(dPos - 1).getDepartment_name());
+        }
         appendSummary(sb, getString(R.string.lbl_roll_number),
                 viewRegisterBinding.edtRegRoll.getText().toString());
+        appendSummary(sb, getString(R.string.lbl_reg_regulation),
+                viewRegisterBinding.edtRegRegulation.getText().toString());
 
         viewRegisterBinding.tvRegSummary.setText(sb.toString().trim());
     }
@@ -408,34 +423,34 @@ public class RegisterActivity extends AppCompatActivity {
     /** Per-step checks, so a mistake is caught on the step that owns the field. */
     private boolean validateStep(int step) {
         if (step == 1) {
-            String name = viewRegisterBinding.edtRegName.getText().toString();
-            if (name.trim().isEmpty()) {
-                viewRegisterBinding.edtRegName.requestFocus();
-                viewRegisterBinding.edtRegName.setError(getString(R.string.please_enter_name));
-                return false;
-            }
-            if (viewRegisterBinding.spRegGender.getSelectedItemPosition() <= 0) {
-                Toast.makeText(this, getString(R.string.please_select_gender), Toast.LENGTH_SHORT).show();
-                return false;
-            }
-            return true;
-        }
-
-        if (step == 2) {
             String email = viewRegisterBinding.edtRegEmail.getText().toString();
             if (email.isEmpty() || !isValidMail(email)) {
                 viewRegisterBinding.edtRegEmail.requestFocus();
                 viewRegisterBinding.edtRegEmail.setError(getString(R.string.please_enter_email));
                 return false;
             }
+            String pass = viewRegisterBinding.edtRegPass.getText().toString();
+            if (pass.isEmpty()) {
+                viewRegisterBinding.edtRegPass.requestFocus();
+                viewRegisterBinding.edtRegPass.setError(getString(R.string.please_enter_password));
+                return false;
+            }
+            if (!pass.equals(viewRegisterBinding.edtRegPassConfirm.getText().toString())) {
+                viewRegisterBinding.edtRegPassConfirm.requestFocus();
+                viewRegisterBinding.edtRegPassConfirm.setError(getString(R.string.msg_reg_pass_mismatch));
+                return false;
+            }
+            return true;
+        }
+
+        if (step == 2) {
+            if (viewRegisterBinding.spRegGender.getSelectedItemPosition() <= 0) {
+                Toast.makeText(this, getString(R.string.please_select_gender), Toast.LENGTH_SHORT).show();
+                return false;
+            }
             if (viewRegisterBinding.edtRegPhone.getText().toString().trim().isEmpty()) {
                 viewRegisterBinding.edtRegPhone.requestFocus();
                 viewRegisterBinding.edtRegPhone.setError(getString(R.string.please_enter_phone));
-                return false;
-            }
-            if (viewRegisterBinding.edtRegPass.getText().toString().isEmpty()) {
-                viewRegisterBinding.edtRegPass.requestFocus();
-                viewRegisterBinding.edtRegPass.setError(getString(R.string.please_enter_password));
                 return false;
             }
             return true;
@@ -446,6 +461,28 @@ public class RegisterActivity extends AppCompatActivity {
                 Toast.makeText(this, getString(R.string.please_select_university), Toast.LENGTH_SHORT).show();
                 return false;
             }
+            // The lookup needs a full hall ticket, so check the length here
+            // rather than letting the server reject it a round-trip later.
+            String roll = viewRegisterBinding.edtRegRoll.getText().toString().trim();
+            if (roll.length() != 10) {
+                viewRegisterBinding.edtRegRoll.requestFocus();
+                viewRegisterBinding.edtRegRoll.setError(getString(R.string.result_fetch_invalid));
+                return false;
+            }
+            return true;
+        }
+
+        if (step == 4) {
+            if (viewRegisterBinding.edtRegName.getText().toString().trim().isEmpty()) {
+                viewRegisterBinding.edtRegName.requestFocus();
+                viewRegisterBinding.edtRegName.setError(getString(R.string.please_enter_name));
+                return false;
+            }
+            if (viewRegisterBinding.edtRegFather.getText().toString().trim().isEmpty()) {
+                viewRegisterBinding.edtRegFather.requestFocus();
+                viewRegisterBinding.edtRegFather.setError(getString(R.string.please_enter_name));
+                return false;
+            }
             if (viewRegisterBinding.spRegDepartment.getSelectedItemPosition() <= 0) {
                 Toast.makeText(this, getString(R.string.please_select_department), Toast.LENGTH_SHORT).show();
                 return false;
@@ -454,15 +491,133 @@ public class RegisterActivity extends AppCompatActivity {
                 Toast.makeText(this, getString(R.string.please_select_college), Toast.LENGTH_SHORT).show();
                 return false;
             }
-            if (viewRegisterBinding.edtRegRoll.getText().toString().trim().isEmpty()) {
-                viewRegisterBinding.edtRegRoll.requestFocus();
-                viewRegisterBinding.edtRegRoll.setError(getString(R.string.please_enter_roll));
+            if (viewRegisterBinding.edtRegRegulation.getText().toString().trim().isEmpty()) {
+                viewRegisterBinding.edtRegRegulation.requestFocus();
+                viewRegisterBinding.edtRegRegulation.setError(getString(R.string.lbl_reg_regulation));
                 return false;
             }
             return true;
         }
 
         return true;
+    }
+
+    /**
+     * Step 3 -> 4. Ask the server who this hall ticket belongs to and pre-fill
+     * step 4 with the answer.
+     *
+     * The university feed queues a scrape on a first request, so "queued" is not
+     * a failure: it leaves the student on this step with a note to tap again.
+     * A genuine miss still moves on — they can type their details in.
+     */
+    private void lookupThenAdvance() {
+        String roll = viewRegisterBinding.edtRegRoll.getText().toString().trim().toUpperCase(java.util.Locale.US);
+
+        if (roll.equals(lookedUpRoll)) {   // already answered for this one
+            showStep(4);
+            return;
+        }
+        if (lookupInFlight) return;
+        if (!method.isNetworkAvailable()) {
+            method.alertBox(getString(R.string.internet_connection));
+            return;
+        }
+
+        lookupInFlight = true;
+        setFetchStatus(getString(R.string.msg_reg_looking_up));
+
+        JsonObject jsObj = (JsonObject) new Gson().toJsonTree(new API(RegisterActivity.this));
+        jsObj.addProperty("hall_ticket_no", roll);
+
+        ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
+        api.lookupHallTicket(API.toBase64(jsObj.toString()))
+                .enqueue(new Callback<com.jntuh.response.HallTicketRP>() {
+            @Override
+            public void onResponse(@NotNull Call<com.jntuh.response.HallTicketRP> call,
+                                   @NotNull Response<com.jntuh.response.HallTicketRP> resp) {
+                lookupInFlight = false;
+
+                com.jntuh.item.HallTicketItem item = null;
+                com.jntuh.response.HallTicketRP body = resp.body();
+                if (body != null && body.getEbookApp() != null && !body.getEbookApp().isEmpty()) {
+                    item = body.getEbookApp().get(0);
+                }
+                if (item == null) {
+                    setFetchStatus(getString(R.string.msg_reg_lookup_manual));
+                    showStep(4);
+                    return;
+                }
+
+                String state = item.getState() == null ? "" : item.getState();
+
+                if ("queued".equals(state)) {
+                    setFetchStatus(getString(R.string.msg_reg_lookup_queued));
+                    return;   // stay on step 3; tapping Next asks again
+                }
+
+                if (item.getAlready_registered() == 1) {
+                    // Nothing to pre-fill, and signing up again would fail later.
+                    setFetchStatus(null);
+                    method.alertBox(item.getMsg());
+                    return;
+                }
+
+                if ("ready".equals(state)) {
+                    lookedUpRoll = roll;
+                    applyLookup(item);
+                    setFetchStatus(getString(R.string.msg_reg_lookup_ok));
+                } else {
+                    setFetchStatus(item.getMsg() == null || item.getMsg().trim().isEmpty()
+                            ? getString(R.string.msg_reg_lookup_manual) : item.getMsg());
+                }
+                showStep(4);
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<com.jntuh.response.HallTicketRP> call, @NotNull Throwable t) {
+                lookupInFlight = false;
+                Log.e("lookup_fail", t.toString());
+                setFetchStatus(getString(R.string.msg_reg_lookup_manual));
+                showStep(4);   // never trap the student behind a failed lookup
+            }
+        });
+    }
+
+    /** Fill step 4 from the lookup, leaving anything already typed alone. */
+    private void applyLookup(com.jntuh.item.HallTicketItem item) {
+        fillIfBlank(viewRegisterBinding.edtRegName, item.getStudent_name());
+        fillIfBlank(viewRegisterBinding.edtRegFather, item.getFather_name());
+        fillIfBlank(viewRegisterBinding.edtRegRegulation, item.getRegulation());
+        selectDepartmentByName(item.getBranch());
+    }
+
+    private void fillIfBlank(android.widget.EditText field, String value) {
+        if (value == null || value.trim().isEmpty()) return;
+        if (!field.getText().toString().trim().isEmpty()) return;
+        field.setText(value.trim());
+    }
+
+    /** Match the fetched branch against the department list, if it is in there. */
+    private void selectDepartmentByName(String branch) {
+        if (branch == null || branch.trim().isEmpty()) return;
+        if (viewRegisterBinding.spRegDepartment.getSelectedItemPosition() > 0) return;
+        String wanted = branch.trim();
+        for (int i = 0; i < departmentListFiltered.size(); i++) {
+            String name = departmentListFiltered.get(i).getDepartment_name();
+            if (name != null && name.trim().equalsIgnoreCase(wanted)) {
+                viewRegisterBinding.spRegDepartment.setSelection(i + 1);   // 0 is the placeholder
+                return;
+            }
+        }
+    }
+
+    private void setFetchStatus(String text) {
+        if (text == null || text.trim().isEmpty()) {
+            viewRegisterBinding.tvRegFetchStatus.setVisibility(View.GONE);
+        } else {
+            viewRegisterBinding.tvRegFetchStatus.setText(text);
+            viewRegisterBinding.tvRegFetchStatus.setVisibility(View.VISIBLE);
+        }
     }
 
     private boolean isValidMail(String email) {
@@ -491,6 +646,8 @@ public class RegisterActivity extends AppCompatActivity {
         String password = viewRegisterBinding.edtRegPass.getText().toString();
         String phoneNo = viewRegisterBinding.edtRegPhone.getText().toString();
         String rollNo = viewRegisterBinding.edtRegRoll.getText().toString();
+        String fatherName = viewRegisterBinding.edtRegFather.getText().toString();
+        String regulation = viewRegisterBinding.edtRegRegulation.getText().toString();
 
         int uPos = viewRegisterBinding.spRegUniversity.getSelectedItemPosition();
         int dPos = viewRegisterBinding.spRegDepartment.getSelectedItemPosition();
@@ -514,12 +671,16 @@ public class RegisterActivity extends AppCompatActivity {
             method.alertBox(getResources().getString(R.string.internet_connection));
             return;
         }
-        register(name, email, password, phoneNo, universityName, departmentId, collegeName, gender, rollNo);
+        // Branch mirrors the chosen department, which is what the profile shows.
+        String branch = departmentListFiltered.get(dPos - 1).getDepartment_name();
+        register(name, email, password, phoneNo, universityName, departmentId, collegeName,
+                gender, rollNo, fatherName, regulation, branch);
     }
 
     public void register(String sendName, String sendEmail, String sendPassword, String sendPhone,
                          String sendUniversity, String sendDepartmentId, String sendCollege,
-                         String sendGender, String sendRoll) {
+                         String sendGender, String sendRoll, String sendFather,
+                         String sendRegulation, String sendBranch) {
 
         progressDialog.show();
         progressDialog.setMessage(getResources().getString(R.string.loading));
@@ -535,6 +696,9 @@ public class RegisterActivity extends AppCompatActivity {
         jsObj.addProperty("college", sendCollege);
         jsObj.addProperty("gender", sendGender);
         jsObj.addProperty("rollnumber", sendRoll);
+        jsObj.addProperty("father_name", sendFather);
+        jsObj.addProperty("regulation", sendRegulation);
+        jsObj.addProperty("branch", sendBranch);
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
         Call<RegisterRP> call = apiService.getRegisterData(API.toBase64(jsObj.toString()));
         call.enqueue(new Callback<RegisterRP>() {

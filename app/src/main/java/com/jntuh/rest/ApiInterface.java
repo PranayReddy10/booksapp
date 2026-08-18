@@ -405,6 +405,14 @@ public interface ApiInterface {
     @FormUrlEncoded
     Call<ResultSaveRP> fetchResult(@Field("data") String data);
 
+    /**
+     * Who a hall ticket belongs to. Used during sign-up, before an account
+     * exists, to fill in name / father / branch / regulation.
+     */
+    @POST("hall_ticket_lookup")
+    @FormUrlEncoded
+    Call<com.jntuh.response.HallTicketRP> lookupHallTicket(@Field("data") String data);
+
     @POST("report_generate")
     @FormUrlEncoded
     Call<ReportCardRP> generateReportCard(@Field("data") String data);
