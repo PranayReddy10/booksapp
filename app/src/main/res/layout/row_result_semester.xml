@@ -128,56 +128,92 @@
                 android:layout_marginBottom="8dp"
                 android:background="#12000000" />
 
-            <!-- Column header -->
-            <LinearLayout
+            <!-- The mark sheet as a table. It scrolls sideways rather than
+                 squeezing six columns into a phone width, and the header shares
+                 the scroller with the rows so the columns stay lined up. -->
+            <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingBottom="6dp">
+                android:scrollbars="none">
 
-                <TextView
-                    android:layout_width="0dp"
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/result_col_subject"
-                    android:textColor="@color/gray_2"
-                    android:textSize="10sp"
-                    android:fontFamily="@font/opensansromanbold" />
+                    android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="56dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/result_col_cr"
-                    android:textColor="@color/gray_2"
-                    android:textSize="10sp"
-                    android:fontFamily="@font/opensansromanbold" />
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingBottom="6dp">
 
-                <TextView
-                    android:layout_width="44dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/result_col_gr"
-                    android:textColor="@color/gray_2"
-                    android:textSize="10sp"
-                    android:fontFamily="@font/opensansromanbold" />
+                        <TextView
+                            android:layout_width="154dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/opensansromanbold"
+                            android:text="@string/result_col_subject"
+                            android:textColor="@color/gray_2"
+                            android:textSize="10sp" />
 
-                <TextView
-                    android:layout_width="44dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/result_col_pts"
-                    android:textColor="@color/gray_2"
-                    android:textSize="10sp"
-                    android:fontFamily="@font/opensansromanbold" />
-            </LinearLayout>
+                        <TextView
+                            android:layout_width="46dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/opensansromanbold"
+                            android:gravity="center"
+                            android:text="@string/result_col_int"
+                            android:textColor="@color/gray_2"
+                            android:textSize="10sp" />
 
-            <!-- Subject rows injected here at runtime -->
-            <LinearLayout
-                android:id="@+id/llSubjectRows"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical" />
+                        <TextView
+                            android:layout_width="46dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/opensansromanbold"
+                            android:gravity="center"
+                            android:text="@string/result_col_ext"
+                            android:textColor="@color/gray_2"
+                            android:textSize="10sp" />
+
+                        <TextView
+                            android:layout_width="50dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/opensansromanbold"
+                            android:gravity="center"
+                            android:text="@string/result_col_total"
+                            android:textColor="@color/gray_2"
+                            android:textSize="10sp" />
+
+                        <TextView
+                            android:layout_width="46dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/opensansromanbold"
+                            android:gravity="center"
+                            android:text="@string/result_col_gr"
+                            android:textColor="@color/gray_2"
+                            android:textSize="10sp" />
+
+                        <TextView
+                            android:layout_width="46dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/opensansromanbold"
+                            android:gravity="center"
+                            android:text="@string/result_col_cr"
+                            android:textColor="@color/gray_2"
+                            android:textSize="10sp" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#14000000" />
+
+                    <!-- Subject rows injected here at runtime -->
+                    <LinearLayout
+                        android:id="@+id/llSubjectRows"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" />
+                </LinearLayout>
+            </HorizontalScrollView>
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

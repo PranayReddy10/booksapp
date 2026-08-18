@@ -25,6 +25,10 @@ public class ResultItem implements Serializable {
     @SerializedName("hall_ticket_no")
     private String hall_ticket_no;
 
+    /** "jntuh" when fetched from the university feed, "manual" when typed. */
+    @SerializedName("source")
+    private String source;
+
     @SerializedName("student_name")
     private String student_name;
 
@@ -83,6 +87,10 @@ public class ResultItem implements Serializable {
 
     public void setResult_id(String result_id) {
         this.result_id = result_id;
+    }
+
+    public String getSource() {
+        return source;
     }
 
     public String getHall_ticket_no() {
