@@ -130,6 +130,7 @@ public class HomeFragment extends Fragment {
 
         bindGreeting();
         bindComposer();
+        bindResultsCard();
         bindQuickAccess();
         bindSectionLinks();
 
@@ -394,6 +395,73 @@ public class HomeFragment extends Fragment {
         // Filter button beside the search field opens the dedicated search screen.
         viewHome.ivHomeFilter.setOnClickListener(v ->
                 startActivity(new Intent(requireActivity(), SearchBookActivity.class)));
+    }
+
+    /**
+     * The results card. It reuses result_get rather than adding an endpoint:
+     * marks when they exist, an invitation to fetch when they do not, and hidden
+     * entirely for a signed-out visitor who has nothing to show yet.
+     */
+    private void bindResultsCard() {
+        viewHome.cvHomeResults.setOnClickListener(v -> openProfileTab(0));
+        viewHome.btnHomeResultsFetch.setOnClickListener(v -> openProfileTab(0));
+
+        if (!method.getIsLogin()) {
+            viewHome.cvHomeResults.setVisibility(View.GONE);
+            return;
+        }
+        viewHome.cvHomeResults.setVisibility(View.VISIBLE);
+        showResultsPrompt();   // until the call answers
+
+        if (!method.isNetworkAvailable()) return;
+
+        JsonObject jsObj = (JsonObject) new Gson().toJsonTree(new API(requireActivity()));
+        jsObj.addProperty("user_id", method.getUserId());
+
+        ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
+        api.getResult(API.toBase64(jsObj.toString())).enqueue(new Callback<com.jntuh.response.ResultRP>() {
+            @Override
+            public void onResponse(@NonNull Call<com.jntuh.response.ResultRP> call,
+                                   @NonNull Response<com.jntuh.response.ResultRP> resp) {
+                if (getActivity() == null || viewHome == null) return;
+                try {
+                    com.jntuh.response.ResultRP body = resp.body();
+                    if (body != null && body.getResultItems() != null && !body.getResultItems().isEmpty()) {
+                        com.jntuh.item.ResultItem item = body.getResultItems().get(0);
+                        if (item.getHas_result() == 1) {
+                            showResultsSummary(item);
+                            return;
+                        }
+                    }
+                } catch (Exception e) {
+                    Log.d("home_results", e.toString());
+                }
+                showResultsPrompt();
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<com.jntuh.response.ResultRP> call, @NonNull Throwable t) {
+                if (getActivity() == null || viewHome == null) return;
+                showResultsPrompt();   // the card still invites, it just cannot boast
+            }
+        });
+    }
+
+    private void showResultsSummary(com.jntuh.item.ResultItem item) {
+        viewHome.llHomeResultsHave.setVisibility(View.VISIBLE);
+        viewHome.llHomeResultsFetch.setVisibility(View.GONE);
+        viewHome.tvHomeResultsCgpa.setText(statOrDash(item.getCurrent_cgpa()));
+        viewHome.tvHomeResultsCredits.setText(statOrDash(item.getTotal_credits()));
+        viewHome.tvHomeResultsBacklogs.setText(statOrDash(item.getBacklogs_count()));
+    }
+
+    private void showResultsPrompt() {
+        viewHome.llHomeResultsHave.setVisibility(View.GONE);
+        viewHome.llHomeResultsFetch.setVisibility(View.VISIBLE);
+    }
+
+    private static String statOrDash(String value) {
+        return (value == null || value.trim().isEmpty()) ? "—" : value.trim();
     }
 
     /** "See all" on each rail, pointing at the full screen for that section. */
