@@ -87,36 +87,27 @@ public class SemesterAdapter extends RecyclerView.Adapter<SemesterAdapter.ViewHo
 
             TextView tvName = row.findViewById(R.id.tvSubName);
             TextView tvCode = row.findViewById(R.id.tvSubCode);
-            TextView tvCredits = row.findViewById(R.id.tvSubCredits);
+            TextView tvInternal = row.findViewById(R.id.tvSubInternal);
+            TextView tvExternal = row.findViewById(R.id.tvSubExternal);
+            TextView tvTotal = row.findViewById(R.id.tvSubTotal);
             TextView tvGrade = row.findViewById(R.id.tvSubGrade);
-            TextView tvPoints = row.findViewById(R.id.tvSubPoints);
+            TextView tvCredits = row.findViewById(R.id.tvSubCredits);
             TextView tagBacklog = row.findViewById(R.id.tagBacklog);
-            TextView tvMarks = row.findViewById(R.id.tvSubMarks);
 
             tvName.setText(nn(s.getSubject_name(), "—"));
             tvCode.setText(nn(s.getSubject_code(), ""));
-            tvCredits.setText(s.getCredits() == null ? "—" : fmt(s.getCredits()));
+            // A dash reads better than a blank cell for a paper with no
+            // internal or no external component (a project, a seminar).
+            tvInternal.setText(s.getInternal() == null ? "–" : String.valueOf(s.getInternal()));
+            tvExternal.setText(s.getExternal() == null ? "–" : String.valueOf(s.getExternal()));
+            tvTotal.setText(s.getTotal() == null ? "–" : String.valueOf(s.getTotal()));
             tvGrade.setText(nn(s.getGrade(), "—"));
-            tvPoints.setText(s.getGrade_points() == null ? "—" : fmt(s.getGrade_points()));
+            tvCredits.setText(s.getCredits() == null ? "—" : fmt(s.getCredits()));
 
-            tagBacklog.setVisibility(s.getIs_backlog() == 1 ? View.VISIBLE : View.GONE);
-
-            if (s.getInternal() != null || s.getExternal() != null || s.getTotal() != null) {
-                StringBuilder m = new StringBuilder();
-                if (s.getInternal() != null) m.append("Int ").append(s.getInternal());
-                if (s.getExternal() != null) {
-                    if (m.length() > 0) m.append("  ");
-                    m.append("Ext ").append(s.getExternal());
-                }
-                if (s.getTotal() != null) {
-                    if (m.length() > 0) m.append("  ");
-                    m.append("Total ").append(s.getTotal());
-                }
-                tvMarks.setVisibility(View.VISIBLE);
-                tvMarks.setText(m.toString());
-            } else {
-                tvMarks.setVisibility(View.GONE);
-            }
+            boolean failed = s.getIs_backlog() == 1;
+            tagBacklog.setVisibility(failed ? View.VISIBLE : View.GONE);
+            tvGrade.setTextColor(androidx.core.content.ContextCompat.getColor(activity,
+                    failed ? R.color.result_backlog_red : R.color.result_brand_blue));
 
             b.llSubjectRows.addView(row);
         }

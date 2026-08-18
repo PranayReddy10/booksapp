@@ -64,6 +64,12 @@ public class RegisterActivity extends AppCompatActivity {
     private int queuedTries;
     private String queuedRoll = "";
     private static final int MAX_QUEUED_TRIES = 2;
+    private static final long LOOKUP_RETRY_MS = 5000L;
+    /** Values the lookup put on step 4, so a different hall ticket can replace them. */
+    private String autoName = "", autoFather = "", autoRegulation = "";
+    private boolean autoDepartment;
+    private final android.os.Handler lookupRetry =
+            new android.os.Handler(android.os.Looper.getMainLooper());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +106,26 @@ public class RegisterActivity extends AppCompatActivity {
                 if (validateStep(currentStep)) showStep(currentStep + 1);
             } else {
                 form();
+            }
+        });
+
+        // Editing the hall ticket invalidates the last lookup, so Next asks again
+        // instead of walking on with the previous student's details.
+        viewRegisterBinding.edtRegRoll.addTextChangedListener(new android.text.TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence cs, int a, int b, int c) { }
+
+            @Override
+            public void onTextChanged(CharSequence cs, int a, int b, int c) { }
+
+            @Override
+            public void afterTextChanged(android.text.Editable e) {
+                String typed = e.toString().trim().toUpperCase(java.util.Locale.US);
+                if (!typed.equals(lookedUpRoll)) {
+                    lookedUpRoll = "";
+                    lookupRetry.removeCallbacksAndMessages(null);
+                    setFetchStatus(null);
+                }
             }
         });
 
@@ -568,14 +594,19 @@ public class RegisterActivity extends AppCompatActivity {
                 String state = item.getState() == null ? "" : item.getState();
 
                 if ("queued".equals(state)) {
-                    // A roll number the feed has nothing for queues forever, so
-                    // stop waiting after a couple of tries and let them type it.
+                    // A hall ticket the feed has nothing for — a 1-1 fresher who
+                    // has not sat an exam yet, say — queues forever rather than
+                    // answering "not found". Retry once on the student's behalf,
+                    // then move on; they can fetch results later from My Results.
                     queuedTries++;
                     if (queuedTries >= MAX_QUEUED_TRIES) {
                         setFetchStatus(getString(R.string.msg_reg_lookup_giveup));
                         showStep(4);
                     } else {
                         setFetchStatus(getString(R.string.msg_reg_lookup_queued));
+                        lookupRetry.postDelayed(() -> {
+                            if (currentStep == 3) lookupThenAdvance();
+                        }, LOOKUP_RETRY_MS);
                     }
                     return;
                 }
@@ -616,29 +647,48 @@ public class RegisterActivity extends AppCompatActivity {
         return name != null && name.toUpperCase(java.util.Locale.US).contains("JNTU");
     }
 
-    /** Fill step 4 from the lookup, leaving anything already typed alone. */
+    /**
+     * Fill step 4 from the lookup. Anything the student typed is left alone, but
+     * a value this lookup put there for an earlier hall ticket is replaced —
+     * otherwise correcting the roll number would leave the old name behind.
+     */
     private void applyLookup(com.jntuh.item.HallTicketItem item) {
-        fillIfBlank(viewRegisterBinding.edtRegName, item.getStudent_name());
-        fillIfBlank(viewRegisterBinding.edtRegFather, item.getFather_name());
-        fillIfBlank(viewRegisterBinding.edtRegRegulation, item.getRegulation());
+        autoName = fillFromLookup(viewRegisterBinding.edtRegName, item.getStudent_name(), autoName);
+        autoFather = fillFromLookup(viewRegisterBinding.edtRegFather, item.getFather_name(), autoFather);
+        autoRegulation = fillFromLookup(viewRegisterBinding.edtRegRegulation, item.getRegulation(), autoRegulation);
         selectDepartmentByName(item.getBranch());
     }
 
-    private void fillIfBlank(android.widget.EditText field, String value) {
-        if (value == null || value.trim().isEmpty()) return;
-        if (!field.getText().toString().trim().isEmpty()) return;
-        field.setText(value.trim());
+    /**
+     * @param previous what the last lookup wrote here, or "" if none
+     * @return what this lookup wrote here, for the next call to recognise
+     */
+    private String fillFromLookup(android.widget.EditText field, String value, String previous) {
+        String incoming = value == null ? "" : value.trim();
+        String shown = field.getText().toString().trim();
+
+        // Typed by hand, and not ours to overwrite.
+        if (!shown.isEmpty() && !shown.equals(previous)) return previous;
+        if (incoming.isEmpty()) {
+            // No answer this time: clear our stale value rather than keep it.
+            if (!shown.isEmpty() && shown.equals(previous)) field.setText("");
+            return "";
+        }
+        field.setText(incoming);
+        return incoming;
     }
 
     /** Match the fetched branch against the department list, if it is in there. */
     private void selectDepartmentByName(String branch) {
         if (branch == null || branch.trim().isEmpty()) return;
-        if (viewRegisterBinding.spRegDepartment.getSelectedItemPosition() > 0) return;
+        // Only move a selection this lookup made itself.
+        if (viewRegisterBinding.spRegDepartment.getSelectedItemPosition() > 0 && !autoDepartment) return;
         String wanted = branch.trim();
         for (int i = 0; i < departmentListFiltered.size(); i++) {
             String name = departmentListFiltered.get(i).getDepartment_name();
             if (name != null && name.trim().equalsIgnoreCase(wanted)) {
                 viewRegisterBinding.spRegDepartment.setSelection(i + 1);   // 0 is the placeholder
+                autoDepartment = true;
                 return;
             }
         }
@@ -655,6 +705,12 @@ public class RegisterActivity extends AppCompatActivity {
 
     private boolean isValidMail(String email) {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        lookupRetry.removeCallbacksAndMessages(null);
     }
 
     public void form() {

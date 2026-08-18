@@ -520,8 +520,12 @@
     <!-- Column headers -->
     <string name="result_col_subject">Subject</string>
     <string name="result_col_cr">Credits</string>
-    <string name="result_col_gr">Gr</string>
+    <string name="result_col_gr">Grade</string>
     <string name="result_col_pts">Pts</string>
+    <string name="result_col_int">Int</string>
+    <string name="result_col_ext">Ext</string>
+    <string name="result_col_total">Total</string>
+    <string name="result_from_university">Fetched from the university — read-only</string>
 
     <!-- Locked -->
     <string name="result_locked_short">Locked</string>

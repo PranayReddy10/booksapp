@@ -114,6 +114,10 @@ public class MyResultsFragment extends Fragment {
     }
 
     private void openEditor() {
+        if (current != null && "jntuh".equalsIgnoreCase(nn(current.getSource(), ""))) {
+            method.alertBox(getString(R.string.result_from_university));
+            return;
+        }
         // Always open the editor. Locked (verified) semesters render read-only
         // inside it, but the student can still add NEW semesters.
         Intent i = new Intent(requireActivity(), EditResultActivity.class);
@@ -321,9 +325,12 @@ public class MyResultsFragment extends Fragment {
 
         v.pillVerified.setVisibility(item.getVerified() == 1 ? View.VISIBLE : View.GONE);
         v.bannerLocked.setVisibility(locked ? View.VISIBLE : View.GONE);
-        // Keep the edit entry point available even when everything is locked,
-        // because the student can still ADD a new (unlocked) semester.
-        v.btnEditResult.setVisibility(View.VISIBLE);
+        // A result pulled from the university is not the student's to edit —
+        // it is the official mark sheet, and re-fetching is the way to change
+        // it. A hand-entered one keeps its editor, locked semesters and all,
+        // because the student can still add a new semester.
+        boolean fromUniversity = "jntuh".equalsIgnoreCase(nn(item.getSource(), ""));
+        v.btnEditResult.setVisibility(fromUniversity ? View.GONE : View.VISIBLE);
 
         semesters.clear();
         if (item.getSemesters() != null) semesters.addAll(item.getSemesters());
