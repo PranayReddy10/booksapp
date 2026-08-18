@@ -60,6 +60,10 @@ public class RegisterActivity extends AppCompatActivity {
     /** Hall ticket the lookup last answered for, so Next does not re-ask. */
     private String lookedUpRoll = "";
     private boolean lookupInFlight;
+    /** Queued replies seen for the current roll number; see lookupThenAdvance. */
+    private int queuedTries;
+    private String queuedRoll = "";
+    private static final int MAX_QUEUED_TRIES = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -518,9 +522,22 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
         if (lookupInFlight) return;
+
+        // The feed only covers JNTUH, so for any other university go straight to
+        // typing the details in rather than asking about a roll it cannot know.
+        if (!isJntuhSelected()) {
+            setFetchStatus(getString(R.string.msg_reg_lookup_other_uni));
+            showStep(4);
+            return;
+        }
         if (!method.isNetworkAvailable()) {
             method.alertBox(getString(R.string.internet_connection));
             return;
+        }
+
+        if (!roll.equals(queuedRoll)) {   // a different hall ticket starts over
+            queuedRoll = roll;
+            queuedTries = 0;
         }
 
         lookupInFlight = true;
@@ -551,8 +568,16 @@ public class RegisterActivity extends AppCompatActivity {
                 String state = item.getState() == null ? "" : item.getState();
 
                 if ("queued".equals(state)) {
-                    setFetchStatus(getString(R.string.msg_reg_lookup_queued));
-                    return;   // stay on step 3; tapping Next asks again
+                    // A roll number the feed has nothing for queues forever, so
+                    // stop waiting after a couple of tries and let them type it.
+                    queuedTries++;
+                    if (queuedTries >= MAX_QUEUED_TRIES) {
+                        setFetchStatus(getString(R.string.msg_reg_lookup_giveup));
+                        showStep(4);
+                    } else {
+                        setFetchStatus(getString(R.string.msg_reg_lookup_queued));
+                    }
+                    return;
                 }
 
                 if (item.getAlready_registered() == 1) {
@@ -581,6 +606,14 @@ public class RegisterActivity extends AppCompatActivity {
                 showStep(4);   // never trap the student behind a failed lookup
             }
         });
+    }
+
+    /** The hall-ticket feed is JNTUH-only; everyone else types their details. */
+    private boolean isJntuhSelected() {
+        int uPos = viewRegisterBinding.spRegUniversity.getSelectedItemPosition();
+        if (uPos <= 0) return false;
+        String name = universityList.get(uPos - 1).getUniversity_name();
+        return name != null && name.toUpperCase(java.util.Locale.US).contains("JNTU");
     }
 
     /** Fill step 4 from the lookup, leaving anything already typed alone. */

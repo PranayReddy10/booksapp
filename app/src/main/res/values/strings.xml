@@ -168,6 +168,8 @@
     <string name="msg_reg_lookup_queued">Still looking. Tap Next again in a moment.</string>
     <string name="msg_reg_lookup_ok">Details found. Check them on the next step.</string>
     <string name="msg_reg_lookup_manual">We could not find these details — please type them in.</string>
+    <string name="msg_reg_lookup_other_uni">Automatic lookup works for JNTUH only — please enter your details.</string>
+    <string name="msg_reg_lookup_giveup">The university feed did not respond. Please enter your details.</string>
     <string name="lbl_summary_line">%1$s: %2$s</string>
 
     <!-- Home screen -->
