@@ -216,9 +216,9 @@
                     android:paddingEnd="@dimen/_18px"
                     android:paddingBottom="@dimen/_10px"
                     android:text="@string/lbl_photo"
-                    android:textColor="@color/app_bg_orange"
+                    android:textColor="@color/compose_chip_text"
                     android:textSize="@dimen/_13sp"
-                    app:drawableTint="@color/app_bg_orange" />
+                    app:drawableTint="@color/compose_chip_text" />
 
                 <RadioButton
                     android:id="@+id/rbVideo"
@@ -236,9 +236,9 @@
                     android:paddingEnd="@dimen/_18px"
                     android:paddingBottom="@dimen/_10px"
                     android:text="@string/lbl_video"
-                    android:textColor="@color/app_bg_orange"
+                    android:textColor="@color/compose_chip_text"
                     android:textSize="@dimen/_13sp"
-                    app:drawableTint="@color/app_bg_orange" />
+                    app:drawableTint="@color/compose_chip_text" />
             </RadioGroup>
 
             <TextView

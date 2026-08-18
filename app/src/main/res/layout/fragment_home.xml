@@ -241,6 +241,193 @@
                         android:layout_height="@dimen/_180px" />
                 </LinearLayout>
 
+                <!-- ===== Results ===== -->
+                <!-- Two faces of one card: the marks once they exist, otherwise an
+                     invitation to pull them. Both open the results screen, which
+                     owns the fetching. -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cvHomeResults"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_16px"
+                    android:layout_marginTop="@dimen/_16px"
+                    android:layout_marginEnd="@dimen/_16px"
+                    android:foreground="?attr/selectableItemBackground"
+                    app:cardBackgroundColor="@color/result_brand_blue"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="2dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/_16px">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:src="@drawable/ic_result_school"
+                                app:tint="@color/white"
+                                tools:ignore="ContentDescription" />
+
+                            <TextView
+                                style="@style/txt_OpenSansRomanExtraBold"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_8px"
+                                android:layout_weight="1"
+                                android:text="@string/tab_my_results"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/_15sp" />
+
+                            <TextView
+                                android:id="@+id/tvHomeResultsAction"
+                                style="@style/txt_OpenSansRomanBold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:alpha="0.9"
+                                android:text="@string/lbl_view_all"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/_12sp" />
+                        </LinearLayout>
+
+                        <!-- Marks we already have -->
+                        <LinearLayout
+                            android:id="@+id/llHomeResultsHave"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_14px"
+                            android:orientation="horizontal"
+                            android:visibility="gone"
+                            tools:visibility="visible">
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:id="@+id/tvHomeResultsCgpa"
+                                        style="@style/txt_OpenSansRomanExtraBold"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="@color/white"
+                                        android:textSize="@dimen/_20sp"
+                                        tools:text="8.4" />
+
+                                    <TextView
+                                        style="@style/txtOpenSansRomanSemiBold"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="@dimen/_2px"
+                                        android:alpha="0.75"
+                                        android:text="@string/result_cgpa"
+                                        android:textColor="@color/white"
+                                        android:textSize="@dimen/_11sp" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:id="@+id/tvHomeResultsCredits"
+                                        style="@style/txt_OpenSansRomanExtraBold"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="@color/white"
+                                        android:textSize="@dimen/_20sp"
+                                        tools:text="8.4" />
+
+                                    <TextView
+                                        style="@style/txtOpenSansRomanSemiBold"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="@dimen/_2px"
+                                        android:alpha="0.75"
+                                        android:text="@string/result_credits"
+                                        android:textColor="@color/white"
+                                        android:textSize="@dimen/_11sp" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:id="@+id/tvHomeResultsBacklogs"
+                                        style="@style/txt_OpenSansRomanExtraBold"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="@color/white"
+                                        android:textSize="@dimen/_20sp"
+                                        tools:text="8.4" />
+
+                                    <TextView
+                                        style="@style/txtOpenSansRomanSemiBold"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="@dimen/_2px"
+                                        android:alpha="0.75"
+                                        android:text="@string/result_backlogs"
+                                        android:textColor="@color/white"
+                                        android:textSize="@dimen/_11sp" />
+                                </LinearLayout>
+                        </LinearLayout>
+
+                        <!-- Nothing yet: say what the button will do -->
+                        <LinearLayout
+                            android:id="@+id/llHomeResultsFetch"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_10px"
+                            android:orientation="vertical"
+                            android:visibility="gone"
+                            tools:visibility="visible">
+
+                            <TextView
+                                android:id="@+id/tvHomeResultsPrompt"
+                                style="@style/txtOpenSansRomanSemiBold"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:alpha="0.85"
+                                android:lineSpacingExtra="@dimen/_3px"
+                                android:text="@string/msg_home_results_prompt"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/_12sp" />
+
+                            <TextView
+                                android:id="@+id/btnHomeResultsFetch"
+                                style="@style/txt_OpenSansRomanBold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_12px"
+                                android:background="@drawable/bg_home_results_cta"
+                                android:paddingStart="@dimen/_18px"
+                                android:paddingTop="@dimen/_10px"
+                                android:paddingEnd="@dimen/_18px"
+                                android:paddingBottom="@dimen/_10px"
+                                android:text="@string/result_fetch_auto"
+                                android:textColor="@color/result_brand_blue"
+                                android:textSize="@dimen/_13sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
                 <!-- ===== Write something ===== -->
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cvHomeComposer"
