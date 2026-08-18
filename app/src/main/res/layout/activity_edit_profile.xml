@@ -222,6 +222,19 @@
                     android:importantForAutofill="no"
                     tools:ignore="RtlSymmetry" />
 
+                <!-- Shown once the hall ticket is set; it cannot change after that. -->
+                <TextView
+                    android:id="@+id/tvRollLockedNote"
+                    style="@style/txtOpenSansRomanSemiBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_6px"
+                    android:text="@string/msg_roll_locked"
+                    android:textColor="@color/gray_trans_99"
+                    android:textSize="@dimen/_12sp"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
+
                 <!-- Regulation (dropdown + Others) -->
                 <TextView
                     style="@style/txt_OpenSansRomanBold"
