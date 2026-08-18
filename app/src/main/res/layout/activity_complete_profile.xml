@@ -164,7 +164,7 @@
                     tools:ignore="ContentDescription" />
             </RelativeLayout>
 
-            <!-- 2. Department -->
+            <!-- 2. Hall ticket — the lookup that fills in the rest -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -179,6 +179,96 @@
                     android:background="@drawable/bg_reg_badge"
                     android:gravity="center"
                     android:text="@string/lbl_step_2"
+                    android:textColor="@color/app_bg_orange"
+                    android:textSize="@dimen/_12sp" />
+
+                <TextView
+                    style="@style/txtOpenSansRomanSemiBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10px"
+                    android:text="@string/lbl_roll_req"
+                    android:textColor="@color/home_by_author"
+                    android:textSize="@dimen/_13sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8px"
+                android:background="@drawable/bg_reg_field"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/_16px"
+                android:paddingEnd="@dimen/_16px">
+
+                <ImageView
+                    android:layout_width="@dimen/_20px"
+                    android:layout_height="@dimen/_20px"
+                    android:src="@drawable/ic_reg_badge_id"
+                    app:tint="@color/app_bg_orange"
+                    tools:ignore="ContentDescription" />
+
+                <EditText
+                    android:id="@+id/edtCpRoll"
+                    style="@style/txt_PoppinsMedium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_12px"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:ellipsize="end"
+                    android:hint="@string/lbl_roll_req"
+                    android:inputType="textCapCharacters"
+                    android:maxLength="10"
+                    android:paddingTop="@dimen/_16px"
+                    android:paddingBottom="@dimen/_16px"
+                    android:singleLine="true"
+                    android:textColor="@color/gray_2"
+                    android:textColorHint="@color/gray_edt_hint_text"
+                    android:textCursorDrawable="@drawable/cursor"
+                    android:textSize="@dimen/_15sp"
+                    tools:ignore="Autofill" />
+
+                <TextView
+                    android:id="@+id/btnCpFetch"
+                    style="@style/txt_OpenSansRomanBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:padding="@dimen/_6px"
+                    android:text="@string/result_fetch_auto"
+                    android:textColor="@color/app_bg_orange"
+                    android:textSize="@dimen/_13sp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvCpFetchStatus"
+                style="@style/txtOpenSansRomanSemiBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8px"
+                android:textColor="@color/home_by_author"
+                android:textSize="@dimen/_12sp"
+                android:visibility="gone"
+                tools:text="Looking up your details…"
+                tools:visibility="visible" />
+
+            <!-- 3. Department -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_18px"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/txt_OpenSansRomanBold"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:background="@drawable/bg_reg_badge"
+                    android:gravity="center"
+                    android:text="@string/lbl_step_3"
                     android:textColor="@color/app_bg_orange"
                     android:textSize="@dimen/_12sp" />
 
@@ -220,7 +310,7 @@
                     tools:ignore="ContentDescription" />
             </RelativeLayout>
 
-            <!-- 3. College -->
+            <!-- 4. College -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -234,7 +324,7 @@
                     android:layout_height="24dp"
                     android:background="@drawable/bg_reg_badge"
                     android:gravity="center"
-                    android:text="@string/lbl_step_3"
+                    android:text="@string/lbl_step_4"
                     android:textColor="@color/app_bg_orange"
                     android:textSize="@dimen/_12sp" />
 

@@ -76,9 +76,16 @@ public class MyResultsFragment extends Fragment {
         v.btnEditResult.setOnClickListener(view -> openEditor());
         v.btnViewReport.setOnClickListener(view -> openReport());
 
-        // Auto-fetch. From the empty state we don't know the hall ticket yet, so
-        // ask; from the summary card we already have it.
-        v.btnFetchResultAuto.setOnClickListener(view -> askHallTicket());
+        // Auto-fetch. result_get hands back the profile's hall ticket even when
+        // there is no result yet, so this normally needs no typing at all.
+        v.btnFetchResultAuto.setOnClickListener(view -> {
+            String known = current != null ? current.getHall_ticket_no() : null;
+            if (known != null && known.trim().length() == 10) {
+                startFetch(known, 1);
+            } else {
+                askHallTicket();
+            }
+        });
         v.btnSyncResult.setOnClickListener(view ->
                 startFetch(current != null ? current.getHall_ticket_no() : null, 1));
 
