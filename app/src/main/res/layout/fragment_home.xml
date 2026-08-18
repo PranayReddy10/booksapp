@@ -331,7 +331,7 @@
                                         android:alpha="0.75"
                                         android:text="@string/result_cgpa"
                                         android:textColor="@color/white"
-                                        android:textSize="@dimen/_11sp" />
+                                        android:textSize="@dimen/_12sp" />
                                 </LinearLayout>
 
                                 <LinearLayout
@@ -358,7 +358,7 @@
                                         android:alpha="0.75"
                                         android:text="@string/result_credits"
                                         android:textColor="@color/white"
-                                        android:textSize="@dimen/_11sp" />
+                                        android:textSize="@dimen/_12sp" />
                                 </LinearLayout>
 
                                 <LinearLayout
@@ -385,7 +385,7 @@
                                         android:alpha="0.75"
                                         android:text="@string/result_backlogs"
                                         android:textColor="@color/white"
-                                        android:textSize="@dimen/_11sp" />
+                                        android:textSize="@dimen/_12sp" />
                                 </LinearLayout>
                         </LinearLayout>
 
