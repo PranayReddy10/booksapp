@@ -528,6 +528,25 @@
     <string name="result_from_university">Fetched from the university — read-only</string>
 
     <string name="msg_home_results_prompt">Enter your hall ticket once and we will pull every semester from the university.</string>
+    <!-- Coins -->
+    <string name="lbl_my_coins">My Coins</string>
+    <string name="lbl_coin_balance">Your balance</string>
+    <string name="lbl_redeem_gift_card">Redeem for a gift card</string>
+    <string name="lbl_coins_from_books">Earnings from your books</string>
+    <string name="lbl_my_gift_cards">Your gift cards</string>
+    <string name="lbl_copy_code">Copy</string>
+    <string name="msg_no_coin_books">Upload a book and you will earn coins every time a student reads it.</string>
+    <string name="msg_coin_rates">You earn %1$d coin(s) each time a new student reads one of your books, and %2$d coins when an upload is approved.</string>
+    <string name="msg_coin_worth">worth %1$s%2$s</string>
+    <string name="msg_coin_need_more">Collect %1$d coins to redeem</string>
+    <string name="msg_coin_stats">%1$s views · %2$d readers</string>
+    <string name="msg_redeem_confirm">Turn %1$d coins into a %2$s%3$s gift card? Use the code in the coupon box at checkout.</string>
+    <string name="lbl_redeem_now">Redeem</string>
+    <string name="msg_code_copied">Gift card code copied</string>
+    <string name="msg_card_pending">Being issued…</string>
+    <string name="msg_coins_disabled">Coins are not available right now.</string>
+    <string name="sub_my_coins">Coins you have earned and your gift cards</string>
+
     <string name="msg_roll_locked">Your hall ticket number is linked to your results and cannot be changed. Contact support if it is wrong.</string>
 
 
