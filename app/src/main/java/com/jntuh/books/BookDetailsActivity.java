@@ -513,6 +513,11 @@ public class BookDetailsActivity extends AppCompatActivity {
         JsonObject jsObj = (JsonObject) new Gson().toJsonTree(new API(BookDetailsActivity.this));
         jsObj.addProperty("post_id", bookId);
         jsObj.addProperty("post_type", "Book");
+        // Who is reading decides whether the uploader earns coins for it, and
+        // stops the same reader paying out twice.
+        if (method.getIsLogin()) {
+            jsObj.addProperty("user_id", method.getUserId());
+        }
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
         Call<JsonObject> call = apiService.getPostViewData(API.toBase64(jsObj.toString()));
         call.enqueue(new Callback<JsonObject>() {

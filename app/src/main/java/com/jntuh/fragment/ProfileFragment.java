@@ -133,6 +133,11 @@ public class ProfileFragment extends Fragment {
                     openSection(ProfileSectionActivity.SECTION_CONTINUE));
             viewProfile.llSecUploads.setOnClickListener(v ->
                     openSection(ProfileSectionActivity.SECTION_UPLOADS));
+            // Coins has its own screen rather than a profile tab: it is a
+            // balance and a wallet, not another list of books.
+            viewProfile.llSecCoins.setOnClickListener(v ->
+                    startActivity(new android.content.Intent(requireActivity(),
+                            com.jntuh.books.MyCoinsActivity.class)));
             viewProfile.llSecSubscription.setOnClickListener(v ->
                     openSection(ProfileSectionActivity.SECTION_SUBSCRIPTION));
             viewProfile.llSecRent.setOnClickListener(v ->

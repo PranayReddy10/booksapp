@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- A redeemed gift card. The code is what goes in the coupon box at checkout. -->
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    app:cardBackgroundColor="@color/home_surface"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="0dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="14dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvCardCode"
+                style="@style/txt_OpenSansRomanExtraBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:letterSpacing="0.08"
+                android:textColor="@color/home_title"
+                android:textSize="@dimen/_16sp"
+                tools:text="JB4KD9QP2A" />
+
+            <TextView
+                android:id="@+id/tvCardMeta"
+                style="@style/txtOpenSansRomanSemiBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:textColor="@color/home_muted"
+                android:textSize="@dimen/_12sp"
+                tools:text="₹50.00 · 500 coins · 18 Aug 2026" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvCardCopy"
+            style="@style/txt_OpenSansRomanBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:padding="8dp"
+            android:text="@string/lbl_copy_code"
+            android:textColor="@color/app_bg_orange"
+            android:textSize="@dimen/_13sp" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

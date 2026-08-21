@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- My Coins: what you have, where it came from, and how to spend it. -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_bg">
+
+    <RelativeLayout
+        android:id="@+id/coinsBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:paddingStart="@dimen/_12px"
+        android:paddingTop="@dimen/_12px"
+        android:paddingEnd="@dimen/_16px"
+        android:paddingBottom="@dimen/_10px">
+
+        <ImageView
+            android:id="@+id/ivCoinsBack"
+            android:layout_width="@dimen/_40px"
+            android:layout_height="@dimen/_40px"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="@dimen/_8px"
+            android:src="@drawable/ic_result_back"
+            app:tint="@color/gray_2"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            style="@style/txt_OpenSansRomanExtraBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/_6px"
+            android:layout_toEndOf="@+id/ivCoinsBack"
+            android:text="@string/lbl_my_coins"
+            android:textColor="@color/gray_2"
+            android:textSize="@dimen/_20sp" />
+    </RelativeLayout>
+
+    <ProgressBar
+        android:id="@+id/progressCoins"
+        style="@style/ProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/svCoins"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/coinsBar"
+        android:clipToPadding="false"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/_16px"
+            android:paddingEnd="@dimen/_16px"
+            android:paddingBottom="@dimen/_24px">
+
+            <!-- Balance -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/app_bg_orange"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_20px">
+
+                    <TextView
+                        style="@style/txtOpenSansRomanSemiBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:alpha="0.85"
+                        android:text="@string/lbl_coin_balance"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_13sp" />
+
+                    <TextView
+                        android:id="@+id/tvCoinBalance"
+                        style="@style/txt_OpenSansRomanExtraBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_4px"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_30sp"
+                        tools:text="1,240" />
+
+                    <TextView
+                        android:id="@+id/tvCoinValue"
+                        style="@style/txtOpenSansRomanSemiBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:alpha="0.9"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_14sp"
+                        tools:text="worth ₹124.00" />
+
+                    <TextView
+                        android:id="@+id/btnRedeemCoins"
+                        style="@style/txt_OpenSansRomanBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_16px"
+                        android:background="@drawable/bg_home_results_cta"
+                        android:paddingStart="@dimen/_24px"
+                        android:paddingTop="@dimen/_12px"
+                        android:paddingEnd="@dimen/_24px"
+                        android:paddingBottom="@dimen/_12px"
+                        android:text="@string/lbl_redeem_gift_card"
+                        android:textColor="@color/app_bg_orange"
+                        android:textSize="@dimen/_14sp" />
+
+                    <TextView
+                        android:id="@+id/tvRedeemHint"
+                        style="@style/txtOpenSansRomanSemiBold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10px"
+                        android:alpha="0.85"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_12sp"
+                        tools:text="Collect 500 coins to redeem" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- How it works -->
+            <TextView
+                android:id="@+id/tvCoinRates"
+                style="@style/txtOpenSansRomanSemiBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_14px"
+                android:background="@drawable/bg_compose_field"
+                android:lineSpacingExtra="@dimen/_4px"
+                android:padding="@dimen/_14px"
+                android:textColor="@color/home_muted"
+                android:textSize="@dimen/_12sp"
+                tools:text="You earn 1 coin each time a student reads one of your books." />
+
+            <!-- Per-book earnings -->
+            <TextView
+                android:id="@+id/tvCoinBooksHeader"
+                style="@style/txt_OpenSansRomanExtraBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20px"
+                android:text="@string/lbl_coins_from_books"
+                android:textColor="@color/home_title"
+                android:textSize="@dimen/_15sp" />
+
+            <LinearLayout
+                android:id="@+id/llCoinBooks"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10px"
+                android:orientation="vertical" />
+
+            <TextView
+                android:id="@+id/tvCoinBooksEmpty"
+                style="@style/txtOpenSansRomanSemiBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10px"
+                android:gravity="center"
+                android:paddingTop="@dimen/_20px"
+                android:paddingBottom="@dimen/_20px"
+                android:text="@string/msg_no_coin_books"
+                android:textColor="@color/home_muted"
+                android:textSize="@dimen/_13sp"
+                android:visibility="gone" />
+
+            <!-- Gift cards -->
+            <TextView
+                android:id="@+id/tvCoinCardsHeader"
+                style="@style/txt_OpenSansRomanExtraBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20px"
+                android:text="@string/lbl_my_gift_cards"
+                android:textColor="@color/home_title"
+                android:textSize="@dimen/_15sp"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:id="@+id/llCoinCards"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10px"
+                android:orientation="vertical" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</RelativeLayout>

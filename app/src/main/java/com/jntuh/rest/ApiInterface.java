@@ -413,6 +413,19 @@ public interface ApiInterface {
     @FormUrlEncoded
     Call<com.jntuh.response.HallTicketRP> lookupHallTicket(@Field("data") String data);
 
+    // --- Coins: earned on reads of your uploads, spent on shop gift cards ---
+    @POST("coins_summary")
+    @FormUrlEncoded
+    Call<com.jntuh.response.CoinSummaryRP> getCoinsSummary(@Field("data") String data);
+
+    @POST("coins_redeem")
+    @FormUrlEncoded
+    Call<com.jntuh.response.CoinCardRP> redeemCoins(@Field("data") String data);
+
+    @POST("coins_cards")
+    @FormUrlEncoded
+    Call<com.jntuh.response.CoinCardRP> getCoinCards(@Field("data") String data);
+
     @POST("report_generate")
     @FormUrlEncoded
     Call<ReportCardRP> generateReportCard(@Field("data") String data);
