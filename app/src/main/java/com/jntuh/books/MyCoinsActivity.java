@@ -98,8 +98,12 @@ public class MyCoinsActivity extends AppCompatActivity {
                             loadCards();
                             return;
                         }
-                        // Coins switched off by the admin.
-                        showMessage(nn(summary.getMsg(), getString(R.string.msg_coins_disabled)));
+                        // Two different problems: the admin switched it off, or
+                        // this server has not run the coins migration.
+                        String fallback = "setup".equals(summary.getReason())
+                                ? getString(R.string.msg_coins_setup_pending)
+                                : getString(R.string.msg_coins_disabled);
+                        showMessage(nn(summary.getMsg(), fallback));
                         return;
                     }
                 } catch (Exception e) {
@@ -126,6 +130,9 @@ public class MyCoinsActivity extends AppCompatActivity {
         v.tvCoinBalance.setText(NumberFormat.getInstance().format(s.getBalance()));
         v.tvCoinValue.setText(getString(R.string.msg_coin_worth, currency, nn(s.getBalance_value(), "0")));
         v.tvCoinRates.setText(getString(R.string.msg_coin_rates, s.getCoins_per_read(), s.getCoins_per_upload()));
+        v.tvCoinStepSpend.setText(s.getCan_redeem() == 1
+                ? getString(R.string.msg_coin_step_spend_ready)
+                : getString(R.string.msg_coin_step_spend, s.getMin_redeem()));
 
         // Below the minimum the button would only ever fail, so say what is
         // missing instead of offering it.

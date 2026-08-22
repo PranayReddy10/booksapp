@@ -156,19 +156,115 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- How it works -->
-            <TextView
-                android:id="@+id/tvCoinRates"
-                style="@style/txtOpenSansRomanSemiBold"
+            <!-- What coins are, and what to do with them. Three lines instead of
+                 a balance with no explanation next to it. -->
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_14px"
-                android:background="@drawable/bg_compose_field"
-                android:lineSpacingExtra="@dimen/_4px"
-                android:padding="@dimen/_14px"
-                android:textColor="@color/home_muted"
-                android:textSize="@dimen/_12sp"
-                tools:text="You earn 1 coin each time a student reads one of your books." />
+                app:cardBackgroundColor="@color/home_surface"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_16px">
+
+                    <TextView
+                        style="@style/txt_OpenSansRomanExtraBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/lbl_how_coins_work"
+                        android:textColor="@color/home_title"
+                        android:textSize="@dimen/_15sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_12px"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/txt_OpenSansRomanBold"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:background="@drawable/bg_reg_badge"
+                            android:gravity="center"
+                            android:text="1"
+                            android:textColor="@color/app_bg_orange"
+                            android:textSize="@dimen/_12sp" />
+
+                        <TextView
+                            android:id="@+id/tvCoinRates"
+                            style="@style/txtOpenSansRomanSemiBold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_12px"
+                            android:lineSpacingExtra="@dimen/_3px"
+                            android:text=""
+                            android:textColor="@color/home_muted"
+                            android:textSize="@dimen/_13sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_12px"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/txt_OpenSansRomanBold"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:background="@drawable/bg_reg_badge"
+                            android:gravity="center"
+                            android:text="2"
+                            android:textColor="@color/app_bg_orange"
+                            android:textSize="@dimen/_12sp" />
+
+                        <TextView
+                            android:id="@+id/tvCoinStepTrack"
+                            style="@style/txtOpenSansRomanSemiBold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_12px"
+                            android:lineSpacingExtra="@dimen/_3px"
+                            android:text="@string/msg_coin_step_track"
+                            android:textColor="@color/home_muted"
+                            android:textSize="@dimen/_13sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_12px"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/txt_OpenSansRomanBold"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:background="@drawable/bg_reg_badge"
+                            android:gravity="center"
+                            android:text="3"
+                            android:textColor="@color/app_bg_orange"
+                            android:textSize="@dimen/_12sp" />
+
+                        <TextView
+                            android:id="@+id/tvCoinStepSpend"
+                            style="@style/txtOpenSansRomanSemiBold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_12px"
+                            android:lineSpacingExtra="@dimen/_3px"
+                            android:text=""
+                            android:textColor="@color/home_muted"
+                            android:textSize="@dimen/_13sp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
             <!-- Per-book earnings -->
             <TextView

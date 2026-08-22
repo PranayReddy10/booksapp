@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -8,6 +10,56 @@
     <include
         android:id="@+id/toolbarMain"
         layout="@layout/row_toolbar" />
+
+    <!-- The totals behind the per-book numbers below, and the way to spend them.
+         Hidden until the server confirms coins are on. -->
+    <LinearLayout
+        android:id="@+id/llUploadCoins"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/_16px"
+        android:paddingTop="@dimen/_12px"
+        android:paddingEnd="@dimen/_16px"
+        android:paddingBottom="@dimen/_12px"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <ImageView
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:src="@drawable/ic_coin"
+            app:tint="@color/app_bg_orange"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/tvUploadCoinsTotal"
+            style="@style/txt_OpenSansRomanBold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10px"
+            android:layout_weight="1"
+            android:textColor="@color/gray_2"
+            android:textSize="@dimen/_14sp"
+            tools:text="You have earned 86 coins" />
+
+        <TextView
+            style="@style/txt_OpenSansRomanBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lbl_my_coins"
+            android:textColor="@color/app_bg_orange"
+            android:textSize="@dimen/_13sp" />
+
+        <ImageView
+            android:layout_width="@dimen/_20px"
+            android:layout_height="@dimen/_20px"
+            android:src="@drawable/ic_home_chevron"
+            app:tint="@color/app_bg_orange"
+            tools:ignore="ContentDescription" />
+    </LinearLayout>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeUploads"

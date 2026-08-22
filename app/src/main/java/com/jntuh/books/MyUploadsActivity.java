@@ -54,8 +54,32 @@ public class MyUploadsActivity extends AppCompatActivity {
         binding.rvMyUploads.setAdapter(adapter);
 
         binding.swipeUploads.setOnRefreshListener(this::loadUploads);
+        binding.llUploadCoins.setOnClickListener(v ->
+                startActivity(new android.content.Intent(this, MyCoinsActivity.class)));
 
         loadUploads();
+    }
+
+    /**
+     * The per-book coins add up to something, and this is where a student is
+     * already looking at those numbers — so total them here and offer the way
+     * through to spending them. Stays hidden unless the server says coins are on.
+     */
+    private void bindCoinsStrip() {
+        boolean coinsOn = false;
+        int total = 0;
+        for (com.jntuh.item.MyUploadList item : uploadList) {
+            if (item.getCoins_enabled() == 1) {
+                coinsOn = true;
+                total += item.getCoins_earned();
+            }
+        }
+
+        binding.llUploadCoins.setVisibility(coinsOn ? View.VISIBLE : View.GONE);
+        if (coinsOn) {
+            binding.tvUploadCoinsTotal.setText(getString(R.string.msg_upload_coins_total,
+                    java.text.NumberFormat.getInstance().format(total)));
+        }
     }
 
     private void loadUploads() {
@@ -88,6 +112,7 @@ public class MyUploadsActivity extends AppCompatActivity {
                     }
                     adapter.notifyDataSetChanged();
                     binding.tvNoUploads.setVisibility(uploadList.isEmpty() ? View.VISIBLE : View.GONE);
+                    bindCoinsStrip();
                 } catch (Exception e) {
                     Log.d("exception_error", e.toString());
                     binding.tvNoUploads.setVisibility(uploadList.isEmpty() ? View.VISIBLE : View.GONE);

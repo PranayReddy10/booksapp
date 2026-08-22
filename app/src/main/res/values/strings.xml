@@ -536,7 +536,13 @@
     <string name="lbl_my_gift_cards">Your gift cards</string>
     <string name="lbl_copy_code">Copy</string>
     <string name="msg_no_coin_books">Upload a book and you will earn coins every time a student reads it.</string>
-    <string name="msg_coin_rates">You earn %1$d coin(s) each time a new student reads one of your books, and %2$d coins when an upload is approved.</string>
+    <string name="msg_upload_coins_total">You have earned %1$s coins</string>
+    <string name="lbl_how_coins_work">How coins work</string>
+    <string name="msg_coin_step_track">Every book you upload shows its own views, readers and coins — here and in My Uploads.</string>
+    <string name="msg_coin_step_spend">At %1$d coins you can swap them for a gift card. You get a code to paste into the coupon box when you buy from the Shop.</string>
+    <string name="msg_coin_step_spend_ready">You have enough to redeem. You get a code to paste into the coupon box when you buy from the Shop.</string>
+    <string name="msg_coins_setup_pending">Coins are not set up on the server yet. Please try again later.</string>
+    <string name="msg_coin_rates">Earn %1$d coin(s) every time a new student reads one of your books, plus %2$d when an upload is approved.</string>
     <string name="msg_coin_worth">worth %1$s%2$s</string>
     <string name="msg_coin_need_more">Collect %1$d coins to redeem</string>
     <string name="msg_coin_stats">%1$s views · %2$d readers</string>
