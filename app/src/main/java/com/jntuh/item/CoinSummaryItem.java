@@ -41,6 +41,10 @@ public class CoinSummaryItem implements Serializable {
     @SerializedName("books")
     private List<CoinBookItem> books;
 
+    /** "setup" (migration not run) or "disabled" when enabled is 0. */
+    @SerializedName("reason")
+    private String reason;
+
     @SerializedName("msg")
     private String msg;
 
@@ -68,6 +72,8 @@ public class CoinSummaryItem implements Serializable {
     public String getCurrency() { return currency; }
 
     public List<CoinBookItem> getBooks() { return books; }
+
+    public String getReason() { return reason; }
 
     public String getMsg() { return msg; }
 
