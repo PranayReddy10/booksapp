@@ -24,6 +24,36 @@ public class MyUploadList implements Serializable {
     @SerializedName("reject_reason")
     private String reject_reason;
 
+    /** 0 when the coins feature is off, so the row can hide the earnings line. */
+    @SerializedName("coins_enabled")
+    private int coins_enabled;
+
+    @SerializedName("total_views")
+    private int total_views;
+
+    /** Distinct readers who earned coins, which is not the same as views. */
+    @SerializedName("reader_count")
+    private int reader_count;
+
+    @SerializedName("coins_earned")
+    private int coins_earned;
+
+    public int getCoins_enabled() {
+        return coins_enabled;
+    }
+
+    public int getTotal_views() {
+        return total_views;
+    }
+
+    public int getReader_count() {
+        return reader_count;
+    }
+
+    public int getCoins_earned() {
+        return coins_earned;
+    }
+
     public String getPost_id() {
         return post_id;
     }

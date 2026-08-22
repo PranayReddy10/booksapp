@@ -44,6 +44,18 @@ public class MyUploadAdapter extends RecyclerView.Adapter<MyUploadAdapter.ViewHo
 
         holder.binding.tvUploadTitle.setText(item.getPost_title());
 
+        // What this book has done for its uploader. Hidden entirely when coins
+        // are off, and while a book is still pending, where it can only be zeros.
+        boolean showEarnings = item.getCoins_enabled() == 1
+                && "approved".equalsIgnoreCase(item.getUpload_status() == null ? "" : item.getUpload_status());
+        holder.binding.tvUploadEarnings.setVisibility(showEarnings ? View.VISIBLE : View.GONE);
+        if (showEarnings) {
+            holder.binding.tvUploadEarnings.setText(activity.getString(R.string.msg_upload_earnings,
+                    java.text.NumberFormat.getInstance().format(item.getTotal_views()),
+                    item.getReader_count(),
+                    item.getCoins_earned()));
+        }
+
         // Tapping an upload opens the book's detail page — but only approved books are
         // live (books_details returns status=1 only), so guard pending/rejected.
         holder.binding.getRoot().setOnClickListener(v -> {

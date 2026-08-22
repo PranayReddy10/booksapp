@@ -66,12 +66,14 @@ public class MyCoinsActivity extends AppCompatActivity {
     }
 
     private void load() {
+        // Anything that goes wrong here shows a line on the screen. Closing the
+        // activity instead just looked like the app bouncing straight back.
         if (!method.getIsLogin()) {
-            finish();
+            showMessage(getString(R.string.result_login_needed));
             return;
         }
         if (!method.isNetworkAvailable()) {
-            method.alertBox(getString(R.string.internet_connection));
+            showMessage(getString(R.string.internet_connection));
             return;
         }
 
@@ -86,30 +88,33 @@ public class MyCoinsActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NotNull Call<CoinSummaryRP> call, @NotNull Response<CoinSummaryRP> resp) {
                 v.progressCoins.setVisibility(View.GONE);
-                v.svCoins.setVisibility(View.VISIBLE);
                 try {
                     CoinSummaryRP body = resp.body();
                     if (body != null && body.getEbookApp() != null && !body.getEbookApp().isEmpty()) {
                         summary = body.getEbookApp().get(0);
                         if (summary.getEnabled() == 1) {
+                            showContent();
                             render(summary);
                             loadCards();
                             return;
                         }
+                        // Coins switched off by the admin.
+                        showMessage(nn(summary.getMsg(), getString(R.string.msg_coins_disabled)));
+                        return;
                     }
                 } catch (Exception e) {
                     Log.d("coins_error", e.toString());
                 }
-                method.alertBox(getString(R.string.msg_coins_disabled));
-                finish();
+                // No usable body: usually the server does not have the coins
+                // endpoints yet, which is a deploy state, not a user error.
+                showMessage(getString(R.string.msg_coins_disabled));
             }
 
             @Override
             public void onFailure(@NotNull Call<CoinSummaryRP> call, @NotNull Throwable t) {
                 v.progressCoins.setVisibility(View.GONE);
-                v.svCoins.setVisibility(View.VISIBLE);
                 Log.e("coins_fail", t.toString());
-                method.alertBox(getString(R.string.failed_try_again));
+                showMessage(getString(R.string.failed_try_again));
             }
         });
     }
@@ -276,6 +281,18 @@ public class MyCoinsActivity extends AppCompatActivity {
                 method.alertBox(getString(R.string.failed_try_again));
             }
         });
+    }
+
+    private void showMessage(String text) {
+        v.svCoins.setVisibility(View.GONE);
+        v.progressCoins.setVisibility(View.GONE);
+        v.tvCoinsMessage.setText(text);
+        v.tvCoinsMessage.setVisibility(View.VISIBLE);
+    }
+
+    private void showContent() {
+        v.tvCoinsMessage.setVisibility(View.GONE);
+        v.svCoins.setVisibility(View.VISIBLE);
     }
 
     private static String nn(String s, String fallback) {

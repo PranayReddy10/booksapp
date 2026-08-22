@@ -73,12 +73,30 @@
                 android:textSize="@dimen/_15sp"
                 tools:text="@string/app_name" />
 
+            <!-- Views, readers and coins for this one book. -->
+            <TextView
+                android:id="@+id/tvUploadEarnings"
+                style="@style/txtOpenSansRomanSemiBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvUploadTitle"
+                android:layout_marginStart="@dimen/_8px"
+                android:layout_marginTop="@dimen/_2px"
+                android:layout_marginEnd="@dimen/_8px"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:textColor="@color/app_bg_orange"
+                android:textSize="@dimen/_12sp"
+                android:visibility="gone"
+                tools:text="1,204 views · 86 readers · +86"
+                tools:visibility="visible" />
+
             <TextView
                 android:id="@+id/tvUploadReason"
                 style="@style/txtOpenSansRomanSemiBold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tvUploadTitle"
+                android:layout_below="@+id/tvUploadEarnings"
                 android:layout_marginStart="@dimen/_8px"
                 android:layout_marginTop="@dimen/_1px"
                 android:layout_marginEnd="@dimen/_8px"
