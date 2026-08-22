@@ -49,6 +49,24 @@
         android:layout_centerInParent="true"
         android:visibility="gone" />
 
+    <!-- Shown instead of the content when coins are off or unreachable. The
+         screen used to close itself here, which looked like a crash. -->
+    <TextView
+        android:id="@+id/tvCoinsMessage"
+        style="@style/txtOpenSansRomanSemiBold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/coinsBar"
+        android:layout_marginTop="@dimen/_60px"
+        android:gravity="center"
+        android:paddingStart="@dimen/_32px"
+        android:paddingEnd="@dimen/_32px"
+        android:textColor="@color/home_muted"
+        android:textSize="@dimen/_14sp"
+        android:visibility="gone"
+        tools:text="Coins are not available right now."
+        tools:visibility="visible" />
+
     <androidx.core.widget.NestedScrollView
         android:id="@+id/svCoins"
         android:layout_width="match_parent"

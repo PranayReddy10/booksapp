@@ -545,6 +545,7 @@
     <string name="msg_code_copied">Gift card code copied</string>
     <string name="msg_card_pending">Being issued…</string>
     <string name="msg_coins_disabled">Coins are not available right now.</string>
+    <string name="msg_upload_earnings">%1$s views · %2$d readers · +%3$d coins</string>
     <string name="sub_my_coins">Coins you have earned and your gift cards</string>
 
     <string name="msg_roll_locked">Your hall ticket number is linked to your results and cannot be changed. Contact support if it is wrong.</string>
