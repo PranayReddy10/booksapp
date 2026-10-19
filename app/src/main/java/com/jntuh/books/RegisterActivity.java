@@ -483,6 +483,11 @@ public class RegisterActivity extends AppCompatActivity {
                 viewRegisterBinding.edtRegPhone.setError(getString(R.string.please_enter_phone));
                 return false;
             }
+            if (Method.normalizePhone(viewRegisterBinding.edtRegPhone.getText().toString()).isEmpty()) {
+                viewRegisterBinding.edtRegPhone.requestFocus();
+                viewRegisterBinding.edtRegPhone.setError(getString(R.string.please_enter_valid_phone));
+                return false;
+            }
             return true;
         }
 
@@ -733,7 +738,7 @@ public class RegisterActivity extends AppCompatActivity {
         String name = viewRegisterBinding.edtRegName.getText().toString();
         String email = viewRegisterBinding.edtRegEmail.getText().toString();
         String password = viewRegisterBinding.edtRegPass.getText().toString();
-        String phoneNo = viewRegisterBinding.edtRegPhone.getText().toString();
+        String phoneNo = Method.normalizePhone(viewRegisterBinding.edtRegPhone.getText().toString());
         String rollNo = viewRegisterBinding.edtRegRoll.getText().toString();
         String fatherName = viewRegisterBinding.edtRegFather.getText().toString();
         String regulation = viewRegisterBinding.edtRegRegulation.getText().toString();
