@@ -430,7 +430,7 @@ public interface ApiInterface {
     @FormUrlEncoded
     Call<ReportCardRP> generateReportCard(@Field("data") String data);
 
-    // ---- Shop (MadeForU WooCommerce proxy) ----
+    // ---- Shop (MadeForU store API proxy) ----
     @POST("shop_categories")
     @FormUrlEncoded
     Call<ShopCategoryRP> getShopCategories(@Field("data") String data);

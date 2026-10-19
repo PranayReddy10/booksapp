@@ -41,7 +41,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
- * Shop storefront: WooCommerce categories (chips) + product grid, fetched via
+ * Shop storefront: MadeForU store categories (chips) + product grid, fetched via
  * the JNTU Books backend proxy. Browsing only — tapping a product opens the
  * detail screen, and buying/tracking opens the website in a WebView.
  */
@@ -249,7 +249,7 @@ public class ShopFragment extends Fragment {
 
     private void openTrackOrder() {
         String url = (trackUrl != null && !trackUrl.isEmpty())
-                ? trackUrl : "https://madeforu.co.in/tracking-order/";
+                ? trackUrl : "https://madeforu.co.in/track-order";
         Intent i = new Intent(requireActivity(), ShopWebActivity.class);
         i.putExtra("url", url);
         i.putExtra("title", getString(R.string.shop_track_order));
