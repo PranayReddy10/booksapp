@@ -487,9 +487,14 @@
     <string name="lbl_view_book">View book</string>
     <string name="lbl_view_book_fmt">View book: %1$s</string>
     <string name="lbl_complete_profile">Complete your profile</string>
-    <string name="lbl_complete_profile_sub">Select your university, department and college to continue.</string>
+    <string name="lbl_complete_profile_sub">A few details Google doesn\'t share with us. All fields are required.</string>
 
     <string name="lbl_complete_all_fields">Please select all fields to continue</string>
+    <string name="lbl_cp_about_you">About you</string>
+    <string name="lbl_cp_your_campus">Your campus</string>
+    <string name="lbl_phone_country_code">+91</string>
+    <string name="lbl_phone_hint_10">10-digit mobile number</string>
+    <string name="please_enter_valid_phone">Please enter a valid 10-digit mobile number</string>
     <string name="lbl_play_video">Play video</string>
     <string name="lbl_home">Home</string>
     <string name="lbl_upload_reels_photos">Upload Reels / Photos</string>

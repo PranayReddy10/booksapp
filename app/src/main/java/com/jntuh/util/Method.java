@@ -220,6 +220,18 @@ public class Method {
         editor.apply();
     }
 
+    /**
+     * Ten digits of an Indian mobile number, or "" when it is not one. Accepts
+     * what people type or what was saved before: spaces, dashes, +91 or a leading 0.
+     */
+    public static String normalizePhone(String raw) {
+        if (raw == null) return "";
+        String digits = raw.replaceAll("[^0-9]", "");
+        if (digits.length() == 12 && digits.startsWith("91")) digits = digits.substring(2);
+        if (digits.length() == 11 && digits.startsWith("0")) digits = digits.substring(1);
+        return digits.matches("[6-9][0-9]{9}") ? digits : "";
+    }
+
     public String getUserPhone() {
         pref = activity.getSharedPreferences(myPreference, 0);
         return pref.getString("user_phone", "");

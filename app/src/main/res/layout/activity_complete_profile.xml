@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Completing a profile is enrolment, not a settings form: it says why the details
-     are needed, shows the three campus choices as numbered steps on one card, and
-     ends in a single action. Matches the registration flow's look. -->
+<!-- Completing a profile is enrolment, not a settings form. Google gives only a name
+     and email, so this asks for the rest of what sign-up asks for: phone and gender
+     on one card, the campus choices as numbered steps on another, then one action.
+     Matches the registration flow's look. -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -16,7 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginStart="@dimen/_20px"
-        android:layout_marginTop="@dimen/_40px"
+        android:layout_marginTop="@dimen/_30px"
         android:layout_marginEnd="@dimen/_20px"
         android:orientation="vertical">
 
@@ -101,13 +102,289 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        <!-- ===== About you: what Google does not tell us ===== -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_20px"
             android:layout_marginTop="@dimen/_20px"
+            android:layout_marginEnd="@dimen/_20px"
+            android:background="@drawable/bg_reg_card"
+            android:orientation="vertical"
+            android:padding="@dimen/_20px">
+
+            <TextView
+                style="@style/txt_OpenSansRomanBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_14px"
+                android:text="@string/lbl_cp_about_you"
+                android:textColor="@color/gray_2"
+                android:textSize="@dimen/_16sp" />
+
+            <!-- Email comes from Google and is the sign-in, so it is shown, not edited. -->
+            <TextView
+                style="@style/txtOpenSansRomanSemiBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lbl_email"
+                android:textColor="@color/home_by_author"
+                android:textSize="@dimen/_13sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8px"
+                android:alpha="0.75"
+                android:background="@drawable/bg_reg_field"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/_16px"
+                android:paddingTop="@dimen/_16px"
+                android:paddingEnd="@dimen/_16px"
+                android:paddingBottom="@dimen/_16px">
+
+                <ImageView
+                    android:layout_width="@dimen/_20px"
+                    android:layout_height="@dimen/_20px"
+                    android:src="@drawable/ic_reg_mail"
+                    app:tint="@color/app_bg_orange"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:id="@+id/tvCpEmail"
+                    style="@style/txt_PoppinsMedium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_12px"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:textColor="@color/gray_2"
+                    android:textSize="@dimen/_15sp"
+                    tools:text="student@gmail.com" />
+
+                <ImageView
+                    android:layout_width="@dimen/_18px"
+                    android:layout_height="@dimen/_18px"
+                    android:src="@drawable/ic_reg_lock"
+                    app:tint="@color/home_by_author"
+                    tools:ignore="ContentDescription" />
+            </LinearLayout>
+
+            <TextView
+                style="@style/txtOpenSansRomanSemiBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_18px"
+                android:text="@string/lbl_phone_req"
+                android:textColor="@color/home_by_author"
+                android:textSize="@dimen/_13sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8px"
+                android:background="@drawable/bg_reg_field"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/_16px"
+                android:paddingEnd="@dimen/_16px">
+
+                <ImageView
+                    android:layout_width="@dimen/_20px"
+                    android:layout_height="@dimen/_20px"
+                    android:src="@drawable/ic_reg_phone"
+                    app:tint="@color/app_bg_orange"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    style="@style/txt_PoppinsMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_12px"
+                    android:text="@string/lbl_phone_country_code"
+                    android:textColor="@color/gray_2"
+                    android:textSize="@dimen/_15sp" />
+
+                <EditText
+                    android:id="@+id/edtCpPhone"
+                    style="@style/txt_PoppinsMedium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_8px"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:hint="@string/lbl_phone_hint_10"
+                    android:inputType="phone"
+                    android:maxLength="10"
+                    android:paddingTop="@dimen/_16px"
+                    android:paddingBottom="@dimen/_16px"
+                    android:singleLine="true"
+                    android:textColor="@color/gray_2"
+                    android:textColorHint="@color/gray_edt_hint_text"
+                    android:textCursorDrawable="@drawable/cursor"
+                    android:textSize="@dimen/_15sp"
+                    tools:ignore="Autofill" />
+            </LinearLayout>
+
+            <TextView
+                style="@style/txtOpenSansRomanSemiBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_18px"
+                android:text="@string/lbl_gender_req"
+                android:textColor="@color/home_by_author"
+                android:textSize="@dimen/_13sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10px"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/llCpGenderMale"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_2px"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/_4px"
+                    android:paddingBottom="@dimen/_4px">
+
+                    <FrameLayout
+                        android:id="@+id/ivCpGenderMaleDisc"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:background="@drawable/bg_gender_circle">
+
+                        <ImageView
+                            android:id="@+id/ivCpGenderMale"
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_gender_male"
+                            app:tint="@color/home_by_author"
+                            tools:ignore="ContentDescription" />
+                    </FrameLayout>
+
+                    <TextView
+                        android:id="@+id/tvCpGenderMale"
+                        style="@style/txt_OpenSansRomanBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_6px"
+                        android:text="@string/lbl_gender_male"
+                        android:textColor="@color/home_by_author"
+                        android:textSize="@dimen/_13sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llCpGenderFemale"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_8px"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/_4px"
+                    android:paddingBottom="@dimen/_4px">
+
+                    <FrameLayout
+                        android:id="@+id/ivCpGenderFemaleDisc"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:background="@drawable/bg_gender_circle">
+
+                        <ImageView
+                            android:id="@+id/ivCpGenderFemale"
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_gender_female"
+                            app:tint="@color/home_by_author"
+                            tools:ignore="ContentDescription" />
+                    </FrameLayout>
+
+                    <TextView
+                        android:id="@+id/tvCpGenderFemale"
+                        style="@style/txt_OpenSansRomanBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_6px"
+                        android:text="@string/lbl_gender_female"
+                        android:textColor="@color/home_by_author"
+                        android:textSize="@dimen/_13sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llCpGenderOther"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_8px"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/_4px"
+                    android:paddingBottom="@dimen/_4px">
+
+                    <FrameLayout
+                        android:id="@+id/ivCpGenderOtherDisc"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:background="@drawable/bg_gender_circle">
+
+                        <ImageView
+                            android:id="@+id/ivCpGenderOther"
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_gender_other"
+                            app:tint="@color/home_by_author"
+                            tools:ignore="ContentDescription" />
+                    </FrameLayout>
+
+                    <TextView
+                        android:id="@+id/tvCpGenderOther"
+                        style="@style/txt_OpenSansRomanBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_6px"
+                        android:text="@string/lbl_gender_other"
+                        android:textColor="@color/home_by_author"
+                        android:textSize="@dimen/_13sp" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- ===== Your campus ===== -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20px"
+            android:layout_marginTop="@dimen/_16px"
             android:layout_marginEnd="@dimen/_20px"
             android:layout_marginBottom="@dimen/_20px"
             android:background="@drawable/bg_reg_card"
             android:orientation="vertical"
             android:padding="@dimen/_20px">
+
+            <TextView
+                style="@style/txt_OpenSansRomanBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_14px"
+                android:text="@string/lbl_cp_your_campus"
+                android:textColor="@color/gray_2"
+                android:textSize="@dimen/_16sp" />
 
             <!-- 1. University -->
             <LinearLayout
@@ -392,6 +669,7 @@
                     android:textColor="@color/gray_2"
                     android:textSize="@dimen/_13sp" />
             </LinearLayout>
+        </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </RelativeLayout>

@@ -18,6 +18,7 @@ import com.jntuh.item.UniversityList;
 import com.jntuh.response.CollegeRP;
 import com.jntuh.response.DepartmentRP;
 import com.jntuh.response.EditProfileRP;
+import com.jntuh.response.LoginRP;
 import com.jntuh.response.UniversityRP;
 import com.jntuh.rest.ApiClient;
 import com.jntuh.rest.ApiInterface;
@@ -34,8 +35,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
- * Shown once, right after a Google user signs in without University/Department/College.
- * They must pick all three before entering the app.
+ * Shown right after a Google user signs in whose account is missing any of what
+ * sign-up asks for: phone, gender, University, Department, College. Google gives
+ * only the name and email, so they must fill the rest before entering the app.
+ * Whatever the account already has is filled in for them.
  */
 public class CompleteProfileActivity extends AppCompatActivity {
 
@@ -54,6 +57,15 @@ public class CompleteProfileActivity extends AppCompatActivity {
 
     private ArrayAdapter<String> universityAdapter, departmentAdapter, collegeAdapter;
 
+    /** Stored values, matched to the gender cards (0 = none picked). */
+    private final String[] genders = {"", "Male", "Female", "Other"};
+    private int selectedGender;
+
+    // What the account already has, applied once the lists it points into have loaded.
+    private String pendingUniversity = "";
+    private String pendingDepartmentId = "";
+    private String pendingCollege = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,16 +76,132 @@ public class CompleteProfileActivity extends AppCompatActivity {
         userId = getIntent().getStringExtra("uId");
 
         setupSpinners();
+        setupAboutYou();
 
         binding.btnSaveProfile.setOnClickListener(v -> save());
         binding.btnCpFetch.setOnClickListener(v -> lookupHallTicket());
 
         if (method.isNetworkAvailable()) {
+            loadProfile();
             loadUniversities();
             loadDepartments();
             loadColleges();
         } else {
             method.alertBox(getString(R.string.internet_connection));
+        }
+    }
+
+    private void setupAboutYou() {
+        binding.tvCpEmail.setText(method.getUserEmail());
+        binding.edtCpPhone.setText(Method.normalizePhone(method.getUserPhone()));
+
+        binding.llCpGenderMale.setOnClickListener(v -> selectGender(1));
+        binding.llCpGenderFemale.setOnClickListener(v -> selectGender(2));
+        binding.llCpGenderOther.setOnClickListener(v -> selectGender(3));
+        paintGender();
+    }
+
+    private void selectGender(int position) {
+        selectedGender = position;
+        paintGender();
+    }
+
+    /** Fill the chosen disc with the brand colour and leave the others neutral. */
+    private void paintGender() {
+        paintGenderChoice(binding.ivCpGenderMaleDisc, binding.ivCpGenderMale,
+                binding.tvCpGenderMale, selectedGender == 1);
+        paintGenderChoice(binding.ivCpGenderFemaleDisc, binding.ivCpGenderFemale,
+                binding.tvCpGenderFemale, selectedGender == 2);
+        paintGenderChoice(binding.ivCpGenderOtherDisc, binding.ivCpGenderOther,
+                binding.tvCpGenderOther, selectedGender == 3);
+    }
+
+    private void paintGenderChoice(View disc, android.widget.ImageView icon,
+                                   android.widget.TextView label, boolean selected) {
+        disc.setBackgroundResource(selected
+                ? R.drawable.bg_gender_circle_selected : R.drawable.bg_gender_circle);
+        icon.setColorFilter(androidx.core.content.ContextCompat.getColor(this,
+                selected ? R.color.white : R.color.home_by_author));
+        label.setTextColor(androidx.core.content.ContextCompat.getColor(this,
+                selected ? R.color.app_bg_orange : R.color.home_by_author));
+    }
+
+    /**
+     * Pre-fill from the account: someone who already gave their college before
+     * phone and gender became required only has to add those two.
+     */
+    private void loadProfile() {
+        JsonObject jsObj = (JsonObject) new Gson().toJsonTree(new API(this));
+        jsObj.addProperty("user_id", userId);
+        ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
+        api.getProfileData(API.toBase64(jsObj.toString())).enqueue(new Callback<LoginRP>() {
+            @Override
+            public void onResponse(@NotNull Call<LoginRP> call, @NotNull Response<LoginRP> response) {
+                LoginRP body = response.body();
+                if (binding == null || body == null || body.getItemUserList() == null
+                        || body.getItemUserList().isEmpty()) {
+                    return;
+                }
+                LoginRP.ItemUser u = body.getItemUserList().get(0);
+
+                if (binding.edtCpPhone.getText().toString().trim().isEmpty()) {
+                    binding.edtCpPhone.setText(Method.normalizePhone(u.getPhone()));
+                }
+                if (selectedGender == 0 && u.getGender() != null) {
+                    for (int i = 1; i < genders.length; i++) {
+                        if (genders[i].equalsIgnoreCase(u.getGender().trim())) selectGender(i);
+                    }
+                }
+                // The hall ticket is fixed once set (results are keyed on it).
+                String roll = u.getRollnumber() == null ? "" : u.getRollnumber().trim();
+                if (!roll.isEmpty()) {
+                    binding.edtCpRoll.setText(roll);
+                    binding.edtCpRoll.setEnabled(false);
+                }
+                pendingUniversity = u.getUniversity() == null ? "" : u.getUniversity().trim();
+                pendingDepartmentId = u.getDepartment_id() == null ? "" : u.getDepartment_id().trim();
+                pendingCollege = u.getCollege() == null ? "" : u.getCollege().trim();
+                applyPendingCampus();
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<LoginRP> call, @NotNull Throwable t) {
+                Log.e("fail", t.toString());
+            }
+        });
+    }
+
+    /** Select the account's university and college once their lists are in. */
+    private void applyPendingCampus() {
+        if (!pendingUniversity.isEmpty() && binding.spUniversity.getSelectedItemPosition() <= 0) {
+            for (int i = 0; i < universityList.size(); i++) {
+                if (pendingUniversity.equalsIgnoreCase(universityList.get(i).getUniversity_name())) {
+                    binding.spUniversity.setSelection(i + 1);
+                    pendingUniversity = "";
+                    break;
+                }
+            }
+        }
+        if (!pendingCollege.isEmpty() && binding.spCollege.getSelectedItemPosition() <= 0) {
+            for (int i = 0; i < collegeList.size(); i++) {
+                if (pendingCollege.equalsIgnoreCase(collegeList.get(i).getCollege_name())) {
+                    binding.spCollege.setSelection(i + 1);
+                    pendingCollege = "";
+                    break;
+                }
+            }
+        }
+        applyPendingDepartment();
+    }
+
+    private void applyPendingDepartment() {
+        if (pendingDepartmentId.isEmpty() || binding.spDepartment.getSelectedItemPosition() > 0) return;
+        for (int i = 0; i < departmentFiltered.size(); i++) {
+            if (pendingDepartmentId.equals(departmentFiltered.get(i).getDepartment_id())) {
+                binding.spDepartment.setSelection(i + 1);
+                pendingDepartmentId = "";
+                return;
+            }
         }
     }
 
@@ -106,6 +234,7 @@ public class CompleteProfileActivity extends AppCompatActivity {
                     universityId = universityList.get(position - 1).getUniversity_id();
                 }
                 filterDepartments(universityId);
+                applyPendingDepartment();
             }
 
             @Override
@@ -129,6 +258,7 @@ public class CompleteProfileActivity extends AppCompatActivity {
                         universityNames.add(getString(R.string.lbl_select_university));
                         for (UniversityList u : universityList) universityNames.add(u.getUniversity_name());
                         universityAdapter.notifyDataSetChanged();
+                        applyPendingCampus();
                     }
                 } catch (Exception e) {
                     Log.d("exception_error", e.toString());
@@ -153,7 +283,9 @@ public class CompleteProfileActivity extends AppCompatActivity {
                     if (body != null && "1".equals(body.getSuccess()) && body.getDepartmentLists() != null) {
                         departmentAll.clear();
                         departmentAll.addAll(body.getDepartmentLists());
-                        filterDepartments(null);
+                        int uPos = binding.spUniversity.getSelectedItemPosition();
+                        filterDepartments(uPos > 0 ? universityList.get(uPos - 1).getUniversity_id() : null);
+                        applyPendingDepartment();
                     }
                 } catch (Exception e) {
                     Log.d("exception_error", e.toString());
@@ -168,6 +300,12 @@ public class CompleteProfileActivity extends AppCompatActivity {
     }
 
     private void filterDepartments(String universityId) {
+        // Keep the chosen department if it belongs to this university too, so a
+        // late re-filter (the spinner listener runs after setSelection) does not undo it.
+        int dPos = binding.spDepartment.getSelectedItemPosition();
+        String keepId = dPos > 0 && (dPos - 1) < departmentFiltered.size()
+                ? departmentFiltered.get(dPos - 1).getDepartment_id() : null;
+
         departmentFiltered.clear();
         for (DepartmentList d : departmentAll) {
             if (universityId == null || universityId.equals(d.getUniversity_id())) {
@@ -176,9 +314,14 @@ public class CompleteProfileActivity extends AppCompatActivity {
         }
         departmentNames.clear();
         departmentNames.add(getString(R.string.lbl_select_department));
-        for (DepartmentList d : departmentFiltered) departmentNames.add(d.getDepartment_name());
+        int select = 0;
+        for (int i = 0; i < departmentFiltered.size(); i++) {
+            DepartmentList d = departmentFiltered.get(i);
+            departmentNames.add(d.getDepartment_name());
+            if (keepId != null && keepId.equals(d.getDepartment_id())) select = i + 1;
+        }
         departmentAdapter.notifyDataSetChanged();
-        binding.spDepartment.setSelection(0);
+        binding.spDepartment.setSelection(select);
     }
 
     private void loadColleges() {
@@ -196,6 +339,7 @@ public class CompleteProfileActivity extends AppCompatActivity {
                         collegeNames.add(getString(R.string.lbl_select_college));
                         for (CollegeList c : collegeList) collegeNames.add(c.getCollege_name());
                         collegeAdapter.notifyDataSetChanged();
+                        applyPendingCampus();
                     }
                 } catch (Exception e) {
                     Log.d("exception_error", e.toString());
@@ -319,7 +463,17 @@ public class CompleteProfileActivity extends AppCompatActivity {
         int cPos = binding.spCollege.getSelectedItemPosition();
 
         String roll = binding.edtCpRoll.getText().toString().trim().toUpperCase(java.util.Locale.US);
+        String phone = Method.normalizePhone(binding.edtCpPhone.getText().toString());
 
+        if (phone.isEmpty()) {
+            binding.edtCpPhone.requestFocus();
+            binding.edtCpPhone.setError(getString(R.string.please_enter_valid_phone));
+            return;
+        }
+        if (selectedGender <= 0) {
+            method.alertBox(getString(R.string.please_select_gender));
+            return;
+        }
         if (uPos <= 0 || dPos <= 0 || cPos <= 0) {
             method.alertBox(getString(R.string.lbl_complete_all_fields));
             return;
@@ -345,7 +499,8 @@ public class CompleteProfileActivity extends AppCompatActivity {
         jsObj.addProperty("user_id", userId);
         jsObj.addProperty("name", method.getUserName());
         jsObj.addProperty("email", method.getUserEmail());
-        jsObj.addProperty("phone", "");
+        jsObj.addProperty("phone", phone);
+        jsObj.addProperty("gender", genders[selectedGender]);
         jsObj.addProperty("password", "");
         jsObj.addProperty("university", university);
         jsObj.addProperty("department_id", departmentId);
@@ -366,6 +521,7 @@ public class CompleteProfileActivity extends AppCompatActivity {
                 try {
                     EditProfileRP body = response.body();
                     if (body != null && "1".equals(body.getSuccess())) {
+                        method.savePhone(phone);
                         goToApp();
                     } else {
                         method.alertBox(getString(R.string.failed_try_again));
