@@ -7,19 +7,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="@dimen/_12px"
-    android:layout_marginTop="@dimen/_6px"
-    android:layout_marginEnd="@dimen/_12px"
-    android:layout_marginBottom="@dimen/_10px"
-    app:cardBackgroundColor="@color/feed_card_bg"
-    app:cardCornerRadius="20dp"
-    app:cardElevation="2dp">
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="6dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginBottom="12dp"
+    app:cardBackgroundColor="@color/authx_card"
+    app:cardCornerRadius="22dp"
+    app:cardElevation="3dp"
+    app:strokeWidth="0dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="@dimen/_12px">
+        android:padding="14dp">
 
         <!-- ===== Header: avatar, uploader, time, overflow ===== -->
         <LinearLayout
@@ -31,7 +32,7 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                app:cardBackgroundColor="@color/feed_media_bg"
+                app:cardBackgroundColor="@color/authx_soft"
                 app:cardCornerRadius="20dp"
                 app:cardElevation="0dp">
 
@@ -58,7 +59,7 @@
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:singleLine="true"
-                    android:textColor="@color/feed_name"
+                    android:textColor="@color/authx_text"
                     android:textSize="@dimen/_15sp"
                     tools:text="Michelle Ogilvy" />
 
@@ -70,7 +71,7 @@
                     android:layout_marginTop="1dp"
                     android:ellipsize="end"
                     android:singleLine="true"
-                    android:textColor="@color/feed_meta"
+                    android:textColor="@color/authx_text_muted"
                     android:textSize="@dimen/_12sp"
                     tools:text="1h ago" />
             </LinearLayout>
@@ -82,7 +83,7 @@
                 android:background="@drawable/bg_feed_more"
                 android:padding="4dp"
                 android:src="@drawable/ic_feed_more"
-                app:tint="@color/feed_icon"
+                app:tint="@color/authx_text"
                 tools:ignore="ContentDescription" />
         </LinearLayout>
 
@@ -92,7 +93,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_12px"
-            app:cardBackgroundColor="@color/feed_media_bg"
+            app:cardBackgroundColor="@color/authx_soft"
             app:cardCornerRadius="16dp"
             app:cardElevation="0dp">
 
@@ -143,7 +144,7 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:src="@drawable/ic_feed_heart_outline"
-                    app:tint="@color/feed_icon"
+                    app:tint="@color/authx_text"
                     tools:ignore="ContentDescription" />
 
                 <TextView
@@ -152,7 +153,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="6dp"
-                    android:textColor="@color/feed_name"
+                    android:textColor="@color/authx_text"
                     android:textSize="@dimen/_13sp"
                     tools:text="18.6k" />
             </LinearLayout>
@@ -170,7 +171,7 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:src="@drawable/ic_feed_comment_outline"
-                    app:tint="@color/feed_icon"
+                    app:tint="@color/authx_text"
                     tools:ignore="ContentDescription" />
 
                 <TextView
@@ -179,7 +180,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="6dp"
-                    android:textColor="@color/feed_name"
+                    android:textColor="@color/authx_text"
                     android:textSize="@dimen/_13sp"
                     tools:text="4.7k" />
             </LinearLayout>
@@ -197,7 +198,7 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:src="@drawable/ic_feed_send"
-                    app:tint="@color/feed_icon"
+                    app:tint="@color/authx_text"
                     tools:ignore="ContentDescription" />
             </LinearLayout>
 
@@ -215,7 +216,7 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:src="@drawable/ic_feed_eye"
-                    app:tint="@color/feed_meta"
+                    app:tint="@color/authx_text_muted"
                     tools:ignore="ContentDescription" />
 
                 <TextView
@@ -224,7 +225,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="6dp"
-                    android:textColor="@color/feed_meta"
+                    android:textColor="@color/authx_text_muted"
                     android:textSize="@dimen/_13sp"
                     tools:text="12.4k" />
             </LinearLayout>
@@ -240,7 +241,7 @@
                 android:layout_height="24dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@drawable/ic_feed_bookmark"
-                app:tint="@color/feed_icon"
+                app:tint="@color/authx_text"
                 tools:ignore="ContentDescription" />
         </LinearLayout>
 
@@ -253,7 +254,7 @@
             android:layout_marginTop="@dimen/_10px"
             android:ellipsize="end"
             android:maxLines="2"
-            android:textColor="@color/feed_caption"
+            android:textColor="@color/authx_text"
             android:textSize="@dimen/_14sp"
             tools:text="Personalized gifts for every moment" />
 
@@ -272,7 +273,7 @@
                 style="@style/txt_OpenSansRomanBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_feed_pill"
+                android:background="@drawable/bg_authx_coral_soft"
                 android:drawableStart="@drawable/ic_feed_link"
                 android:drawablePadding="6dp"
                 android:gravity="center_vertical"
@@ -281,10 +282,10 @@
                 android:paddingEnd="@dimen/_14px"
                 android:paddingBottom="6dp"
                 android:text="@string/lbl_open_link"
-                android:textColor="@color/app_bg_orange"
+                android:textColor="@color/authx_coral"
                 android:textSize="@dimen/_12sp"
                 android:visibility="gone"
-                app:drawableTint="@color/app_bg_orange"
+                app:drawableTint="@color/authx_coral"
                 tools:visibility="visible" />
 
             <TextView
@@ -294,7 +295,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_8px"
                 android:layout_weight="1"
-                android:background="@drawable/bg_feed_pill"
+                android:background="@drawable/bg_authx_coral_soft"
                 android:drawableStart="@drawable/ic_feed_book"
                 android:drawablePadding="6dp"
                 android:ellipsize="end"
@@ -305,10 +306,10 @@
                 android:paddingEnd="@dimen/_14px"
                 android:paddingBottom="6dp"
                 android:text="@string/lbl_view_book"
-                android:textColor="@color/app_bg_orange"
+                android:textColor="@color/authx_coral"
                 android:textSize="@dimen/_12sp"
                 android:visibility="gone"
-                app:drawableTint="@color/app_bg_orange"
+                app:drawableTint="@color/authx_coral"
                 tools:text="View book: Advanced Supply" />
         </LinearLayout>
     </LinearLayout>

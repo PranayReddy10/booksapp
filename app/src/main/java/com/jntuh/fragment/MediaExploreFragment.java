@@ -74,7 +74,8 @@ public class MediaExploreFragment extends Fragment implements MediaPostAdapter.L
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentMediaExploreBinding.inflate(inflater, container, false);
-        StatusBarUtil.setStatusBar(requireActivity(), "");
+        // Navy header, so the navy status bar with white icons.
+        StatusBarUtil.setStatusBar(requireActivity(), "profile");
         method = new Method(requireActivity());
 
         binding.progressExplore.setVisibility(View.GONE);
@@ -94,6 +95,7 @@ public class MediaExploreFragment extends Fragment implements MediaPostAdapter.L
         binding.tvChipAll.setOnClickListener(v -> selectFilter(""));
         binding.tvChipPhotos.setOnClickListener(v -> selectFilter("photo"));
         binding.tvChipVideos.setOnClickListener(v -> selectFilter("video"));
+        binding.tvChipText.setOnClickListener(v -> selectFilter("text"));
         paintChips();
 
         binding.flBell.setOnClickListener(v -> {
@@ -151,13 +153,14 @@ public class MediaExploreFragment extends Fragment implements MediaPostAdapter.L
         paintChip(binding.tvChipAll, mediaTypeFilter.isEmpty());
         paintChip(binding.tvChipPhotos, "photo".equals(mediaTypeFilter));
         paintChip(binding.tvChipVideos, "video".equals(mediaTypeFilter));
+        paintChip(binding.tvChipText, "text".equals(mediaTypeFilter));
     }
 
     private void paintChip(TextView chip, boolean selected) {
         chip.setBackgroundResource(selected
                 ? R.drawable.bg_feed_chip_selected : R.drawable.bg_feed_chip_normal);
         chip.setTextColor(ContextCompat.getColor(requireActivity(),
-                selected ? R.color.white : R.color.feed_name));
+                selected ? R.color.white : R.color.authx_text));
     }
 
     // ---- Feed loading ----
