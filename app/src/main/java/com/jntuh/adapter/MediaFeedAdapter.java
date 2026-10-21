@@ -22,9 +22,10 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 /**
- * Full-screen card feed (one post per screen). A single shared ExoPlayer plays only
- * the centered video and is released on scroll-away. The action bar under each post
- * shows like / comment / share / link / views, each gated on that post's toggle.
+ * Full-screen photo / video viewer (one post per screen). A single shared ExoPlayer
+ * plays only the centered video and is released on scroll-away. The bottom panel shows
+ * the author (name, @handle · time, university), the words, link / book extras and a
+ * reply / like / views / share / save row, each gated on that post's toggle.
  */
 public class MediaFeedAdapter extends RecyclerView.Adapter<MediaFeedAdapter.ViewHolder> {
 
@@ -73,14 +74,49 @@ public class MediaFeedAdapter extends RecyclerView.Adapter<MediaFeedAdapter.View
         com.jntuh.item.MediaItem item = items.get(position);
         RowMediaFeedBinding b = holder.binding;
 
-        // Header
+        // Author: avatar, name, "@handle · time", university underneath.
         boolean isAdmin = "1".equals(item.getIs_admin());
         b.tvUploader.setText(isAdmin ? activity.getString(R.string.lbl_admin)
                 : safe(item.getUploaded_by()));
-        b.tvTime.setText(relativeTime(item.getCreated_at()));
+        String when = relativeTime(item.getCreated_at());
+        String handle = isAdmin ? "" : safe(item.getUploader_username()).trim();
+        b.tvTime.setText(handle.isEmpty() ? when : "@" + handle + (when.isEmpty() ? "" : " · " + when));
 
-        // Caption
-        b.tvCaption.setText(item.getTitle());
+        String avatar = isAdmin ? "" : safe(item.getUploader_image()).trim();
+        if (isAdmin) {
+            b.ivAvatar.setImageResource(R.mipmap.ic_launcher_round);
+        } else if (!avatar.isEmpty()) {
+            Glide.with(activity.getApplicationContext())
+                    .load(avatar)
+                    .placeholder(R.drawable.img_user)
+                    .error(R.drawable.img_user)
+                    .into(b.ivAvatar);
+        } else {
+            Glide.with(activity.getApplicationContext()).clear(b.ivAvatar);
+            b.ivAvatar.setImageResource(R.drawable.img_user);
+        }
+
+        String university = isAdmin ? "" : safe(item.getUploader_university()).trim();
+        b.tvUniversity.setText(university);
+        b.tvUniversity.setVisibility(university.isEmpty() ? View.GONE : View.VISIBLE);
+
+        // Words: bold title, then the body.
+        String caption = safe(item.getTitle()).trim();
+        b.tvCaption.setText(caption);
+        b.tvCaption.setVisibility(caption.isEmpty() ? View.GONE : View.VISIBLE);
+        String body = safe(item.getDescription()).trim();
+        b.tvPostBody.setText(body);
+        b.tvPostBody.setVisibility(body.isEmpty() || body.equals(caption) ? View.GONE : View.VISIBLE);
+        // Tap the words to read them in full, tap again to fold them back.
+        View.OnClickListener toggleWords = v -> {
+            boolean open = b.tvPostBody.getMaxLines() > 3;
+            b.tvPostBody.setMaxLines(open ? 3 : 30);
+            b.tvCaption.setMaxLines(open ? 2 : 10);
+        };
+        b.tvPostBody.setMaxLines(3);
+        b.tvCaption.setMaxLines(2);
+        b.tvCaption.setOnClickListener(toggleWords);
+        b.tvPostBody.setOnClickListener(toggleWords);
 
         // Media
         boolean isVideo = "video".equalsIgnoreCase(item.getMedia_type());
@@ -102,16 +138,12 @@ public class MediaFeedAdapter extends RecyclerView.Adapter<MediaFeedAdapter.View
                 && !String.valueOf(isVideo ? item.getFile_url() : bgSrc).trim().isEmpty();
 
         if (!hasMedia) {
-            // Text post: nothing to play or show, so the words fill the screen.
+            // Text posts are filtered out before they reach this screen.
             b.ivPhoto.setVisibility(View.GONE);
             b.playerView.setVisibility(View.GONE);
             b.ivVideoPoster.setVisibility(View.GONE);
             b.progressVideo.setVisibility(View.GONE);
-            b.tvCaption.setMaxLines(14);
-            b.tvCaption.setTextSize(android.util.TypedValue.COMPLEX_UNIT_SP, 22f);
         } else if (isVideo) {
-            b.tvCaption.setMaxLines(3);
-            b.tvCaption.setTextSize(android.util.TypedValue.COMPLEX_UNIT_SP, 15f);
             b.ivPhoto.setVisibility(View.GONE);
             b.playerView.setVisibility(View.VISIBLE);
             b.ivVideoPoster.setVisibility(View.VISIBLE);
@@ -120,8 +152,6 @@ public class MediaFeedAdapter extends RecyclerView.Adapter<MediaFeedAdapter.View
                 Glide.with(activity.getApplicationContext()).load(thumb).into(b.ivVideoPoster);
             }
         } else {
-            b.tvCaption.setMaxLines(3);
-            b.tvCaption.setTextSize(android.util.TypedValue.COMPLEX_UNIT_SP, 15f);
             b.playerView.setVisibility(View.GONE);
             b.ivVideoPoster.setVisibility(View.GONE);
             b.progressVideo.setVisibility(View.GONE);
@@ -129,7 +159,7 @@ public class MediaFeedAdapter extends RecyclerView.Adapter<MediaFeedAdapter.View
             Glide.with(activity.getApplicationContext()).load(item.getFile_url()).into(b.ivPhoto);
         }
 
-        // Views — shown in the right action rail (below comment), when enabled.
+        // Views — in the action row, when enabled.
         if ("1".equals(item.getShow_views())) {
             b.llViewsRail.setVisibility(View.VISIBLE);
             b.tvViewRail.setText(num(item.getView_count()));
@@ -198,9 +228,10 @@ public class MediaFeedAdapter extends RecyclerView.Adapter<MediaFeedAdapter.View
         holder.binding.ivLike.setImageResource(
                 liked ? R.drawable.ic_feed_heart : R.drawable.ic_feed_heart_outline);
         // Filled heart is red when liked; outline is white on the media overlay.
-        holder.binding.ivLike.setColorFilter(
-                androidx.core.content.ContextCompat.getColor(activity,
-                        liked ? R.color.status_rejected : R.color.white));
+        int tint = androidx.core.content.ContextCompat.getColor(activity,
+                liked ? R.color.status_rejected : R.color.white);
+        holder.binding.ivLike.setColorFilter(tint);
+        holder.binding.tvLikeCount.setTextColor(tint);
         holder.binding.tvLikeCount.setText(num(item.getLike_count()));
     }
 
@@ -328,12 +359,12 @@ public class MediaFeedAdapter extends RecyclerView.Adapter<MediaFeedAdapter.View
             long diff = System.currentTimeMillis() - d.getTime();
             if (diff < 0) diff = 0;
             long min = diff / 60000;
-            if (min < 1) return "just now";
-            if (min < 60) return min + (min == 1 ? " minute ago" : " minutes ago");
+            if (min < 1) return "now";
+            if (min < 60) return min + "m";
             long hr = min / 60;
-            if (hr < 24) return hr + (hr == 1 ? " hour ago" : " hours ago");
+            if (hr < 24) return hr + "h";
             long day = hr / 24;
-            if (day < 30) return day + (day == 1 ? " day ago" : " days ago");
+            if (day < 30) return day + "d";
             return created.substring(0, 10);
         } catch (Exception e) {
             return created;

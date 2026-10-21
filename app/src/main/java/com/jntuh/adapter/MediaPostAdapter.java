@@ -66,7 +66,7 @@ public class MediaPostAdapter extends RecyclerView.Adapter<MediaPostAdapter.View
         MediaItem item = items.get(position);
         RowMediaPostBinding b = holder.binding;
 
-        // Header: avatar, name, "@handle · time", college underneath.
+        // Header: avatar, name, "@handle · time", university underneath.
         boolean isAdmin = "1".equals(item.getIs_admin());
         b.tvUploader.setText(isAdmin ? activity.getString(R.string.lbl_admin) : safe(item.getUploaded_by()));
         String when = relativeTime(item.getCreated_at());
@@ -88,9 +88,9 @@ public class MediaPostAdapter extends RecyclerView.Adapter<MediaPostAdapter.View
             b.ivAvatar.setImageResource(R.drawable.img_user);
         }
 
-        String college = isAdmin ? "" : safe(item.getUploader_college()).trim();
-        b.tvCollege.setText(college);
-        b.tvCollege.setVisibility(college.isEmpty() ? View.GONE : View.VISIBLE);
+        String university = isAdmin ? "" : safe(item.getUploader_university()).trim();
+        b.tvUniversity.setText(university);
+        b.tvUniversity.setVisibility(university.isEmpty() ? View.GONE : View.VISIBLE);
 
         b.ivMore.setOnClickListener(v -> {
             if (listener != null) listener.onMore(item, v);

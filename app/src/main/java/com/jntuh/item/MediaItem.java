@@ -51,6 +51,9 @@ public class MediaItem implements Serializable {
     @SerializedName("uploader_college")
     private String uploader_college;
 
+    @SerializedName("uploader_university")
+    private String uploader_university;
+
     @SerializedName("is_admin")
     private String is_admin;
 
@@ -136,6 +139,10 @@ public class MediaItem implements Serializable {
 
     public String getUploader_college() {
         return uploader_college;
+    }
+
+    public String getUploader_university() {
+        return uploader_university;
     }
 
     public String getUploaded_by() {

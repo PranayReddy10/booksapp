@@ -189,6 +189,8 @@ public class MyApplication extends Application implements Application.ActivityLi
             } else {
                 StatusBarUtil.setStatusBar(activity, "payment");
             }
+        } else if(activity instanceof MediaUploadActivity) {
+            StatusBarUtil.setStatusBar(activity, "compose");
         } else if(!(activity instanceof MainActivity) && !(activity instanceof SplashActivity) && !(activity instanceof SignInHubActivity)){
             StatusBarUtil.setStatusBar(activity, "login");
         }
