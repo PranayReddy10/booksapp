@@ -93,6 +93,8 @@ public class CompleteProfileActivity extends AppCompatActivity {
 
     private void setupAboutYou() {
         binding.tvCpEmail.setText(method.getUserEmail());
+        binding.edtCpName.setText(method.getUserName());
+        Method.capsHallTicket(binding.edtCpRoll);
         binding.edtCpPhone.setText(Method.normalizePhone(method.getUserPhone()));
 
         binding.llCpGenderMale.setOnClickListener(v -> selectGender(1));
@@ -358,6 +360,8 @@ public class CompleteProfileActivity extends AppCompatActivity {
     private String fetchedFather = "";
     private String lookedUpRoll = "";
     private boolean lookupInFlight;
+    /** The name the last lookup put in the Name field, so another lookup may replace it. */
+    private String lookedUpName = "";
 
     /**
      * Same lookup the sign-up flow uses: the hall ticket is enough to name the
@@ -366,19 +370,19 @@ public class CompleteProfileActivity extends AppCompatActivity {
      */
     private void lookupHallTicket() {
         String roll = binding.edtCpRoll.getText().toString().trim().toUpperCase(java.util.Locale.US);
+        // The feed only covers JNTU; other universities fill this in by hand.
+        int uPos = binding.spUniversity.getSelectedItemPosition();
+        String uni = uPos > 0 ? universityList.get(uPos - 1).getUniversity_name() : "";
+        if (!Method.isJntuUniversity(uni)) {
+            setFetchStatus(getString(R.string.msg_reg_lookup_other_uni));
+            return;
+        }
         if (roll.length() != 10) {
             binding.edtCpRoll.requestFocus();
             binding.edtCpRoll.setError(getString(R.string.result_fetch_invalid));
             return;
         }
         if (lookupInFlight || roll.equals(lookedUpRoll)) return;
-        // The feed only covers JNTUH; other universities fill this in by hand.
-        int uPos = binding.spUniversity.getSelectedItemPosition();
-        String uni = uPos > 0 ? universityList.get(uPos - 1).getUniversity_name() : "";
-        if (uni == null || !uni.toUpperCase(java.util.Locale.US).contains("JNTU")) {
-            setFetchStatus(getString(R.string.msg_reg_lookup_other_uni));
-            return;
-        }
         if (!method.isNetworkAvailable()) {
             method.alertBox(getString(R.string.internet_connection));
             return;
@@ -420,6 +424,13 @@ public class CompleteProfileActivity extends AppCompatActivity {
                 }
 
                 lookedUpRoll = roll;
+                // The hall ticket's name, unless the student already typed their own.
+                String official = item.getStudent_name() == null ? "" : item.getStudent_name().trim();
+                String shown = binding.edtCpName.getText() == null ? "" : binding.edtCpName.getText().toString().trim();
+                if (!official.isEmpty() && (shown.isEmpty() || shown.equals(method.getUserName()) || shown.equals(lookedUpName))) {
+                    binding.edtCpName.setText(official);
+                    lookedUpName = official;
+                }
                 fetchedRegulation = item.getRegulation() == null ? "" : item.getRegulation().trim();
                 fetchedFather = item.getFather_name() == null ? "" : item.getFather_name().trim();
                 String department = item.getDepartment_name();
@@ -493,13 +504,18 @@ public class CompleteProfileActivity extends AppCompatActivity {
             method.alertBox(getString(R.string.lbl_complete_all_fields));
             return;
         }
-        if (roll.length() != 10) {
+        String university = universityList.get(uPos - 1).getUniversity_name();
+        if (!Method.validHallTicket(roll, university)) {
             binding.edtCpRoll.requestFocus();
-            binding.edtCpRoll.setError(getString(R.string.result_fetch_invalid));
+            binding.edtCpRoll.setError(getString(Method.hallTicketError(university)));
             return;
         }
-
-        String university = universityList.get(uPos - 1).getUniversity_name();
+        String name = binding.edtCpName.getText() == null ? "" : binding.edtCpName.getText().toString().trim();
+        if (name.isEmpty()) {
+            binding.edtCpName.requestFocus();
+            binding.edtCpName.setError(getString(R.string.please_enter_name));
+            return;
+        }
         String departmentId = departmentFiltered.get(dPos - 1).getDepartment_id();
         String college = collegeList.get(cPos - 1).getCollege_name();
 
@@ -512,7 +528,7 @@ public class CompleteProfileActivity extends AppCompatActivity {
 
         JsonObject jsObj = (JsonObject) new Gson().toJsonTree(new API(this));
         jsObj.addProperty("user_id", userId);
-        jsObj.addProperty("name", method.getUserName());
+        jsObj.addProperty("name", name);
         jsObj.addProperty("email", method.getUserEmail());
         jsObj.addProperty("phone", phone);
         jsObj.addProperty("gender", genders[selectedGender]);
@@ -558,6 +574,9 @@ public class CompleteProfileActivity extends AppCompatActivity {
 
     private void goToApp() {
         method.saveProfileComplete("1");
+        if (binding.edtCpName.getText() != null && !binding.edtCpName.getText().toString().trim().isEmpty()) {
+            method.saveUserName(binding.edtCpName.getText().toString().trim());
+        }
         Intent i = new Intent(this, MainActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(i);

@@ -149,8 +149,9 @@ public class MyResultsFragment extends Fragment {
         final android.widget.EditText input = new android.widget.EditText(requireActivity());
         input.setHint(R.string.result_fetch_hall_hint);
         input.setSingleLine(true);
-        input.setAllCaps(true);
-        input.setFilters(new android.text.InputFilter[]{new android.text.InputFilter.LengthFilter(10)});
+        com.jntuh.util.Method.capsHallTicket(input);
+        input.setFilters(new android.text.InputFilter[]{input.getFilters()[0],
+                new android.text.InputFilter.LengthFilter(10)});   // the results feed is JNTU-only
         if (current != null && current.getHall_ticket_no() != null) {
             input.setText(current.getHall_ticket_no().trim());
         }
