@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Outline of an auth text field: coral while typing, quiet otherwise. -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="@color/authx_coral" android:state_focused="true" />
+    <item android:color="@color/authx_coral" android:state_hovered="true" />
+    <item android:color="@color/authx_field_stroke" />
+</selector>

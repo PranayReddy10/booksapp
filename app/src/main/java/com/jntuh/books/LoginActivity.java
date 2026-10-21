@@ -58,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
         View view = viewLoginBinding.getRoot();
         setContentView(view);
 
-        // Ambient drift for the mesh background blobs.
+        // Ambient drift for the header's decorative ring and disc.
         com.jntuh.util.AuthAnimator.floatView(viewLoginBinding.authBlobTeal, 40f, -55f, 4200);
         com.jntuh.util.AuthAnimator.floatView(viewLoginBinding.authBlobViolet, -45f, 35f, 5200);
 
@@ -100,11 +100,13 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intentPage);
         });
 
-        viewLoginBinding.tvSignUp.setOnClickListener(v -> {
+        View.OnClickListener openSignUp = v -> {
             Intent intent_register = new Intent(LoginActivity.this, RegisterActivity.class);
             intent_register.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent_register);
-        });
+        };
+        viewLoginBinding.tvSignUp.setOnClickListener(openSignUp);
+        viewLoginBinding.tvTabSignUp.setOnClickListener(openSignUp);
 
         viewLoginBinding.cbRemMe.setOnCheckedChangeListener((checkBox, isChecked) -> {
 

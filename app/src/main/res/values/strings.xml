@@ -811,4 +811,13 @@
     <string name="alarm_snooze">Snooze</string>
     <string name="alarm_dismiss">Dismiss</string>
     <string name="alarm_done">Mark done</string>
+
+    <string name="lbl_authx_welcome">Welcome back</string>
+    <string name="lbl_authx_welcome_sub">Log in to pick up your books, results and updates.</string>
+    <string name="lbl_authx_tab_login">Log in</string>
+    <string name="lbl_authx_tab_signup">Sign up</string>
+    <string name="lbl_authx_or">or</string>
+    <string name="lbl_authx_google">Continue with Google</string>
+    <string name="lbl_authx_email">Email address</string>
+    <string name="lbl_authx_login_btn">Log in</string>
 </resources>
