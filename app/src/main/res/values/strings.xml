@@ -828,7 +828,7 @@
     <string name="lbl_authx_lookup">Look up</string>
     <string name="lbl_authx_account">Account</string>
     <string name="lbl_authx_academic">Academic details</string>
-    <string name="lbl_authx_new_pass">New password (leave blank to keep)</string>
+    <string name="lbl_authx_new_pass">New password (optional)</string>
     <string name="lbl_authx_save">Save changes</string>
     <string name="lbl_authx_change_photo">Change photo</string>
 </resources>
