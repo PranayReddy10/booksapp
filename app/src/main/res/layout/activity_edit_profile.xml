@@ -257,76 +257,172 @@
                         tools:ignore="Autofill" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <!-- Year and gender are read-only; each row shows only when set. -->
+                <!-- Gender: pick one; saved with the profile. -->
+                <TextView
+                    style="@style/AuthxLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lbl_gender_req" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
                     android:orientation="horizontal">
 
                     <LinearLayout
-                        android:id="@+id/llGenderRow"
+                        android:id="@+id/llEpGenderMale"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="14dp"
                         android:layout_weight="1"
-                        android:background="@drawable/bg_authx_soft"
+                        android:background="@drawable/bg_authx_outline"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center"
                         android:orientation="vertical"
-                        android:padding="12dp"
-                        android:visibility="gone"
-                        tools:visibility="visible">
+                        android:paddingTop="12dp"
+                        android:paddingBottom="10dp">
+
+                        <FrameLayout
+                            android:id="@+id/ivEpGenderMaleDisc"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:background="@drawable/bg_gender_circle">
+
+                            <ImageView
+                                android:id="@+id/ivEpGenderMale"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_gender_male"
+                                app:tint="@color/home_by_author"
+                                tools:ignore="ContentDescription" />
+                        </FrameLayout>
 
                         <TextView
-                            style="@style/txtOpenSansRomanSemiBold"
+                            android:id="@+id/tvEpGenderMale"
+                            style="@style/txt_OpenSansRomanBold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/lbl_gender"
-                            android:textColor="@color/authx_text_muted"
-                            android:textSize="@dimen/_12sp" />
-
-                        <TextView
-                            android:id="@+id/tvGenderValue"
-                            style="@style/txt_OpenSansRomanBold"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:singleLine="true"
-                            android:textColor="@color/authx_text"
-                            android:textSize="@dimen/_15sp"
-                            tools:text="Male" />
+                            android:layout_marginTop="6dp"
+                            android:text="@string/lbl_gender_male"
+                            android:textColor="@color/home_by_author"
+                            android:textSize="@dimen/_13sp" />
                     </LinearLayout>
-
                     <LinearLayout
-                        android:id="@+id/llYearRow"
+                        android:id="@+id/llEpGenderFemale"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
-                        android:layout_marginTop="14dp"
                         android:layout_weight="1"
-                        android:background="@drawable/bg_authx_soft"
+                        android:background="@drawable/bg_authx_outline"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center"
                         android:orientation="vertical"
-                        android:padding="12dp"
-                        android:visibility="gone"
-                        tools:visibility="visible">
+                        android:paddingTop="12dp"
+                        android:paddingBottom="10dp">
+
+                        <FrameLayout
+                            android:id="@+id/ivEpGenderFemaleDisc"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:background="@drawable/bg_gender_circle">
+
+                            <ImageView
+                                android:id="@+id/ivEpGenderFemale"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_gender_female"
+                                app:tint="@color/home_by_author"
+                                tools:ignore="ContentDescription" />
+                        </FrameLayout>
 
                         <TextView
-                            style="@style/txtOpenSansRomanSemiBold"
+                            android:id="@+id/tvEpGenderFemale"
+                            style="@style/txt_OpenSansRomanBold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/lbl_year"
-                            android:textColor="@color/authx_text_muted"
-                            android:textSize="@dimen/_12sp" />
+                            android:layout_marginTop="6dp"
+                            android:text="@string/lbl_gender_female"
+                            android:textColor="@color/home_by_author"
+                            android:textSize="@dimen/_13sp" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/llEpGenderOther"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_authx_outline"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:paddingTop="12dp"
+                        android:paddingBottom="10dp">
+
+                        <FrameLayout
+                            android:id="@+id/ivEpGenderOtherDisc"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:background="@drawable/bg_gender_circle">
+
+                            <ImageView
+                                android:id="@+id/ivEpGenderOther"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_gender_other"
+                                app:tint="@color/home_by_author"
+                                tools:ignore="ContentDescription" />
+                        </FrameLayout>
 
                         <TextView
-                            android:id="@+id/tvYearValue"
+                            android:id="@+id/tvEpGenderOther"
                             style="@style/txt_OpenSansRomanBold"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:singleLine="true"
-                            android:textColor="@color/authx_text"
-                            android:textSize="@dimen/_15sp"
-                            tools:text="3rd Year" />
+                            android:layout_marginTop="6dp"
+                            android:text="@string/lbl_gender_other"
+                            android:textColor="@color/home_by_author"
+                            android:textSize="@dimen/_13sp" />
                     </LinearLayout>
+                </LinearLayout>
+
+                <!-- Year is read-only; shown only when set. -->
+                <LinearLayout
+                    android:id="@+id/llYearRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:background="@drawable/bg_authx_soft"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="12dp"
+                    android:visibility="gone"
+                    tools:visibility="visible">
+
+                    <TextView
+                        style="@style/txtOpenSansRomanSemiBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/lbl_year"
+                        android:textColor="@color/authx_text_muted"
+                        android:textSize="@dimen/_13sp" />
+
+                    <TextView
+                        android:id="@+id/tvYearValue"
+                        style="@style/txt_OpenSansRomanBold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:gravity="end"
+                        android:singleLine="true"
+                        android:textColor="@color/authx_text"
+                        android:textSize="@dimen/_15sp"
+                        tools:text="3rd Year" />
                 </LinearLayout>
             </LinearLayout>
 

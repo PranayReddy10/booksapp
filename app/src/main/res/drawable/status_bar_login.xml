@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="rectangle">
-    <solid android:color="@color/deep_orange" />
-</shape>
+<!-- Window background behind the system bars on the auth and profile screens:
+     navy under the status bar to continue the screen's navy header, the page
+     colour everywhere else (the navigation bar strip). -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/authx_page" />
+        </shape>
+    </item>
+    <item
+        android:gravity="top"
+        android:height="96dp">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/authx_header_start" />
+        </shape>
+    </item>
+</layer-list>

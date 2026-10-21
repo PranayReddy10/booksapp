@@ -70,6 +70,9 @@ public class EditProfileActivity extends AppCompatActivity {
     private boolean suppressUniListener = false;
     private String savedDepartment = null; // captured once; never nulled by the listener
     boolean isProfile = false;
+    /** Stored values, matched to the gender tiles (0 = none picked). */
+    private final String[] genders = {"", "Male", "Female", "Other"};
+    private int selectedGender;
     ProgressDialog progressDialog;
     String imageProfile;
 
@@ -189,9 +192,9 @@ public class EditProfileActivity extends AppCompatActivity {
         viewEditProfile.llUniversityRow.setVisibility(View.VISIBLE);
         viewEditProfile.llDepartmentRow.setVisibility(View.VISIBLE);
         viewEditProfile.llCollegeRow.setVisibility(View.VISIBLE);
-        // Year + gender stay as-is (read-only rows, shown only if present).
+        // Year stays read-only (shown only if present); gender is picked from tiles.
         bindDetailRow(viewEditProfile.llYearRow, viewEditProfile.tvYearValue, uYear);
-        bindDetailRow(viewEditProfile.llGenderRow, viewEditProfile.tvGenderValue, uGender);
+        setupGender();
 
         setupCascadeSpinners();
 
@@ -231,6 +234,46 @@ public class EditProfileActivity extends AppCompatActivity {
                     .into(viewEditProfile.ivUser);
         }
 
+    }
+
+    // ---- Gender choice ----
+
+    private void setupGender() {
+        selectedGender = 0;
+        if (uGender != null) {
+            for (int i = 1; i < genders.length; i++) {
+                if (genders[i].equalsIgnoreCase(uGender.trim())) selectedGender = i;
+            }
+        }
+        viewEditProfile.llEpGenderMale.setOnClickListener(v -> selectGender(1));
+        viewEditProfile.llEpGenderFemale.setOnClickListener(v -> selectGender(2));
+        viewEditProfile.llEpGenderOther.setOnClickListener(v -> selectGender(3));
+        paintGender();
+    }
+
+    private void selectGender(int position) {
+        selectedGender = position;
+        paintGender();
+    }
+
+    /** Fill the chosen disc with the brand colour and leave the others neutral. */
+    private void paintGender() {
+        paintGenderChoice(viewEditProfile.ivEpGenderMaleDisc, viewEditProfile.ivEpGenderMale,
+                viewEditProfile.tvEpGenderMale, selectedGender == 1);
+        paintGenderChoice(viewEditProfile.ivEpGenderFemaleDisc, viewEditProfile.ivEpGenderFemale,
+                viewEditProfile.tvEpGenderFemale, selectedGender == 2);
+        paintGenderChoice(viewEditProfile.ivEpGenderOtherDisc, viewEditProfile.ivEpGenderOther,
+                viewEditProfile.tvEpGenderOther, selectedGender == 3);
+    }
+
+    private void paintGenderChoice(View disc, android.widget.ImageView icon,
+                                   android.widget.TextView label, boolean selected) {
+        disc.setBackgroundResource(selected
+                ? R.drawable.bg_gender_circle_selected : R.drawable.bg_gender_circle);
+        icon.setColorFilter(androidx.core.content.ContextCompat.getColor(this,
+                selected ? R.color.white : R.color.home_by_author));
+        label.setTextColor(androidx.core.content.ContextCompat.getColor(this,
+                selected ? R.color.app_bg_orange : R.color.home_by_author));
     }
 
     // Show a read-only detail row only when the profile API returned a value for it.
@@ -462,6 +505,8 @@ public class EditProfileActivity extends AppCompatActivity {
         } else if (phoneNo.equals("") || phoneNo.isEmpty()) {
             viewEditProfile.edtPhone.requestFocus();
             viewEditProfile.edtPhone.setError(getResources().getString(R.string.please_enter_phone));
+        } else if (selectedGender <= 0) {
+            method.alertBox(getString(R.string.please_select_gender));
         } else {
             if (method.isNetworkAvailable()) {
 
@@ -496,6 +541,7 @@ public class EditProfileActivity extends AppCompatActivity {
         jsObj.addProperty("email", sendEmail);
         jsObj.addProperty("password", sendPass);
         jsObj.addProperty("phone", sendPhone);
+        if (selectedGender > 0) jsObj.addProperty("gender", genders[selectedGender]);
         // University -> Department (= Branch) -> College from the cascade.
         int uPos = viewEditProfile.spEditUniversity.getSelectedItemPosition();
         if (uPos > 0 && (uPos - 1) < universityList.size()) {

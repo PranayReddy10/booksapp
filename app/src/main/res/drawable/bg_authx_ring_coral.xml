@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Coral ring around the profile photo on a white card. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="oval">
+    <gradient
+        android:angle="315"
+        android:endColor="@color/authx_coral_end"
+        android:startColor="@color/authx_coral"
+        android:type="linear" />
+</shape>

@@ -142,6 +142,7 @@ public class ProfileFragment extends Fragment {
                     openSection(ProfileSectionActivity.SECTION_SUBSCRIPTION));
             viewProfile.llSecRent.setOnClickListener(v ->
                     openSection(ProfileSectionActivity.SECTION_RENT));
+            viewProfile.llSecLogout.setOnClickListener(v -> logoutDialog());
 
             viewProfile.btnLogIn.setOnClickListener(v -> {
                 Intent intentLogin = new Intent(requireActivity(), LoginActivity.class);
@@ -211,6 +212,7 @@ public class ProfileFragment extends Fragment {
 
                                     viewProfile.tvProfileName.setText(itemUser.getName());
                                     viewProfile.tvProfileEmail.setText(itemUser.getEmail());
+                                    showDetails(itemUser);
 
                                     String uname = itemUser.getUsername();
                                     String emailLocal = itemUser.getEmail() != null && itemUser.getEmail().contains("@")
@@ -261,6 +263,26 @@ public class ProfileFragment extends Fragment {
         }
     }
 
+
+    /** Department · university line and the hall ticket / gender chips, when set. */
+    private void showDetails(LoginRP.ItemUser user) {
+        List<String> meta = new ArrayList<>();
+        if (notBlank(user.getDepartment())) meta.add(user.getDepartment().trim());
+        if (notBlank(user.getUniversity())) meta.add(user.getUniversity().trim());
+        showText(viewProfile.tvProfileMeta, android.text.TextUtils.join(" · ", meta));
+        showText(viewProfile.tvProfileRoll,
+                notBlank(user.getRollnumber()) ? user.getRollnumber().trim().toUpperCase() : "");
+        showText(viewProfile.tvProfileGender, notBlank(user.getGender()) ? user.getGender().trim() : "");
+    }
+
+    private static boolean notBlank(String value) {
+        return value != null && !value.trim().isEmpty();
+    }
+
+    private static void showText(TextView view, String text) {
+        view.setText(text);
+        view.setVisibility(text.isEmpty() ? View.GONE : View.VISIBLE);
+    }
 
     @Subscribe
     public void getName(Events.ProfileUpdate profileUpdate) {

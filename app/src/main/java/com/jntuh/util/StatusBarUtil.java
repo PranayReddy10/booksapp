@@ -76,5 +76,12 @@ public class StatusBarUtil {
             }
             decorView.setSystemUiVisibility(flags);
         }
+
+        // The auth and profile screens sit under a navy header, so their
+        // status bar keeps white icons in light mode too.
+        if (activityName.equalsIgnoreCase("login") || activityName.equalsIgnoreCase("profile")) {
+            androidx.core.view.WindowCompat.getInsetsController(window, decorView)
+                    .setAppearanceLightStatusBars(false);
+        }
     }
 }
