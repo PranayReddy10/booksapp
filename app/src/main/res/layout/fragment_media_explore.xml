@@ -4,78 +4,101 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/feed_screen_bg"
+    android:background="@color/authx_page"
     tools:context="com.jntuh.books.MainActivity">
 
-    <!-- Top bar: title + notification bell (with unread dot) + overflow -->
+    <!-- Navy header: title, who the feed is from, bell (with unread dot), menu -->
     <RelativeLayout
         android:id="@+id/exploreTopBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:background="@color/feed_card_bg"
-        android:paddingStart="@dimen/_16px"
-        android:paddingTop="@dimen/_12px"
-        android:paddingEnd="@dimen/_16px"
-        android:paddingBottom="@dimen/_12px">
+        android:background="@drawable/bg_authx_header"
+        android:paddingStart="20dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="18dp"
+        android:paddingBottom="22dp">
 
-        <TextView
-            android:id="@+id/tvExploreTitle"
-            style="@style/txt_OpenSansRomanExtraBold"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:text="@string/lbl_feed"
-            android:textColor="@color/feed_name"
-            android:textSize="@dimen/_22sp" />
+            android:layout_toStartOf="@+id/flBell"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvExploreTitle"
+                style="@style/txt_OpenSansRomanExtraBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lbl_feed"
+                android:textColor="@color/authx_on_header"
+                android:textSize="@dimen/_24sp" />
+
+            <TextView
+                style="@style/txtOpenSansRomanSemiBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="@string/lbl_feed_sub"
+                android:textColor="@color/authx_on_header_muted"
+                android:textSize="@dimen/_13sp" />
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/ivExploreMenu"
-            android:layout_width="26dp"
-            android:layout_height="26dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
+            android:background="@drawable/bg_authx_glass_circle"
+            android:padding="9dp"
             android:src="@drawable/ic_feed_menu"
-            app:tint="@color/feed_icon"
+            app:tint="@color/white"
             tools:ignore="ContentDescription" />
 
         <FrameLayout
             android:id="@+id/flBell"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_centerVertical="true"
-            android:layout_marginEnd="@dimen/_20px"
-            android:layout_toStartOf="@+id/ivExploreMenu">
+            android:layout_marginEnd="8dp"
+            android:layout_toStartOf="@+id/ivExploreMenu"
+            android:background="@drawable/bg_authx_glass_circle">
 
             <ImageView
                 android:id="@+id/ivExploreBell"
-                android:layout_width="26dp"
-                android:layout_height="26dp"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_gravity="center"
                 android:src="@android:drawable/ic_popup_reminder"
-                app:tint="@color/feed_icon"
+                app:tint="@color/white"
                 tools:ignore="ContentDescription" />
 
             <View
                 android:id="@+id/viewBellDot"
-                android:layout_width="9dp"
-                android:layout_height="9dp"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
                 android:layout_gravity="top|end"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="6dp"
                 android:background="@drawable/bg_unread_dot"
                 android:visibility="gone" />
         </FrameLayout>
     </RelativeLayout>
 
-    <!-- Filter chips: everything / photos only / videos only -->
+    <!-- Filter chips: everything / photos / videos / text posts -->
     <HorizontalScrollView
         android:id="@+id/hsvFeedFilters"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/exploreTopBar"
-        android:background="@color/feed_card_bg"
-        android:paddingStart="@dimen/_12px"
-        android:paddingEnd="@dimen/_12px"
-        android:paddingBottom="@dimen/_12px"
+        android:paddingStart="16dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="4dp"
+        android:clipToPadding="false"
         android:scrollbars="none">
 
         <LinearLayout
@@ -109,7 +132,7 @@
                 android:paddingEnd="@dimen/_20px"
                 android:paddingBottom="@dimen/_8px"
                 android:text="@string/lbl_filter_photos"
-                android:textColor="@color/feed_name"
+                android:textColor="@color/authx_text"
                 android:textSize="@dimen/_13sp" />
 
             <TextView
@@ -124,7 +147,22 @@
                 android:paddingEnd="@dimen/_20px"
                 android:paddingBottom="@dimen/_8px"
                 android:text="@string/lbl_filter_videos"
-                android:textColor="@color/feed_name"
+                android:textColor="@color/authx_text"
+                android:textSize="@dimen/_13sp" />
+
+            <TextView
+                android:id="@+id/tvChipText"
+                style="@style/txt_OpenSansRomanBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8px"
+                android:background="@drawable/bg_feed_chip_normal"
+                android:paddingStart="@dimen/_20px"
+                android:paddingTop="@dimen/_8px"
+                android:paddingEnd="@dimen/_20px"
+                android:paddingBottom="@dimen/_8px"
+                android:text="@string/lbl_filter_text"
+                android:textColor="@color/authx_text"
                 android:textSize="@dimen/_13sp" />
         </LinearLayout>
     </HorizontalScrollView>

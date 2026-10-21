@@ -183,7 +183,7 @@ public class MediaPostAdapter extends RecyclerView.Adapter<MediaPostAdapter.View
                 liked ? R.drawable.ic_feed_heart : R.drawable.ic_feed_heart_outline);
         holder.binding.ivLike.setColorFilter(
                 androidx.core.content.ContextCompat.getColor(activity,
-                        liked ? R.color.status_rejected : R.color.feed_icon));
+                        liked ? R.color.status_rejected : R.color.authx_text));
         holder.binding.tvLikeCount.setText(compact(item.getLike_count()));
     }
 

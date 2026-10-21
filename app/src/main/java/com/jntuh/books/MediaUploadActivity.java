@@ -70,6 +70,10 @@ public class MediaUploadActivity extends AppCompatActivity {
 
     private ActivityResultLauncher<Intent> mediaPicker;
 
+    /** A text post: no attachment strip, nothing to pick. */
+    private boolean isText = true;
+    private static final String KEY_IS_TEXT = "state_is_text";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,24 +100,30 @@ public class MediaUploadActivity extends AppCompatActivity {
             mediaPath = savedInstanceState.getString(KEY_MEDIA, null);
             mediaName = savedInstanceState.getString(KEY_MEDIA_NAME, null);
             isVideo = savedInstanceState.getBoolean(KEY_IS_VIDEO, false);
+            isText = savedInstanceState.getBoolean(KEY_IS_TEXT, mediaPaths.isEmpty());
         }
 
         // Home's photo / video chips arrive with the type already chosen.
         String attachType = getIntent().getStringExtra(EXTRA_ATTACH_TYPE);
-        if (savedInstanceState == null && attachType != null) {
+        // Without one, the composer opens as a text post.
+        if (savedInstanceState == null && attachType != null && !"text".equalsIgnoreCase(attachType)) {
             isVideo = "video".equalsIgnoreCase(attachType);
+            isText = false;
         }
 
         registerPicker();
         restorePreview();
 
         binding.rgMediaType.setOnCheckedChangeListener((group, checkedId) -> {
+            boolean nowText = checkedId == R.id.rbText;
             boolean nowVideo = checkedId == R.id.rbVideo;
-            if (nowVideo != isVideo) {
+            if (nowText != isText || (!nowText && nowVideo != isVideo)) {
                 // Switching type invalidates any previously picked file.
-                isVideo = nowVideo;
+                isText = nowText;
+                if (!nowText) isVideo = nowVideo;
                 clearMedia();
             }
+            applyMode();
         });
 
         binding.btnPickMedia.setOnClickListener(v -> {
@@ -140,6 +150,7 @@ public class MediaUploadActivity extends AppCompatActivity {
         if (mediaPath != null) outState.putString(KEY_MEDIA, mediaPath);
         if (mediaName != null) outState.putString(KEY_MEDIA_NAME, mediaName);
         outState.putBoolean(KEY_IS_VIDEO, isVideo);
+        outState.putBoolean(KEY_IS_TEXT, isText);
     }
 
     /** Drop every attachment; the post reverts to text only. */
@@ -150,9 +161,17 @@ public class MediaUploadActivity extends AppCompatActivity {
         renderStrip();
     }
 
+    /** Text shows a note; photo / video show the attachment strip. */
+    private void applyMode() {
+        binding.llAttach.setVisibility(isText ? View.GONE : View.VISIBLE);
+        binding.tvTextOnlyNote.setVisibility(isText ? View.VISIBLE : View.GONE);
+    }
+
     private void restorePreview() {
-        binding.rbVideo.setChecked(isVideo);
-        binding.rbPhoto.setChecked(!isVideo);
+        binding.rbText.setChecked(isText);
+        binding.rbVideo.setChecked(!isText && isVideo);
+        binding.rbPhoto.setChecked(!isText && !isVideo);
+        applyMode();
         // Anything the cache lost between sessions is dropped rather than shown broken.
         for (int i = mediaPaths.size() - 1; i >= 0; i--) {
             if (!new File(mediaPaths.get(i)).exists()) mediaPaths.remove(i);
