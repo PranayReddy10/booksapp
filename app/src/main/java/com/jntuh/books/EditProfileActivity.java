@@ -209,6 +209,9 @@ public class EditProfileActivity extends AppCompatActivity {
         viewEditProfile.edtRoll.setTextColor(androidx.core.content.ContextCompat.getColor(
                 this, rollLocked ? R.color.authx_text_muted : R.color.authx_text));
         viewEditProfile.tvRollLockedNote.setVisibility(rollLocked ? View.VISIBLE : View.GONE);
+        // No hall ticket yet: Look up fills the form from it, like sign-up does.
+        viewEditProfile.btnEpLookup.setVisibility(rollLocked ? View.GONE : View.VISIBLE);
+        viewEditProfile.btnEpLookup.setOnClickListener(v -> lookupHallTicket());
         setupAcademicSpinner(viewEditProfile.spProfileRegulation, viewEditProfile.edtRegulationOther,
                 R.array.result_regulation_entries, uRegulation);
         setupAcademicSpinner(viewEditProfile.spProfileDegree, viewEditProfile.edtDegreeOther,
@@ -274,6 +277,122 @@ public class EditProfileActivity extends AppCompatActivity {
                 selected ? R.color.white : R.color.home_by_author));
         label.setTextColor(androidx.core.content.ContextCompat.getColor(this,
                 selected ? R.color.app_bg_orange : R.color.home_by_author));
+    }
+
+    // ---- Hall ticket lookup ----
+
+    private boolean lookupInFlight;
+
+    /**
+     * Ask the university feed who this hall ticket belongs to and fill the form:
+     * name, department, college and regulation. Everything stays editable, and
+     * nothing is saved until the student taps Save.
+     */
+    private void lookupHallTicket() {
+        String roll = viewEditProfile.edtRoll.getText() == null ? ""
+                : viewEditProfile.edtRoll.getText().toString().trim().toUpperCase(java.util.Locale.US);
+        if (roll.length() != 10) {
+            viewEditProfile.edtRoll.requestFocus();
+            viewEditProfile.edtRoll.setError(getString(R.string.result_fetch_invalid));
+            return;
+        }
+        int uPos = viewEditProfile.spEditUniversity.getSelectedItemPosition();
+        String uni = uPos > 0 && (uPos - 1) < universityList.size()
+                ? universityList.get(uPos - 1).getUniversity_name() : "";
+        if (uni == null || !uni.toUpperCase(java.util.Locale.US).contains("JNTU")) {
+            setLookupStatus(getString(R.string.msg_reg_lookup_other_uni));
+            return;
+        }
+        if (lookupInFlight) return;
+        if (!method.isNetworkAvailable()) {
+            method.alertBox(getString(R.string.internet_connection));
+            return;
+        }
+
+        lookupInFlight = true;
+        setLookupStatus(getString(R.string.msg_reg_looking_up));
+
+        JsonObject jsObj = (JsonObject) new Gson().toJsonTree(new API(this));
+        jsObj.addProperty("hall_ticket_no", roll);
+        ApiClient.getClient().create(ApiInterface.class)
+                .lookupHallTicket(API.toBase64(jsObj.toString()))
+                .enqueue(new Callback<com.jntuh.response.HallTicketRP>() {
+            @Override
+            public void onResponse(@NotNull Call<com.jntuh.response.HallTicketRP> call,
+                                   @NotNull Response<com.jntuh.response.HallTicketRP> resp) {
+                lookupInFlight = false;
+                com.jntuh.response.HallTicketRP body = resp.body();
+                com.jntuh.item.HallTicketItem item = body != null && body.getEbookApp() != null
+                        && !body.getEbookApp().isEmpty() ? body.getEbookApp().get(0) : null;
+                if (item == null) {
+                    setLookupStatus(getString(R.string.msg_reg_lookup_manual));
+                    return;
+                }
+                String state = item.getState() == null ? "" : item.getState();
+                if ("queued".equals(state)) {
+                    setLookupStatus(getString(R.string.lbl_ep_lookup_queued));
+                    return;
+                }
+                if (!"ready".equals(state)) {
+                    setLookupStatus(item.getMsg() == null || item.getMsg().trim().isEmpty()
+                            ? getString(R.string.msg_reg_lookup_manual) : item.getMsg());
+                    return;
+                }
+                applyLookup(item);
+                setLookupStatus(getString(R.string.lbl_ep_lookup_ok));
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<com.jntuh.response.HallTicketRP> call, @NotNull Throwable t) {
+                lookupInFlight = false;
+                Log.e("lookup_fail", t.toString());
+                setLookupStatus(getString(R.string.msg_reg_lookup_manual));
+            }
+        });
+    }
+
+    /** Fill the form from the lookup; the student asked for it, so it replaces what is there. */
+    private void applyLookup(com.jntuh.item.HallTicketItem item) {
+        if (notBlank(item.getStudent_name())) {
+            viewEditProfile.edtName.setText(item.getStudent_name().trim());
+        }
+        String department = notBlank(item.getDepartment_name()) ? item.getDepartment_name() : item.getBranch();
+        if (notBlank(department)) {
+            savedDepartment = department.trim();
+            selectByName(viewEditProfile.spEditDepartment, departmentNames, savedDepartment);
+        }
+        if (notBlank(item.getCollege_name())) {
+            uCollege = item.getCollege_name().trim();
+            selectByName(viewEditProfile.spEditCollege, collegeNames, uCollege);
+        }
+        if (notBlank(item.getRegulation())) {
+            selectAcademicValue(viewEditProfile.spProfileRegulation, viewEditProfile.edtRegulationOther,
+                    item.getRegulation().trim());
+        }
+    }
+
+    /** Select a value in a regulation/degree dropdown, or put it in the "Others" box. */
+    private void selectAcademicValue(Spinner spinner, EditText otherBox, String value) {
+        android.widget.SpinnerAdapter adapter = spinner.getAdapter();
+        if (adapter == null || adapter.getCount() == 0) return;
+        for (int i = 0; i < adapter.getCount(); i++) {
+            if (value.equalsIgnoreCase(String.valueOf(adapter.getItem(i)))) {
+                spinner.setSelection(i);
+                return;
+            }
+        }
+        spinner.setSelection(adapter.getCount() - 1);   // "Others"
+        otherBox.setText(value);
+        otherBox.setVisibility(View.VISIBLE);
+    }
+
+    private static boolean notBlank(String value) {
+        return value != null && !value.trim().isEmpty();
+    }
+
+    private void setLookupStatus(String text) {
+        viewEditProfile.tvEpLookupStatus.setText(text);
+        viewEditProfile.tvEpLookupStatus.setVisibility(View.VISIBLE);
     }
 
     // Show a read-only detail row only when the profile API returned a value for it.

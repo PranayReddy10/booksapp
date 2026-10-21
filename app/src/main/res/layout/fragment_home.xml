@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Home, in reading order:
-       1. Identity      — avatar, greeting, community links, settings
-       2. Find          — search pill + filter
-       3. Featured      — the cover carousel, first thing on the page
-       4. Quick access  — every destination the app has, in one grid
-       5. Browse        — continue / trending / latest / community / API sections -->
+<!-- Home, in the app's navy and coral look, in reading order:
+       1. Header        - avatar, greeting, community links, settings, search
+       2. Featured      - the cover carousel
+       3. Results       - marks summary, or an invitation to fetch them
+       4. Compose       - post to the community
+       5. Quick access  - every destination in one grid
+       6. Browse        - continue / trending / latest / community / API sections
+     Everything scrolls together. -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_home_gradient"
+    android:background="@color/authx_page"
     tools:context="com.jntuh.books.MainActivity">
 
     <ProgressBar
@@ -35,105 +37,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <!-- ===== 1. Identity ===== -->
-        <RelativeLayout
-            android:id="@+id/linearRowebookapp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="@dimen/_16px"
-            android:paddingTop="@dimen/_12px"
-            android:paddingEnd="@dimen/_12px"
-            android:paddingBottom="@dimen/_10px">
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cvHomeAvatar"
-                android:layout_width="42dp"
-                android:layout_height="42dp"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                app:cardBackgroundColor="@color/home_pill_bg"
-                app:cardCornerRadius="21dp"
-                app:cardElevation="0dp">
-
-                <ImageView
-                    android:id="@+id/ivHomeAvatar"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/img_user"
-                    tools:ignore="ContentDescription" />
-            </androidx.cardview.widget.CardView>
-
-            <LinearLayout
-                android:id="@+id/llHomeGreeting"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/_10px"
-                android:layout_toEndOf="@+id/cvHomeAvatar"
-                android:layout_toStartOf="@+id/ibWhatsapp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tvHomeGreeting"
-                    style="@style/txtOpenSansRomanSemiBold"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:text="@string/lbl_greet_evening"
-                    android:textColor="@color/home_muted"
-                    android:textSize="@dimen/_12sp"
-                    tools:text="Good evening" />
-
-                <TextView
-                    android:id="@+id/txtEbookApp"
-                    style="@style/txt_OpenSansRomanExtraBold"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:text="@string/lbl_ebook_app"
-                    android:textColor="@color/home_title"
-                    android:textSize="@dimen/_19sp"
-                    tools:text="JNTU books" />
-            </LinearLayout>
-
-            <ImageView
-                android:id="@+id/ibWhatsapp"
-                android:layout_width="@dimen/_40px"
-                android:layout_height="@dimen/_40px"
-                android:layout_centerVertical="true"
-                android:layout_toStartOf="@+id/ibInstagram"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:padding="@dimen/_8px"
-                android:src="@drawable/ic_whatsapp"
-                tools:ignore="ContentDescription" />
-
-            <ImageView
-                android:id="@+id/ibInstagram"
-                android:layout_width="@dimen/_40px"
-                android:layout_height="@dimen/_40px"
-                android:layout_centerVertical="true"
-                android:layout_toStartOf="@+id/ibSetting"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:padding="@dimen/_8px"
-                android:src="@drawable/ic_instagram"
-                tools:ignore="ContentDescription" />
-
-            <ImageButton
-                android:id="@+id/ibSetting"
-                android:layout_width="@dimen/_40px"
-                android:layout_height="@dimen/_40px"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:background="@drawable/rectangle_bg_setting_home"
-                android:padding="@dimen/_10px"
-                android:scaleType="fitCenter"
-                android:src="@drawable/img_setting"
-                tools:ignore="ContentDescription" />
-        </RelativeLayout>
-
         <androidx.core.widget.NestedScrollView
             android:id="@+id/scrollViewScrollview"
             android:layout_width="match_parent"
@@ -145,83 +48,209 @@
                 android:id="@+id/linearHomeScreen"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_10px"
+                android:paddingBottom="16dp"
                 android:orientation="vertical">
 
-                <!-- ===== 2. Find ===== -->
-                <LinearLayout
+                <!-- ===== 1. Header ===== -->
+                <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_16px"
-                    android:layout_marginEnd="@dimen/_16px"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <RelativeLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@drawable/bg_home_search">
-
-                        <ImageView
-                            android:id="@+id/imageHomeSearch"
-                            android:layout_width="@dimen/_20px"
-                            android:layout_height="@dimen/_20px"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginEnd="@dimen/_18px"
-                            android:contentDescription="@string/app_name"
-                            android:src="@drawable/img_search" />
-
-                        <EditText
-                            android:id="@+id/edtHomeSearch"
-                            style="@style/txt_PoppinsMedium"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_toStartOf="@+id/imageHomeSearch"
-                            android:background="@android:color/transparent"
-                            android:ellipsize="end"
-                            android:hint="@string/lbl_search_here"
-                            android:imeOptions="actionDone"
-                            android:inputType="text"
-                            android:paddingStart="@dimen/_18px"
-                            android:paddingTop="@dimen/_14px"
-                            android:paddingEnd="@dimen/_10px"
-                            android:paddingBottom="@dimen/_14px"
-                            android:singleLine="true"
-                            android:textColor="@color/home_title"
-                            android:textColorHint="@color/home_muted"
-                            android:textCursorDrawable="@drawable/cursor"
-                            android:textSize="@dimen/_15sp"
-                            tools:ignore="Autofill" />
-                    </RelativeLayout>
+                    android:background="@drawable/bg_authx_header">
 
                     <ImageView
-                        android:id="@+id/ivHomeFilter"
-                        android:layout_width="52dp"
-                        android:layout_height="52dp"
-                        android:layout_marginStart="@dimen/_10px"
-                        android:background="@drawable/bg_home_filter_btn"
-                        android:padding="@dimen/_14px"
-                        android:src="@drawable/ic_home_filter"
+                        android:layout_width="190dp"
+                        android:layout_height="190dp"
+                        android:layout_gravity="top|end"
+                        android:layout_marginTop="-80dp"
+                        android:layout_marginEnd="-60dp"
+                        android:src="@drawable/bg_authx_ring"
+                        tools:ignore="ContentDescription" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingStart="18dp"
+                        android:paddingTop="14dp"
+                        android:paddingEnd="18dp"
+                        android:paddingBottom="22dp">
+
+                        <RelativeLayout
+                            android:id="@+id/linearRowebookapp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <androidx.cardview.widget.CardView
+                                android:id="@+id/cvHomeAvatar"
+                                android:layout_width="46dp"
+                                android:layout_height="46dp"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"
+                                app:cardBackgroundColor="@color/white"
+                                app:cardCornerRadius="23dp"
+                                app:cardElevation="0dp"
+                                app:contentPadding="2dp">
+
+                                <com.google.android.material.imageview.ShapeableImageView
+                                    android:id="@+id/ivHomeAvatar"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:scaleType="centerCrop"
+                                    android:src="@drawable/img_user"
+                                    app:shapeAppearanceOverlay="@style/CircleImage"
+                                    tools:ignore="ContentDescription" />
+                            </androidx.cardview.widget.CardView>
+
+                            <LinearLayout
+                                android:id="@+id/llHomeGreeting"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginStart="12dp"
+                                android:layout_marginEnd="8dp"
+                                android:layout_toStartOf="@+id/ibWhatsapp"
+                                android:layout_toEndOf="@+id/cvHomeAvatar"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/tvHomeGreeting"
+                                    style="@style/txtOpenSansRomanSemiBold"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:ellipsize="end"
+                                    android:singleLine="true"
+                                    android:text="@string/lbl_greet_evening"
+                                    android:textColor="@color/authx_on_header_muted"
+                                    android:textSize="@dimen/_13sp"
+                                    tools:text="Good evening" />
+
+                                <TextView
+                                    android:id="@+id/txtEbookApp"
+                                    style="@style/txt_OpenSansRomanExtraBold"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:ellipsize="end"
+                                    android:singleLine="true"
+                                    android:text="@string/lbl_ebook_app"
+                                    android:textColor="@color/authx_on_header"
+                                    android:textSize="@dimen/_20sp"
+                                    tools:text="JNTU books" />
+                            </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/ibWhatsapp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="8dp"
+                        android:layout_toStartOf="@+id/ibInstagram"
+                        android:background="@drawable/bg_authx_glass_circle"
+                        android:padding="9dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_whatsapp"
+                        tools:ignore="ContentDescription" />
+
+                    <ImageView
+                        android:id="@+id/ibInstagram"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="8dp"
+                        android:layout_toStartOf="@+id/ibSetting"
+                        android:background="@drawable/bg_authx_glass_circle"
+                        android:padding="9dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_instagram"
+                        tools:ignore="ContentDescription" />
+
+                    <ImageButton
+                        android:id="@+id/ibSetting"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentEnd="true"
+                        android:background="@drawable/bg_authx_glass_circle"
+                        android:padding="9dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/img_setting"
                         app:tint="@color/white"
                         tools:ignore="ContentDescription" />
-                </LinearLayout>
 
-                <!-- ===== 3. Featured ===== -->
+                        </RelativeLayout>
+
+                        <!-- Search -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="18dp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="52dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/bg_authx_search_field"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal"
+                                android:paddingStart="14dp"
+                                android:paddingEnd="6dp">
+
+                                <ImageView
+                                    android:id="@+id/imageHomeSearch"
+                                    android:layout_width="36dp"
+                                    android:layout_height="36dp"
+                                    android:background="?attr/selectableItemBackgroundBorderless"
+                                    android:contentDescription="@string/app_name"
+                                    android:padding="8dp"
+                                    android:src="@drawable/ic_authx_search" />
+
+                                <EditText
+                                    android:id="@+id/edtHomeSearch"
+                                    style="@style/txt_PoppinsMedium"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginStart="4dp"
+                                    android:background="@android:color/transparent"
+                                    android:ellipsize="end"
+                                    android:hint="@string/lbl_search_here"
+                                    android:imeOptions="actionDone"
+                                    android:inputType="text"
+                                    android:singleLine="true"
+                                    android:textColor="@color/authx_text"
+                                    android:textColorHint="@color/authx_text_muted"
+                                    android:textCursorDrawable="@drawable/cursor"
+                                    android:textSize="@dimen/_15sp"
+                                    tools:ignore="Autofill" />
+                            </LinearLayout>
+
+                            <ImageView
+                                android:id="@+id/ivHomeFilter"
+                                android:layout_width="52dp"
+                                android:layout_height="52dp"
+                                android:layout_marginStart="10dp"
+                                android:background="@drawable/bg_authx_coral_square"
+                                android:padding="14dp"
+                                android:src="@drawable/ic_home_filter"
+                                app:tint="@color/white"
+                                tools:ignore="ContentDescription" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </FrameLayout>
+
+                <!-- ===== 2. Featured ===== -->
                 <TextView
                     android:id="@+id/tvHomeFeature"
-                    style="@style/txt_InterBold"
+                    style="@style/txt_OpenSansRomanExtraBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_16px"
-                    android:layout_marginTop="@dimen/_20px"
-                    android:layout_marginEnd="@dimen/_16px"
+                    android:layout_marginStart="18dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="18dp"
                     android:ellipsize="end"
                     android:singleLine="true"
                     android:text="@string/lbl_featured"
-                    android:textColor="@color/home_title"
+                    android:textColor="@color/authx_text"
                     android:textSize="@dimen/_18sp" />
 
                 <LinearLayout
@@ -231,7 +260,7 @@
                     android:layout_height="@dimen/_180px"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginStart="7dp"
-                    android:layout_marginTop="@dimen/_10px"
+                    android:layout_marginTop="12dp"
                     android:layout_marginEnd="7dp"
                     android:orientation="vertical">
 
@@ -241,7 +270,7 @@
                         android:layout_height="@dimen/_180px" />
                 </LinearLayout>
 
-                <!-- ===== Results ===== -->
+                <!-- ===== 3. Results ===== -->
                 <!-- Two faces of one card: the marks once they exist, otherwise an
                      invitation to pull them. Both open the results screen, which
                      owns the fetching. -->
@@ -249,19 +278,21 @@
                     android:id="@+id/cvHomeResults"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_16px"
-                    android:layout_marginTop="@dimen/_16px"
-                    android:layout_marginEnd="@dimen/_16px"
+                    android:layout_marginStart="18dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="18dp"
                     android:foreground="?attr/selectableItemBackground"
-                    app:cardBackgroundColor="@color/result_brand_blue"
-                    app:cardCornerRadius="20dp"
-                    app:cardElevation="2dp">
+                    app:cardBackgroundColor="@android:color/transparent"
+                    app:cardCornerRadius="22dp"
+                    app:cardElevation="6dp"
+                    app:strokeWidth="0dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/bg_authx_hero_card"
                         android:orientation="vertical"
-                        android:padding="@dimen/_16px">
+                        android:padding="18dp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -269,29 +300,40 @@
                             android:gravity="center_vertical"
                             android:orientation="horizontal">
 
-                            <ImageView
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
-                                android:src="@drawable/ic_result_school"
-                                app:tint="@color/white"
-                                tools:ignore="ContentDescription" />
+                            <FrameLayout
+                                android:layout_width="36dp"
+                                android:layout_height="36dp"
+                                android:background="@drawable/bg_authx_glass">
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/ic_result_school"
+                                    app:tint="@color/white"
+                                    tools:ignore="ContentDescription" />
+                            </FrameLayout>
 
                             <TextView
                                 style="@style/txt_OpenSansRomanExtraBold"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/_8px"
+                                android:layout_marginStart="10dp"
                                 android:layout_weight="1"
                                 android:text="@string/tab_my_results"
                                 android:textColor="@color/white"
-                                android:textSize="@dimen/_15sp" />
+                                android:textSize="@dimen/_16sp" />
 
                             <TextView
                                 android:id="@+id/tvHomeResultsAction"
                                 style="@style/txt_OpenSansRomanBold"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:alpha="0.9"
+                                android:background="@drawable/bg_authx_glass"
+                                android:paddingStart="12dp"
+                                android:paddingTop="5dp"
+                                android:paddingEnd="12dp"
+                                android:paddingBottom="5dp"
                                 android:text="@string/lbl_view_all"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/_12sp" />
@@ -302,91 +344,103 @@
                             android:id="@+id/llHomeResultsHave"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_14px"
+                            android:layout_marginStart="-4dp"
+                            android:layout_marginTop="14dp"
+                            android:layout_marginEnd="-4dp"
                             android:orientation="horizontal"
                             android:visibility="gone"
                             tools:visibility="visible">
 
-                                <LinearLayout
-                                    android:layout_width="0dp"
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="4dp"
+                                android:layout_marginEnd="4dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/bg_authx_glass"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:paddingTop="10dp"
+                                android:paddingBottom="10dp">
+
+                                <TextView
+                                    android:id="@+id/tvHomeResultsCgpa"
+                                    style="@style/txt_OpenSansRomanExtraBold"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:orientation="vertical">
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/_20sp"
+                                    tools:text="8.4" />
 
-                                    <TextView
-                                        android:id="@+id/tvHomeResultsCgpa"
-                                        style="@style/txt_OpenSansRomanExtraBold"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:textColor="@color/white"
-                                        android:textSize="@dimen/_20sp"
-                                        tools:text="8.4" />
-
-                                    <TextView
-                                        style="@style/txtOpenSansRomanSemiBold"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="@dimen/_2px"
-                                        android:alpha="0.75"
-                                        android:text="@string/result_cgpa"
-                                        android:textColor="@color/white"
-                                        android:textSize="@dimen/_12sp" />
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="0dp"
+                                <TextView
+                                    style="@style/txtOpenSansRomanSemiBold"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:orientation="vertical">
+                                    android:text="@string/result_cgpa"
+                                    android:textColor="@color/authx_on_header_muted"
+                                    android:textSize="@dimen/_12sp" />
+                            </LinearLayout>
 
-                                    <TextView
-                                        android:id="@+id/tvHomeResultsCredits"
-                                        style="@style/txt_OpenSansRomanExtraBold"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:textColor="@color/white"
-                                        android:textSize="@dimen/_20sp"
-                                        tools:text="8.4" />
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="4dp"
+                                android:layout_marginEnd="4dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/bg_authx_glass"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:paddingTop="10dp"
+                                android:paddingBottom="10dp">
 
-                                    <TextView
-                                        style="@style/txtOpenSansRomanSemiBold"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="@dimen/_2px"
-                                        android:alpha="0.75"
-                                        android:text="@string/result_credits"
-                                        android:textColor="@color/white"
-                                        android:textSize="@dimen/_12sp" />
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="0dp"
+                                <TextView
+                                    android:id="@+id/tvHomeResultsCredits"
+                                    style="@style/txt_OpenSansRomanExtraBold"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:orientation="vertical">
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/_20sp"
+                                    tools:text="8.4" />
 
-                                    <TextView
-                                        android:id="@+id/tvHomeResultsBacklogs"
-                                        style="@style/txt_OpenSansRomanExtraBold"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:textColor="@color/white"
-                                        android:textSize="@dimen/_20sp"
-                                        tools:text="8.4" />
+                                <TextView
+                                    style="@style/txtOpenSansRomanSemiBold"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/result_credits"
+                                    android:textColor="@color/authx_on_header_muted"
+                                    android:textSize="@dimen/_12sp" />
+                            </LinearLayout>
 
-                                    <TextView
-                                        style="@style/txtOpenSansRomanSemiBold"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="@dimen/_2px"
-                                        android:alpha="0.75"
-                                        android:text="@string/result_backlogs"
-                                        android:textColor="@color/white"
-                                        android:textSize="@dimen/_12sp" />
-                                </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="4dp"
+                                android:layout_marginEnd="4dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/bg_authx_glass"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:paddingTop="10dp"
+                                android:paddingBottom="10dp">
+
+                                <TextView
+                                    android:id="@+id/tvHomeResultsBacklogs"
+                                    style="@style/txt_OpenSansRomanExtraBold"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/_20sp"
+                                    tools:text="8.4" />
+
+                                <TextView
+                                    style="@style/txtOpenSansRomanSemiBold"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/result_backlogs"
+                                    android:textColor="@color/authx_on_header_muted"
+                                    android:textSize="@dimen/_12sp" />
+                            </LinearLayout>
+
                         </LinearLayout>
 
                         <!-- Nothing yet: say what the button will do -->
@@ -394,7 +448,7 @@
                             android:id="@+id/llHomeResultsFetch"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_10px"
+                            android:layout_marginTop="10dp"
                             android:orientation="vertical"
                             android:visibility="gone"
                             tools:visibility="visible">
@@ -404,98 +458,86 @@
                                 style="@style/txtOpenSansRomanSemiBold"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:alpha="0.85"
-                                android:lineSpacingExtra="@dimen/_3px"
+                                android:lineSpacingExtra="3dp"
                                 android:text="@string/msg_home_results_prompt"
-                                android:textColor="@color/white"
-                                android:textSize="@dimen/_12sp" />
+                                android:textColor="@color/authx_on_header_muted"
+                                android:textSize="@dimen/_13sp" />
 
                             <TextView
                                 android:id="@+id/btnHomeResultsFetch"
                                 style="@style/txt_OpenSansRomanBold"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/_12px"
-                                android:background="@drawable/bg_home_results_cta"
-                                android:paddingStart="@dimen/_18px"
-                                android:paddingTop="@dimen/_10px"
-                                android:paddingEnd="@dimen/_18px"
-                                android:paddingBottom="@dimen/_10px"
+                                android:layout_marginTop="12dp"
+                                android:background="@drawable/bg_authx_white_pill"
+                                android:paddingStart="18dp"
+                                android:paddingTop="10dp"
+                                android:paddingEnd="18dp"
+                                android:paddingBottom="10dp"
                                 android:text="@string/result_fetch_auto"
-                                android:textColor="@color/result_brand_blue"
+                                android:textColor="@color/authx_header_end"
                                 android:textSize="@dimen/_13sp" />
                         </LinearLayout>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
-                <!-- ===== Write something ===== -->
-                <com.google.android.material.card.MaterialCardView
+                <!-- ===== 4. Compose ===== -->
+                <LinearLayout
                     android:id="@+id/cvHomeComposer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_16px"
-                    android:layout_marginTop="@dimen/_16px"
-                    android:layout_marginEnd="@dimen/_16px"
-                    app:cardBackgroundColor="@color/home_surface"
-                    app:cardCornerRadius="20dp"
-                    app:cardElevation="2dp">
+                    android:layout_marginStart="18dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="18dp"
+                    android:background="@drawable/bg_authx_card"
+                    android:elevation="6dp"
+                    android:orientation="vertical"
+                    android:padding="14dp">
+
+                    <LinearLayout
+                        android:id="@+id/llComposeOpen"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackground"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/ivComposerAvatar"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@color/authx_soft"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/img_user"
+                            app:shapeAppearanceOverlay="@style/CircleImage"
+                            tools:ignore="ContentDescription" />
+
+                        <TextView
+                            style="@style/txtOpenSansRomanSemiBold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:background="@drawable/bg_authx_soft"
+                            android:paddingStart="16dp"
+                            android:paddingTop="12dp"
+                            android:paddingEnd="16dp"
+                            android:paddingBottom="12dp"
+                            android:text="@string/lbl_write_something"
+                            android:textColor="@color/authx_text_muted"
+                            android:textSize="@dimen/_14sp" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="12dp"
+                        android:background="@drawable/bg_authx_divider" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="@dimen/_12px">
-
-                        <LinearLayout
-                            android:id="@+id/llComposeOpen"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="?attr/selectableItemBackground"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal">
-
-                            <androidx.cardview.widget.CardView
-                                android:layout_width="38dp"
-                                android:layout_height="38dp"
-                                app:cardBackgroundColor="@color/home_pill_bg"
-                                app:cardCornerRadius="19dp"
-                                app:cardElevation="0dp">
-
-                                <ImageView
-                                    android:id="@+id/ivComposerAvatar"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:scaleType="centerCrop"
-                                    android:src="@drawable/img_user"
-                                    tools:ignore="ContentDescription" />
-                            </androidx.cardview.widget.CardView>
-
-                            <TextView
-                                style="@style/txtOpenSansRomanSemiBold"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/_10px"
-                                android:background="@drawable/bg_home_composer"
-                                android:paddingStart="@dimen/_16px"
-                                android:paddingTop="@dimen/_12px"
-                                android:paddingEnd="@dimen/_16px"
-                                android:paddingBottom="@dimen/_12px"
-                                android:text="@string/lbl_write_something"
-                                android:textColor="@color/home_muted"
-                                android:textSize="@dimen/_14sp" />
-                        </LinearLayout>
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_marginTop="@dimen/_12px"
-                            android:background="@color/detail_line" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_6px"
-                            android:orientation="horizontal">
+                        android:layout_marginTop="4dp"
+                        android:orientation="horizontal">
 
                             <LinearLayout
                                 android:id="@+id/llComposePhoto"
@@ -505,23 +547,23 @@
                                 android:background="?attr/selectableItemBackground"
                                 android:gravity="center"
                                 android:orientation="horizontal"
-                                android:paddingTop="@dimen/_10px"
-                                android:paddingBottom="@dimen/_10px">
+                                android:paddingTop="10dp"
+                                android:paddingBottom="10dp">
 
                                 <ImageView
                                     android:layout_width="20dp"
                                     android:layout_height="20dp"
                                     android:src="@drawable/ic_compose_photo"
-                                    app:tint="@color/app_bg_orange"
+                                    app:tint="@color/authx_coral"
                                     tools:ignore="ContentDescription" />
 
                                 <TextView
                                     style="@style/txt_OpenSansRomanBold"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginStart="@dimen/_6px"
+                                    android:layout_marginStart="6dp"
                                     android:text="@string/lbl_photo"
-                                    android:textColor="@color/gray_2"
+                                    android:textColor="@color/authx_text"
                                     android:textSize="@dimen/_13sp" />
                             </LinearLayout>
 
@@ -533,23 +575,23 @@
                                 android:background="?attr/selectableItemBackground"
                                 android:gravity="center"
                                 android:orientation="horizontal"
-                                android:paddingTop="@dimen/_10px"
-                                android:paddingBottom="@dimen/_10px">
+                                android:paddingTop="10dp"
+                                android:paddingBottom="10dp">
 
                                 <ImageView
                                     android:layout_width="20dp"
                                     android:layout_height="20dp"
                                     android:src="@drawable/ic_compose_video"
-                                    app:tint="@color/app_bg_orange"
+                                    app:tint="@color/authx_coral"
                                     tools:ignore="ContentDescription" />
 
                                 <TextView
                                     style="@style/txt_OpenSansRomanBold"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginStart="@dimen/_6px"
+                                    android:layout_marginStart="6dp"
                                     android:text="@string/lbl_video"
-                                    android:textColor="@color/gray_2"
+                                    android:textColor="@color/authx_text"
                                     android:textSize="@dimen/_13sp" />
                             </LinearLayout>
 
@@ -561,62 +603,57 @@
                                 android:background="?attr/selectableItemBackground"
                                 android:gravity="center"
                                 android:orientation="horizontal"
-                                android:paddingTop="@dimen/_10px"
-                                android:paddingBottom="@dimen/_10px">
+                                android:paddingTop="10dp"
+                                android:paddingBottom="10dp">
 
                                 <ImageView
                                     android:layout_width="20dp"
                                     android:layout_height="20dp"
                                     android:src="@drawable/ic_feed_comment_outline"
-                                    app:tint="@color/app_bg_orange"
+                                    app:tint="@color/authx_coral"
                                     tools:ignore="ContentDescription" />
 
                                 <TextView
                                     style="@style/txt_OpenSansRomanBold"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginStart="@dimen/_6px"
+                                    android:layout_marginStart="6dp"
                                     android:text="@string/lbl_post_action"
-                                    android:textColor="@color/gray_2"
+                                    android:textColor="@color/authx_text"
                                     android:textSize="@dimen/_13sp" />
                             </LinearLayout>
-                        </LinearLayout>
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
 
-                <!-- ===== 4. Quick access ===== -->
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- ===== 5. Quick access ===== -->
                 <TextView
-                    style="@style/txt_InterBold"
+                    style="@style/txt_OpenSansRomanExtraBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_16px"
-                    android:layout_marginTop="@dimen/_20px"
+                    android:layout_marginStart="18dp"
+                    android:layout_marginTop="24dp"
                     android:text="@string/lbl_quick_access"
-                    android:textColor="@color/home_title"
+                    android:textColor="@color/authx_text"
                     android:textSize="@dimen/_18sp" />
 
-                <com.google.android.material.card.MaterialCardView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_16px"
-                    android:layout_marginTop="@dimen/_10px"
-                    android:layout_marginEnd="@dimen/_16px"
-                    app:cardBackgroundColor="@color/home_surface"
-                    app:cardCornerRadius="20dp"
-                    app:cardElevation="2dp">
+                    android:layout_marginStart="18dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="18dp"
+                    android:background="@drawable/bg_authx_card"
+                    android:elevation="6dp"
+                    android:orientation="vertical"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="16dp">
 
+                    <!-- Row 1: browse -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:paddingTop="@dimen/_16px"
-                        android:paddingBottom="@dimen/_16px">
-
-                        <!-- Row 1: browse -->
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                        android:orientation="horizontal">
 
                             <LinearLayout
                                 android:id="@+id/llQaCategories"
@@ -625,19 +662,21 @@
                                 android:layout_weight="1"
                                 android:background="?attr/selectableItemBackground"
                                 android:gravity="center"
-                                android:orientation="vertical">
+                                android:orientation="vertical"
+                                android:paddingTop="4dp"
+                                android:paddingBottom="4dp">
 
                                 <FrameLayout
                                     android:layout_width="52dp"
                                     android:layout_height="52dp"
-                                    android:background="@drawable/bg_quick_tile">
+                                    android:background="@drawable/bg_authx_icon_tile">
 
                                     <ImageView
-                                        android:layout_width="26dp"
-                                        android:layout_height="26dp"
+                                        android:layout_width="24dp"
+                                        android:layout_height="24dp"
                                         android:layout_gravity="center"
                                         android:src="@drawable/menu_cat"
-                                        app:tint="@color/app_bg_orange"
+                                        app:tint="@color/authx_coral"
                                         tools:ignore="ContentDescription" />
                                 </FrameLayout>
 
@@ -645,11 +684,11 @@
                                     style="@style/txtOpenSansRomanSemiBold"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/_8px"
+                                    android:layout_marginTop="8dp"
                                     android:ellipsize="end"
                                     android:singleLine="true"
                                     android:text="@string/lbl_qa_categories"
-                                    android:textColor="@color/home_title"
+                                    android:textColor="@color/authx_text"
                                     android:textSize="@dimen/_12sp" />
                             </LinearLayout>
 
@@ -660,19 +699,21 @@
                                 android:layout_weight="1"
                                 android:background="?attr/selectableItemBackground"
                                 android:gravity="center"
-                                android:orientation="vertical">
+                                android:orientation="vertical"
+                                android:paddingTop="4dp"
+                                android:paddingBottom="4dp">
 
                                 <FrameLayout
                                     android:layout_width="52dp"
                                     android:layout_height="52dp"
-                                    android:background="@drawable/bg_quick_tile">
+                                    android:background="@drawable/bg_authx_icon_tile">
 
                                     <ImageView
-                                        android:layout_width="26dp"
-                                        android:layout_height="26dp"
+                                        android:layout_width="24dp"
+                                        android:layout_height="24dp"
                                         android:layout_gravity="center"
                                         android:src="@drawable/img_star"
-                                        app:tint="@color/app_bg_orange"
+                                        app:tint="@color/authx_coral"
                                         tools:ignore="ContentDescription" />
                                 </FrameLayout>
 
@@ -680,11 +721,11 @@
                                     style="@style/txtOpenSansRomanSemiBold"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/_8px"
+                                    android:layout_marginTop="8dp"
                                     android:ellipsize="end"
                                     android:singleLine="true"
                                     android:text="@string/lbl_qa_trending"
-                                    android:textColor="@color/home_title"
+                                    android:textColor="@color/authx_text"
                                     android:textSize="@dimen/_12sp" />
                             </LinearLayout>
 
@@ -695,19 +736,21 @@
                                 android:layout_weight="1"
                                 android:background="?attr/selectableItemBackground"
                                 android:gravity="center"
-                                android:orientation="vertical">
+                                android:orientation="vertical"
+                                android:paddingTop="4dp"
+                                android:paddingBottom="4dp">
 
                                 <FrameLayout
                                     android:layout_width="52dp"
                                     android:layout_height="52dp"
-                                    android:background="@drawable/bg_quick_tile">
+                                    android:background="@drawable/bg_authx_icon_tile">
 
                                     <ImageView
-                                        android:layout_width="26dp"
-                                        android:layout_height="26dp"
+                                        android:layout_width="24dp"
+                                        android:layout_height="24dp"
                                         android:layout_gravity="center"
                                         android:src="@drawable/menu_reels"
-                                        app:tint="@color/app_bg_orange"
+                                        app:tint="@color/authx_coral"
                                         tools:ignore="ContentDescription" />
                                 </FrameLayout>
 
@@ -715,11 +758,11 @@
                                     style="@style/txtOpenSansRomanSemiBold"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/_8px"
+                                    android:layout_marginTop="8dp"
                                     android:ellipsize="end"
                                     android:singleLine="true"
                                     android:text="@string/lbl_qa_reels"
-                                    android:textColor="@color/home_title"
+                                    android:textColor="@color/authx_text"
                                     android:textSize="@dimen/_12sp" />
                             </LinearLayout>
 
@@ -730,19 +773,21 @@
                                 android:layout_weight="1"
                                 android:background="?attr/selectableItemBackground"
                                 android:gravity="center"
-                                android:orientation="vertical">
+                                android:orientation="vertical"
+                                android:paddingTop="4dp"
+                                android:paddingBottom="4dp">
 
                                 <FrameLayout
                                     android:layout_width="52dp"
                                     android:layout_height="52dp"
-                                    android:background="@drawable/bg_quick_tile">
+                                    android:background="@drawable/bg_authx_icon_tile">
 
                                     <ImageView
-                                        android:layout_width="26dp"
-                                        android:layout_height="26dp"
+                                        android:layout_width="24dp"
+                                        android:layout_height="24dp"
                                         android:layout_gravity="center"
                                         android:src="@drawable/menu_shop"
-                                        app:tint="@color/app_bg_orange"
+                                        app:tint="@color/authx_coral"
                                         tools:ignore="ContentDescription" />
                                 </FrameLayout>
 
@@ -750,21 +795,22 @@
                                     style="@style/txtOpenSansRomanSemiBold"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/_8px"
+                                    android:layout_marginTop="8dp"
                                     android:ellipsize="end"
                                     android:singleLine="true"
                                     android:text="@string/lbl_qa_shop"
-                                    android:textColor="@color/home_title"
+                                    android:textColor="@color/authx_text"
                                     android:textSize="@dimen/_12sp" />
                             </LinearLayout>
-                        </LinearLayout>
 
-                        <!-- Row 2: your library -->
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_16px"
-                            android:orientation="horizontal">
+                    </LinearLayout>
+
+                    <!-- Row 2: your library -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:orientation="horizontal">
 
                             <LinearLayout
                                 android:id="@+id/llQaResults"
@@ -773,19 +819,21 @@
                                 android:layout_weight="1"
                                 android:background="?attr/selectableItemBackground"
                                 android:gravity="center"
-                                android:orientation="vertical">
+                                android:orientation="vertical"
+                                android:paddingTop="4dp"
+                                android:paddingBottom="4dp">
 
                                 <FrameLayout
                                     android:layout_width="52dp"
                                     android:layout_height="52dp"
-                                    android:background="@drawable/bg_quick_tile">
+                                    android:background="@drawable/bg_authx_icon_tile">
 
                                     <ImageView
-                                        android:layout_width="26dp"
-                                        android:layout_height="26dp"
+                                        android:layout_width="24dp"
+                                        android:layout_height="24dp"
                                         android:layout_gravity="center"
                                         android:src="@drawable/ic_result_school"
-                                        app:tint="@color/app_bg_orange"
+                                        app:tint="@color/authx_coral"
                                         tools:ignore="ContentDescription" />
                                 </FrameLayout>
 
@@ -793,11 +841,11 @@
                                     style="@style/txtOpenSansRomanSemiBold"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/_8px"
+                                    android:layout_marginTop="8dp"
                                     android:ellipsize="end"
                                     android:singleLine="true"
                                     android:text="@string/lbl_qa_results"
-                                    android:textColor="@color/home_title"
+                                    android:textColor="@color/authx_text"
                                     android:textSize="@dimen/_12sp" />
                             </LinearLayout>
 
@@ -808,19 +856,21 @@
                                 android:layout_weight="1"
                                 android:background="?attr/selectableItemBackground"
                                 android:gravity="center"
-                                android:orientation="vertical">
+                                android:orientation="vertical"
+                                android:paddingTop="4dp"
+                                android:paddingBottom="4dp">
 
                                 <FrameLayout
                                     android:layout_width="52dp"
                                     android:layout_height="52dp"
-                                    android:background="@drawable/bg_quick_tile">
+                                    android:background="@drawable/bg_authx_icon_tile">
 
                                     <ImageView
-                                        android:layout_width="26dp"
-                                        android:layout_height="26dp"
+                                        android:layout_width="24dp"
+                                        android:layout_height="24dp"
                                         android:layout_gravity="center"
                                         android:src="@drawable/img_download"
-                                        app:tint="@color/app_bg_orange"
+                                        app:tint="@color/authx_coral"
                                         tools:ignore="ContentDescription" />
                                 </FrameLayout>
 
@@ -828,11 +878,11 @@
                                     style="@style/txtOpenSansRomanSemiBold"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/_8px"
+                                    android:layout_marginTop="8dp"
                                     android:ellipsize="end"
                                     android:singleLine="true"
                                     android:text="@string/lbl_qa_downloads"
-                                    android:textColor="@color/home_title"
+                                    android:textColor="@color/authx_text"
                                     android:textSize="@dimen/_12sp" />
                             </LinearLayout>
 
@@ -843,19 +893,21 @@
                                 android:layout_weight="1"
                                 android:background="?attr/selectableItemBackground"
                                 android:gravity="center"
-                                android:orientation="vertical">
+                                android:orientation="vertical"
+                                android:paddingTop="4dp"
+                                android:paddingBottom="4dp">
 
                                 <FrameLayout
                                     android:layout_width="52dp"
                                     android:layout_height="52dp"
-                                    android:background="@drawable/bg_quick_tile">
+                                    android:background="@drawable/bg_authx_icon_tile">
 
                                     <ImageView
-                                        android:layout_width="26dp"
-                                        android:layout_height="26dp"
+                                        android:layout_width="24dp"
+                                        android:layout_height="24dp"
                                         android:layout_gravity="center"
                                         android:src="@drawable/img_fav"
-                                        app:tint="@color/app_bg_orange"
+                                        app:tint="@color/authx_coral"
                                         tools:ignore="ContentDescription" />
                                 </FrameLayout>
 
@@ -863,11 +915,11 @@
                                     style="@style/txtOpenSansRomanSemiBold"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/_8px"
+                                    android:layout_marginTop="8dp"
                                     android:ellipsize="end"
                                     android:singleLine="true"
                                     android:text="@string/lbl_qa_saved"
-                                    android:textColor="@color/home_title"
+                                    android:textColor="@color/authx_text"
                                     android:textSize="@dimen/_12sp" />
                             </LinearLayout>
 
@@ -878,19 +930,21 @@
                                 android:layout_weight="1"
                                 android:background="?attr/selectableItemBackground"
                                 android:gravity="center"
-                                android:orientation="vertical">
+                                android:orientation="vertical"
+                                android:paddingTop="4dp"
+                                android:paddingBottom="4dp">
 
                                 <FrameLayout
                                     android:layout_width="52dp"
                                     android:layout_height="52dp"
-                                    android:background="@drawable/bg_quick_tile">
+                                    android:background="@drawable/bg_authx_icon_tile">
 
                                     <ImageView
-                                        android:layout_width="26dp"
-                                        android:layout_height="26dp"
+                                        android:layout_width="24dp"
+                                        android:layout_height="24dp"
                                         android:layout_gravity="center"
                                         android:src="@drawable/img_read_book"
-                                        app:tint="@color/app_bg_orange"
+                                        app:tint="@color/authx_coral"
                                         tools:ignore="ContentDescription" />
                                 </FrameLayout>
 
@@ -898,22 +952,23 @@
                                     style="@style/txtOpenSansRomanSemiBold"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/_8px"
+                                    android:layout_marginTop="8dp"
                                     android:ellipsize="end"
                                     android:singleLine="true"
                                     android:text="@string/lbl_qa_my_books"
-                                    android:textColor="@color/home_title"
+                                    android:textColor="@color/authx_text"
                                     android:textSize="@dimen/_12sp" />
                             </LinearLayout>
-                        </LinearLayout>
 
-                        <!-- Row 3: reminders. Padded with empty weighted slots so the
-                             tile lines up with the column above it. -->
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_16px"
-                            android:orientation="horizontal">
+                    </LinearLayout>
+
+                    <!-- Row 3: reminders. Padded with empty weighted slots so the
+                         tile lines up with the column above it. -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:orientation="horizontal">
 
                             <LinearLayout
                                 android:id="@+id/llQaTasks"
@@ -922,19 +977,21 @@
                                 android:layout_weight="1"
                                 android:background="?attr/selectableItemBackground"
                                 android:gravity="center"
-                                android:orientation="vertical">
+                                android:orientation="vertical"
+                                android:paddingTop="4dp"
+                                android:paddingBottom="4dp">
 
                                 <FrameLayout
                                     android:layout_width="52dp"
                                     android:layout_height="52dp"
-                                    android:background="@drawable/bg_quick_tile">
+                                    android:background="@drawable/bg_authx_icon_tile">
 
                                     <ImageView
-                                        android:layout_width="26dp"
-                                        android:layout_height="26dp"
+                                        android:layout_width="24dp"
+                                        android:layout_height="24dp"
                                         android:layout_gravity="center"
                                         android:src="@drawable/ic_task_bell"
-                                        app:tint="@color/app_bg_orange"
+                                        app:tint="@color/authx_coral"
                                         tools:ignore="ContentDescription" />
 
                                     <!-- Pending-task count, hidden at zero -->
@@ -957,45 +1014,44 @@
                                     style="@style/txtOpenSansRomanSemiBold"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/_8px"
+                                    android:layout_marginTop="8dp"
                                     android:ellipsize="end"
                                     android:singleLine="true"
                                     android:text="@string/lbl_qa_tasks"
-                                    android:textColor="@color/home_title"
+                                    android:textColor="@color/authx_text"
                                     android:textSize="@dimen/_12sp" />
                             </LinearLayout>
 
-                            <View
-                                android:layout_width="0dp"
-                                android:layout_height="1dp"
-                                android:layout_weight="3" />
-                        </LinearLayout>
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="1dp"
+                            android:layout_weight="3" />
                     </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
+                </LinearLayout>
 
-                <!-- ===== 5. Browse ===== -->
+                <!-- ===== 6. Browse ===== -->
 
-                <!-- Continue reading -->
                 <RelativeLayout
                     android:id="@+id/rlConSection"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_20px"
-                    android:layout_marginBottom="@dimen/_10px">
+                    android:layout_marginTop="24dp"
+                    android:layout_marginBottom="12dp"
+                    android:paddingStart="18dp"
+                    android:paddingEnd="18dp">
 
                     <TextView
                         android:id="@+id/tvHomeConBook"
-                        style="@style/txt_InterBold"
+                        style="@style/txt_OpenSansRomanExtraBold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/_16px"
                         android:layout_toStartOf="@+id/tvSeeAllContinue"
                         android:ellipsize="end"
                         android:singleLine="true"
                         android:text="@string/msg_continue_reading"
-                        android:textColor="@color/home_title"
+                        android:textColor="@color/authx_text"
                         android:textSize="@dimen/_18sp" />
 
                     <TextView
@@ -1005,12 +1061,14 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginEnd="@dimen/_16px"
-                        android:background="?attr/selectableItemBackground"
-                        android:padding="@dimen/_4px"
+                        android:background="@drawable/bg_authx_coral_soft"
+                        android:paddingStart="12dp"
+                        android:paddingTop="5dp"
+                        android:paddingEnd="12dp"
+                        android:paddingBottom="5dp"
                         android:text="@string/lbl_view_all"
-                        android:textColor="@color/app_bg_orange"
-                        android:textSize="@dimen/_13sp" />
+                        android:textColor="@color/authx_coral"
+                        android:textSize="@dimen/_12sp" />
                 </RelativeLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -1019,30 +1077,30 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clipToPadding="false"
-                    android:paddingStart="@dimen/_16px"
-                    android:paddingEnd="@dimen/_10px" />
+                    android:paddingStart="18dp"
+                    android:paddingEnd="10dp" />
 
-                <!-- Trending -->
                 <RelativeLayout
                     android:id="@+id/rlTrendSection"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_20px"
-                    android:layout_marginBottom="@dimen/_10px">
+                    android:layout_marginTop="24dp"
+                    android:layout_marginBottom="12dp"
+                    android:paddingStart="18dp"
+                    android:paddingEnd="18dp">
 
                     <TextView
                         android:id="@+id/tvHomeTrendBook"
-                        style="@style/txt_InterBold"
+                        style="@style/txt_OpenSansRomanExtraBold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/_16px"
                         android:layout_toStartOf="@+id/tvSeeAllTrending"
                         android:ellipsize="end"
                         android:singleLine="true"
                         android:text="@string/lbl_trending"
-                        android:textColor="@color/home_title"
+                        android:textColor="@color/authx_text"
                         android:textSize="@dimen/_18sp" />
 
                     <TextView
@@ -1052,12 +1110,14 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginEnd="@dimen/_16px"
-                        android:background="?attr/selectableItemBackground"
-                        android:padding="@dimen/_4px"
+                        android:background="@drawable/bg_authx_coral_soft"
+                        android:paddingStart="12dp"
+                        android:paddingTop="5dp"
+                        android:paddingEnd="12dp"
+                        android:paddingBottom="5dp"
                         android:text="@string/lbl_view_all"
-                        android:textColor="@color/app_bg_orange"
-                        android:textSize="@dimen/_13sp" />
+                        android:textColor="@color/authx_coral"
+                        android:textSize="@dimen/_12sp" />
                 </RelativeLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -1066,30 +1126,30 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clipToPadding="false"
-                    android:paddingStart="@dimen/_16px"
-                    android:paddingEnd="@dimen/_10px" />
+                    android:paddingStart="18dp"
+                    android:paddingEnd="10dp" />
 
-                <!-- Latest -->
                 <RelativeLayout
                     android:id="@+id/rlLatestHeader"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_20px"
-                    android:layout_marginBottom="@dimen/_10px">
+                    android:layout_marginTop="24dp"
+                    android:layout_marginBottom="12dp"
+                    android:paddingStart="18dp"
+                    android:paddingEnd="18dp">
 
                     <TextView
                         android:id="@+id/tvHomeLatestBook"
-                        style="@style/txt_InterBold"
+                        style="@style/txt_OpenSansRomanExtraBold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/_16px"
                         android:layout_toStartOf="@+id/tvSeeAllLatest"
                         android:ellipsize="end"
                         android:singleLine="true"
                         android:text="@string/lbl_latest_books"
-                        android:textColor="@color/home_title"
+                        android:textColor="@color/authx_text"
                         android:textSize="@dimen/_18sp" />
 
                     <TextView
@@ -1099,12 +1159,14 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginEnd="@dimen/_16px"
-                        android:background="?attr/selectableItemBackground"
-                        android:padding="@dimen/_4px"
+                        android:background="@drawable/bg_authx_coral_soft"
+                        android:paddingStart="12dp"
+                        android:paddingTop="5dp"
+                        android:paddingEnd="12dp"
+                        android:paddingBottom="5dp"
                         android:text="@string/lbl_view_all"
-                        android:textColor="@color/app_bg_orange"
-                        android:textSize="@dimen/_13sp" />
+                        android:textColor="@color/authx_coral"
+                        android:textSize="@dimen/_12sp" />
                 </RelativeLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -1113,30 +1175,30 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clipToPadding="false"
-                    android:paddingStart="@dimen/_16px"
-                    android:paddingEnd="@dimen/_10px" />
+                    android:paddingStart="18dp"
+                    android:paddingEnd="10dp" />
 
-                <!-- Community (reels) -->
                 <RelativeLayout
                     android:id="@+id/rlFeedHeader"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_20px"
-                    android:layout_marginBottom="@dimen/_10px">
+                    android:layout_marginTop="24dp"
+                    android:layout_marginBottom="12dp"
+                    android:paddingStart="18dp"
+                    android:paddingEnd="18dp">
 
                     <TextView
                         android:id="@+id/tvHomeFeed"
-                        style="@style/txt_InterBold"
+                        style="@style/txt_OpenSansRomanExtraBold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/_16px"
                         android:layout_toStartOf="@+id/tvSeeAllFeed"
                         android:ellipsize="end"
                         android:singleLine="true"
                         android:text="@string/lbl_from_community"
-                        android:textColor="@color/home_title"
+                        android:textColor="@color/authx_text"
                         android:textSize="@dimen/_18sp" />
 
                     <TextView
@@ -1146,12 +1208,14 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginEnd="@dimen/_16px"
-                        android:background="?attr/selectableItemBackground"
-                        android:padding="@dimen/_4px"
+                        android:background="@drawable/bg_authx_coral_soft"
+                        android:paddingStart="12dp"
+                        android:paddingTop="5dp"
+                        android:paddingEnd="12dp"
+                        android:paddingBottom="5dp"
                         android:text="@string/lbl_view_all"
-                        android:textColor="@color/app_bg_orange"
-                        android:textSize="@dimen/_13sp" />
+                        android:textColor="@color/authx_coral"
+                        android:textSize="@dimen/_12sp" />
                 </RelativeLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -1159,10 +1223,9 @@
                     style="@style/groupStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/_10px"
                     android:clipToPadding="false"
-                    android:paddingStart="@dimen/_16px"
-                    android:paddingEnd="@dimen/_10px" />
+                    android:paddingStart="18dp"
+                    android:paddingEnd="10dp" />
 
                 <!-- Server-driven sections -->
                 <androidx.recyclerview.widget.RecyclerView
