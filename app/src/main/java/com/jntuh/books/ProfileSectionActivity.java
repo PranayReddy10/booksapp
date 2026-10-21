@@ -43,7 +43,7 @@ public class ProfileSectionActivity extends AppCompatActivity {
         if (section == null) section = SECTION_RESULTS;
 
         binding.tvSectionTitle.setText(getString(titleFor(section)));
-        if (SECTION_RESULTS.equals(section)) usePagePalette();
+        if (SECTION_RESULTS.equals(section) || SECTION_CONTINUE.equals(section)) usePagePalette();
         binding.ivSectionBack.setOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
 
         if (savedInstanceState == null) {
@@ -53,7 +53,7 @@ public class ProfileSectionActivity extends AppCompatActivity {
         }
     }
 
-    /** My Results draws its own cards, on the auth page colour below the bar. */
+    /** Sections drawn in the new card style sit on the auth page colour. */
     private void usePagePalette() {
         binding.llSectionRoot.setBackgroundColor(
                 androidx.core.content.ContextCompat.getColor(this, R.color.authx_page));
