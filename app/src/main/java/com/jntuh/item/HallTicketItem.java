@@ -26,6 +26,14 @@ public class HallTicketItem implements Serializable {
     @SerializedName("college_code")
     private String college_code;
 
+    /** The college as the app lists it, matched by college code; may be empty. */
+    @SerializedName("college_name")
+    private String college_name;
+
+    /** The department as the app lists it, matched from the branch; may be empty. */
+    @SerializedName("department_name")
+    private String department_name;
+
     @SerializedName("branch")
     private String branch;
 
@@ -62,6 +70,14 @@ public class HallTicketItem implements Serializable {
 
     public String getCollege_code() {
         return college_code;
+    }
+
+    public String getCollege_name() {
+        return college_name;
+    }
+
+    public String getDepartment_name() {
+        return department_name;
     }
 
     public String getBranch() {

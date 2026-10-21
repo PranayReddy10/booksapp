@@ -577,25 +577,66 @@
                     </RelativeLayout>
                 </LinearLayout>
 
-                <!-- Hall ticket: set once, then locked (results are keyed on it). -->
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/AuthxField"
+                <!-- Hall ticket: set once, then locked (results are keyed on it).
+                     While it is still empty, Look up fills the form from it. -->
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="18dp"
-                    android:hint="@string/lbl_roll_number"
-                    app:placeholderText="@string/result_hall_ticket_hint"
-                    app:startIconDrawable="@drawable/ic_reg_badge_id">
+                    android:gravity="bottom"
+                    android:orientation="horizontal">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/edtRoll"
-                        style="@style/AuthxFieldEdit"
-                        android:layout_width="match_parent"
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/AuthxField"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:importantForAutofill="no"
-                        android:inputType="textCapCharacters"
-                        android:maxLength="12" />
-                </com.google.android.material.textfield.TextInputLayout>
+                        android:layout_marginTop="0dp"
+                        android:layout_weight="1"
+                        android:hint="@string/lbl_roll_number"
+                        app:placeholderText="@string/result_hall_ticket_hint"
+                        app:startIconDrawable="@drawable/ic_reg_badge_id">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edtRoll"
+                            style="@style/AuthxFieldEdit"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:importantForAutofill="no"
+                            android:inputType="textCapCharacters"
+                            android:maxLength="12" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <TextView
+                        android:id="@+id/btnEpLookup"
+                        style="@style/txt_OpenSansRomanBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="56dp"
+                        android:layout_marginStart="10dp"
+                        android:background="@drawable/bg_authx_pill"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:text="@string/lbl_authx_lookup"
+                        android:textColor="@color/authx_coral"
+                        android:textSize="@dimen/_14sp"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvEpLookupStatus"
+                    style="@style/txtOpenSansRomanSemiBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/bg_authx_soft"
+                    android:lineSpacingExtra="2dp"
+                    android:padding="12dp"
+                    android:textColor="@color/authx_text"
+                    android:textSize="@dimen/_13sp"
+                    android:visibility="gone"
+                    tools:text="Details found. Check them and save." />
 
                 <TextView
                     android:id="@+id/tvRollLockedNote"

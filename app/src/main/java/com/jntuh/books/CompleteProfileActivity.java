@@ -422,7 +422,9 @@ public class CompleteProfileActivity extends AppCompatActivity {
                 lookedUpRoll = roll;
                 fetchedRegulation = item.getRegulation() == null ? "" : item.getRegulation().trim();
                 fetchedFather = item.getFather_name() == null ? "" : item.getFather_name().trim();
-                selectDepartmentByName(item.getBranch());
+                String department = item.getDepartment_name();
+                selectDepartmentByName(department == null || department.trim().isEmpty() ? item.getBranch() : department);
+                selectCollegeByName(item.getCollege_name());
                 setFetchStatus(getString(R.string.msg_reg_lookup_ok));
             }
 
@@ -443,6 +445,19 @@ public class CompleteProfileActivity extends AppCompatActivity {
             String name = departmentFiltered.get(i).getDepartment_name();
             if (name != null && name.trim().equalsIgnoreCase(branch.trim())) {
                 binding.spDepartment.setSelection(i + 1);
+                return;
+            }
+        }
+    }
+
+    /** Pre-select the fetched college, unless one is already chosen. */
+    private void selectCollegeByName(String college) {
+        if (college == null || college.trim().isEmpty()) return;
+        if (binding.spCollege.getSelectedItemPosition() > 0) return;
+        for (int i = 0; i < collegeList.size(); i++) {
+            String name = collegeList.get(i).getCollege_name();
+            if (name != null && name.trim().equalsIgnoreCase(college.trim())) {
+                binding.spCollege.setSelection(i + 1);
                 return;
             }
         }

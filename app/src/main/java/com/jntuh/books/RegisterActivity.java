@@ -67,7 +67,7 @@ public class RegisterActivity extends AppCompatActivity {
     private static final long LOOKUP_RETRY_MS = 5000L;
     /** Values the lookup put on step 4, so a different hall ticket can replace them. */
     private String autoName = "", autoFather = "", autoRegulation = "";
-    private boolean autoDepartment;
+    private boolean autoDepartment, autoCollege;
     private final android.os.Handler lookupRetry =
             new android.os.Handler(android.os.Looper.getMainLooper());
 
@@ -661,7 +661,10 @@ public class RegisterActivity extends AppCompatActivity {
         autoName = fillFromLookup(viewRegisterBinding.edtRegName, item.getStudent_name(), autoName);
         autoFather = fillFromLookup(viewRegisterBinding.edtRegFather, item.getFather_name(), autoFather);
         autoRegulation = fillFromLookup(viewRegisterBinding.edtRegRegulation, item.getRegulation(), autoRegulation);
-        selectDepartmentByName(item.getBranch());
+        // The server matches the branch to our department list; fall back to the raw branch.
+        String department = item.getDepartment_name();
+        selectDepartmentByName(department == null || department.trim().isEmpty() ? item.getBranch() : department);
+        selectCollegeByName(item.getCollege_name());
     }
 
     /**
@@ -694,6 +697,20 @@ public class RegisterActivity extends AppCompatActivity {
             if (name != null && name.trim().equalsIgnoreCase(wanted)) {
                 viewRegisterBinding.spRegDepartment.setSelection(i + 1);   // 0 is the placeholder
                 autoDepartment = true;
+                return;
+            }
+        }
+    }
+
+    /** Pre-select the fetched college, unless the student already chose one. */
+    private void selectCollegeByName(String college) {
+        if (college == null || college.trim().isEmpty()) return;
+        if (viewRegisterBinding.spRegCollege.getSelectedItemPosition() > 0 && !autoCollege) return;
+        for (int i = 0; i < collegeList.size(); i++) {
+            String name = collegeList.get(i).getCollege_name();
+            if (name != null && name.trim().equalsIgnoreCase(college.trim())) {
+                viewRegisterBinding.spRegCollege.setSelection(i + 1);   // 0 is the placeholder
+                autoCollege = true;
                 return;
             }
         }
