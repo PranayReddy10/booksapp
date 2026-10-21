@@ -58,7 +58,7 @@ public class ShopCategoryAdapter extends RecyclerView.Adapter<ShopCategoryAdapte
         holder.binding.tvChip.setBackgroundResource(
                 selected ? R.drawable.bg_shop_chip_selected : R.drawable.bg_shop_chip_normal);
         holder.binding.tvChip.setTextColor(ContextCompat.getColor(activity,
-                selected ? R.color.white : R.color.gray));
+                selected ? R.color.white : R.color.authx_text));
 
         holder.binding.tvChip.setOnClickListener(v -> {
             if (listener != null) listener.onCategoryClick(c, holder.getAdapterPosition());

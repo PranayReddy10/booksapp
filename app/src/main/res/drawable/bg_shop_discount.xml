@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Discount badge on a product image. -->
 <shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
-    <solid android:color="#E53935" />
-    <corners android:radius="6dp" />
+    <gradient android:angle="0" android:endColor="@color/authx_coral_end"
+        android:startColor="@color/authx_coral" android:type="linear" />
+    <corners android:radius="10dp" />
 </shape>

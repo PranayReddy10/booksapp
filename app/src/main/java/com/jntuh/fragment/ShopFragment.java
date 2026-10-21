@@ -67,7 +67,8 @@ public class ShopFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentShopBinding.inflate(inflater, container, false);
-        StatusBarUtil.setStatusBar(requireActivity(), "");
+        // Navy header, so the navy status bar with white icons.
+        StatusBarUtil.setStatusBar(requireActivity(), "profile");
         method = new Method(requireActivity());
 
         // Category chips (horizontal).

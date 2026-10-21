@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Shop category chip, selected. -->
 <shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
-    <solid android:color="@color/app_bg_orange" />
+    <gradient android:angle="0" android:endColor="@color/authx_coral_end"
+        android:startColor="@color/authx_coral" android:type="linear" />
     <corners android:radius="20dp" />
 </shape>

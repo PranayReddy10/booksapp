@@ -862,4 +862,5 @@
     <string name="lbl_ub_link">Book link</string>
     <string name="lbl_ep_lookup_ok">Details found and filled in. Change anything you like, then save.</string>
     <string name="lbl_ep_lookup_queued">Still looking. Tap Look up again in a moment.</string>
+    <string name="lbl_shop_sub">Custom gifts, mugs and more from MadeForU</string>
 </resources>
