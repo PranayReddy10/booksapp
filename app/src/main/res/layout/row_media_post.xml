@@ -87,7 +87,7 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/tvCollege"
+                android:id="@+id/tvUniversity"
                 style="@style/txtOpenSansRomanSemiBold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -96,7 +96,7 @@
                 android:textColor="@color/authx_text_muted"
                 android:textSize="@dimen/_12sp"
                 android:visibility="gone"
-                tools:text="JNTUH College of Engineering"
+                tools:text="JNTU Hyderabad"
                 tools:visibility="visible" />
 
             <!-- ===== Words ===== -->

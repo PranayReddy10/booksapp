@@ -39,7 +39,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
- * Full-screen vertical feed (one post per screen). Reached three ways:
+ * Full-screen vertical feed of photo and video posts (one per screen). Text posts
+ * never appear here: they are read in the timeline and open their replies instead.
+ * Reached three ways:
  *  - from the Explore grid via {@link MediaFeedHandoff} (opens focused on a tile),
  *  - from a notification / deep link via {@link #EXTRA_POST_ID} (loads that post first),
  *  - standalone (loads page 1).
@@ -169,12 +171,16 @@ public class MediaFeedActivity extends AppCompatActivity implements MediaFeedAda
     }
 
     private void consumeHandoff() {
-        feed.addAll(MediaFeedHandoff.getItems());
+        List<MediaItem> handed = MediaFeedHandoff.getItems();
+        int handedStart = MediaFeedHandoff.getStartPosition();
+        MediaItem startItem = (handedStart >= 0 && handedStart < handed.size())
+                ? handed.get(handedStart) : null;
+        feed.addAll(mediaOnly(handed));
         pageIndex = MediaFeedHandoff.getPageIndex();
         totalPages = MediaFeedHandoff.getTotalPages();
         mediaTypeFilter = MediaFeedHandoff.getMediaTypeFilter();
-        int start = MediaFeedHandoff.getStartPosition();
         MediaFeedHandoff.clear();
+        int start = Math.max(0, feed.indexOf(startItem));
 
         binding.progressFeed.setVisibility(View.GONE);
         adapter.notifyDataSetChanged();
@@ -230,12 +236,19 @@ public class MediaFeedActivity extends AppCompatActivity implements MediaFeedAda
                             if (body != null && "1".equals(body.getSuccess())) {
                                 totalPages = Math.max(body.getTotal_pages(), 1);
                                 int startCount = feed.size();
-                                if (body.getMediaItems() != null) feed.addAll(body.getMediaItems());
+                                if (body.getMediaItems() != null) feed.addAll(mediaOnly(body.getMediaItems()));
                                 if (startCount == 0) {
                                     adapter.notifyDataSetChanged();
                                     binding.rvFeed.post(MediaFeedActivity.this::onSettledOnPage);
                                 } else {
                                     adapter.notifyItemRangeInserted(startCount, feed.size() - startCount);
+                                }
+                                // A page of only text posts adds nothing to scroll into,
+                                // so fetch the next one straight away.
+                                if (feed.size() - startCount < 2 && pageIndex < totalPages) {
+                                    pageIndex++;
+                                    loadFeed(false);
+                                    return;
                                 }
                             }
                             binding.tvNoFeed.setVisibility(feed.isEmpty() ? View.VISIBLE : View.GONE);
@@ -271,9 +284,17 @@ public class MediaFeedActivity extends AppCompatActivity implements MediaFeedAda
                         try {
                             MediaFeedRP body = response.body();
                             if (body != null && "1".equals(body.getSuccess()) && body.getMediaItems() != null) {
+                                // A text post has nothing to view full screen: open its replies.
+                                for (MediaItem it : body.getMediaItems()) {
+                                    if (focusPostId.equals(it.getPost_id()) && !hasMedia(it)) {
+                                        onComment(it, -1);
+                                        finish();
+                                        return;
+                                    }
+                                }
                                 totalPages = Math.max(body.getTotal_pages(), 1);
                                 pageIndex = 1;
-                                feed.addAll(body.getMediaItems());
+                                feed.addAll(mediaOnly(body.getMediaItems()));
                                 adapter.notifyDataSetChanged();
                                 int idx = indexOfPost(focusPostId);
                                 if (idx >= 0) {
@@ -293,6 +314,24 @@ public class MediaFeedActivity extends AppCompatActivity implements MediaFeedAda
                         binding.progressFeed.setVisibility(View.GONE);
                     }
                 });
+    }
+
+    /** Photo and video posts only; text posts stay in the timeline. */
+    public static boolean hasMedia(MediaItem item) {
+        String type = item.getMedia_type();
+        String url = item.getFile_url();
+        return ("photo".equalsIgnoreCase(type) || "image".equalsIgnoreCase(type)
+                || "video".equalsIgnoreCase(type))
+                && url != null && !url.trim().isEmpty();
+    }
+
+    private static List<MediaItem> mediaOnly(List<MediaItem> in) {
+        List<MediaItem> out = new ArrayList<>();
+        if (in == null) return out;
+        for (MediaItem it : in) {
+            if (hasMedia(it)) out.add(it);
+        }
+        return out;
     }
 
     private int indexOfPost(String postId) {

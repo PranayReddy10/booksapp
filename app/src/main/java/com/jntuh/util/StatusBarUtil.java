@@ -25,6 +25,8 @@ public class StatusBarUtil {
             background = ContextCompat.getDrawable(activity, R.drawable.status_bar_profile);
         } else if(activityName.equalsIgnoreCase("payment")) {
             background = ContextCompat.getDrawable(activity, R.drawable.status_bar_ppayment);
+        } else if(activityName.equalsIgnoreCase("compose")) {
+            background = ContextCompat.getDrawable(activity, R.drawable.status_bar_compose);
         } else {
             background = ContextCompat.getDrawable(activity, R.drawable.status_bar_login);
         }

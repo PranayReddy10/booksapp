@@ -141,6 +141,17 @@ public class MediaUploadActivity extends AppCompatActivity {
         });
 
         binding.btnSubmitMedia.setOnClickListener(v -> validateAndSubmit());
+
+        // Running character count in the toolbar, like the timeline composer.
+        binding.edtDescription.addTextChangedListener(new android.text.TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence c, int a, int b, int d) {}
+            @Override public void onTextChanged(CharSequence c, int a, int b, int d) {}
+            @Override public void afterTextChanged(android.text.Editable e) {
+                binding.tvCharCount.setText(String.valueOf(e.length()));
+            }
+        });
+        binding.tvCharCount.setText(String.valueOf(binding.edtDescription.length()));
+        binding.edtDescription.requestFocus();
     }
 
     @Override

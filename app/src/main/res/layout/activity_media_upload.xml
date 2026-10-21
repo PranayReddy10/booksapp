@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Composer: write first, then choose what kind of post it is. Text needs
-     nothing else; Photo and Video open the attachment strip. -->
+<!-- Composer, timeline style: close on the left and a Post pill on the right, the
+     author's avatar beside a large writing area, attachments under the words, and a
+     toolbar along the bottom to switch between text, photo and video. -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/authx_page">
+    android:background="@color/authx_card">
 
-    <!-- ===== Header ===== -->
+    <!-- ===== Top bar: close · Post ===== -->
     <RelativeLayout
         android:id="@+id/composeBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:background="@drawable/bg_authx_header"
-        android:paddingStart="18dp"
-        android:paddingTop="14dp"
-        android:paddingEnd="18dp"
-        android:paddingBottom="22dp">
+        android:paddingStart="8dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="8dp">
 
         <ImageView
             android:id="@+id/ivComposeClose"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:background="@drawable/bg_authx_glass"
-            android:padding="10dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="11dp"
             android:src="@drawable/ic_compose_close"
-            app:tint="@color/authx_on_header"
+            app:tint="@color/authx_text"
             tools:ignore="ContentDescription" />
 
         <TextView
@@ -37,280 +37,305 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginStart="14dp"
+            android:layout_marginStart="6dp"
             android:layout_toEndOf="@+id/ivComposeClose"
             android:text="@string/lbl_new_post"
-            android:textColor="@color/authx_on_header"
-            android:textSize="@dimen/_20sp" />
+            android:textColor="@color/authx_text"
+            android:textSize="@dimen/_17sp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnSubmitMedia"
+            style="@style/txtOpenSansRomanBold"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/bg_authx_pill_cta"
+            android:minWidth="76dp"
+            android:paddingStart="18dp"
+            android:paddingEnd="18dp"
+            android:stateListAnimator="@null"
+            android:text="@string/lbl_post_action"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14sp" />
     </RelativeLayout>
 
-    <!-- ===== Post action ===== -->
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnSubmitMedia"
-        style="@style/txtOpenSansRomanBold"
+    <!-- ===== Bottom toolbar: who sees it, then text / photo / video ===== -->
+    <LinearLayout
+        android:id="@+id/composeTools"
         android:layout_width="match_parent"
-        android:layout_height="54dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="18dp"
-        android:layout_marginEnd="18dp"
-        android:layout_marginBottom="18dp"
-        android:background="@drawable/bg_authx_cta"
-        android:elevation="4dp"
-        android:gravity="center"
-        android:singleLine="true"
-        android:stateListAnimator="@null"
-        android:text="@string/lbl_post_action"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_16sp" />
+        android:background="@color/authx_card"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/txt_OpenSansRomanBold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_feed_comment_outline"
+            android:drawablePadding="8dp"
+            android:gravity="center_vertical"
+            android:paddingStart="16dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="10dp"
+            android:text="@string/msg_compose_audience"
+            android:textColor="@color/authx_coral"
+            android:textSize="@dimen/_13sp"
+            app:drawableTint="@color/authx_coral" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@drawable/bg_authx_divider" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="10dp"
+            android:paddingTop="6dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="6dp">
+
+            <RadioGroup
+                android:id="@+id/rgMediaType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rbText"
+                    style="@style/txt_OpenSansRomanBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="38dp"
+                    android:background="@drawable/bg_compose_tool"
+                    android:button="@null"
+                    android:checked="true"
+                    android:drawableStart="@drawable/ic_feed_comment_outline"
+                    android:drawablePadding="6dp"
+                    android:gravity="center"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="14dp"
+                    android:text="@string/lbl_post_text"
+                    android:textColor="@color/compose_tool_text"
+                    android:textSize="@dimen/_13sp"
+                    app:drawableTint="@color/compose_tool_text" />
+
+                <RadioButton
+                    android:id="@+id/rbPhoto"
+                    style="@style/txt_OpenSansRomanBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="38dp"
+                    android:layout_marginStart="4dp"
+                    android:background="@drawable/bg_compose_tool"
+                    android:button="@null"
+                    android:drawableStart="@drawable/ic_compose_photo"
+                    android:drawablePadding="6dp"
+                    android:gravity="center"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="14dp"
+                    android:text="@string/lbl_photo"
+                    android:textColor="@color/compose_tool_text"
+                    android:textSize="@dimen/_13sp"
+                    app:drawableTint="@color/compose_tool_text" />
+
+                <RadioButton
+                    android:id="@+id/rbVideo"
+                    style="@style/txt_OpenSansRomanBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="38dp"
+                    android:layout_marginStart="4dp"
+                    android:background="@drawable/bg_compose_tool"
+                    android:button="@null"
+                    android:drawableStart="@drawable/ic_compose_video"
+                    android:drawablePadding="6dp"
+                    android:gravity="center"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="14dp"
+                    android:text="@string/lbl_video"
+                    android:textColor="@color/compose_tool_text"
+                    android:textSize="@dimen/_13sp"
+                    app:drawableTint="@color/compose_tool_text" />
+            </RadioGroup>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/tvCharCount"
+                style="@style/txtOpenSansRomanSemiBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/authx_text_muted"
+                android:textSize="@dimen/_12sp"
+                tools:text="0" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/composeBarDivider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/composeBar"
+        android:background="@drawable/bg_authx_divider" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/btnSubmitMedia"
-        android:layout_below="@+id/composeBar"
+        android:layout_above="@+id/composeTools"
+        android:layout_below="@+id/composeBarDivider"
         android:clipToPadding="false"
         android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingStart="18dp"
-            android:paddingTop="16dp"
-            android:paddingEnd="18dp"
+            android:orientation="horizontal"
+            android:paddingStart="16dp"
+            android:paddingTop="14dp"
+            android:paddingEnd="16dp"
             android:paddingBottom="16dp">
 
-            <!-- Author + body -->
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/ivComposeAvatar"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:background="@color/authx_soft"
+                android:scaleType="centerCrop"
+                android:src="@drawable/img_user"
+                app:shapeAppearanceOverlay="@style/CircleImage"
+                tools:ignore="ContentDescription" />
+
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_authx_card"
-                android:elevation="4dp"
-                android:orientation="vertical"
-                android:padding="16dp">
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <com.google.android.material.imageview.ShapeableImageView
-                        android:id="@+id/ivComposeAvatar"
-                        android:layout_width="44dp"
-                        android:layout_height="44dp"
-                        android:background="@color/authx_soft"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/img_user"
-                        app:shapeAppearanceOverlay="@style/CircleImage"
-                        tools:ignore="ContentDescription" />
-
-                    <EditText
-                        android:id="@+id/edtDescription"
-                        style="@style/txt_PoppinsMedium"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
-                        android:background="@android:color/transparent"
-                        android:gravity="top"
-                        android:hint="@string/hint_compose_body"
-                        android:inputType="textMultiLine|textCapSentences"
-                        android:minLines="5"
-                        android:paddingTop="8dp"
-                        android:textColor="@color/authx_text"
-                        android:textColorHint="@color/authx_text_muted"
-                        android:textCursorDrawable="@drawable/cursor"
-                        android:textSize="@dimen/_17sp"
-                        tools:ignore="Autofill" />
-                </LinearLayout>
-
-                <!-- Optional headline -->
+                <!-- Optional headline, shown bold above the words in the feed -->
                 <EditText
                     android:id="@+id/edtTitle"
-                    style="@style/txt_PoppinsMedium"
+                    style="@style/txt_OpenSansRomanBold"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:background="@drawable/bg_authx_soft"
-                    android:ellipsize="end"
+                    android:background="@android:color/transparent"
                     android:hint="@string/hint_compose_title"
                     android:inputType="textCapSentences"
-                    android:paddingStart="14dp"
-                    android:paddingTop="12dp"
-                    android:paddingEnd="14dp"
-                    android:paddingBottom="12dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="4dp"
                     android:singleLine="true"
                     android:textColor="@color/authx_text"
                     android:textColorHint="@color/authx_text_muted"
                     android:textCursorDrawable="@drawable/cursor"
-                    android:textSize="@dimen/_15sp"
+                    android:textSize="@dimen/_16sp"
                     tools:ignore="Autofill" />
-            </LinearLayout>
 
-            <!-- Post type -->
-            <TextView
-                style="@style/AuthxLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="@string/lbl_post_type" />
-
-            <RadioGroup
-                android:id="@+id/rgMediaType"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/bg_authx_soft"
-                android:orientation="horizontal"
-                android:padding="4dp">
-
-                    <RadioButton
-                        android:id="@+id/rbText"
-                        style="@style/txt_OpenSansRomanBold"
-                        android:layout_width="0dp"
-                        android:layout_height="44dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/bg_authx_seg_tab_coral"
-                        android:button="@null"
-                        android:drawableStart="@drawable/ic_feed_comment_outline"
-                        android:drawablePadding="6dp"
-                        android:gravity="center"
-                        android:paddingStart="14dp"
-                        android:paddingEnd="14dp"
-                        android:text="@string/lbl_post_text"
-                        android:textColor="@color/authx_seg_text_on_coral"
-                        android:textSize="@dimen/_14sp"
-                        app:drawableTint="@color/authx_seg_text_on_coral" />
-
-                    <RadioButton
-                        android:id="@+id/rbPhoto"
-                        style="@style/txt_OpenSansRomanBold"
-                        android:layout_width="0dp"
-                        android:layout_height="44dp"
-                        android:layout_weight="1"
-                        android:layout_marginStart="4dp"
-                        android:background="@drawable/bg_authx_seg_tab_coral"
-                        android:button="@null"
-                        android:drawableStart="@drawable/ic_compose_photo"
-                        android:drawablePadding="6dp"
-                        android:gravity="center"
-                        android:paddingStart="14dp"
-                        android:paddingEnd="14dp"
-                        android:text="@string/lbl_photo"
-                        android:textColor="@color/authx_seg_text_on_coral"
-                        android:textSize="@dimen/_14sp"
-                        app:drawableTint="@color/authx_seg_text_on_coral" />
-
-                    <RadioButton
-                        android:id="@+id/rbVideo"
-                        style="@style/txt_OpenSansRomanBold"
-                        android:layout_width="0dp"
-                        android:layout_height="44dp"
-                        android:layout_weight="1"
-                        android:layout_marginStart="4dp"
-                        android:background="@drawable/bg_authx_seg_tab_coral"
-                        android:button="@null"
-                        android:drawableStart="@drawable/ic_compose_video"
-                        android:drawablePadding="6dp"
-                        android:gravity="center"
-                        android:paddingStart="14dp"
-                        android:paddingEnd="14dp"
-                        android:text="@string/lbl_video"
-                        android:textColor="@color/authx_seg_text_on_coral"
-                        android:textSize="@dimen/_14sp"
-                        app:drawableTint="@color/authx_seg_text_on_coral" />
-
-            </RadioGroup>
-
-            <!-- Text post: nothing to attach -->
-            <TextView
-                android:id="@+id/tvTextOnlyNote"
-                style="@style/txtOpenSansRomanSemiBold"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:background="@drawable/bg_authx_coral_soft"
-                android:padding="14dp"
-                android:text="@string/msg_post_text_only"
-                android:textColor="@color/authx_text"
-                android:textSize="@dimen/_13sp" />
-
-            <!-- Photo / video: the attachment strip -->
-            <LinearLayout
-                android:id="@+id/llAttach"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="gone"
-                tools:visibility="visible">
-
-                <TextView
-                    style="@style/AuthxLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/lbl_post_attach" />
-
-                <HorizontalScrollView
+                <EditText
+                    android:id="@+id/edtDescription"
+                    style="@style/txt_PoppinsMedium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:scrollbars="none">
+                    android:background="@android:color/transparent"
+                    android:gravity="top"
+                    android:hint="@string/hint_compose_body"
+                    android:inputType="textMultiLine|textCapSentences"
+                    android:minLines="4"
+                    android:paddingTop="4dp"
+                    android:textColor="@color/authx_text"
+                    android:textColorHint="@color/authx_text_muted"
+                    android:textCursorDrawable="@drawable/cursor"
+                    android:textSize="@dimen/_18sp"
+                    tools:ignore="Autofill" />
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:id="@+id/llMediaStrip"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal" />
-
-                        <FrameLayout
-                            android:id="@+id/btnPickMedia"
-                            android:layout_width="92dp"
-                            android:layout_height="92dp"
-                            android:layout_marginStart="4dp"
-                            android:background="@drawable/bg_authx_dashed"
-                            android:clickable="true"
-                            android:focusable="true">
-
-                            <ImageView
-                                android:layout_width="28dp"
-                                android:layout_height="28dp"
-                                android:layout_gravity="center"
-                                android:src="@drawable/ic_result_add"
-                                app:tint="@color/authx_coral"
-                                tools:ignore="ContentDescription" />
-                        </FrameLayout>
-                    </LinearLayout>
-                </HorizontalScrollView>
-
+                <!-- Text post: nothing to attach -->
                 <TextView
-                    android:id="@+id/tvMediaName"
-                    style="@style/txtOpenSansRomanSemiBold"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:ellipsize="middle"
-                    android:singleLine="true"
-                    android:textColor="@color/authx_text_muted"
-                    android:textSize="@dimen/_12sp"
-                    android:visibility="gone"
-                    tools:text="photo_1234.jpg"
-                    tools:visibility="visible" />
-
-                <TextView
+                    android:id="@+id/tvTextOnlyNote"
                     style="@style/txtOpenSansRomanSemiBold"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="@string/msg_text_post_hint"
+                    android:text="@string/msg_post_text_only"
                     android:textColor="@color/authx_text_muted"
                     android:textSize="@dimen/_12sp" />
+
+                <!-- Photo / video: the attachment strip -->
+                <LinearLayout
+                    android:id="@+id/llAttach"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    tools:visibility="visible">
+
+                    <HorizontalScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:scrollbars="none">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:id="@+id/llMediaStrip"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal" />
+
+                            <FrameLayout
+                                android:id="@+id/btnPickMedia"
+                                android:layout_width="88dp"
+                                android:layout_height="88dp"
+                                android:layout_marginStart="4dp"
+                                android:layout_marginTop="8dp"
+                                android:background="@drawable/bg_authx_dashed"
+                                android:clickable="true"
+                                android:focusable="true">
+
+                                <ImageView
+                                    android:layout_width="28dp"
+                                    android:layout_height="28dp"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/ic_result_add"
+                                    app:tint="@color/authx_coral"
+                                    tools:ignore="ContentDescription" />
+                            </FrameLayout>
+                        </LinearLayout>
+                    </HorizontalScrollView>
+
+                    <TextView
+                        android:id="@+id/tvMediaName"
+                        style="@style/txtOpenSansRomanSemiBold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:ellipsize="middle"
+                        android:singleLine="true"
+                        android:textColor="@color/authx_text_muted"
+                        android:textSize="@dimen/_12sp"
+                        android:visibility="gone"
+                        tools:text="photo_1234.jpg"
+                        tools:visibility="visible" />
+
+                    <TextView
+                        style="@style/txtOpenSansRomanSemiBold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/msg_text_post_hint"
+                        android:textColor="@color/authx_text_muted"
+                        android:textSize="@dimen/_12sp" />
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
