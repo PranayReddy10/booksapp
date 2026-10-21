@@ -75,7 +75,8 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
 
-        StatusBarUtil.setStatusBar(requireActivity(), "home");
+        // Navy header, so the navy status bar with white icons.
+        StatusBarUtil.setStatusBar(requireActivity(), "profile");
 
         viewHome = FragmentHomeBinding.inflate(inflater, container, false);
         method = new Method(requireActivity());

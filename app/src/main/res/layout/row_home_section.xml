@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -9,10 +10,10 @@
         android:id="@+id/rlHome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_10px"
-        android:layout_marginTop="@dimen/_20px"
-        android:layout_marginEnd="@dimen/_10px"
-        android:layout_marginBottom="@dimen/_10px">
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="18dp"
+        android:layout_marginBottom="12dp">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -24,27 +25,28 @@
 
             <TextView
                 android:id="@+id/tvHomeTitle"
-                style="@style/txt_InterBold"
+                style="@style/txt_OpenSansRomanExtraBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:singleLine="true"
                 android:text="@string/app_name"
-                android:textColor="@color/gray_2"
-                android:textSize="@dimen/_19sp"
+                android:textColor="@color/authx_text"
+                android:textSize="@dimen/_18sp"
                 tools:text="@string/app_name" />
         </LinearLayout>
 
         <ImageView
             android:id="@+id/ivHomeMore"
-            android:layout_width="17dp"
-            android:layout_height="13dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:scaleType="fitXY"
-            android:src="@drawable/img_arrow_home_deep_orange"
-            tools:ignore="ContentDescription"
-            tools:src="@drawable/img_arrow_home_deep_orange" />
+            android:background="@drawable/bg_authx_circle_soft"
+            android:padding="8dp"
+            android:src="@drawable/ic_home_chevron"
+            app:tint="@color/authx_coral"
+            tools:ignore="ContentDescription" />
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -54,6 +56,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/rlHome"
         android:clipToPadding="false"
-        android:paddingStart="@dimen/_10px"
-        android:paddingEnd="@dimen/_10px" />
+        android:paddingStart="18dp"
+        android:paddingEnd="10dp" />
 </RelativeLayout>
