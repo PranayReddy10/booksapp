@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Coral "change photo" badge on the avatar, ringed in white to lift it off the photo. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="oval">
+    <solid android:color="@color/authx_coral" />
+    <stroke android:width="2dp" android:color="@color/white" />
+</shape>

@@ -172,10 +172,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
     /** Fill every field from whatever profile data we ended up with. */
     private void populateProfile() {
-        viewEditProfile.toolbarMain.tvToolbarTitle.setText(getString(R.string.profile_edt_title));
-        viewEditProfile.toolbarMain.ivSearch.setVisibility(View.GONE);
-        viewEditProfile.toolbarMain.imageFilter.setVisibility(View.GONE);
-        viewEditProfile.toolbarMain.imageArrowBack.setOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
+        viewEditProfile.btnEditBack.setOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
 
         Glide.with(EditProfileActivity.this.getApplicationContext()).load(uImage)
                 .placeholder(R.drawable.user_profile)
@@ -207,7 +204,7 @@ public class EditProfileActivity extends AppCompatActivity {
         viewEditProfile.edtRoll.setFocusable(!rollLocked);
         viewEditProfile.edtRoll.setFocusableInTouchMode(!rollLocked);
         viewEditProfile.edtRoll.setTextColor(androidx.core.content.ContextCompat.getColor(
-                this, rollLocked ? R.color.gray_trans_99 : R.color.gray));
+                this, rollLocked ? R.color.authx_text_muted : R.color.authx_text));
         viewEditProfile.tvRollLockedNote.setVisibility(rollLocked ? View.VISIBLE : View.GONE);
         setupAcademicSpinner(viewEditProfile.spProfileRegulation, viewEditProfile.edtRegulationOther,
                 R.array.result_regulation_entries, uRegulation);
@@ -250,15 +247,18 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private void setupCascadeSpinners() {
         universityNames.add(getString(R.string.lbl_select_university));
-        universityAdapter = new ArrayAdapter<>(this, R.layout.row_spinner_item, universityNames);
+        universityAdapter = new ArrayAdapter<>(this, R.layout.row_spinner_item_light, universityNames);
+        universityAdapter.setDropDownViewResource(R.layout.row_spinner_dropdown_item);
         viewEditProfile.spEditUniversity.setAdapter(universityAdapter);
 
         departmentNames.add(getString(R.string.lbl_select_department));
-        departmentAdapter = new ArrayAdapter<>(this, R.layout.row_spinner_item, departmentNames);
+        departmentAdapter = new ArrayAdapter<>(this, R.layout.row_spinner_item_light, departmentNames);
+        departmentAdapter.setDropDownViewResource(R.layout.row_spinner_dropdown_item);
         viewEditProfile.spEditDepartment.setAdapter(departmentAdapter);
 
         collegeNames.add(getString(R.string.lbl_select_college));
-        collegeAdapter = new ArrayAdapter<>(this, R.layout.row_spinner_item, collegeNames);
+        collegeAdapter = new ArrayAdapter<>(this, R.layout.row_spinner_item_light, collegeNames);
+        collegeAdapter.setDropDownViewResource(R.layout.row_spinner_dropdown_item);
         viewEditProfile.spEditCollege.setAdapter(collegeAdapter);
 
         com.jntuh.util.SearchableSpinner.attach(viewEditProfile.spEditUniversity, getString(R.string.lbl_select_university));
@@ -407,7 +407,8 @@ public class EditProfileActivity extends AppCompatActivity {
     private void setupAcademicSpinner(Spinner spinner, EditText otherBox, int arrayRes, String current) {
         final java.util.List<String> items = new java.util.ArrayList<>();
         for (String s : getResources().getStringArray(arrayRes)) items.add(s);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.row_spinner_item, items);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.row_spinner_item_light, items);
+        adapter.setDropDownViewResource(R.layout.row_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
         final String othersLabel = items.get(items.size() - 1); // "Others"
