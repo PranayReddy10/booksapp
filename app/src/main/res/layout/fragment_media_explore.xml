@@ -32,7 +32,7 @@
                 style="@style/txt_OpenSansRomanExtraBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/lbl_feed"
+                android:text="@string/lbl_feed_title"
                 android:textColor="@color/authx_on_header"
                 android:textSize="@dimen/_24sp" />
 
@@ -177,9 +177,10 @@
             android:id="@+id/rvExplore"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:background="@color/authx_card"
             android:clipToPadding="false"
-            android:paddingTop="@dimen/_10px"
-            android:paddingBottom="@dimen/_12px" />
+            android:paddingBottom="16dp" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <ProgressBar
