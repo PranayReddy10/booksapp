@@ -228,6 +228,8 @@ public class UploadBookActivity extends AppCompatActivity {
 
     private void loadCategories() {
         JsonObject jsObj = (JsonObject) new Gson().toJsonTree(new API(UploadBookActivity.this));
+        // Every category, including ones with no books yet (browsing hides those).
+        jsObj.addProperty("all", 1);
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
         Call<CatRP> call = apiService.getAllCatData(API.toBase64(jsObj.toString()));
         call.enqueue(new Callback<CatRP>() {
