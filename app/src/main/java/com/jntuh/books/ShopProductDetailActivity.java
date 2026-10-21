@@ -62,10 +62,7 @@ public class ShopProductDetailActivity extends AppCompatActivity {
         buyUrl = getIntent().getStringExtra("buy_url");
         categoryId = getIntent().getStringExtra("category_id");
 
-        binding.toolbarMain.tvToolbarTitle.setText(getString(R.string.shop_title));
-        binding.toolbarMain.ivSearch.setVisibility(View.GONE);
-        binding.toolbarMain.imageFilter.setVisibility(View.GONE);
-        binding.toolbarMain.imageArrowBack.setOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
+        binding.btnShopBack.setOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
 
         binding.btnBuyNow.setOnClickListener(v -> openBuy());
         binding.btnBulkWhatsapp.setOnClickListener(v -> openWhatsAppBulk());
