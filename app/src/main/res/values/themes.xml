@@ -1,6 +1,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Theme.AndroidEBook_V16" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="spinnerStyle">@style/AuthxSpinner</item>
+        <item name="android:spinnerStyle">@style/AuthxSpinner</item>
         <!-- Primary brand color. -->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -307,5 +309,15 @@
     <style name="AuthxCoverShape" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">10dp</item>
+    </style>
+
+    <!-- Every dropdown: outlined box with a chevron, opening as a rounded card. -->
+    <style name="AuthxSpinner" parent="Widget.AppCompat.Spinner">
+        <item name="android:background">@drawable/bg_authx_spinner</item>
+        <item name="android:popupBackground">@drawable/bg_authx_popup</item>
+        <item name="android:dropDownVerticalOffset">6dp</item>
+        <item name="android:paddingStart">14dp</item>
+        <item name="android:paddingEnd">40dp</item>
+        <item name="android:minHeight">52dp</item>
     </style>
 </resources>

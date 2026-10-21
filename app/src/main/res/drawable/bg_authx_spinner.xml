@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- A closed dropdown: the outlined auth field with its chevron at the end. -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/bg_authx_outline" />
+    <item
+        android:width="20dp"
+        android:height="20dp"
+        android:end="14dp"
+        android:gravity="end|center_vertical"
+        android:drawable="@drawable/ic_authx_chevron_down" />
+</layer-list>

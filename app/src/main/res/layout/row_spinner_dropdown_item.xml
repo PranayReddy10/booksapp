@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Each row in the opened dropdown list. -->
+<!-- Each row in an opened dropdown list (on the rounded popup card). -->
 <CheckedTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="@dimen/_50px"
-    android:gravity="center_vertical"
-    android:paddingStart="@dimen/_20px"
-    android:paddingEnd="@dimen/_20px"
-    android:paddingTop="@dimen/_12px"
-    android:paddingBottom="@dimen/_12px"
-    android:background="@color/white"
+    android:background="@drawable/bg_authx_dropdown_row"
     android:ellipsize="end"
-    android:maxLines="1"
-    android:textColor="@color/gray"
-    android:textSize="@dimen/_15sp"
     android:fontFamily="@font/opensansromansemibold"
-    tools:ignore="RtlSymmetry"
-    xmlns:tools="http://schemas.android.com/tools" />
+    android:gravity="center_vertical"
+    android:maxLines="1"
+    android:minHeight="48dp"
+    android:paddingStart="16dp"
+    android:paddingTop="12dp"
+    android:paddingEnd="16dp"
+    android:paddingBottom="12dp"
+    android:textColor="@color/authx_text"
+    android:textSize="@dimen/_15sp"
+    tools:ignore="RtlSymmetry" />

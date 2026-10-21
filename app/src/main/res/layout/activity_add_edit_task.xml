@@ -295,8 +295,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="54dp"
                     android:layout_marginTop="10dp"
-                    android:background="@drawable/bg_task_field"
-                    android:paddingHorizontal="14dp" />
+                    android:background="@drawable/bg_authx_spinner"
+                    android:paddingStart="14dp"
+                    android:paddingEnd="40dp" />
 
                 <TextView
                     style="@style/txt_OpenSansRomanExtraBold"
@@ -312,8 +313,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="54dp"
                     android:layout_marginTop="10dp"
-                    android:background="@drawable/bg_task_field"
-                    android:paddingHorizontal="14dp" />
+                    android:background="@drawable/bg_authx_spinner"
+                    android:paddingStart="14dp"
+                    android:paddingEnd="40dp" />
 
                 <!-- Tone picker, alarm reminders only -->
                 <LinearLayout

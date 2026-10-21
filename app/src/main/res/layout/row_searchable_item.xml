@@ -22,8 +22,9 @@
         android:layout_weight="1"
         android:paddingTop="@dimen/_12px"
         android:paddingBottom="@dimen/_12px"
-        android:textColor="@color/gray_2"
-        android:textSize="16sp"
+        android:textColor="@color/authx_text"
+        android:fontFamily="@font/opensansromansemibold"
+        android:textSize="15sp"
         tools:text="Hindi" />
 
     <ImageView
@@ -32,7 +33,7 @@
         android:layout_height="22dp"
         android:src="@drawable/ic_picker_check"
         android:visibility="invisible"
-        app:tint="@color/app_bg_orange"
+        app:tint="@color/authx_coral"
         tools:ignore="ContentDescription"
         tools:visibility="visible" />
 </LinearLayout>

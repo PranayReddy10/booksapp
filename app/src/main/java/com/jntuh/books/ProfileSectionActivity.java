@@ -43,7 +43,8 @@ public class ProfileSectionActivity extends AppCompatActivity {
         if (section == null) section = SECTION_RESULTS;
 
         binding.tvSectionTitle.setText(getString(titleFor(section)));
-        if (SECTION_RESULTS.equals(section) || SECTION_CONTINUE.equals(section)) usePagePalette();
+        if (SECTION_RESULTS.equals(section) || SECTION_CONTINUE.equals(section)
+                || SECTION_UPLOADS.equals(section)) usePagePalette();
         binding.ivSectionBack.setOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
 
         if (savedInstanceState == null) {

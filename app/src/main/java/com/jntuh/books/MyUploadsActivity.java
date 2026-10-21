@@ -5,7 +5,6 @@ import android.util.Log;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.jntuh.adapter.MyUploadAdapter;
 import com.jntuh.books.databinding.ActivityMyUploadsBinding;
@@ -50,7 +49,7 @@ public class MyUploadsActivity extends AppCompatActivity {
 
         adapter = new MyUploadAdapter(this, uploadList);
         binding.rvMyUploads.setHasFixedSize(true);
-        binding.rvMyUploads.setLayoutManager(new GridLayoutManager(this, 2));
+        binding.rvMyUploads.setLayoutManager(new androidx.recyclerview.widget.LinearLayoutManager(this));
         binding.rvMyUploads.setAdapter(adapter);
 
         binding.swipeUploads.setOnRefreshListener(this::loadUploads);
