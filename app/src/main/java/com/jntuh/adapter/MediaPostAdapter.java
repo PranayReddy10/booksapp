@@ -19,10 +19,10 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * Reels feed rendered as social cards: header (avatar / uploader / time / overflow),
- * rounded media, then like–comment–share with a bookmark on the end, caption and the
- * post's link / book actions. Videos show a poster with a play badge; tapping the media
- * opens the full-screen player feed at that post.
+ * Campus feed rendered as a timeline: avatar on the left, "Name @handle · 2h" on top,
+ * the post's words, optional rounded media, link / book chips, then a spread
+ * reply–like–views–share–save row. Videos show a poster with a play badge; tapping the
+ * media opens the full-screen player at that post, tapping a text post opens its replies.
  */
 public class MediaPostAdapter extends RecyclerView.Adapter<MediaPostAdapter.ViewHolder> {
 
@@ -66,10 +66,32 @@ public class MediaPostAdapter extends RecyclerView.Adapter<MediaPostAdapter.View
         MediaItem item = items.get(position);
         RowMediaPostBinding b = holder.binding;
 
-        // Header
+        // Header: avatar, name, "@handle · time", college underneath.
         boolean isAdmin = "1".equals(item.getIs_admin());
         b.tvUploader.setText(isAdmin ? activity.getString(R.string.lbl_admin) : safe(item.getUploaded_by()));
-        b.tvTime.setText(relativeTime(item.getCreated_at()));
+        String when = relativeTime(item.getCreated_at());
+        String handle = isAdmin ? "" : safe(item.getUploader_username()).trim();
+        b.tvHandle.setText(handle.isEmpty() ? when : "@" + handle + (when.isEmpty() ? "" : " · " + when));
+        b.tvTime.setText(when);
+
+        String avatar = isAdmin ? "" : safe(item.getUploader_image());
+        if (isAdmin) {
+            b.ivAvatar.setImageResource(R.mipmap.ic_launcher_round);
+        } else if (!avatar.trim().isEmpty()) {
+            Glide.with(activity.getApplicationContext())
+                    .load(avatar)
+                    .placeholder(R.drawable.img_user)
+                    .error(R.drawable.img_user)
+                    .into(b.ivAvatar);
+        } else {
+            Glide.with(activity.getApplicationContext()).clear(b.ivAvatar);
+            b.ivAvatar.setImageResource(R.drawable.img_user);
+        }
+
+        String college = isAdmin ? "" : safe(item.getUploader_college()).trim();
+        b.tvCollege.setText(college);
+        b.tvCollege.setVisibility(college.isEmpty() ? View.GONE : View.VISIBLE);
+
         b.ivMore.setOnClickListener(v -> {
             if (listener != null) listener.onMore(item, v);
         });
@@ -98,7 +120,16 @@ public class MediaPostAdapter extends RecyclerView.Adapter<MediaPostAdapter.View
             if (pos != RecyclerView.NO_POSITION && listener != null) listener.onOpenPost(pos);
         };
         b.cvMedia.setOnClickListener(openPost);
-        b.tvCaption.setOnClickListener(openPost);
+
+        // Tapping the words: media posts open the player, text posts open their replies.
+        View.OnClickListener openWords = hasMedia ? openPost : v -> {
+            int pos = holder.getBindingAdapterPosition();
+            if (pos != RecyclerView.NO_POSITION && listener != null
+                    && "1".equals(item.getAllow_comments())) listener.onComment(item, pos);
+        };
+        b.llPostRow.setOnClickListener(openWords);
+        b.tvCaption.setOnClickListener(openWords);
+        b.tvPostBody.setOnClickListener(openWords);
 
         // Like — only when the post allows it.
         if ("1".equals(item.getAllow_likes())) {
@@ -136,16 +167,15 @@ public class MediaPostAdapter extends RecyclerView.Adapter<MediaPostAdapter.View
             b.llViews.setVisibility(View.GONE);
         }
 
-        // Caption. Without media it is the post itself, so it gets more room and size.
-        String caption = item.getTitle();
-        if (caption != null && !caption.trim().isEmpty()) {
-            b.tvCaption.setVisibility(View.VISIBLE);
-            b.tvCaption.setText(caption);
-            b.tvCaption.setMaxLines(hasMedia ? 2 : 12);
-            b.tvCaption.setTextSize(android.util.TypedValue.COMPLEX_UNIT_SP, hasMedia ? 14f : 17f);
-        } else {
-            b.tvCaption.setVisibility(View.GONE);
-        }
+        // Words: the title as a bold first line, then the body (text posts keep their
+        // words in the description).
+        String caption = safe(item.getTitle()).trim();
+        b.tvCaption.setText(caption);
+        b.tvCaption.setVisibility(caption.isEmpty() ? View.GONE : View.VISIBLE);
+
+        String body = safe(item.getDescription()).trim();
+        b.tvPostBody.setText(body);
+        b.tvPostBody.setVisibility(body.isEmpty() || body.equals(caption) ? View.GONE : View.VISIBLE);
 
         // Extras: open link / view book, mirroring the full-screen feed's actions.
         String link = item.getLink_url();
@@ -183,8 +213,11 @@ public class MediaPostAdapter extends RecyclerView.Adapter<MediaPostAdapter.View
                 liked ? R.drawable.ic_feed_heart : R.drawable.ic_feed_heart_outline);
         holder.binding.ivLike.setColorFilter(
                 androidx.core.content.ContextCompat.getColor(activity,
-                        liked ? R.color.status_rejected : R.color.authx_text));
+                        liked ? R.color.status_rejected : R.color.authx_text_muted));
         holder.binding.tvLikeCount.setText(compact(item.getLike_count()));
+        holder.binding.tvLikeCount.setTextColor(
+                androidx.core.content.ContextCompat.getColor(activity,
+                        liked ? R.color.status_rejected : R.color.authx_text_muted));
     }
 
     /** Refresh just the like row for a position, without rebinding the whole card. */
@@ -237,12 +270,12 @@ public class MediaPostAdapter extends RecyclerView.Adapter<MediaPostAdapter.View
             long diff = System.currentTimeMillis() - d.getTime();
             if (diff < 0) diff = 0;
             long min = diff / 60000;
-            if (min < 1) return "just now";
-            if (min < 60) return min + "m ago";
+            if (min < 1) return "now";
+            if (min < 60) return min + "m";
             long hr = min / 60;
-            if (hr < 24) return hr + "h ago";
+            if (hr < 24) return hr + "h";
             long day = hr / 24;
-            if (day < 30) return day + "d ago";
+            if (day < 30) return day + "d";
             return created.substring(0, 10);
         } catch (Exception e) {
             return created;

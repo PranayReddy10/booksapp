@@ -42,6 +42,15 @@ public class MediaItem implements Serializable {
     @SerializedName("uploaded_by")
     private String uploaded_by;
 
+    @SerializedName("uploader_image")
+    private String uploader_image;
+
+    @SerializedName("uploader_username")
+    private String uploader_username;
+
+    @SerializedName("uploader_college")
+    private String uploader_college;
+
     @SerializedName("is_admin")
     private String is_admin;
 
@@ -115,6 +124,18 @@ public class MediaItem implements Serializable {
 
     public void setThumb_url(String thumb_url) {
         this.thumb_url = thumb_url;
+    }
+
+    public String getUploader_image() {
+        return uploader_image;
+    }
+
+    public String getUploader_username() {
+        return uploader_username;
+    }
+
+    public String getUploader_college() {
+        return uploader_college;
     }
 
     public String getUploaded_by() {

@@ -91,7 +91,7 @@
     <string name="lbl_write_something">Write something…</string>
 
     <!-- Media feed -->
-    <string name="lbl_feed">Reels</string>
+    <string name="lbl_feed">Campus</string>
     <string name="lbl_upload_feed">Upload Feed</string>
     <string name="lbl_upload_media">Upload Media</string>
     <string name="lbl_my_media">My Media</string>
@@ -184,7 +184,7 @@
     <string name="lbl_qa_my_books">My books</string>
     <string name="lbl_qa_categories">Categories</string>
     <string name="lbl_qa_trending">Trending</string>
-    <string name="lbl_qa_reels">Reels</string>
+    <string name="lbl_qa_reels">Campus</string>
     <string name="lbl_qa_shop">Shop</string>
     <string name="lbl_qa_results">Results</string>
     <string name="lbl_qa_downloads">Downloads</string>
@@ -871,4 +871,5 @@
     <string name="lbl_feed_sub">From students at your university</string>
     <string name="msg_roll_invalid_other">Enter your hall ticket / roll number (6–15 letters or digits)</string>
     <string name="lbl_cp_name_note">As on your hall ticket. Look up fills it in.</string>
+    <string name="lbl_feed_title">Campus Feed</string>
 </resources>

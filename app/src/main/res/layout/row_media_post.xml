@@ -1,316 +1,345 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- One post in the Reels feed, laid out as a social card: avatar + name header,
-     rounded media, then a like / comment / share row with a bookmark on the end. -->
-<com.google.android.material.card.MaterialCardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- One post in the Campus feed, laid out like a timeline entry: avatar on the left,
+     name / @handle · time on top, the words, optional media, then a spread action row. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="16dp"
-    android:layout_marginTop="6dp"
-    android:layout_marginEnd="16dp"
-    android:layout_marginBottom="12dp"
-    app:cardBackgroundColor="@color/authx_card"
-    app:cardCornerRadius="22dp"
-    app:cardElevation="3dp"
-    app:strokeWidth="0dp">
+    android:background="@color/authx_card"
+    android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/llPostRow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="14dp">
+        android:background="?attr/selectableItemBackground"
+        android:orientation="horizontal"
+        android:paddingStart="16dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="12dp"
+        android:paddingBottom="6dp">
 
-        <!-- ===== Header: avatar, uploader, time, overflow ===== -->
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/ivAvatar"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:background="@color/authx_soft"
+            android:scaleType="centerCrop"
+            android:src="@drawable/img_user"
+            app:shapeAppearanceOverlay="@style/CircleImage"
+            tools:ignore="ContentDescription" />
+
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                app:cardBackgroundColor="@color/authx_soft"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="0dp">
-
-                <ImageView
-                    android:id="@+id/ivAvatar"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/img_user"
-                    tools:ignore="ContentDescription" />
-            </androidx.cardview.widget.CardView>
-
+            <!-- ===== Name  @handle · time  ⋯ ===== -->
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_10px"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/tvUploader"
-                    style="@style/txt_OpenSansRomanBold"
-                    android:layout_width="match_parent"
+                    style="@style/txt_OpenSansRomanExtraBold"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
+                    android:maxWidth="170dp"
                     android:singleLine="true"
                     android:textColor="@color/authx_text"
                     android:textSize="@dimen/_15sp"
-                    tools:text="Michelle Ogilvy" />
+                    tools:text="Rahul Varma" />
 
                 <TextView
-                    android:id="@+id/tvTime"
+                    android:id="@+id/tvHandle"
                     style="@style/txtOpenSansRomanSemiBold"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="1dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_weight="1"
                     android:ellipsize="end"
                     android:singleLine="true"
                     android:textColor="@color/authx_text_muted"
-                    android:textSize="@dimen/_12sp"
-                    tools:text="1h ago" />
+                    android:textSize="@dimen/_14sp"
+                    tools:text="\@rahul_v · 2h" />
+
+                <TextView
+                    android:id="@+id/tvTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/ivMore"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:padding="4dp"
+                    android:src="@drawable/ic_feed_more"
+                    app:tint="@color/authx_text_muted"
+                    tools:ignore="ContentDescription" />
             </LinearLayout>
 
-            <ImageView
-                android:id="@+id/ivMore"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:background="@drawable/bg_feed_more"
-                android:padding="4dp"
-                android:src="@drawable/ic_feed_more"
-                app:tint="@color/authx_text"
-                tools:ignore="ContentDescription" />
-        </LinearLayout>
-
-        <!-- ===== Media ===== -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cvMedia"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_12px"
-            app:cardBackgroundColor="@color/authx_soft"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="0dp">
-
-            <FrameLayout
+            <TextView
+                android:id="@+id/tvCollege"
+                style="@style/txtOpenSansRomanSemiBold"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:textColor="@color/authx_text_muted"
+                android:textSize="@dimen/_12sp"
+                android:visibility="gone"
+                tools:text="JNTUH College of Engineering"
+                tools:visibility="visible" />
 
-                <ImageView
-                    android:id="@+id/ivMedia"
+            <!-- ===== Words ===== -->
+            <TextView
+                android:id="@+id/tvCaption"
+                style="@style/txt_OpenSansRomanBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textColor="@color/authx_text"
+                android:textSize="@dimen/_15sp"
+                tools:text="Mid exams timetable is out" />
+
+            <TextView
+                android:id="@+id/tvPostBody"
+                style="@style/txtOpenSansRomanSemiBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:autoLink="web"
+                android:ellipsize="end"
+                android:lineSpacingExtra="2dp"
+                android:maxLines="10"
+                android:textColor="@color/authx_text"
+                android:textColorLink="@color/authx_coral"
+                android:textSize="@dimen/_15sp"
+                android:visibility="gone"
+                tools:text="Anyone has last year's DBMS notes? Need unit 3 and 4 before Monday."
+                tools:visibility="visible" />
+
+            <!-- ===== Media ===== -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cvMedia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:cardBackgroundColor="@color/authx_soft"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/authx_field_stroke"
+                app:strokeWidth="1dp">
+
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
-                    android:maxHeight="420dp"
-                    android:minHeight="200dp"
-                    android:scaleType="fitCenter"
-                    tools:ignore="ContentDescription"
-                    tools:src="@drawable/placeholder_landscape" />
+                    android:layout_height="wrap_content">
 
-                <ImageView
-                    android:id="@+id/ivPlay"
-                    android:layout_width="56dp"
-                    android:layout_height="56dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic_play_badge"
-                    android:visibility="gone"
-                    tools:ignore="ContentDescription" />
-            </FrameLayout>
-        </com.google.android.material.card.MaterialCardView>
+                    <ImageView
+                        android:id="@+id/ivMedia"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        android:maxHeight="380dp"
+                        android:minHeight="160dp"
+                        android:scaleType="centerCrop"
+                        tools:ignore="ContentDescription"
+                        tools:src="@drawable/placeholder_landscape" />
 
-        <!-- ===== Actions ===== -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_12px"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+                    <ImageView
+                        android:id="@+id/ivPlay"
+                        android:layout_width="52dp"
+                        android:layout_height="52dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_play_badge"
+                        android:visibility="gone"
+                        tools:ignore="ContentDescription" />
+                </FrameLayout>
+            </com.google.android.material.card.MaterialCardView>
 
+            <!-- ===== Post extras: open link / view book ===== -->
             <LinearLayout
-                android:id="@+id/llLike"
-                android:layout_width="wrap_content"
+                android:id="@+id/llPostExtras"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/ivLike"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/ic_feed_heart_outline"
-                    app:tint="@color/authx_text"
-                    tools:ignore="ContentDescription" />
-
-                <TextView
-                    android:id="@+id/tvLikeCount"
-                    style="@style/txtOpenSansRomanSemiBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="6dp"
-                    android:textColor="@color/authx_text"
-                    android:textSize="@dimen/_13sp"
-                    tools:text="18.6k" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/llComment"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_20px"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/ic_feed_comment_outline"
-                    app:tint="@color/authx_text"
-                    tools:ignore="ContentDescription" />
-
-                <TextView
-                    android:id="@+id/tvCommentCount"
-                    style="@style/txtOpenSansRomanSemiBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="6dp"
-                    android:textColor="@color/authx_text"
-                    android:textSize="@dimen/_13sp"
-                    tools:text="4.7k" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/llShare"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_20px"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/ic_feed_send"
-                    app:tint="@color/authx_text"
-                    tools:ignore="ContentDescription" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/llViews"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_20px"
-                android:gravity="center_vertical"
+                android:layout_marginTop="10dp"
                 android:orientation="horizontal"
                 android:visibility="gone"
                 tools:visibility="visible">
 
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_feed_eye"
-                    app:tint="@color/authx_text_muted"
-                    tools:ignore="ContentDescription" />
-
                 <TextView
-                    android:id="@+id/tvViewCount"
-                    style="@style/txtOpenSansRomanSemiBold"
+                    android:id="@+id/tvLinkChip"
+                    style="@style/txt_OpenSansRomanBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="6dp"
-                    android:textColor="@color/authx_text_muted"
-                    android:textSize="@dimen/_13sp"
-                    tools:text="12.4k" />
+                    android:background="@drawable/bg_authx_coral_soft"
+                    android:drawableStart="@drawable/ic_feed_link"
+                    android:drawablePadding="6dp"
+                    android:gravity="center_vertical"
+                    android:paddingStart="@dimen/_12px"
+                    android:paddingTop="6dp"
+                    android:paddingEnd="@dimen/_14px"
+                    android:paddingBottom="6dp"
+                    android:text="@string/lbl_open_link"
+                    android:textColor="@color/authx_coral"
+                    android:textSize="@dimen/_12sp"
+                    android:visibility="gone"
+                    app:drawableTint="@color/authx_coral"
+                    tools:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/tvBookChip"
+                    style="@style/txt_OpenSansRomanBold"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_8px"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_authx_coral_soft"
+                    android:drawableStart="@drawable/ic_feed_book"
+                    android:drawablePadding="6dp"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:maxLines="1"
+                    android:paddingStart="@dimen/_12px"
+                    android:paddingTop="6dp"
+                    android:paddingEnd="@dimen/_14px"
+                    android:paddingBottom="6dp"
+                    android:text="@string/lbl_view_book"
+                    android:textColor="@color/authx_coral"
+                    android:textSize="@dimen/_12sp"
+                    android:visibility="gone"
+                    app:drawableTint="@color/authx_coral"
+                    tools:text="View book: Advanced Supply" />
             </LinearLayout>
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1" />
-
-            <ImageView
-                android:id="@+id/ivBookmark"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:src="@drawable/ic_feed_bookmark"
-                app:tint="@color/authx_text"
-                tools:ignore="ContentDescription" />
-        </LinearLayout>
-
-        <!-- ===== Caption ===== -->
-        <TextView
-            android:id="@+id/tvCaption"
-            style="@style/txtOpenSansRomanSemiBold"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10px"
-            android:ellipsize="end"
-            android:maxLines="2"
-            android:textColor="@color/authx_text"
-            android:textSize="@dimen/_14sp"
-            tools:text="Personalized gifts for every moment" />
-
-        <!-- ===== Post extras: open link / view book ===== -->
-        <LinearLayout
-            android:id="@+id/llPostExtras"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10px"
-            android:orientation="horizontal"
-            android:visibility="gone"
-            tools:visibility="visible">
-
-            <TextView
-                android:id="@+id/tvLinkChip"
-                style="@style/txt_OpenSansRomanBold"
-                android:layout_width="wrap_content"
+            <!-- ===== Actions: reply · like · views · share · save ===== -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_authx_coral_soft"
-                android:drawableStart="@drawable/ic_feed_link"
-                android:drawablePadding="6dp"
+                android:layout_marginTop="4dp"
                 android:gravity="center_vertical"
-                android:paddingStart="@dimen/_12px"
-                android:paddingTop="6dp"
-                android:paddingEnd="@dimen/_14px"
-                android:paddingBottom="6dp"
-                android:text="@string/lbl_open_link"
-                android:textColor="@color/authx_coral"
-                android:textSize="@dimen/_12sp"
-                android:visibility="gone"
-                app:drawableTint="@color/authx_coral"
-                tools:visibility="visible" />
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/tvBookChip"
-                style="@style/txt_OpenSansRomanBold"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_8px"
-                android:layout_weight="1"
-                android:background="@drawable/bg_authx_coral_soft"
-                android:drawableStart="@drawable/ic_feed_book"
-                android:drawablePadding="6dp"
-                android:ellipsize="end"
-                android:gravity="center_vertical"
-                android:maxLines="1"
-                android:paddingStart="@dimen/_12px"
-                android:paddingTop="6dp"
-                android:paddingEnd="@dimen/_14px"
-                android:paddingBottom="6dp"
-                android:text="@string/lbl_view_book"
-                android:textColor="@color/authx_coral"
-                android:textSize="@dimen/_12sp"
-                android:visibility="gone"
-                app:drawableTint="@color/authx_coral"
-                tools:text="View book: Advanced Supply" />
+                <LinearLayout
+                    android:id="@+id/llComment"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="19dp"
+                        android:layout_height="19dp"
+                        android:src="@drawable/ic_feed_comment_outline"
+                        app:tint="@color/authx_text_muted"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:id="@+id/tvCommentCount"
+                        style="@style/txtOpenSansRomanSemiBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:textColor="@color/authx_text_muted"
+                        android:textSize="@dimen/_13sp"
+                        tools:text="12" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llLike"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/ivLike"
+                        android:layout_width="19dp"
+                        android:layout_height="19dp"
+                        android:src="@drawable/ic_feed_heart_outline"
+                        app:tint="@color/authx_text_muted"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:id="@+id/tvLikeCount"
+                        style="@style/txtOpenSansRomanSemiBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:textColor="@color/authx_text_muted"
+                        android:textSize="@dimen/_13sp"
+                        tools:text="86" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llViews"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="19dp"
+                        android:layout_height="19dp"
+                        android:src="@drawable/ic_feed_eye"
+                        app:tint="@color/authx_text_muted"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:id="@+id/tvViewCount"
+                        style="@style/txtOpenSansRomanSemiBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:textColor="@color/authx_text_muted"
+                        android:textSize="@dimen/_13sp"
+                        tools:text="1.2k" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llShare"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="19dp"
+                        android:layout_height="19dp"
+                        android:src="@drawable/ic_feed_send"
+                        app:tint="@color/authx_text_muted"
+                        tools:ignore="ContentDescription" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/ivBookmark"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_feed_bookmark"
+                    app:tint="@color/authx_text_muted"
+                    tools:ignore="ContentDescription" />
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-</com.google.android.material.card.MaterialCardView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/bg_authx_divider" />
+</LinearLayout>
