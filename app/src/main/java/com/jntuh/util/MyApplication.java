@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.DefaultLifecycleObserver;
 import androidx.multidex.MultiDex;
 
+import com.jntuh.books.BookDetailsActivity;
 import com.jntuh.books.CompleteProfileActivity;
 import com.jntuh.books.EditProfileActivity;
 import com.jntuh.books.ForgotPassActivity;
@@ -182,7 +183,7 @@ public class MyApplication extends Application implements Application.ActivityLi
 
     @Override
     public void onActivityCreated(@NonNull Activity activity, @Nullable Bundle bundle) {
-        if(!(activity instanceof MainActivity) && !(activity instanceof LoginActivity) && !(activity instanceof RegisterActivity) && !(activity instanceof ForgotPassActivity) && !(activity instanceof CompleteProfileActivity) && !(activity instanceof EditProfileActivity) && !(activity instanceof ProfileSectionActivity) && !(activity instanceof UploadBookActivity) && !(activity instanceof SplashActivity) && !(activity instanceof SignInHubActivity)) {
+        if(!(activity instanceof MainActivity) && !(activity instanceof LoginActivity) && !(activity instanceof RegisterActivity) && !(activity instanceof ForgotPassActivity) && !(activity instanceof CompleteProfileActivity) && !(activity instanceof EditProfileActivity) && !(activity instanceof ProfileSectionActivity) && !(activity instanceof UploadBookActivity) && !(activity instanceof BookDetailsActivity) && !(activity instanceof SplashActivity) && !(activity instanceof SignInHubActivity)) {
             if(!(activity instanceof PaymentMethodActivity) && !(activity instanceof PlanListActivity)) {
                 StatusBarUtil.setStatusBar(activity, "");
             } else {

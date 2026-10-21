@@ -79,10 +79,7 @@ public class BookDetailsActivity extends AppCompatActivity {
         Intent intent = getIntent();
         postBookId = intent.getStringExtra("BOOK_ID");
 
-        viewBookDetail.toolbarMain.tvToolbarTitle.setText(getString(R.string.book_detail_title));
-        viewBookDetail.toolbarMain.imageFilter.setVisibility(View.VISIBLE);
-        viewBookDetail.toolbarMain.imageFilter.setImageResource(R.drawable.img_share);
-        viewBookDetail.toolbarMain.imageFilter.setOnClickListener(v -> {
+        viewBookDetail.btnDetailShare.setOnClickListener(v -> {
             if (bookDetailListPos != null && bookDetailListPos.getPost_id() != null) {
                 // Match the public website's share URL: read.jntubooks.in/book/{id}-{slug}
                 String slug = com.jntuh.util.Constant.webSlug(bookDetailListPos.getPost_title());
@@ -98,7 +95,7 @@ public class BookDetailsActivity extends AppCompatActivity {
             }
         });
 
-        viewBookDetail.toolbarMain.imageArrowBack.setOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
+        viewBookDetail.btnDetailBack.setOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
 
         viewBookDetail.ivRateList.setOnClickListener(v -> {
             Intent intentRateList = new Intent(BookDetailsActivity.this, RateReviewActivity.class);
@@ -173,20 +170,20 @@ public class BookDetailsActivity extends AppCompatActivity {
                                 viewBookDetail.tvPremium.setText(getString(R.string.rent));
                                 viewBookDetail.imageLock.setImageResource(R.drawable.ic_rent);
                                 viewBookDetail.tvBookPrice.setText(getString(R.string.currency_code, Constant.constantCurrency, bookDetailListPos.getBook_rent_price()));
-                                viewBookDetail.tvBookPrice.setBackgroundResource(R.drawable.paid_detail_box);
+                                viewBookDetail.tvBookPrice.setBackgroundResource(R.drawable.bg_authx_pill_cta);
                                 viewBookDetail.tvBookPrice.setTextColor(ContextCompat.getColor(BookDetailsActivity.this, R.color.white));
                             } else if (bookDetailListPos.getPost_access().equals("Paid")) {
                                 viewBookDetail.llPremium.setVisibility(View.VISIBLE);
                                 viewBookDetail.tvPremium.setText(getString(R.string.lbl_premium));
                                 viewBookDetail.imageLock.setImageResource(R.drawable.img_premium_lock);
                                 viewBookDetail.tvBookPrice.setText(getString(R.string.lbl_paid));
-                                viewBookDetail.tvBookPrice.setBackgroundResource(R.drawable.paid_detail_box);
+                                viewBookDetail.tvBookPrice.setBackgroundResource(R.drawable.bg_authx_pill_cta);
                                 viewBookDetail.tvBookPrice.setTextColor(ContextCompat.getColor(BookDetailsActivity.this, R.color.white));
                             } else {
                                 viewBookDetail.llPremium.setVisibility(View.GONE);
                                 viewBookDetail.tvBookPrice.setText(getString(R.string.lbl_free));
-                                viewBookDetail.tvBookPrice.setBackgroundResource(R.drawable.free_box);
-                                viewBookDetail.tvBookPrice.setTextColor(ContextCompat.getColor(BookDetailsActivity.this, R.color.free_box_text));
+                                viewBookDetail.tvBookPrice.setBackgroundResource(R.drawable.bg_authx_white_pill);
+                                viewBookDetail.tvBookPrice.setTextColor(ContextCompat.getColor(BookDetailsActivity.this, R.color.authx_good));
                             }
 
                             viewBookDetail.ivBook.post(() ->
