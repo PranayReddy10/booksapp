@@ -43,6 +43,7 @@ public class ProfileSectionActivity extends AppCompatActivity {
         if (section == null) section = SECTION_RESULTS;
 
         binding.tvSectionTitle.setText(getString(titleFor(section)));
+        if (SECTION_RESULTS.equals(section)) overlapHeader();
         binding.ivSectionBack.setOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
 
         if (savedInstanceState == null) {
@@ -50,6 +51,23 @@ public class ProfileSectionActivity extends AppCompatActivity {
                     .replace(R.id.flSectionContainer, fragmentFor(section))
                     .commit();
         }
+    }
+
+    /**
+     * My Results draws its own cards, so let them ride up over the bar's rounded
+     * bottom edge (the container is drawn after the bar, so it sits on top).
+     */
+    private void overlapHeader() {
+        int overlap = (int) (40 * getResources().getDisplayMetrics().density);
+        binding.llSectionRoot.setBackgroundColor(
+                androidx.core.content.ContextCompat.getColor(this, R.color.authx_page));
+        binding.rlSectionHeader.setPadding(binding.rlSectionHeader.getPaddingLeft(),
+                binding.rlSectionHeader.getPaddingTop(), binding.rlSectionHeader.getPaddingRight(),
+                binding.rlSectionHeader.getPaddingBottom() + overlap);
+        android.widget.LinearLayout.LayoutParams lp =
+                (android.widget.LinearLayout.LayoutParams) binding.flSectionContainer.getLayoutParams();
+        lp.topMargin = -overlap;
+        binding.flSectionContainer.setLayoutParams(lp);
     }
 
     private Fragment fragmentFor(String section) {

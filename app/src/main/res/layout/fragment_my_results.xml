@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- My Results in the auth/profile look. The summary card rides up over the navy
+     section bar: who the result belongs to, then a CGPA ring beside credits and
+     backlogs. Under it the actions (report card, re-sync, edit) and the semester
+     list. Empty and logged-out states are cards in the same place. -->
 <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -6,11 +10,12 @@
     android:id="@+id/swipeResults"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/app_bg">
+    android:background="@android:color/transparent">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:clipToPadding="false"
         android:fillViewport="true"
         android:overScrollMode="never">
 
@@ -24,217 +29,242 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingHorizontal="14dp"
-                android:paddingTop="12dp"
+                android:paddingStart="18dp"
+                android:paddingEnd="18dp"
                 android:paddingBottom="28dp"
-                android:visibility="gone">
+                android:visibility="gone"
+                tools:visibility="visible">
 
-                <!-- Summary / hero card -->
-                <androidx.cardview.widget.CardView
+                <!-- Summary card -->
+                <LinearLayout
                     android:id="@+id/cardSummary"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:cardCornerRadius="22dp"
-                    app:cardElevation="6dp"
-                    app:cardBackgroundColor="@android:color/transparent">
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/bg_authx_card"
+                    android:elevation="10dp"
+                    android:orientation="vertical"
+                    android:padding="20dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/bg_result_gradient"
-                        android:orientation="vertical"
-                        android:padding="20dp">
+                        android:gravity="top"
+                        android:orientation="horizontal">
 
                         <LinearLayout
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:gravity="center_vertical">
+                            android:layout_weight="1"
+                            android:orientation="vertical">
 
-                            <LinearLayout
-                                android:layout_width="0dp"
+                            <TextView
+                                android:id="@+id/tvStudentName"
+                                style="@style/txt_OpenSansRomanExtraBold"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:orientation="vertical">
+                                android:ellipsize="end"
+                                android:maxLines="2"
+                                android:text="@string/result_student"
+                                android:textColor="@color/authx_text"
+                                android:textSize="@dimen/_18sp" />
 
-                                <TextView
-                                    android:id="@+id/tvStudentName"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/result_student"
-                                    android:textColor="@color/white"
-                                    android:textSize="18sp"
-                                    android:fontFamily="@font/opensansromanextrabold" />
+                            <TextView
+                                android:id="@+id/tvHallTicket"
+                                style="@style/txt_OpenSansRomanBold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:background="@drawable/bg_authx_coral_soft"
+                                android:paddingStart="10dp"
+                                android:paddingTop="3dp"
+                                android:paddingEnd="10dp"
+                                android:paddingBottom="3dp"
+                                android:singleLine="true"
+                                android:text="@string/result_hall_ticket"
+                                android:textColor="@color/authx_coral"
+                                android:textSize="@dimen/_12sp" />
 
-                                <TextView
-                                    android:id="@+id/tvHallTicket"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="2dp"
-                                    android:alpha="0.9"
-                                    android:text="@string/result_hall_ticket"
-                                    android:textColor="@color/white"
-                                    android:textSize="12sp"
-                                    android:fontFamily="@font/opensansromansemibold" />
+                            <TextView
+                                android:id="@+id/tvBranchReg"
+                                style="@style/txtOpenSansRomanSemiBold"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:ellipsize="end"
+                                android:maxLines="2"
+                                android:textColor="@color/authx_text_muted"
+                                android:textSize="@dimen/_13sp"
+                                tools:text="CSE  ·  R22" />
+                        </LinearLayout>
 
-                                <TextView
-                                    android:id="@+id/tvBranchReg"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="1dp"
-                                    android:alpha="0.85"
-                                    android:textColor="@color/white"
-                                    android:textSize="11sp"
-                                    android:fontFamily="@font/opensansromansemibold" />
-                            </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/pillVerified"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:background="@drawable/bg_verified_pill"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingHorizontal="10dp"
+                            android:paddingVertical="5dp"
+                            android:visibility="gone"
+                            tools:visibility="visible">
+
+                            <ImageView
+                                android:layout_width="14dp"
+                                android:layout_height="14dp"
+                                android:layout_marginEnd="4dp"
+                                android:contentDescription="@string/result_verified"
+                                android:src="@drawable/ic_result_verified" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/opensansromanbold"
+                                android:text="@string/result_verified"
+                                android:textColor="@color/result_verified_green"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="16dp"
+                        android:background="@drawable/bg_authx_divider" />
+
+                    <!-- CGPA ring beside credits and backlogs -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:baselineAligned="false"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <FrameLayout
+                            android:layout_width="116dp"
+                            android:layout_height="116dp">
+
+                            <com.google.android.material.progressindicator.CircularProgressIndicator
+                                android:id="@+id/progressCgpa"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:max="100"
+                                app:indicatorColor="@color/authx_coral"
+                                app:indicatorSize="116dp"
+                                app:trackColor="@color/authx_soft"
+                                app:trackCornerRadius="6dp"
+                                app:trackThickness="10dp"
+                                tools:progress="78" />
 
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                android:gravity="end|center_vertical">
-
-                                <LinearLayout
-                                    android:id="@+id/pillVerified"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:orientation="horizontal"
-                                    android:gravity="center_vertical"
-                                    android:background="@drawable/bg_verified_pill"
-                                    android:paddingHorizontal="10dp"
-                                    android:paddingVertical="5dp"
-                                    android:visibility="gone">
-
-                                    <ImageView
-                                        android:layout_width="14dp"
-                                        android:layout_height="14dp"
-                                        android:layout_marginEnd="4dp"
-                                        android:src="@drawable/ic_result_verified"
-                                        android:contentDescription="@string/result_verified" />
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="@string/result_verified"
-                                        android:textColor="@color/result_verified_green"
-                                        android:textSize="11sp"
-                                        android:fontFamily="@font/opensansromanbold" />
-                                </LinearLayout>
-                            </LinearLayout>
-                        </LinearLayout>
-
-                        <!-- Stat trio -->
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="18dp"
-                            android:orientation="horizontal"
-                            android:baselineAligned="false">
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:orientation="vertical"
-                                android:gravity="center">
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:orientation="vertical">
 
                                 <TextView
                                     android:id="@+id/tvCgpa"
+                                    style="@style/txt_OpenSansRomanExtraBold"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="@string/result_dash"
-                                    android:textColor="@color/white"
-                                    android:textSize="26sp"
-                                    android:fontFamily="@font/opensansromanextrabold" />
+                                    android:textColor="@color/authx_text"
+                                    android:textSize="@dimen/_26sp"
+                                    tools:text="7.84" />
 
                                 <TextView
+                                    style="@style/txt_OpenSansRomanBold"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:alpha="0.9"
                                     android:text="@string/result_cgpa"
-                                    android:textColor="@color/white"
-                                    android:textSize="11sp"
-                                    android:fontFamily="@font/opensansromansemibold" />
+                                    android:textColor="@color/authx_text_muted"
+                                    android:textSize="@dimen/_12sp" />
                             </LinearLayout>
+                        </FrameLayout>
 
-                            <View
-                                android:layout_width="1dp"
-                                android:layout_height="34dp"
-                                android:layout_gravity="center_vertical"
-                                android:alpha="0.4"
-                                android:background="@color/white" />
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
 
                             <LinearLayout
-                                android:layout_width="0dp"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
+                                android:background="@drawable/bg_authx_soft"
                                 android:orientation="vertical"
-                                android:gravity="center">
+                                android:paddingStart="14dp"
+                                android:paddingTop="10dp"
+                                android:paddingEnd="14dp"
+                                android:paddingBottom="10dp">
 
                                 <TextView
                                     android:id="@+id/tvTotalCredits"
+                                    style="@style/txt_OpenSansRomanExtraBold"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="@string/result_dash"
-                                    android:textColor="@color/white"
-                                    android:textSize="26sp"
-                                    android:fontFamily="@font/opensansromanextrabold" />
+                                    android:textColor="@color/authx_text"
+                                    android:textSize="@dimen/_20sp"
+                                    tools:text="142" />
 
                                 <TextView
+                                    style="@style/txtOpenSansRomanSemiBold"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:alpha="0.9"
                                     android:text="@string/result_credits"
-                                    android:textColor="@color/white"
-                                    android:textSize="11sp"
-                                    android:fontFamily="@font/opensansromansemibold" />
+                                    android:textColor="@color/authx_text_muted"
+                                    android:textSize="@dimen/_12sp" />
                             </LinearLayout>
 
-                            <View
-                                android:layout_width="1dp"
-                                android:layout_height="34dp"
-                                android:layout_gravity="center_vertical"
-                                android:alpha="0.4"
-                                android:background="@color/white" />
-
                             <LinearLayout
-                                android:layout_width="0dp"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
+                                android:layout_marginTop="10dp"
+                                android:background="@drawable/bg_authx_soft"
                                 android:orientation="vertical"
-                                android:gravity="center">
+                                android:paddingStart="14dp"
+                                android:paddingTop="10dp"
+                                android:paddingEnd="14dp"
+                                android:paddingBottom="10dp">
 
                                 <TextView
                                     android:id="@+id/tvBacklogs"
+                                    style="@style/txt_OpenSansRomanExtraBold"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="@string/result_dash"
-                                    android:textColor="@color/white"
-                                    android:textSize="26sp"
-                                    android:fontFamily="@font/opensansromanextrabold" />
+                                    android:textColor="@color/authx_text"
+                                    android:textSize="@dimen/_20sp"
+                                    tools:text="0" />
 
                                 <TextView
+                                    style="@style/txtOpenSansRomanSemiBold"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:alpha="0.9"
                                     android:text="@string/result_backlogs"
-                                    android:textColor="@color/white"
-                                    android:textSize="11sp"
-                                    android:fontFamily="@font/opensansromansemibold" />
+                                    android:textColor="@color/authx_text_muted"
+                                    android:textSize="@dimen/_12sp" />
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
-                </androidx.cardview.widget.CardView>
+                </LinearLayout>
 
                 <!-- Locked banner -->
                 <LinearLayout
                     android:id="@+id/bannerLocked"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:orientation="horizontal"
+                    android:layout_marginTop="14dp"
+                    android:background="@drawable/bg_authx_soft"
                     android:gravity="center_vertical"
-                    android:background="@drawable/bg_locked_pill"
+                    android:orientation="horizontal"
                     android:padding="12dp"
                     android:visibility="gone">
 
@@ -242,101 +272,107 @@
                         android:layout_width="16dp"
                         android:layout_height="16dp"
                         android:layout_marginEnd="8dp"
+                        android:contentDescription="@string/result_locked_short"
                         android:src="@drawable/ic_result_lock"
-                        android:contentDescription="@string/result_locked_short" />
+                        app:tint="@color/authx_text_muted" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        style="@style/txtOpenSansRomanSemiBold"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/result_locked_banner"
-                        android:textColor="#66000000"
-                        android:textSize="12sp"
-                        android:fontFamily="@font/opensansromansemibold" />
+                        android:textColor="@color/authx_text_muted"
+                        android:textSize="@dimen/_12sp" />
                 </LinearLayout>
 
-                <!-- Action buttons -->
+                <!-- Actions -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="14dp"
-                    android:orientation="horizontal"
-                    android:baselineAligned="false">
+                    android:baselineAligned="false"
+                    android:orientation="horizontal">
 
                     <LinearLayout
                         android:id="@+id/btnViewReport"
                         android:layout_width="0dp"
-                        android:layout_height="52dp"
+                        android:layout_height="54dp"
                         android:layout_weight="1"
-                        android:orientation="horizontal"
+                        android:background="@drawable/bg_authx_cta"
+                        android:clickable="true"
+                        android:elevation="4dp"
+                        android:focusable="true"
                         android:gravity="center"
-                        android:background="@drawable/bg_result_btn_primary"
-                        android:foreground="?attr/selectableItemBackground">
+                        android:orientation="horizontal">
 
                         <ImageView
                             android:layout_width="18dp"
                             android:layout_height="18dp"
                             android:layout_marginEnd="8dp"
+                            android:contentDescription="@string/result_view_share_report"
                             android:src="@drawable/ic_result_share"
-                            android:contentDescription="@string/result_view_share_report" />
+                            app:tint="@color/white" />
 
                         <TextView
+                            style="@style/txt_OpenSansRomanBold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:singleLine="true"
                             android:text="@string/result_view_share_report"
                             android:textColor="@color/white"
-                            android:textSize="13sp"
-                            android:fontFamily="@font/opensansromanbold" />
+                            android:textSize="@dimen/_14sp" />
                     </LinearLayout>
 
                     <!-- Re-pull from the university feed; unlocked semesters refresh. -->
-                    <LinearLayout
+                    <FrameLayout
                         android:id="@+id/btnSyncResult"
-                        android:layout_width="52dp"
-                        android:layout_height="52dp"
+                        android:layout_width="54dp"
+                        android:layout_height="54dp"
                         android:layout_marginStart="10dp"
-                        android:orientation="horizontal"
-                        android:gravity="center"
-                        android:background="@drawable/bg_result_btn_outline"
-                        android:foreground="?attr/selectableItemBackground">
+                        android:background="@drawable/bg_authx_outline"
+                        android:clickable="true"
+                        android:focusable="true">
 
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:contentDescription="@string/result_fetch_auto"
                             android:src="@drawable/ic_result_refresh"
-                            app:tint="@color/result_brand_blue"
-                            android:contentDescription="@string/result_fetch_auto" />
-                    </LinearLayout>
+                            app:tint="@color/authx_coral" />
+                    </FrameLayout>
 
-                    <LinearLayout
+                    <FrameLayout
                         android:id="@+id/btnEditResult"
-                        android:layout_width="52dp"
-                        android:layout_height="52dp"
+                        android:layout_width="54dp"
+                        android:layout_height="54dp"
                         android:layout_marginStart="10dp"
-                        android:orientation="horizontal"
-                        android:gravity="center"
-                        android:background="@drawable/bg_result_btn_outline"
-                        android:foreground="?attr/selectableItemBackground">
+                        android:background="@drawable/bg_authx_outline"
+                        android:clickable="true"
+                        android:focusable="true">
 
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:contentDescription="@string/result_edit"
                             android:src="@drawable/ic_result_edit"
-                            app:tint="@color/result_brand_blue"
-                            android:contentDescription="@string/result_edit" />
-                    </LinearLayout>
+                            app:tint="@color/authx_coral" />
+                    </FrameLayout>
                 </LinearLayout>
 
                 <!-- Semester list -->
                 <TextView
+                    style="@style/txt_OpenSansRomanExtraBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
                     android:layout_marginStart="4dp"
-                    android:layout_marginBottom="6dp"
-                    android:text="@string/result_semesters"
-                    android:textColor="@color/gray"
-                    android:textSize="15sp"
-                    android:fontFamily="@font/opensansromanextrabold" />
+                    android:layout_marginTop="22dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/lbl_res_your_semesters"
+                    android:textColor="@color/authx_text"
+                    android:textSize="@dimen/_17sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvSemesters"
@@ -351,114 +387,124 @@
                 android:id="@+id/llResultEmpty"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="18dp"
+                android:layout_marginBottom="24dp"
+                android:background="@drawable/bg_authx_card"
+                android:elevation="10dp"
+                android:gravity="center_horizontal"
                 android:orientation="vertical"
-                android:gravity="center"
-                android:paddingTop="70dp"
-                android:paddingHorizontal="32dp"
+                android:padding="24dp"
                 android:visibility="gone">
 
                 <FrameLayout
-                    android:layout_width="118dp"
-                    android:layout_height="118dp"
-                    android:background="@drawable/bg_result_empty_circle">
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
+                    android:background="@drawable/bg_authx_circle_soft">
 
                     <ImageView
-                        android:layout_width="54dp"
-                        android:layout_height="54dp"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
                         android:layout_gravity="center"
+                        android:contentDescription="@string/tab_my_results"
                         android:src="@drawable/ic_result_school"
-                        app:tint="@color/app_bg_orange"
-                        android:contentDescription="@string/tab_my_results" />
+                        app:tint="@color/authx_coral" />
                 </FrameLayout>
 
                 <TextView
+                    style="@style/txt_OpenSansRomanExtraBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="22dp"
+                    android:layout_marginTop="18dp"
                     android:text="@string/result_empty_title"
-                    android:textColor="@color/gray"
-                    android:textSize="18sp"
-                    android:fontFamily="@font/opensansromanextrabold" />
+                    android:textColor="@color/authx_text"
+                    android:textSize="@dimen/_19sp" />
 
                 <TextView
+                    style="@style/txtOpenSansRomanSemiBold"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="6dp"
                     android:gravity="center"
+                    android:lineSpacingExtra="2dp"
                     android:text="@string/result_empty_desc"
-                    android:textColor="@color/gray_2"
-                    android:textSize="13sp"
-                    android:fontFamily="@font/opensansromansemibold" />
+                    android:textColor="@color/authx_text_muted"
+                    android:textSize="@dimen/_14sp" />
 
                 <!-- Auto-fetch is the primary path: the hall ticket is enough.
                      Typing six semesters by hand stays available underneath. -->
                 <LinearLayout
                     android:id="@+id/btnFetchResultAuto"
-                    android:layout_width="wrap_content"
-                    android:layout_height="52dp"
-                    android:layout_marginTop="26dp"
-                    android:paddingHorizontal="28dp"
-                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:layout_marginTop="22dp"
+                    android:background="@drawable/bg_authx_cta"
+                    android:clickable="true"
+                    android:elevation="4dp"
+                    android:focusable="true"
                     android:gravity="center"
-                    android:background="@drawable/bg_result_btn_primary"
-                    android:foreground="?attr/selectableItemBackground">
+                    android:orientation="horizontal">
 
                     <ImageView
                         android:layout_width="18dp"
                         android:layout_height="18dp"
                         android:layout_marginEnd="8dp"
+                        android:contentDescription="@string/result_fetch_auto"
                         android:src="@drawable/ic_result_refresh"
-                        app:tint="@color/white"
-                        android:contentDescription="@string/result_fetch_auto" />
+                        app:tint="@color/white" />
 
                     <TextView
+                        style="@style/txt_OpenSansRomanBold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/result_fetch_auto"
                         android:textColor="@color/white"
-                        android:textSize="14sp"
-                        android:fontFamily="@font/opensansromanbold" />
+                        android:textSize="@dimen/_15sp" />
                 </LinearLayout>
 
                 <TextView
                     android:id="@+id/tvFetchStatus"
+                    style="@style/txtOpenSansRomanSemiBold"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
+                    android:background="@drawable/bg_authx_soft"
                     android:gravity="center"
-                    android:textColor="@color/gray_2"
-                    android:textSize="12sp"
-                    android:fontFamily="@font/opensansromansemibold"
+                    android:lineSpacingExtra="2dp"
+                    android:padding="12dp"
+                    android:textColor="@color/authx_text"
+                    android:textSize="@dimen/_13sp"
                     android:visibility="gone"
                     tools:text="Fetching your results…"
                     tools:visibility="visible" />
 
                 <LinearLayout
                     android:id="@+id/btnAddResultEmpty"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="52dp"
                     android:layout_marginTop="12dp"
-                    android:paddingHorizontal="28dp"
-                    android:orientation="horizontal"
+                    android:background="@drawable/bg_authx_outline"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:gravity="center"
-                    android:background="@drawable/bg_result_btn_outline"
-                    android:foreground="?attr/selectableItemBackground">
+                    android:orientation="horizontal">
 
                     <ImageView
                         android:layout_width="18dp"
                         android:layout_height="18dp"
                         android:layout_marginEnd="8dp"
+                        android:contentDescription="@string/result_add_my_result"
                         android:src="@drawable/ic_result_add"
-                        app:tint="@color/result_brand_blue"
-                        android:contentDescription="@string/result_add_my_result" />
+                        app:tint="@color/authx_coral" />
 
                     <TextView
+                        style="@style/txt_OpenSansRomanBold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/result_enter_manually"
-                        android:textColor="@color/result_brand_blue"
-                        android:textSize="14sp"
-                        android:fontFamily="@font/opensansromanbold" />
+                        android:textColor="@color/authx_text"
+                        android:textSize="@dimen/_15sp" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -467,20 +513,24 @@
                 android:id="@+id/llResultLogin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="18dp"
+                android:background="@drawable/bg_authx_card"
+                android:elevation="10dp"
                 android:gravity="center"
-                android:paddingTop="90dp"
-                android:paddingHorizontal="32dp"
+                android:orientation="vertical"
+                android:padding="28dp"
                 android:visibility="gone">
 
                 <TextView
+                    style="@style/txtOpenSansRomanSemiBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="@string/result_login_needed"
-                    android:textColor="@color/gray_2"
-                    android:textSize="14sp"
-                    android:fontFamily="@font/opensansromansemibold" />
+                    android:textColor="@color/authx_text"
+                    android:textSize="@dimen/_15sp" />
             </LinearLayout>
 
             <!-- Progress -->

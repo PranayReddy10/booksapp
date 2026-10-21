@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- One semester: a white row card with the SGPA chip, opening to its mark sheet. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="12dp"
-    app:cardCornerRadius="16dp"
-    app:cardElevation="2dp"
-    app:cardBackgroundColor="@color/white">
+    android:background="@drawable/bg_authx_card_sm"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,6 +23,21 @@
             android:padding="16dp"
             android:background="?attr/selectableItemBackground">
 
+            <FrameLayout
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:layout_marginEnd="12dp"
+                android:background="@drawable/bg_authx_icon_tile">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_result_school"
+                    app:tint="@color/authx_coral"
+                    android:contentDescription="@null" />
+            </FrameLayout>
+
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -33,8 +48,8 @@
                     android:id="@+id/tvSemTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/gray"
-                    android:textSize="15sp"
+                    android:textColor="@color/authx_text"
+                    android:textSize="16sp"
                     android:fontFamily="@font/opensansromanextrabold" />
 
                 <TextView
@@ -42,8 +57,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
-                    android:textColor="@color/gray_2"
-                    android:textSize="11sp"
+                    android:textColor="@color/authx_text_muted"
+                    android:textSize="12sp"
                     android:fontFamily="@font/opensansromansemibold" />
 
                 <LinearLayout
@@ -82,7 +97,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:gravity="center"
-                android:background="@drawable/bg_grade_chip"
+                android:background="@drawable/bg_authx_coral_soft"
                 android:paddingHorizontal="14dp"
                 android:paddingVertical="6dp">
 
@@ -90,15 +105,15 @@
                     android:id="@+id/tvSemSgpa"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/result_brand_blue"
-                    android:textSize="16sp"
+                    android:textColor="@color/authx_coral"
+                    android:textSize="17sp"
                     android:fontFamily="@font/opensansromanextrabold" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/result_sgpa"
-                    android:textColor="@color/gray_2"
+                    android:textColor="@color/authx_text_muted"
                     android:textSize="9sp"
                     android:fontFamily="@font/opensansromansemibold" />
             </LinearLayout>
@@ -109,6 +124,7 @@
                 android:layout_height="26dp"
                 android:layout_marginStart="8dp"
                 android:src="@drawable/ic_result_expand"
+                app:tint="@color/authx_text_muted"
                 android:contentDescription="@string/result_expand" />
         </LinearLayout>
 
@@ -126,7 +142,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginBottom="8dp"
-                android:background="#12000000" />
+                android:background="@drawable/bg_authx_divider" />
 
             <!-- The mark sheet as a table. It scrolls sideways rather than
                  squeezing six columns into a phone width, and the header shares
@@ -152,7 +168,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/opensansromanbold"
                             android:text="@string/result_col_subject"
-                            android:textColor="@color/gray_2"
+                            android:textColor="@color/authx_text_muted"
                             android:textSize="10sp" />
 
                         <TextView
@@ -161,7 +177,7 @@
                             android:fontFamily="@font/opensansromanbold"
                             android:gravity="center"
                             android:text="@string/result_col_int"
-                            android:textColor="@color/gray_2"
+                            android:textColor="@color/authx_text_muted"
                             android:textSize="10sp" />
 
                         <TextView
@@ -170,7 +186,7 @@
                             android:fontFamily="@font/opensansromanbold"
                             android:gravity="center"
                             android:text="@string/result_col_ext"
-                            android:textColor="@color/gray_2"
+                            android:textColor="@color/authx_text_muted"
                             android:textSize="10sp" />
 
                         <TextView
@@ -179,7 +195,7 @@
                             android:fontFamily="@font/opensansromanbold"
                             android:gravity="center"
                             android:text="@string/result_col_total"
-                            android:textColor="@color/gray_2"
+                            android:textColor="@color/authx_text_muted"
                             android:textSize="10sp" />
 
                         <TextView
@@ -188,7 +204,7 @@
                             android:fontFamily="@font/opensansromanbold"
                             android:gravity="center"
                             android:text="@string/result_col_gr"
-                            android:textColor="@color/gray_2"
+                            android:textColor="@color/authx_text_muted"
                             android:textSize="10sp" />
 
                         <TextView
@@ -197,14 +213,14 @@
                             android:fontFamily="@font/opensansromanbold"
                             android:gravity="center"
                             android:text="@string/result_col_cr"
-                            android:textColor="@color/gray_2"
+                            android:textColor="@color/authx_text_muted"
                             android:textSize="10sp" />
                     </LinearLayout>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="#14000000" />
+                        android:background="@drawable/bg_authx_divider" />
 
                     <!-- Subject rows injected here at runtime -->
                     <LinearLayout
@@ -216,4 +232,4 @@
             </HorizontalScrollView>
         </LinearLayout>
     </LinearLayout>
-</androidx.cardview.widget.CardView>
+</LinearLayout>

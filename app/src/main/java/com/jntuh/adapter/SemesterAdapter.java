@@ -107,7 +107,7 @@ public class SemesterAdapter extends RecyclerView.Adapter<SemesterAdapter.ViewHo
             boolean failed = s.getIs_backlog() == 1;
             tagBacklog.setVisibility(failed ? View.VISIBLE : View.GONE);
             tvGrade.setTextColor(androidx.core.content.ContextCompat.getColor(activity,
-                    failed ? R.color.result_backlog_red : R.color.result_brand_blue));
+                    failed ? R.color.result_backlog_red : R.color.authx_grade));
 
             b.llSubjectRows.addView(row);
         }

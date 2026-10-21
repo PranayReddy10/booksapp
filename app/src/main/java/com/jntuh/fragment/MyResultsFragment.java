@@ -69,7 +69,7 @@ public class MyResultsFragment extends Fragment {
         v.rvSemesters.setAdapter(adapter);
 
         v.swipeResults.setColorSchemeColors(
-                androidx.core.content.ContextCompat.getColor(requireActivity(), R.color.app_bg_orange));
+                androidx.core.content.ContextCompat.getColor(requireActivity(), R.color.authx_coral));
         v.swipeResults.setOnRefreshListener(this::loadResult);
 
         v.btnAddResultEmpty.setOnClickListener(view -> openEditor());
@@ -323,6 +323,13 @@ public class MyResultsFragment extends Fragment {
         v.tvTotalCredits.setText(nn(item.getTotal_credits(), "—"));
         v.tvBacklogs.setText(nn(item.getBacklogs_count(), "0"));
 
+        // The ring fills to CGPA out of 10; backlogs read green at zero, red otherwise.
+        v.progressCgpa.setProgressCompat((int) Math.round(Math.min(10d, Math.max(0d,
+                parseOr(item.getCurrent_cgpa(), 0d))) * 10d), true);
+        boolean hasBacklogs = parseOr(item.getBacklogs_count(), 0d) > 0d;
+        v.tvBacklogs.setTextColor(androidx.core.content.ContextCompat.getColor(requireActivity(),
+                hasBacklogs ? R.color.result_backlog_red : R.color.authx_good));
+
         v.pillVerified.setVisibility(item.getVerified() == 1 ? View.VISIBLE : View.GONE);
         v.bannerLocked.setVisibility(locked ? View.VISIBLE : View.GONE);
         // A result pulled from the university is not the student's to edit —
@@ -353,6 +360,14 @@ public class MyResultsFragment extends Fragment {
         v.llResultContent.setVisibility(s == State.CONTENT ? View.VISIBLE : View.GONE);
         v.llResultEmpty.setVisibility(s == State.EMPTY ? View.VISIBLE : View.GONE);
         v.llResultLogin.setVisibility(s == State.LOGIN ? View.VISIBLE : View.GONE);
+    }
+
+    private static double parseOr(String s, double fallback) {
+        try {
+            return s == null ? fallback : Double.parseDouble(s.trim());
+        } catch (NumberFormatException e) {
+            return fallback;
+        }
     }
 
     private static String nn(String s, String fallback) {
