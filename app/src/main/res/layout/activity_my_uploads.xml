@@ -74,10 +74,10 @@
                 android:id="@+id/rvMyUploads"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingStart="@dimen/_10px"
-                android:paddingEnd="@dimen/_10px"
-                android:paddingTop="@dimen/_10px"
-                android:paddingBottom="@dimen/_15px"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:paddingTop="14dp"
+                android:paddingBottom="16dp"
                 android:clipToPadding="false" />
 
             <ProgressBar

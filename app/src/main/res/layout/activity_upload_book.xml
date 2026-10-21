@@ -72,11 +72,12 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/rectangle_bg_white_border"
-                android:minHeight="@dimen/_55px">
+                android:background="@drawable/bg_authx_outline"
+                android:minHeight="56dp">
 
                 <Spinner
                     android:id="@+id/spCategory"
+                    android:background="@android:color/transparent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -87,12 +88,12 @@
 
                 <ImageView
                     android:id="@+id/ivCategoryArrow"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="@dimen/_16px"
-                    android:src="@drawable/img_arrow_dropdown"
+                    android:src="@drawable/ic_authx_chevron_down"
                     tools:ignore="ContentDescription" />
             </RelativeLayout>
 
@@ -110,11 +111,12 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/rectangle_bg_white_border"
-                android:minHeight="@dimen/_55px">
+                android:background="@drawable/bg_authx_outline"
+                android:minHeight="56dp">
 
                 <Spinner
                     android:id="@+id/spDepartment"
+                    android:background="@android:color/transparent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -125,12 +127,12 @@
 
                 <ImageView
                     android:id="@+id/ivDepartmentArrow"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="@dimen/_16px"
-                    android:src="@drawable/img_arrow_dropdown"
+                    android:src="@drawable/ic_authx_chevron_down"
                     tools:ignore="ContentDescription" />
             </RelativeLayout>
 

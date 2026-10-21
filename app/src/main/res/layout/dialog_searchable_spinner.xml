@@ -1,43 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Searchable picker for long dropdowns (university, department, college):
+     a rounded card with the title, a search field and the options as rows. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
+    android:background="@drawable/bg_authx_card"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="18dp">
 
-    <TextView
-        android:id="@+id/tvSearchTitle"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/gray_2"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:text="Select"
-        tools:ignore="HardcodedText" />
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tvSearchTitle"
+            style="@style/txt_OpenSansRomanExtraBold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@+id/ivSearchClose"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="@string/lbl_authx_select"
+            android:textColor="@color/authx_text"
+            android:textSize="@dimen/_18sp" />
+
+        <ImageView
+            android:id="@+id/ivSearchClose"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/bg_authx_icon_tile"
+            android:contentDescription="@android:string/cancel"
+            android:padding="8dp"
+            android:src="@drawable/ic_authx_close" />
+    </RelativeLayout>
 
     <EditText
         android:id="@+id/etSearch"
+        style="@style/AuthxFieldEdit"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:background="@drawable/rectangle_bg_white_border"
-        android:drawableStart="@android:drawable/ic_menu_search"
-        android:drawablePadding="8dp"
-        android:hint="Search…"
+        android:layout_height="52dp"
+        android:layout_marginTop="14dp"
+        android:background="@drawable/bg_authx_soft"
+        android:drawableStart="@drawable/ic_authx_search"
+        android:drawablePadding="10dp"
+        android:hint="@string/lbl_authx_search"
         android:inputType="text"
-        android:padding="12dp"
-        android:singleLine="true"
-        android:textColorHint="@color/gray_edt_hint_text"
-        tools:ignore="Autofill,HardcodedText" />
+        android:paddingStart="14dp"
+        android:paddingEnd="14dp"
+        android:textColorHint="@color/authx_text_muted"
+        tools:ignore="Autofill" />
 
     <ListView
         android:id="@+id/lvItems"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         android:layout_weight="1"
-        android:divider="@color/gray_border_stroke"
-        android:dividerHeight="0.5dp" />
+        android:divider="@null"
+        android:dividerHeight="0dp"
+        android:listSelector="@android:color/transparent"
+        android:scrollbarStyle="outsideOverlay" />
 </LinearLayout>

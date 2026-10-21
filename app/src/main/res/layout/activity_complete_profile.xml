@@ -401,7 +401,7 @@
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         android:layout_marginEnd="16dp"
-                        android:src="@drawable/img_arrow_dropdown"
+                        android:src="@drawable/ic_authx_chevron_down"
                         app:tint="@color/authx_text_muted"
                         tools:ignore="ContentDescription" />
                 </RelativeLayout>
@@ -545,7 +545,7 @@
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         android:layout_marginEnd="16dp"
-                        android:src="@drawable/img_arrow_dropdown"
+                        android:src="@drawable/ic_authx_chevron_down"
                         app:tint="@color/authx_text_muted"
                         tools:ignore="ContentDescription" />
                 </RelativeLayout>
@@ -602,7 +602,7 @@
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         android:layout_marginEnd="16dp"
-                        android:src="@drawable/img_arrow_dropdown"
+                        android:src="@drawable/ic_authx_chevron_down"
                         app:tint="@color/authx_text_muted"
                         tools:ignore="ContentDescription" />
                 </RelativeLayout>

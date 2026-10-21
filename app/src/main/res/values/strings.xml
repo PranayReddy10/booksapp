@@ -842,4 +842,11 @@
     <string name="lbl_cont_empty_title">Nothing in progress yet</string>
     <string name="lbl_cont_empty_desc">Books you start reading show up here, so you can jump back to the page you stopped at.</string>
     <string name="lbl_cont_browse">Browse books</string>
+    <string name="lbl_authx_select">Select</string>
+    <string name="lbl_authx_search">Search…</string>
+    <string name="lbl_mb_heading">Your uploads</string>
+    <string name="lbl_mb_upload">Upload a book</string>
+    <string name="lbl_mb_upload_sub">Share notes or books and earn coins when students read them.</string>
+    <string name="lbl_mb_empty_title">No uploads yet</string>
+    <string name="lbl_mb_empty_desc">Books you upload show here with their review status. Approved books earn coins as students read them.</string>
 </resources>

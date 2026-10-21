@@ -63,6 +63,9 @@ public final class SearchableSpinner {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_searchable_spinner);
         if (dialog.getWindow() != null) {
+            // The card draws its own rounded corners.
+            dialog.getWindow().setBackgroundDrawable(
+                    new android.graphics.drawable.ColorDrawable(android.graphics.Color.TRANSPARENT));
             dialog.getWindow().setLayout(
                     (int) (ctx.getResources().getDisplayMetrics().widthPixels * 0.9),
                     (int) (ctx.getResources().getDisplayMetrics().heightPixels * 0.7));
@@ -72,6 +75,8 @@ public final class SearchableSpinner {
         final EditText etSearch = dialog.findViewById(R.id.etSearch);
         final ListView listView = dialog.findViewById(R.id.lvItems);
         tvTitle.setText(title);
+        View close = dialog.findViewById(R.id.ivSearchClose);
+        if (close != null) close.setOnClickListener(v -> dialog.dismiss());
 
         // Filtered view keeps a parallel list of the ORIGINAL indexes so selecting an
         // item maps back to the real spinner position.
@@ -102,7 +107,7 @@ public final class SearchableSpinner {
                         TextView label = row.findViewById(R.id.tvItem);
                         if (label != null) {
                             label.setTextColor(ContextCompat.getColor(ctx,
-                                    selected ? R.color.app_bg_orange : R.color.gray_2));
+                                    selected ? R.color.authx_coral : R.color.authx_text));
                         }
                         return row;
                     }

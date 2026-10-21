@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Selected/collapsed appearance of a spinner (the closed box). -->
+<!-- Closed dropdown value. Every spinner box shares this look; the box itself
+     (outline and chevron) comes from the spinner's background. -->
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="@dimen/_50px"
-    android:gravity="center_vertical"
-    android:paddingStart="@dimen/_4px"
-    android:paddingEnd="@dimen/_10px"
-    android:paddingTop="@dimen/_10px"
-    android:paddingBottom="@dimen/_10px"
     android:ellipsize="end"
-    android:maxLines="1"
-    android:textColor="@color/gray"
-    android:textSize="@dimen/_15sp"
     android:fontFamily="@font/opensansromansemibold"
-    tools:ignore="RtlSymmetry"
-    xmlns:tools="http://schemas.android.com/tools" />
+    android:gravity="center_vertical"
+    android:maxLines="1"
+    android:minHeight="48dp"
+    android:paddingStart="2dp"
+    android:paddingTop="10dp"
+    android:paddingEnd="8dp"
+    android:paddingBottom="10dp"
+    android:textColor="@color/authx_text"
+    android:textSize="@dimen/_15sp"
+    tools:ignore="RtlSymmetry" />

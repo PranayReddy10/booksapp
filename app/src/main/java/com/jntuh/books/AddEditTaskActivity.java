@@ -151,8 +151,8 @@ public class AddEditTaskActivity extends AppCompatActivity {
      */
     private ArrayAdapter<String> spinnerAdapter(String[] labels) {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item, labels);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                R.layout.row_spinner_item, labels);
+        adapter.setDropDownViewResource(R.layout.row_spinner_dropdown_item);
         return adapter;
     }
 

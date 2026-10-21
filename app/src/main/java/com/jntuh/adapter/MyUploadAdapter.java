@@ -34,7 +34,7 @@ public class MyUploadAdapter extends RecyclerView.Adapter<MyUploadAdapter.ViewHo
     @NotNull
     @Override
     public ViewHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType) {
-        return new ViewHolder(RowMyUploadBinding.inflate(activity.getLayoutInflater()));
+        return new ViewHolder(RowMyUploadBinding.inflate(activity.getLayoutInflater(), parent, false));
     }
 
     @SuppressLint("SetTextI18n")
@@ -97,10 +97,13 @@ public class MyUploadAdapter extends RecyclerView.Adapter<MyUploadAdapter.ViewHo
                 colorRes = R.color.status_pending;
                 break;
         }
+        // A tinted pill with the status colour as text, like the other chips.
+        int color = ContextCompat.getColor(activity, colorRes);
         holder.binding.tvUploadStatus.setText(label);
+        holder.binding.tvUploadStatus.setTextColor(color);
         GradientDrawable pill = new GradientDrawable();
         pill.setCornerRadius(activity.getResources().getDisplayMetrics().density * 12);
-        pill.setColor(ContextCompat.getColor(activity, colorRes));
+        pill.setColor(androidx.core.graphics.ColorUtils.setAlphaComponent(color, 36));
         holder.binding.tvUploadStatus.setBackground(pill);
 
         boolean isRejected = colorRes == R.color.status_rejected;

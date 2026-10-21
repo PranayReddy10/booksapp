@@ -277,6 +277,7 @@ public class EditResultActivity extends AppCompatActivity {
 
         ArrayAdapter<String> gradeAdapter =
                 new ArrayAdapter<>(this, R.layout.row_spinner_item, GradeUtil.GRADES);
+        gradeAdapter.setDropDownViewResource(R.layout.row_spinner_dropdown_item);
         se.spGrade.setAdapter(gradeAdapter);
 
         ivRemove.setOnClickListener(v -> {
