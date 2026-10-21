@@ -26,6 +26,7 @@ import com.jntuh.books.PlanListActivity;
 import com.jntuh.books.ProfileSectionActivity;
 import com.jntuh.books.RegisterActivity;
 import com.jntuh.books.SplashActivity;
+import com.jntuh.books.UploadBookActivity;
 import com.jntuh.service.ReminderSweepWorker;
 import com.facebook.ads.AudienceNetworkAds;
 import com.google.android.gms.ads.MobileAds;
@@ -181,7 +182,7 @@ public class MyApplication extends Application implements Application.ActivityLi
 
     @Override
     public void onActivityCreated(@NonNull Activity activity, @Nullable Bundle bundle) {
-        if(!(activity instanceof MainActivity) && !(activity instanceof LoginActivity) && !(activity instanceof RegisterActivity) && !(activity instanceof ForgotPassActivity) && !(activity instanceof CompleteProfileActivity) && !(activity instanceof EditProfileActivity) && !(activity instanceof ProfileSectionActivity) && !(activity instanceof SplashActivity) && !(activity instanceof SignInHubActivity)) {
+        if(!(activity instanceof MainActivity) && !(activity instanceof LoginActivity) && !(activity instanceof RegisterActivity) && !(activity instanceof ForgotPassActivity) && !(activity instanceof CompleteProfileActivity) && !(activity instanceof EditProfileActivity) && !(activity instanceof ProfileSectionActivity) && !(activity instanceof UploadBookActivity) && !(activity instanceof SplashActivity) && !(activity instanceof SignInHubActivity)) {
             if(!(activity instanceof PaymentMethodActivity) && !(activity instanceof PlanListActivity)) {
                 StatusBarUtil.setStatusBar(activity, "");
             } else {

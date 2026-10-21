@@ -55,17 +55,15 @@ public class CategoryFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
 
-        StatusBarUtil.setStatusBar(requireActivity(), "");
+        // Navy header, so the navy status bar with white icons.
+        StatusBarUtil.setStatusBar(requireActivity(), "profile");
 
         viewCat = FragmentCatBinding.inflate(inflater, container, false);
 
         method=new Method(requireActivity());
         categoryLists=new ArrayList<>();
 
-        viewCat.toolbarMain.imageArrowBack.setVisibility(View.GONE);
-        viewCat.toolbarMain.tvToolbarTitle.setText(getString(R.string.cat_title));
-        viewCat.toolbarMain.ivSearch.setVisibility(View.VISIBLE);
-        viewCat.toolbarMain.ivSearch.setOnClickListener(v -> {
+        viewCat.llCatSearch.setOnClickListener(v -> {
             Intent intentSearch=new Intent(requireActivity(), SearchBookActivity.class);
             startActivity(intentSearch);
         });

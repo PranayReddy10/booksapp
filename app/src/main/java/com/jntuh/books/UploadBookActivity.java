@@ -85,10 +85,7 @@ public class UploadBookActivity extends AppCompatActivity {
         method.forceRTLIfSupported();
         progressDialog = new ProgressDialog(this, R.style.MyAlertDialogStyle);
 
-        binding.toolbarMain.tvToolbarTitle.setText(getString(R.string.lbl_upload_book));
-        binding.toolbarMain.ivSearch.setVisibility(View.GONE);
-        binding.toolbarMain.imageFilter.setVisibility(View.GONE);
-        binding.toolbarMain.imageArrowBack.setOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
+        binding.btnUploadBack.setOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
 
         // Restore picker state if the activity was recreated.
         if (savedInstanceState != null) {
@@ -225,7 +222,7 @@ public class UploadBookActivity extends AppCompatActivity {
             boolean isFile = checkedId == R.id.rbFile;
             binding.btnPickFile.setVisibility(isFile ? View.VISIBLE : View.GONE);
             binding.tvFileName.setVisibility(isFile && fileName != null ? View.VISIBLE : View.GONE);
-            binding.edtLink.setVisibility(isFile ? View.GONE : View.VISIBLE);
+            binding.tilLink.setVisibility(isFile ? View.GONE : View.VISIBLE);
         });
     }
 
