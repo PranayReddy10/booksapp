@@ -5,7 +5,6 @@ import com.jntuh.response.AppDetailRP;
 import com.jntuh.response.AuthorDetailRP;
 import com.jntuh.response.AuthorRP;
 import com.jntuh.response.BookDetailRP;
-import com.jntuh.response.BraintreeCheckOutRP;
 import com.jntuh.response.CatRP;
 import com.jntuh.response.DeleteAccRP;
 import com.jntuh.response.EditProfileRP;
@@ -14,7 +13,6 @@ import com.jntuh.response.HomeRP;
 import com.jntuh.response.LoginRP;
 import com.jntuh.response.PayUMoneyHashRP;
 import com.jntuh.response.PaymentSuccessRP;
-import com.jntuh.response.PaypalTokenRP;
 import com.jntuh.response.PlanRP;
 import com.jntuh.response.PostRateRP;
 import com.jntuh.response.RateReviewRP;
@@ -227,16 +225,6 @@ public interface ApiInterface {
     @POST("stripe_token_get")
     @FormUrlEncoded
     Call<StripeCheckOutRP> getStripeTokenData(@Field("data") String data);
-
-    //get paypal token
-    @POST("get_braintree_token")
-    @FormUrlEncoded
-    Call<PaypalTokenRP> getPaypalTokenData(@Field("data") String data);
-
-    //get paypal check out
-    @POST("braintree_checkout")
-    @FormUrlEncoded
-    Call<BraintreeCheckOutRP> getPaypalCheckOutData(@Field("data") String data);
 
 
     //get razor pay token

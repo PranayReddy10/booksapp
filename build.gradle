@@ -42,20 +42,6 @@ allprojects {
         mavenCentral()
         maven { url 'https://jitpack.io' }
         maven { url 'https://plugins.gradle.org/m2' }
-        // Cardinal 3-D Secure SDK, needed by Braintree drop-in (PayPal / cards).
-        // It is only on Cardinal's JFrog server, which refuses anonymous downloads
-        // (403). Put the read-only password from the Braintree drop-in README
-        // (github.com/braintree/braintree-android-drop-in) in ~/.gradle/gradle.properties
-        // as cardinalPassword=..., or in the CARDINAL_PASSWORD environment variable.
-        maven {
-            url "https://cardinalcommerceprod.jfrog.io/artifactory/android"
-            credentials {
-                username 'braintree_team_sdk'
-                password (findProperty('cardinalPassword') ?: System.getenv('CARDINAL_PASSWORD') ?: '')
-            }
-            // Only ask this server for Cardinal, so a missing password cannot slow other lookups.
-            content { includeGroup 'org.jfrog.cardinalcommerce.gradle' }
-        }
 
         maven {
             url "https://s3-ap-southeast-1.amazonaws.com/godel-release/godel/"
