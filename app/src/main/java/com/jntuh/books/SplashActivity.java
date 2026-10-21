@@ -251,6 +251,16 @@ public class SplashActivity extends AppCompatActivity {
             finishAffinity();
             return;
         }
+        // A Google sign-in that never finished its profile finishes it first,
+        // whatever route (deep link included) brought them here.
+        if ("0".equals(method.getProfileComplete())) {
+            Intent cp = new Intent(getApplicationContext(), CompleteProfileActivity.class);
+            cp.putExtra("uId", method.getUserId());
+            cp.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(cp);
+            finishAffinity();
+            return;
+        }
         switch (type) {
             case "category":
                 Intent intentSubCat = new Intent(SplashActivity.this, SubCategoryActivity.class);
@@ -283,16 +293,6 @@ public class SplashActivity extends AppCompatActivity {
                 finishAffinity();
                 break;
             default:
-                // Google users who didn't finish University/Department/College get
-                // sent back to complete it (covers app-killed-mid-signup cases).
-                if (method.getIsLogin() && "0".equals(method.getProfileComplete())) {
-                    Intent cp = new Intent(getApplicationContext(), CompleteProfileActivity.class);
-                    cp.putExtra("uId", method.getUserId());
-                    cp.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(cp);
-                    finishAffinity();
-                    break;
-                }
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);

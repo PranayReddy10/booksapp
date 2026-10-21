@@ -242,6 +242,57 @@ public class Method {
         return pref.getString("user_id", "");
     }
 
+    public void saveUserName(String userName) {
+        editor.putString("user_name", userName);
+        editor.commit();
+    }
+
+    // ---- Hall ticket ----
+
+    /** Longest hall ticket / roll number any university uses (Osmania: 12). */
+    public static final int HALL_TICKET_MAX = 15;
+
+    /**
+     * Make a hall ticket field type in capitals and drop anything but letters
+     * and digits (so "1005-22-733-001" becomes "100522733001").
+     */
+    public static void capsHallTicket(android.widget.EditText field) {
+        field.setFilters(new android.text.InputFilter[]{
+                (source, start, end, dest, dstart, dend) -> {
+                    StringBuilder out = new StringBuilder();
+                    for (int i = start; i < end; i++) {
+                        char c = source.charAt(i);
+                        if (Character.isLetterOrDigit(c)) out.append(Character.toUpperCase(c));
+                    }
+                    return out.toString().equals(source.subSequence(start, end).toString())
+                            ? null : out.toString();
+                },
+                new android.text.InputFilter.LengthFilter(HALL_TICKET_MAX)
+        });
+    }
+
+    /** Whether the university uses the 10-character JNTU hall ticket. */
+    public static boolean isJntuUniversity(String university) {
+        return university != null && university.toUpperCase(java.util.Locale.US).contains("JNTU");
+    }
+
+    /** JNTU: exactly 10 letters/digits. Other universities: 6 to 15. */
+    public static boolean validHallTicket(String roll, String university) {
+        if (roll == null) return false;
+        String r = roll.trim();
+        if (!r.matches("[A-Za-z0-9]+")) return false;
+        return isJntuUniversity(university)
+                ? r.length() == 10
+                : r.length() >= 6 && r.length() <= HALL_TICKET_MAX;
+    }
+
+    /** The message for an invalid hall ticket at this university. */
+    public static int hallTicketError(String university) {
+        return isJntuUniversity(university)
+                ? com.jntuh.books.R.string.result_fetch_invalid
+                : com.jntuh.books.R.string.msg_roll_invalid_other;
+    }
+
     public String getUserName() {
         pref = activity.getSharedPreferences(myPreference, 0);
         return pref.getString("user_name", "");

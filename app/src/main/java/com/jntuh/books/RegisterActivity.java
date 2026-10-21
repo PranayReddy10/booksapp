@@ -84,6 +84,7 @@ public class RegisterActivity extends AppCompatActivity {
         progressDialog = new ProgressDialog(this, R.style.MyAlertDialogStyle);
 
         setupSpinners();
+        Method.capsHallTicket(viewRegisterBinding.edtRegRoll);
 
         viewRegisterBinding.tvRegPrivacyTerms.setOnClickListener(v -> {
             Intent intentPage = new Intent(RegisterActivity.this, PagesActivity.class);
@@ -496,12 +497,14 @@ public class RegisterActivity extends AppCompatActivity {
                 Toast.makeText(this, getString(R.string.please_select_university), Toast.LENGTH_SHORT).show();
                 return false;
             }
-            // The lookup needs a full hall ticket, so check the length here
-            // rather than letting the server reject it a round-trip later.
+            // JNTU hall tickets are exactly 10 characters (the lookup needs them
+            // whole); other universities' roll numbers run 6 to 15.
             String roll = viewRegisterBinding.edtRegRoll.getText().toString().trim();
-            if (roll.length() != 10) {
+            String uni = universityList.get(viewRegisterBinding.spRegUniversity.getSelectedItemPosition() - 1)
+                    .getUniversity_name();
+            if (!Method.validHallTicket(roll, uni)) {
                 viewRegisterBinding.edtRegRoll.requestFocus();
-                viewRegisterBinding.edtRegRoll.setError(getString(R.string.result_fetch_invalid));
+                viewRegisterBinding.edtRegRoll.setError(getString(Method.hallTicketError(uni)));
                 return false;
             }
             return true;
@@ -756,7 +759,7 @@ public class RegisterActivity extends AppCompatActivity {
         String email = viewRegisterBinding.edtRegEmail.getText().toString();
         String password = viewRegisterBinding.edtRegPass.getText().toString();
         String phoneNo = Method.normalizePhone(viewRegisterBinding.edtRegPhone.getText().toString());
-        String rollNo = viewRegisterBinding.edtRegRoll.getText().toString();
+        String rollNo = viewRegisterBinding.edtRegRoll.getText().toString().trim().toUpperCase(java.util.Locale.US);
         String fatherName = viewRegisterBinding.edtRegFather.getText().toString();
         String regulation = viewRegisterBinding.edtRegRegulation.getText().toString();
 

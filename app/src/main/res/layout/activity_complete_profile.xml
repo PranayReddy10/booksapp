@@ -134,6 +134,26 @@
                     android:textColor="@color/authx_text"
                     android:textSize="@dimen/_17sp" />
 
+                <!-- Name: Google's to start with; Look up replaces it with the
+                     name on the hall ticket. Editable either way. -->
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/AuthxField"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:hint="@string/lbl_name"
+                    app:helperText="@string/lbl_cp_name_note"
+                    app:startIconDrawable="@drawable/ic_reg_person">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtCpName"
+                        style="@style/AuthxFieldEdit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName|textCapWords"
+                        tools:ignore="Autofill" />
+                </com.google.android.material.textfield.TextInputLayout>
+
                 <!-- Email comes from Google and is the sign-in, so it is shown, not edited. -->
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -457,7 +477,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="textCapCharacters"
-                            android:maxLength="10"
+                            android:maxLength="15"
                             tools:ignore="Autofill" />
                     </com.google.android.material.textfield.TextInputLayout>
 

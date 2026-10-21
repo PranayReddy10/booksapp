@@ -201,6 +201,7 @@ public class EditProfileActivity extends AppCompatActivity {
         // Editable extras. The hall ticket is set once: results are keyed on it,
         // so changing it would orphan this student's marks. Still enterable while
         // the account has none, for profiles that predate it being collected.
+        Method.capsHallTicket(viewEditProfile.edtRoll);
         if (uRoll != null) viewEditProfile.edtRoll.setText(uRoll);
         boolean rollLocked = uRoll != null && !uRoll.trim().isEmpty();
         viewEditProfile.edtRoll.setEnabled(!rollLocked);
@@ -291,16 +292,13 @@ public class EditProfileActivity extends AppCompatActivity {
     private void lookupHallTicket() {
         String roll = viewEditProfile.edtRoll.getText() == null ? ""
                 : viewEditProfile.edtRoll.getText().toString().trim().toUpperCase(java.util.Locale.US);
+        if (!Method.isJntuUniversity(selectedUniversityName())) {
+            setLookupStatus(getString(R.string.msg_reg_lookup_other_uni));
+            return;
+        }
         if (roll.length() != 10) {
             viewEditProfile.edtRoll.requestFocus();
             viewEditProfile.edtRoll.setError(getString(R.string.result_fetch_invalid));
-            return;
-        }
-        int uPos = viewEditProfile.spEditUniversity.getSelectedItemPosition();
-        String uni = uPos > 0 && (uPos - 1) < universityList.size()
-                ? universityList.get(uPos - 1).getUniversity_name() : "";
-        if (uni == null || !uni.toUpperCase(java.util.Locale.US).contains("JNTU")) {
-            setLookupStatus(getString(R.string.msg_reg_lookup_other_uni));
             return;
         }
         if (lookupInFlight) return;
@@ -384,6 +382,19 @@ public class EditProfileActivity extends AppCompatActivity {
         spinner.setSelection(adapter.getCount() - 1);   // "Others"
         otherBox.setText(value);
         otherBox.setVisibility(View.VISIBLE);
+    }
+
+    /** A newly typed hall ticket must suit the university; a locked or empty one is fine. */
+    private boolean rollIsValid() {
+        if (!viewEditProfile.edtRoll.isEnabled()) return true;
+        String roll = viewEditProfile.edtRoll.getText() == null ? "" : viewEditProfile.edtRoll.getText().toString().trim();
+        return roll.isEmpty() || Method.validHallTicket(roll, selectedUniversityName());
+    }
+
+    private String selectedUniversityName() {
+        int uPos = viewEditProfile.spEditUniversity.getSelectedItemPosition();
+        return uPos > 0 && (uPos - 1) < universityList.size()
+                ? universityList.get(uPos - 1).getUniversity_name() : uUniversity;
     }
 
     private static boolean notBlank(String value) {
@@ -626,6 +637,9 @@ public class EditProfileActivity extends AppCompatActivity {
             viewEditProfile.edtPhone.setError(getResources().getString(R.string.please_enter_phone));
         } else if (selectedGender <= 0) {
             method.alertBox(getString(R.string.please_select_gender));
+        } else if (!rollIsValid()) {
+            viewEditProfile.edtRoll.requestFocus();
+            viewEditProfile.edtRoll.setError(getString(Method.hallTicketError(selectedUniversityName())));
         } else {
             if (method.isNetworkAvailable()) {
 
@@ -675,7 +689,7 @@ public class EditProfileActivity extends AppCompatActivity {
             jsObj.addProperty("college", collegeList.get(cPos - 1).getCollege_name());
         }
         // Extras used by My Results.
-        jsObj.addProperty("rollnumber", viewEditProfile.edtRoll.getText().toString().trim());
+        jsObj.addProperty("rollnumber", viewEditProfile.edtRoll.getText().toString().trim().toUpperCase(java.util.Locale.US));
         jsObj.addProperty("regulation", resolveSpinnerValue(viewEditProfile.spProfileRegulation,
                 viewEditProfile.edtRegulationOther, R.array.result_regulation_entries));
         jsObj.addProperty("degree", resolveSpinnerValue(viewEditProfile.spProfileDegree,

@@ -869,4 +869,6 @@
     <string name="msg_post_text_only">Just your words — no photo or video needed.</string>
     <string name="lbl_filter_text">Text</string>
     <string name="lbl_feed_sub">From students at your university</string>
+    <string name="msg_roll_invalid_other">Enter your hall ticket / roll number (6–15 letters or digits)</string>
+    <string name="lbl_cp_name_note">As on your hall ticket. Look up fills it in.</string>
 </resources>
