@@ -820,4 +820,10 @@
     <string name="lbl_authx_google">Continue with Google</string>
     <string name="lbl_authx_email">Email address</string>
     <string name="lbl_authx_login_btn">Log in</string>
+    <string name="lbl_authx_forgot_title">Forgot password?</string>
+    <string name="lbl_authx_forgot_sub">Enter the email you signed up with and we\'ll send you a link to reset your password.</string>
+    <string name="lbl_authx_send_link">Send reset link</string>
+    <string name="lbl_authx_remembered">Remembered it?</string>
+    <string name="lbl_authx_back_login">Back to login</string>
+    <string name="lbl_authx_lookup">Look up</string>
 </resources>

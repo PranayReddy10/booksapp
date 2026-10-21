@@ -1,57 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Completing a profile is enrolment, not a settings form. Google gives only a name
-     and email, so this asks for the rest of what sign-up asks for: phone and gender
-     on one card, the campus choices as numbered steps on another, then one action.
-     Matches the registration flow's look. -->
+<!-- Completing a Google profile, in the login screen's look: a navy header that says
+     why we ask, then two white cards overlapping it - "About you" (phone, gender) and
+     "Your campus" (numbered university, hall ticket, department, college) - and one
+     action pinned to the bottom. -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/app_bg">
+    android:background="@color/authx_page">
 
-    <!-- ===== Heading ===== -->
+    <!-- ===== Header ===== -->
     <LinearLayout
         android:id="@+id/llCompleteHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="@dimen/_20px"
-        android:layout_marginTop="@dimen/_30px"
-        android:layout_marginEnd="@dimen/_20px"
-        android:orientation="vertical">
+        android:background="@drawable/bg_authx_header"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="22dp"
+        android:paddingTop="40dp"
+        android:paddingEnd="22dp"
+        android:paddingBottom="64dp">
 
         <FrameLayout
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:background="@drawable/bg_reg_badge">
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:background="@drawable/bg_authx_glass">
 
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
                 android:layout_gravity="center"
                 android:src="@drawable/ic_result_school"
-                app:tint="@color/app_bg_orange"
+                app:tint="@color/authx_on_header"
                 tools:ignore="ContentDescription" />
         </FrameLayout>
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_15px"
-            android:fontFamily="@font/opensansromanextrabold"
-            android:text="@string/lbl_complete_profile"
-            android:textColor="@color/gray_2"
-            android:textSize="@dimen/_24sp" />
+            android:layout_marginStart="16dp"
+            android:orientation="vertical">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_6px"
-            android:fontFamily="@font/opensansromansemibold"
-            android:text="@string/lbl_complete_profile_sub"
-            android:textColor="@color/home_by_author"
-            android:textSize="@dimen/_15sp" />
+            <TextView
+                style="@style/txt_OpenSansRomanExtraBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/lbl_complete_profile"
+                android:textColor="@color/authx_on_header"
+                android:textSize="@dimen/_22sp" />
+
+            <TextView
+                style="@style/txtOpenSansRomanSemiBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/lbl_complete_profile_sub"
+                android:textColor="@color/authx_on_header_muted"
+                android:textSize="@dimen/_14sp" />
+        </LinearLayout>
     </LinearLayout>
 
     <!-- ===== Action ===== -->
@@ -60,17 +69,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="@dimen/_20px"
-        android:layout_marginEnd="@dimen/_20px"
-        android:layout_marginBottom="@dimen/_20px"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingStart="18dp"
+        android:paddingTop="10dp"
+        android:paddingEnd="18dp"
+        android:paddingBottom="18dp">
 
         <ProgressBar
             android:id="@+id/progressComplete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="@dimen/_12px"
+            android:layout_marginBottom="12dp"
             android:theme="@style/ProgressBar"
             android:visibility="gone" />
 
@@ -78,24 +88,25 @@
             android:id="@+id/btnSaveProfile"
             style="@style/txtOpenSansRomanBold"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_auth_cta"
+            android:layout_height="54dp"
+            android:background="@drawable/bg_authx_cta"
+            android:elevation="4dp"
             android:gravity="center"
-            android:paddingTop="@dimen/_16px"
-            android:paddingBottom="@dimen/_16px"
             android:singleLine="true"
+            android:stateListAnimator="@null"
             android:text="@string/lbl_continue"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="@dimen/_16sp" />
     </LinearLayout>
 
-    <!-- ===== Campus choices ===== -->
+    <!-- ===== Cards ===== -->
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/llCompleteActions"
         android:layout_below="@+id/llCompleteHeader"
+        android:layout_marginTop="-44dp"
         android:clipToPadding="false"
         android:fillViewport="true">
 
@@ -104,572 +115,525 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-        <!-- ===== About you: what Google does not tell us ===== -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_20px"
-            android:layout_marginTop="@dimen/_20px"
-            android:layout_marginEnd="@dimen/_20px"
-            android:background="@drawable/bg_reg_card"
-            android:orientation="vertical"
-            android:padding="@dimen/_20px">
-
-            <TextView
-                style="@style/txt_OpenSansRomanBold"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_14px"
-                android:text="@string/lbl_cp_about_you"
-                android:textColor="@color/gray_2"
-                android:textSize="@dimen/_16sp" />
-
-            <!-- Email comes from Google and is the sign-in, so it is shown, not edited. -->
-            <TextView
-                style="@style/txtOpenSansRomanSemiBold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/lbl_email"
-                android:textColor="@color/home_by_author"
-                android:textSize="@dimen/_13sp" />
-
+            <!-- ===== About you: what Google does not tell us ===== -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_8px"
-                android:alpha="0.75"
-                android:background="@drawable/bg_reg_field"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingStart="@dimen/_16px"
-                android:paddingTop="@dimen/_16px"
-                android:paddingEnd="@dimen/_16px"
-                android:paddingBottom="@dimen/_16px">
-
-                <ImageView
-                    android:layout_width="@dimen/_20px"
-                    android:layout_height="@dimen/_20px"
-                    android:src="@drawable/ic_reg_mail"
-                    app:tint="@color/app_bg_orange"
-                    tools:ignore="ContentDescription" />
+                android:layout_marginStart="18dp"
+                android:layout_marginEnd="18dp"
+                android:background="@drawable/bg_authx_card"
+                android:elevation="10dp"
+                android:orientation="vertical"
+                android:padding="20dp">
 
                 <TextView
-                    android:id="@+id/tvCpEmail"
-                    style="@style/txt_PoppinsMedium"
-                    android:layout_width="0dp"
+                    style="@style/txt_OpenSansRomanExtraBold"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_12px"
-                    android:layout_weight="1"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:textColor="@color/gray_2"
-                    android:textSize="@dimen/_15sp"
-                    tools:text="student@gmail.com" />
+                    android:text="@string/lbl_cp_about_you"
+                    android:textColor="@color/authx_text"
+                    android:textSize="@dimen/_17sp" />
 
-                <ImageView
-                    android:layout_width="@dimen/_18px"
-                    android:layout_height="@dimen/_18px"
-                    android:src="@drawable/ic_reg_lock"
-                    app:tint="@color/home_by_author"
-                    tools:ignore="ContentDescription" />
-            </LinearLayout>
-
-            <TextView
-                style="@style/txtOpenSansRomanSemiBold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_18px"
-                android:text="@string/lbl_phone_req"
-                android:textColor="@color/home_by_author"
-                android:textSize="@dimen/_13sp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_8px"
-                android:background="@drawable/bg_reg_field"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingStart="@dimen/_16px"
-                android:paddingEnd="@dimen/_16px">
-
-                <ImageView
-                    android:layout_width="@dimen/_20px"
-                    android:layout_height="@dimen/_20px"
-                    android:src="@drawable/ic_reg_phone"
-                    app:tint="@color/app_bg_orange"
-                    tools:ignore="ContentDescription" />
-
-                <TextView
-                    style="@style/txt_PoppinsMedium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_12px"
-                    android:text="@string/lbl_phone_country_code"
-                    android:textColor="@color/gray_2"
-                    android:textSize="@dimen/_15sp" />
-
-                <EditText
-                    android:id="@+id/edtCpPhone"
-                    style="@style/txt_PoppinsMedium"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_8px"
-                    android:layout_weight="1"
-                    android:background="@android:color/transparent"
-                    android:hint="@string/lbl_phone_hint_10"
-                    android:inputType="phone"
-                    android:maxLength="10"
-                    android:paddingTop="@dimen/_16px"
-                    android:paddingBottom="@dimen/_16px"
-                    android:singleLine="true"
-                    android:textColor="@color/gray_2"
-                    android:textColorHint="@color/gray_edt_hint_text"
-                    android:textCursorDrawable="@drawable/cursor"
-                    android:textSize="@dimen/_15sp"
-                    tools:ignore="Autofill" />
-            </LinearLayout>
-
-            <TextView
-                style="@style/txtOpenSansRomanSemiBold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_18px"
-                android:text="@string/lbl_gender_req"
-                android:textColor="@color/home_by_author"
-                android:textSize="@dimen/_13sp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10px"
-                android:orientation="horizontal">
-
+                <!-- Email comes from Google and is the sign-in, so it is shown, not edited. -->
                 <LinearLayout
-                    android:id="@+id/llCpGenderMale"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_2px"
-                    android:layout_weight="1"
-                    android:background="?attr/selectableItemBackground"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:paddingTop="@dimen/_4px"
-                    android:paddingBottom="@dimen/_4px">
+                    android:layout_marginTop="14dp"
+                    android:background="@drawable/bg_authx_soft"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="14dp">
 
-                    <FrameLayout
-                        android:id="@+id/ivCpGenderMaleDisc"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:background="@drawable/bg_gender_circle">
-
-                        <ImageView
-                            android:id="@+id/ivCpGenderMale"
-                            android:layout_width="28dp"
-                            android:layout_height="28dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_gender_male"
-                            app:tint="@color/home_by_author"
-                            tools:ignore="ContentDescription" />
-                    </FrameLayout>
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/img_google"
+                        tools:ignore="ContentDescription" />
 
                     <TextView
-                        android:id="@+id/tvCpGenderMale"
+                        android:id="@+id/tvCpEmail"
+                        style="@style/txt_PoppinsMedium"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:textColor="@color/authx_text"
+                        android:textSize="@dimen/_15sp"
+                        tools:text="student@gmail.com" />
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/ic_reg_lock"
+                        app:tint="@color/authx_text_muted"
+                        tools:ignore="ContentDescription" />
+                </LinearLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/AuthxField"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:hint="@string/lbl_phone_req"
+                    app:placeholderText="@string/lbl_phone_hint_10"
+                    app:prefixText="@string/lbl_phone_country_code"
+                    app:prefixTextColor="@color/authx_text"
+                    app:startIconDrawable="@drawable/ic_reg_phone">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtCpPhone"
+                        style="@style/AuthxFieldEdit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="phone"
+                        android:maxLength="10"
+                        tools:ignore="Autofill" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    style="@style/AuthxLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lbl_gender_req" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/llCpGenderMale"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_authx_outline"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:paddingTop="14dp"
+                        android:paddingBottom="12dp">
+
+                        <FrameLayout
+                            android:id="@+id/ivCpGenderMaleDisc"
+                            android:layout_width="54dp"
+                            android:layout_height="54dp"
+                            android:background="@drawable/bg_gender_circle">
+
+                            <ImageView
+                                android:id="@+id/ivCpGenderMale"
+                                android:layout_width="26dp"
+                                android:layout_height="26dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_gender_male"
+                                app:tint="@color/home_by_author"
+                                tools:ignore="ContentDescription" />
+                        </FrameLayout>
+
+                        <TextView
+                            android:id="@+id/tvCpGenderMale"
+                            style="@style/txt_OpenSansRomanBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="@string/lbl_gender_male"
+                            android:textColor="@color/home_by_author"
+                            android:textSize="@dimen/_14sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llCpGenderFemale"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_authx_outline"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:paddingTop="14dp"
+                        android:paddingBottom="12dp">
+
+                        <FrameLayout
+                            android:id="@+id/ivCpGenderFemaleDisc"
+                            android:layout_width="54dp"
+                            android:layout_height="54dp"
+                            android:background="@drawable/bg_gender_circle">
+
+                            <ImageView
+                                android:id="@+id/ivCpGenderFemale"
+                                android:layout_width="26dp"
+                                android:layout_height="26dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_gender_female"
+                                app:tint="@color/home_by_author"
+                                tools:ignore="ContentDescription" />
+                        </FrameLayout>
+
+                        <TextView
+                            android:id="@+id/tvCpGenderFemale"
+                            style="@style/txt_OpenSansRomanBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="@string/lbl_gender_female"
+                            android:textColor="@color/home_by_author"
+                            android:textSize="@dimen/_14sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llCpGenderOther"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_authx_outline"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:paddingTop="14dp"
+                        android:paddingBottom="12dp">
+
+                        <FrameLayout
+                            android:id="@+id/ivCpGenderOtherDisc"
+                            android:layout_width="54dp"
+                            android:layout_height="54dp"
+                            android:background="@drawable/bg_gender_circle">
+
+                            <ImageView
+                                android:id="@+id/ivCpGenderOther"
+                                android:layout_width="26dp"
+                                android:layout_height="26dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_gender_other"
+                                app:tint="@color/home_by_author"
+                                tools:ignore="ContentDescription" />
+                        </FrameLayout>
+
+                        <TextView
+                            android:id="@+id/tvCpGenderOther"
+                            style="@style/txt_OpenSansRomanBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="@string/lbl_gender_other"
+                            android:textColor="@color/home_by_author"
+                            android:textSize="@dimen/_14sp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- ===== Your campus ===== -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="18dp"
+                android:layout_marginBottom="14dp"
+                android:background="@drawable/bg_authx_card"
+                android:elevation="10dp"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    style="@style/txt_OpenSansRomanExtraBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lbl_cp_your_campus"
+                    android:textColor="@color/authx_text"
+                    android:textSize="@dimen/_17sp" />
+
+                <!-- 1. University -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
                         style="@style/txt_OpenSansRomanBold"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:background="@drawable/bg_authx_num"
+                        android:gravity="center"
+                        android:text="@string/lbl_step_1"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_12sp" />
+
+                    <TextView
+                        style="@style/txtOpenSansRomanSemiBold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_6px"
-                        android:text="@string/lbl_gender_male"
-                        android:textColor="@color/home_by_author"
+                        android:layout_marginStart="10dp"
+                        android:text="@string/lbl_university_req"
+                        android:textColor="@color/authx_text_muted"
+                        android:textSize="@dimen/_13sp" />
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/bg_authx_outline"
+                    android:minHeight="56dp">
+
+                    <Spinner
+                        android:id="@+id/spUniversity"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:background="@android:color/transparent"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="44dp"
+                        android:spinnerMode="dropdown"
+                        tools:ignore="RtlSymmetry" />
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/img_arrow_dropdown"
+                        app:tint="@color/authx_text_muted"
+                        tools:ignore="ContentDescription" />
+                </RelativeLayout>
+
+                <!-- 2. Hall ticket - the lookup that fills in the rest -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/txt_OpenSansRomanBold"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:background="@drawable/bg_authx_num"
+                        android:gravity="center"
+                        android:text="@string/lbl_step_2"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_12sp" />
+
+                    <TextView
+                        style="@style/txtOpenSansRomanSemiBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="@string/lbl_roll_req"
+                        android:textColor="@color/authx_text_muted"
                         android:textSize="@dimen/_13sp" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/llCpGenderFemale"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_8px"
-                    android:layout_weight="1"
-                    android:background="?attr/selectableItemBackground"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:paddingTop="@dimen/_4px"
-                    android:paddingBottom="@dimen/_4px">
+                    android:layout_marginTop="2dp"
+                    android:gravity="bottom"
+                    android:orientation="horizontal">
 
-                    <FrameLayout
-                        android:id="@+id/ivCpGenderFemaleDisc"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:background="@drawable/bg_gender_circle">
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/AuthxField"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:layout_weight="1"
+                        app:hintEnabled="false"
+                        app:placeholderText="@string/lbl_roll_req"
+                        app:startIconDrawable="@drawable/ic_reg_badge_id">
 
-                        <ImageView
-                            android:id="@+id/ivCpGenderFemale"
-                            android:layout_width="28dp"
-                            android:layout_height="28dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_gender_female"
-                            app:tint="@color/home_by_author"
-                            tools:ignore="ContentDescription" />
-                    </FrameLayout>
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edtCpRoll"
+                            style="@style/AuthxFieldEdit"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textCapCharacters"
+                            android:maxLength="10"
+                            tools:ignore="Autofill" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
                     <TextView
-                        android:id="@+id/tvCpGenderFemale"
+                        android:id="@+id/btnCpFetch"
                         style="@style/txt_OpenSansRomanBold"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_6px"
-                        android:text="@string/lbl_gender_female"
-                        android:textColor="@color/home_by_author"
-                        android:textSize="@dimen/_13sp" />
+                        android:layout_height="56dp"
+                        android:layout_marginStart="10dp"
+                        android:background="@drawable/bg_authx_pill"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:text="@string/lbl_authx_lookup"
+                        android:textColor="@color/authx_coral"
+                        android:textSize="@dimen/_14sp" />
                 </LinearLayout>
 
+                <TextView
+                    android:id="@+id/tvCpFetchStatus"
+                    style="@style/txtOpenSansRomanSemiBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/bg_authx_soft"
+                    android:lineSpacingExtra="3dp"
+                    android:padding="12dp"
+                    android:textColor="@color/authx_text"
+                    android:textSize="@dimen/_13sp"
+                    android:visibility="gone"
+                    tools:text="Looking up your details…"
+                    tools:visibility="visible" />
+
+                <!-- 3. Department -->
                 <LinearLayout
-                    android:id="@+id/llCpGenderOther"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_8px"
-                    android:layout_weight="1"
-                    android:background="?attr/selectableItemBackground"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:paddingTop="@dimen/_4px"
-                    android:paddingBottom="@dimen/_4px">
-
-                    <FrameLayout
-                        android:id="@+id/ivCpGenderOtherDisc"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:background="@drawable/bg_gender_circle">
-
-                        <ImageView
-                            android:id="@+id/ivCpGenderOther"
-                            android:layout_width="28dp"
-                            android:layout_height="28dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_gender_other"
-                            app:tint="@color/home_by_author"
-                            tools:ignore="ContentDescription" />
-                    </FrameLayout>
+                    android:layout_marginTop="18dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/tvCpGenderOther"
                         style="@style/txt_OpenSansRomanBold"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:background="@drawable/bg_authx_num"
+                        android:gravity="center"
+                        android:text="@string/lbl_step_3"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_12sp" />
+
+                    <TextView
+                        style="@style/txtOpenSansRomanSemiBold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_6px"
-                        android:text="@string/lbl_gender_other"
-                        android:textColor="@color/home_by_author"
+                        android:layout_marginStart="10dp"
+                        android:text="@string/lbl_department_req"
+                        android:textColor="@color/authx_text_muted"
                         android:textSize="@dimen/_13sp" />
                 </LinearLayout>
 
-            </LinearLayout>
-        </LinearLayout>
-
-        <!-- ===== Your campus ===== -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_20px"
-            android:layout_marginTop="@dimen/_16px"
-            android:layout_marginEnd="@dimen/_20px"
-            android:layout_marginBottom="@dimen/_20px"
-            android:background="@drawable/bg_reg_card"
-            android:orientation="vertical"
-            android:padding="@dimen/_20px">
-
-            <TextView
-                style="@style/txt_OpenSansRomanBold"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_14px"
-                android:text="@string/lbl_cp_your_campus"
-                android:textColor="@color/gray_2"
-                android:textSize="@dimen/_16sp" />
-
-            <!-- 1. University -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/txt_OpenSansRomanBold"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:background="@drawable/bg_reg_badge"
-                    android:gravity="center"
-                    android:text="@string/lbl_step_1"
-                    android:textColor="@color/app_bg_orange"
-                    android:textSize="@dimen/_12sp" />
-
-                <TextView
-                    style="@style/txtOpenSansRomanSemiBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10px"
-                    android:text="@string/lbl_university_req"
-                    android:textColor="@color/home_by_author"
-                    android:textSize="@dimen/_13sp" />
-            </LinearLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_8px"
-                android:background="@drawable/bg_reg_field"
-                android:minHeight="@dimen/_55px">
-
-                <Spinner
-                    android:id="@+id/spUniversity"
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:paddingStart="@dimen/_16px"
-                    android:paddingEnd="@dimen/_40px"
-                    android:spinnerMode="dropdown"
-                    tools:ignore="RtlSymmetry" />
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/bg_authx_outline"
+                    android:minHeight="56dp">
 
-                <ImageView
-                    android:layout_width="@dimen/_20px"
-                    android:layout_height="@dimen/_20px"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="@dimen/_16px"
-                    android:src="@drawable/img_arrow_dropdown"
-                    app:tint="@color/home_by_author"
-                    tools:ignore="ContentDescription" />
-            </RelativeLayout>
+                    <Spinner
+                        android:id="@+id/spDepartment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:background="@android:color/transparent"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="44dp"
+                        android:spinnerMode="dropdown"
+                        tools:ignore="RtlSymmetry" />
 
-            <!-- 2. Hall ticket — the lookup that fills in the rest -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_18px"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/img_arrow_dropdown"
+                        app:tint="@color/authx_text_muted"
+                        tools:ignore="ContentDescription" />
+                </RelativeLayout>
 
-                <TextView
-                    style="@style/txt_OpenSansRomanBold"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:background="@drawable/bg_reg_badge"
-                    android:gravity="center"
-                    android:text="@string/lbl_step_2"
-                    android:textColor="@color/app_bg_orange"
-                    android:textSize="@dimen/_12sp" />
-
-                <TextView
-                    style="@style/txtOpenSansRomanSemiBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10px"
-                    android:text="@string/lbl_roll_req"
-                    android:textColor="@color/home_by_author"
-                    android:textSize="@dimen/_13sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_8px"
-                android:background="@drawable/bg_reg_field"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingStart="@dimen/_16px"
-                android:paddingEnd="@dimen/_16px">
-
-                <ImageView
-                    android:layout_width="@dimen/_20px"
-                    android:layout_height="@dimen/_20px"
-                    android:src="@drawable/ic_reg_badge_id"
-                    app:tint="@color/app_bg_orange"
-                    tools:ignore="ContentDescription" />
-
-                <EditText
-                    android:id="@+id/edtCpRoll"
-                    style="@style/txt_PoppinsMedium"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_12px"
-                    android:layout_weight="1"
-                    android:background="@android:color/transparent"
-                    android:ellipsize="end"
-                    android:hint="@string/lbl_roll_req"
-                    android:inputType="textCapCharacters"
-                    android:maxLength="10"
-                    android:paddingTop="@dimen/_16px"
-                    android:paddingBottom="@dimen/_16px"
-                    android:singleLine="true"
-                    android:textColor="@color/gray_2"
-                    android:textColorHint="@color/gray_edt_hint_text"
-                    android:textCursorDrawable="@drawable/cursor"
-                    android:textSize="@dimen/_15sp"
-                    tools:ignore="Autofill" />
-
-                <TextView
-                    android:id="@+id/btnCpFetch"
-                    style="@style/txt_OpenSansRomanBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="?attr/selectableItemBackground"
-                    android:padding="@dimen/_6px"
-                    android:text="@string/result_fetch_auto"
-                    android:textColor="@color/app_bg_orange"
-                    android:textSize="@dimen/_13sp" />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/tvCpFetchStatus"
-                style="@style/txtOpenSansRomanSemiBold"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_8px"
-                android:textColor="@color/home_by_author"
-                android:textSize="@dimen/_12sp"
-                android:visibility="gone"
-                tools:text="Looking up your details…"
-                tools:visibility="visible" />
-
-            <!-- 3. Department -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_18px"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/txt_OpenSansRomanBold"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:background="@drawable/bg_reg_badge"
-                    android:gravity="center"
-                    android:text="@string/lbl_step_3"
-                    android:textColor="@color/app_bg_orange"
-                    android:textSize="@dimen/_12sp" />
-
-                <TextView
-                    style="@style/txtOpenSansRomanSemiBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10px"
-                    android:text="@string/lbl_department_req"
-                    android:textColor="@color/home_by_author"
-                    android:textSize="@dimen/_13sp" />
-            </LinearLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_8px"
-                android:background="@drawable/bg_reg_field"
-                android:minHeight="@dimen/_55px">
-
-                <Spinner
-                    android:id="@+id/spDepartment"
+                <!-- 4. College -->
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:paddingStart="@dimen/_16px"
-                    android:paddingEnd="@dimen/_40px"
-                    android:spinnerMode="dropdown"
-                    tools:ignore="RtlSymmetry" />
+                    android:layout_marginTop="18dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-                <ImageView
-                    android:layout_width="@dimen/_20px"
-                    android:layout_height="@dimen/_20px"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="@dimen/_16px"
-                    android:src="@drawable/img_arrow_dropdown"
-                    app:tint="@color/home_by_author"
-                    tools:ignore="ContentDescription" />
-            </RelativeLayout>
+                    <TextView
+                        style="@style/txt_OpenSansRomanBold"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:background="@drawable/bg_authx_num"
+                        android:gravity="center"
+                        android:text="@string/lbl_step_4"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_12sp" />
 
-            <!-- 4. College -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_18px"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                    <TextView
+                        style="@style/txtOpenSansRomanSemiBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="@string/lbl_college_req"
+                        android:textColor="@color/authx_text_muted"
+                        android:textSize="@dimen/_13sp" />
+                </LinearLayout>
 
-                <TextView
-                    style="@style/txt_OpenSansRomanBold"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:background="@drawable/bg_reg_badge"
-                    android:gravity="center"
-                    android:text="@string/lbl_step_4"
-                    android:textColor="@color/app_bg_orange"
-                    android:textSize="@dimen/_12sp" />
-
-                <TextView
-                    style="@style/txtOpenSansRomanSemiBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10px"
-                    android:text="@string/lbl_college_req"
-                    android:textColor="@color/home_by_author"
-                    android:textSize="@dimen/_13sp" />
-            </LinearLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_8px"
-                android:background="@drawable/bg_reg_field"
-                android:minHeight="@dimen/_55px">
-
-                <Spinner
-                    android:id="@+id/spCollege"
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:paddingStart="@dimen/_16px"
-                    android:paddingEnd="@dimen/_40px"
-                    android:spinnerMode="dropdown"
-                    tools:ignore="RtlSymmetry" />
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/bg_authx_outline"
+                    android:minHeight="56dp">
 
-                <ImageView
-                    android:layout_width="@dimen/_20px"
-                    android:layout_height="@dimen/_20px"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="@dimen/_16px"
-                    android:src="@drawable/img_arrow_dropdown"
-                    app:tint="@color/home_by_author"
-                    tools:ignore="ContentDescription" />
-            </RelativeLayout>
+                    <Spinner
+                        android:id="@+id/spCollege"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:background="@android:color/transparent"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="44dp"
+                        android:spinnerMode="dropdown"
+                        tools:ignore="RtlSymmetry" />
 
-            <!-- Why we ask -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_20px"
-                android:background="@drawable/bg_feed_pill"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="@dimen/_12px">
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/img_arrow_dropdown"
+                        app:tint="@color/authx_text_muted"
+                        tools:ignore="ContentDescription" />
+                </RelativeLayout>
 
-                <ImageView
-                    android:layout_width="@dimen/_20px"
-                    android:layout_height="@dimen/_20px"
-                    android:src="@drawable/ic_feed_book"
-                    app:tint="@color/app_bg_orange"
-                    tools:ignore="ContentDescription" />
-
-                <TextView
-                    style="@style/txtOpenSansRomanSemiBold"
+                <!-- Why we ask -->
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10px"
-                    android:text="@string/lbl_complete_profile_why"
-                    android:textColor="@color/gray_2"
-                    android:textSize="@dimen/_13sp" />
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/bg_authx_soft"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="12dp">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_feed_book"
+                        app:tint="@color/authx_coral"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        style="@style/txtOpenSansRomanSemiBold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="@string/lbl_complete_profile_why"
+                        android:textColor="@color/authx_text"
+                        android:textSize="@dimen/_13sp" />
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </RelativeLayout>
