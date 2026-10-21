@@ -17,12 +17,22 @@ public class API {
     private String salt;
     @SerializedName("package_name")
     private String packageName;
+    /**
+     * The signed-in student, on every call. The server uses it to show only
+     * books for that student's university. Left out when nobody is signed in.
+     */
+    @SerializedName("viewer_id")
+    private String viewerId;
 
     public API(Activity activity) {
         String apiKey = "viaviweb";
         salt = "" + getRandomSalt();
         sign = md5(apiKey + salt);
         packageName = activity.getApplication().getPackageName();
+        Method method = new Method(activity);
+        if (method.getIsLogin() && !method.getUserId().isEmpty()) {
+            viewerId = method.getUserId();
+        }
     }
 
     private int getRandomSalt() {
