@@ -1,91 +1,85 @@
 package com.jntuh.adapter;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.res.Resources;
-import android.util.TypedValue;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.jntuh.util.CoverHelper;
-import com.jntuh.books.databinding.RowFavoriteBinding;
+import com.jntuh.books.R;
+import com.jntuh.books.databinding.RowContinueBinding;
 import com.jntuh.item.SubCatListBook;
 import com.jntuh.util.AdInterstitialAds;
-import com.jntuh.util.Method;
+import com.jntuh.util.CoverHelper;
 import com.jntuh.util.OnClick;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+/**
+ * Continue Reading list: one card per book in progress, with its cover, title,
+ * the page the reader stopped at, and a Continue pill. The whole card opens it.
+ */
 public class ContinueAdapter extends RecyclerView.Adapter<ContinueAdapter.ViewHolder> {
 
-    Activity activity;
-    List<SubCatListBook> favListBookList;
-    OnClick onClick;
-    int columnWidth;
-    Method method;
+    private final Activity activity;
+    private final List<SubCatListBook> books;
+    private OnClick onClick;
 
-    public ContinueAdapter(Activity activity, List<SubCatListBook> favListBookList) {
+    public ContinueAdapter(Activity activity, List<SubCatListBook> books) {
         this.activity = activity;
-        this.favListBookList = favListBookList;
-        method = new Method(activity);
-        Resources r = activity.getResources();
-        float padding = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, r.getDisplayMetrics());
-        columnWidth = (int) ((method.getScreenWidth() - ((3 + 1) * padding)));
+        this.books = books;
     }
 
     @NotNull
     @Override
     public ViewHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType) {
-        return new ViewHolder(RowFavoriteBinding.inflate(activity.getLayoutInflater()));
+        return new ViewHolder(RowContinueBinding.inflate(activity.getLayoutInflater(), parent, false));
     }
 
-    @SuppressLint({"SetTextI18n", "UseCompatLoadingForDrawables"})
     @Override
-    public void onBindViewHolder(@NotNull ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NotNull ViewHolder holder, int position) {
+        SubCatListBook book = books.get(position);
+        RowContinueBinding b = holder.binding;
 
+        b.tvContTitle.setText(book.getPost_title());
 
-        holder.rowFavoriteBinding.mcvFav.setVisibility(View.GONE);
-        holder.rowFavoriteBinding.llHomeBook.setLayoutParams(new LinearLayout.LayoutParams(columnWidth / 3, columnWidth / 2));
-        holder.rowFavoriteBinding.tvHomeConTitle.setText(favListBookList.get(position).getPost_title());
+        String page = book.getPage_num() == null ? "" : book.getPage_num().trim();
+        boolean started = !page.isEmpty() && !"0".equals(page);
+        b.tvContPage.setText(started
+                ? activity.getString(R.string.lbl_cont_page, page)
+                : activity.getString(R.string.lbl_cont_not_started));
 
-         holder.rowFavoriteBinding.ivHomeCont.post(() ->
-                CoverHelper.bind(holder.rowFavoriteBinding.ivHomeCont,
-                        favListBookList.get(position).getPost_image(),
-                        favListBookList.get(position).getPost_title(),
-                        favListBookList.get(position).getCover_color()));
+        // Generated covers need the view's real size, so bind after layout.
+        b.ivContCover.post(() -> CoverHelper.bind(b.ivContCover,
+                book.getPost_image(), book.getPost_title(), book.getCover_color()));
 
-        holder.rowFavoriteBinding.rlFav.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AdInterstitialAds.ShowInterstitialAds(activity,holder.getBindingAdapterPosition(),onClick);
-            }
-        });
+        b.llContRow.setOnClickListener(v -> open(holder));
+        b.tvContResume.setOnClickListener(v -> open(holder));
+    }
 
-
+    private void open(ViewHolder holder) {
+        int p = holder.getBindingAdapterPosition();
+        if (p == RecyclerView.NO_POSITION) return;
+        AdInterstitialAds.ShowInterstitialAds(activity, p, onClick);
     }
 
     @Override
     public int getItemCount() {
-        return favListBookList.size();
+        return books.size();
     }
 
     public void setOnItemClickListener(OnClick clickListener) {
         this.onClick = clickListener;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
 
-        RowFavoriteBinding rowFavoriteBinding;
+        final RowContinueBinding binding;
 
-        public ViewHolder(RowFavoriteBinding rowFavoriteBinding) {
-            super(rowFavoriteBinding.getRoot());
-            this.rowFavoriteBinding = rowFavoriteBinding;
+        ViewHolder(RowContinueBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
         }
     }
-
 }
