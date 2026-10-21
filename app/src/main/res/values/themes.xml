@@ -268,4 +268,38 @@
         <item name="android:layout_height">@dimen/result_input_height</item>
         <item name="android:background">@drawable/bg_result_input</item>
     </style>
+
+    <!-- Auth (login / sign-up) outlined field with a floating label. -->
+    <style name="AuthxField" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxCornerRadiusTopStart">14dp</item>
+        <item name="boxCornerRadiusTopEnd">14dp</item>
+        <item name="boxCornerRadiusBottomStart">14dp</item>
+        <item name="boxCornerRadiusBottomEnd">14dp</item>
+        <item name="boxStrokeColor">@color/authx_box_stroke</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="boxStrokeWidthFocused">1.6dp</item>
+        <item name="boxBackgroundColor">@color/authx_field</item>
+        <item name="hintTextColor">@color/authx_coral</item>
+        <item name="android:textColorHint">@color/authx_text_muted</item>
+        <item name="startIconTint">@color/authx_text_muted</item>
+        <item name="endIconTint">@color/authx_text_muted</item>
+        <item name="android:layout_marginTop">14dp</item>
+    </style>
+
+    <style name="AuthxFieldEdit">
+        <item name="android:fontFamily">@font/poppinsmedium</item>
+        <item name="android:textColor">@color/authx_text</item>
+        <item name="android:textSize">@dimen/_15sp</item>
+        <item name="android:textCursorDrawable">@drawable/cursor</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <!-- Small caption above a dropdown in the sign-up card. -->
+    <style name="AuthxLabel">
+        <item name="android:fontFamily">@font/opensansromansemibold</item>
+        <item name="android:textColor">@color/authx_text_muted</item>
+        <item name="android:textSize">@dimen/_13sp</item>
+        <item name="android:layout_marginStart">4dp</item>
+        <item name="android:layout_marginTop">16dp</item>
+    </style>
 </resources>

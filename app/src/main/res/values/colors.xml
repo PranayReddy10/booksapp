@@ -239,4 +239,21 @@
     <color name="alarm_text">#FFFFFFFF</color>
     <color name="alarm_text_dim">#B3FFFFFF</color>
     <color name="alarm_dismiss">#F97F68</color>
+
+    <!-- Auth (login / sign-up): navy header, coral action, clean white card. -->
+    <color name="authx_header_start">#1E2463</color>
+    <color name="authx_header_end">#3A2C85</color>
+    <color name="authx_coral">#F97F68</color>
+    <color name="authx_coral_end">#F2557A</color>
+    <color name="authx_page">#F3F5FB</color>
+    <color name="authx_card">#FFFFFF</color>
+    <color name="authx_field">#FFFFFF</color>
+    <color name="authx_field_stroke">#DDE1EE</color>
+    <color name="authx_soft">#F1F2F9</color>
+    <color name="authx_text">#1B1F3B</color>
+    <color name="authx_text_muted">#6B7088</color>
+    <color name="authx_on_header">#FFFFFF</color>
+    <color name="authx_on_header_muted">#C7C9F0</color>
+    <color name="authx_glass">#1FFFFFFF</color>
+    <color name="authx_glass_stroke">#33FFFFFF</color>
 </resources>

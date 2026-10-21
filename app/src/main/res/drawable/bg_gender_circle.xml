@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Unselected gender choice: a soft neutral disc. -->
 <shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="oval">
-    <solid android:color="@color/auth_field_bg" />
+    <solid android:color="@color/authx_soft" />
+    <stroke android:width="1dp" android:color="@color/authx_field_stroke" />
 </shape>
