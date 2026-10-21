@@ -4,61 +4,103 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/app_bg">
+    android:background="@color/authx_page">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <!-- Top bar: title + Track Order -->
-        <LinearLayout
+        <!-- Navy header: title, what the shop is, Track Order -->
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:paddingStart="16dp"
-            android:paddingEnd="12dp"
-            android:paddingTop="14dp"
-            android:paddingBottom="10dp">
+            android:background="@drawable/bg_authx_header">
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/shop_title"
-                android:textColor="@color/gray"
-                android:textSize="22sp"
-                android:fontFamily="@font/opensansromanextrabold" />
+            <ImageView
+                android:layout_width="180dp"
+                android:layout_height="180dp"
+                android:layout_gravity="top|end"
+                android:layout_marginTop="-80dp"
+                android:layout_marginEnd="-60dp"
+                android:src="@drawable/bg_authx_ring"
+                tools:ignore="ContentDescription" />
 
             <LinearLayout
-                android:id="@+id/btnTrackOrder"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:gravity="center_vertical"
-                android:background="@drawable/bg_result_btn_outline"
-                android:paddingHorizontal="12dp"
-                android:paddingVertical="7dp"
-                android:foreground="?attr/selectableItemBackground">
+                android:orientation="horizontal"
+                android:paddingStart="20dp"
+                android:paddingTop="16dp"
+                android:paddingEnd="18dp"
+                android:paddingBottom="22dp">
 
-                <TextView
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/opensansromanextrabold"
+                        android:text="@string/shop_title"
+                        android:textColor="@color/authx_on_header"
+                        android:textSize="24sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="@font/opensansromansemibold"
+                        android:text="@string/lbl_shop_sub"
+                        android:textColor="@color/authx_on_header_muted"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/btnTrackOrder"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/shop_track_order"
-                    android:textColor="@color/app_bg_orange"
-                    android:textSize="12sp"
-                    android:fontFamily="@font/opensansromanbold" />
+                    android:layout_marginStart="10dp"
+                    android:background="@drawable/bg_authx_glass"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="8dp">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_marginEnd="6dp"
+                        android:src="@drawable/menu_shop"
+                        app:tint="@color/white"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/opensansromanbold"
+                        android:text="@string/shop_track_order"
+                        android:textColor="@color/white"
+                        android:textSize="12sp" />
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
+        </FrameLayout>
 
         <!-- Category chips -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvShopCategories"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
+            android:paddingStart="16dp"
+            android:paddingTop="12dp"
+            android:paddingEnd="16dp"
             android:paddingBottom="6dp"
             android:clipToPadding="false"
             android:orientation="horizontal"
@@ -79,8 +121,8 @@
                     android:id="@+id/rvShopProducts"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
                     android:paddingTop="4dp"
                     android:paddingBottom="90dp"
                     android:clipToPadding="false"
@@ -102,19 +144,26 @@
                     android:gravity="center"
                     android:visibility="gone">
 
-                    <ImageView
-                        android:layout_width="72dp"
-                        android:layout_height="72dp"
-                        android:src="@drawable/menu_shop"
-                        android:alpha="0.4"
-                        tools:ignore="ContentDescription" />
+                    <FrameLayout
+                        android:layout_width="88dp"
+                        android:layout_height="88dp"
+                        android:background="@drawable/bg_authx_circle_soft">
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/menu_shop"
+                            app:tint="@color/authx_coral"
+                            tools:ignore="ContentDescription" />
+                    </FrameLayout>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
                         android:text="@string/shop_empty"
-                        android:textColor="@color/gray_2"
+                        android:textColor="@color/authx_text_muted"
                         android:textSize="14sp"
                         android:fontFamily="@font/opensansromansemibold" />
                 </LinearLayout>

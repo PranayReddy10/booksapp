@@ -13,7 +13,7 @@
         android:background="@drawable/bg_shop_chip_normal"
         android:paddingHorizontal="16dp"
         android:paddingVertical="9dp"
-        android:textColor="@color/gray"
+        android:textColor="@color/authx_text"
         android:textSize="13sp"
         android:fontFamily="@font/opensansromanbold"
         android:foreground="?attr/selectableItemBackground"
