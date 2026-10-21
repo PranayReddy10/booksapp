@@ -849,4 +849,15 @@
     <string name="lbl_mb_upload_sub">Share notes or books and earn coins when students read them.</string>
     <string name="lbl_mb_empty_title">No uploads yet</string>
     <string name="lbl_mb_empty_desc">Books you upload show here with their review status. Approved books earn coins as students read them.</string>
+    <string name="lbl_ub_sub">Share notes or books with your campus. Approved uploads earn coins as students read them.</string>
+    <string name="lbl_ub_details">Book details</string>
+    <string name="lbl_ub_source">Book file</string>
+    <string name="lbl_ub_pick_sub">PDF or EPUB from your phone</string>
+    <string name="lbl_ub_review_note">Every upload is checked by our team before it goes live. You can follow its status in Manage Books.</string>
+    <string name="lbl_ub_submit">Submit for review</string>
+    <string name="lbl_cat_sub">Browse books by subject</string>
+    <string name="lbl_cat_search">Search books, authors…</string>
+    <string name="lbl_ub_tab_file">Upload file</string>
+    <string name="lbl_ub_tab_link">Paste a link</string>
+    <string name="lbl_ub_link">Book link</string>
 </resources>

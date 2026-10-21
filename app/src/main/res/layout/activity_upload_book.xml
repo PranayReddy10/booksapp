@@ -1,246 +1,448 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- Upload a book in the auth look: a navy header that says what uploading is
+     for, a "Book details" card (title, description, category, department), a
+     "Book file" card with a file / link switch and a dashed drop area, the review
+     note, and the submit action pinned to the bottom. -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/white">
+    android:background="@color/authx_page">
 
-    <include
-        android:id="@+id/toolbarMain"
-        layout="@layout/row_toolbar" />
+    <!-- ===== Submit ===== -->
+    <LinearLayout
+        android:id="@+id/llUploadActions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        android:paddingStart="18dp"
+        android:paddingTop="10dp"
+        android:paddingEnd="18dp"
+        android:paddingBottom="18dp">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnSubmitUpload"
+            style="@style/txtOpenSansRomanBold"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:background="@drawable/bg_authx_cta"
+            android:elevation="4dp"
+            android:gravity="center"
+            android:singleLine="true"
+            android:stateListAnimator="@null"
+            android:text="@string/lbl_ub_submit"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_16sp" />
+    </LinearLayout>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/llUploadActions"
+        android:clipToPadding="false"
         android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="@dimen/_20px">
+            android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/edtTitle"
-                style="@style/edtBoxRoundedOutline"
+            <!-- ===== Header ===== -->
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/rectangle_bg_white_border"
-                android:hint="@string/lbl_book_title"
-                android:textCursorDrawable="@drawable/cursor"
-                android:inputType="text"
-                android:paddingStart="@dimen/_20px"
-                android:paddingTop="@dimen/_18px"
-                android:paddingEnd="@dimen/_20px"
-                android:paddingBottom="@dimen/_18px"
-                android:singleLine="true"
-                android:textColorHint="@color/gray_edt_hint_text"
-                tools:ignore="Autofill" />
-
-            <EditText
-                android:id="@+id/edtDescription"
-                style="@style/edtBoxRoundedOutline"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_15px"
-                android:background="@drawable/rectangle_bg_white_border"
-                android:gravity="top"
-                android:hint="@string/lbl_book_description"
-                android:textCursorDrawable="@drawable/cursor"
-                android:inputType="textMultiLine"
-                android:minLines="3"
-                android:paddingStart="@dimen/_20px"
-                android:paddingTop="@dimen/_18px"
-                android:paddingEnd="@dimen/_20px"
-                android:paddingBottom="@dimen/_18px"
-                android:textColorHint="@color/gray_edt_hint_text"
-                tools:ignore="Autofill" />
-
-            <!-- Category -->
-            <TextView
-                style="@style/txt_OpenSansRomanBold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_15px"
-                android:layout_marginBottom="@dimen/_5px"
-                android:text="@string/lbl_select_category"
-                android:textColor="@color/gray_trans_99"
-                android:textSize="@dimen/_14sp" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_authx_outline"
-                android:minHeight="56dp">
-
-                <Spinner
-                    android:id="@+id/spCategory"
-                    android:background="@android:color/transparent"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toStartOf="@+id/ivCategoryArrow"
-                    android:paddingStart="@dimen/_16px"
-                    android:paddingEnd="@dimen/_5px"
-                    tools:ignore="RtlSymmetry" />
+                android:background="@drawable/bg_authx_header">
 
                 <ImageView
-                    android:id="@+id/ivCategoryArrow"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="@dimen/_16px"
-                    android:src="@drawable/ic_authx_chevron_down"
+                    android:layout_width="190dp"
+                    android:layout_height="190dp"
+                    android:layout_gravity="top|end"
+                    android:layout_marginTop="-70dp"
+                    android:layout_marginEnd="-60dp"
+                    android:src="@drawable/bg_authx_ring"
                     tools:ignore="ContentDescription" />
-            </RelativeLayout>
 
-            <!-- Department -->
-            <TextView
-                style="@style/txt_OpenSansRomanBold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_15px"
-                android:layout_marginBottom="@dimen/_5px"
-                android:text="@string/lbl_department"
-                android:textColor="@color/gray_trans_99"
-                android:textSize="@dimen/_14sp" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_authx_outline"
-                android:minHeight="56dp">
-
-                <Spinner
-                    android:id="@+id/spDepartment"
-                    android:background="@android:color/transparent"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toStartOf="@+id/ivDepartmentArrow"
-                    android:paddingStart="@dimen/_16px"
-                    android:paddingEnd="@dimen/_5px"
-                    tools:ignore="RtlSymmetry" />
+                    android:orientation="vertical"
+                    android:paddingStart="22dp"
+                    android:paddingTop="16dp"
+                    android:paddingEnd="22dp"
+                    android:paddingBottom="66dp">
 
-                <ImageView
-                    android:id="@+id/ivDepartmentArrow"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="@dimen/_16px"
-                    android:src="@drawable/ic_authx_chevron_down"
+                    <ImageView
+                        android:id="@+id/btnUploadBack"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/bg_authx_glass"
+                        android:contentDescription="@string/lbl_upload_book"
+                        android:padding="9dp"
+                        android:src="@drawable/ic_reg_back"
+                        app:tint="@color/authx_on_header" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <FrameLayout
+                            android:layout_width="56dp"
+                            android:layout_height="56dp"
+                            android:background="@drawable/bg_authx_glass">
+
+                            <ImageView
+                                android:layout_width="28dp"
+                                android:layout_height="28dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_upload_book"
+                                app:tint="@color/authx_on_header"
+                                tools:ignore="ContentDescription" />
+                        </FrameLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                style="@style/txt_OpenSansRomanExtraBold"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/lbl_mb_upload"
+                                android:textColor="@color/authx_on_header"
+                                android:textSize="@dimen/_22sp" />
+
+                            <TextView
+                                style="@style/txtOpenSansRomanSemiBold"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="@string/lbl_ub_sub"
+                                android:textColor="@color/authx_on_header_muted"
+                                android:textSize="@dimen/_13sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </FrameLayout>
+
+            <!-- ===== Book details ===== -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="-46dp"
+                android:layout_marginEnd="18dp"
+                android:background="@drawable/bg_authx_card"
+                android:elevation="10dp"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    style="@style/txt_OpenSansRomanExtraBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lbl_ub_details"
+                    android:textColor="@color/authx_text"
+                    android:textSize="@dimen/_17sp" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/AuthxField"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/lbl_book_title"
+                    app:startIconDrawable="@drawable/ic_feed_book">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtTitle"
+                        style="@style/AuthxFieldEdit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textCapSentences"
+                        tools:ignore="Autofill" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/AuthxField"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/lbl_book_description"
+                    app:counterEnabled="false">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtDescription"
+                        style="@style/AuthxFieldEdit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="top"
+                        android:inputType="textMultiLine|textCapSentences"
+                        android:minLines="3"
+                        android:singleLine="false"
+                        tools:ignore="Autofill" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    style="@style/AuthxLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lbl_select_category" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:background="@drawable/bg_authx_outline"
+                    android:minHeight="56dp">
+
+                    <Spinner
+                        android:id="@+id/spCategory"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toStartOf="@+id/ivCategoryArrow"
+                        android:background="@android:color/transparent"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="6dp"
+                        tools:ignore="RtlSymmetry" />
+
+                    <ImageView
+                        android:id="@+id/ivCategoryArrow"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/ic_authx_chevron_down"
+                        tools:ignore="ContentDescription" />
+                </RelativeLayout>
+
+                <TextView
+                    style="@style/AuthxLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lbl_department" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:background="@drawable/bg_authx_outline"
+                    android:minHeight="56dp">
+
+                    <Spinner
+                        android:id="@+id/spDepartment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toStartOf="@+id/ivDepartmentArrow"
+                        android:background="@android:color/transparent"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="6dp"
+                        tools:ignore="RtlSymmetry" />
+
+                    <ImageView
+                        android:id="@+id/ivDepartmentArrow"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/ic_authx_chevron_down"
+                        tools:ignore="ContentDescription" />
+                </RelativeLayout>
+
+                <!-- Cover image picker (hidden: covers are generated from the title) -->
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnPickCover"
+                    style="@style/txtOpenSansRomanBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginTop="14dp"
+                    android:background="@drawable/bg_authx_outline"
+                    android:text="@string/lbl_pick_cover"
+                    android:textAllCaps="false"
+                    android:textColor="@color/authx_text"
+                    android:visibility="gone" />
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/ivCoverPreview"
+                    android:layout_width="96dp"
+                    android:layout_height="132dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="12dp"
+                    android:scaleType="centerCrop"
+                    android:visibility="gone"
+                    app:shapeAppearanceOverlay="@style/AuthxCoverShape"
                     tools:ignore="ContentDescription" />
-            </RelativeLayout>
+            </LinearLayout>
 
-            <!-- Cover image picker -->
-            <androidx.appcompat.widget.AppCompatButton
-                android:visibility="gone"
-                android:id="@+id/btnPickCover"
-                style="@style/txtOpenSansRomanBold"
+            <!-- ===== Book file ===== -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_15px"
-                android:background="@drawable/rectangle_bg_white_border"
-                android:paddingTop="@dimen/_16px"
-                android:paddingBottom="@dimen/_16px"
-                android:text="@string/lbl_pick_cover"
-                android:textAllCaps="false"
-                android:textColor="@color/gray" />
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="18dp"
+                android:background="@drawable/bg_authx_card"
+                android:elevation="10dp"
+                android:orientation="vertical"
+                android:padding="20dp">
 
-            <ImageView
-                android:id="@+id/ivCoverPreview"
-                android:layout_width="@dimen/_120px"
-                android:layout_height="@dimen/_160px"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/_10px"
-                android:scaleType="centerCrop"
-                android:visibility="gone"
-                tools:ignore="ContentDescription" />
-
-            <!-- Source type: file vs link -->
-            <RadioGroup
-                android:id="@+id/rgSource"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_20px"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/rbFile"
-                    android:layout_width="wrap_content"
+                <TextView
+                    style="@style/txt_OpenSansRomanExtraBold"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:checked="true"
-                    android:text="@string/lbl_source_file" />
+                    android:text="@string/lbl_ub_source"
+                    android:textColor="@color/authx_text"
+                    android:textSize="@dimen/_17sp" />
 
-                <RadioButton
-                    android:id="@+id/rbLink"
-                    android:layout_width="wrap_content"
+                <!-- Source type: file vs link, as a segmented switch -->
+                <RadioGroup
+                    android:id="@+id/rgSource"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/lbl_source_link" />
-            </RadioGroup>
+                    android:layout_marginTop="14dp"
+                    android:background="@drawable/bg_authx_soft"
+                    android:orientation="horizontal"
+                    android:padding="4dp">
 
-            <!-- File chooser row (visible in file mode) -->
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnPickFile"
-                style="@style/txtOpenSansRomanBold"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10px"
-                android:background="@drawable/rectangle_bg_white_border"
-                android:paddingTop="@dimen/_16px"
-                android:paddingBottom="@dimen/_16px"
-                android:text="@string/lbl_pick_file"
-                android:textAllCaps="false"
-                android:textColor="@color/gray" />
+                    <RadioButton
+                        android:id="@+id/rbFile"
+                        style="@style/txt_OpenSansRomanBold"
+                        android:layout_width="0dp"
+                        android:layout_height="42dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_authx_seg_tab"
+                        android:button="@null"
+                        android:checked="true"
+                        android:gravity="center"
+                        android:text="@string/lbl_ub_tab_file"
+                        android:textColor="@color/authx_seg_text"
+                        android:textSize="@dimen/_14sp" />
 
+                    <RadioButton
+                        android:id="@+id/rbLink"
+                        style="@style/txt_OpenSansRomanBold"
+                        android:layout_width="0dp"
+                        android:layout_height="42dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_authx_seg_tab"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="@string/lbl_ub_tab_link"
+                        android:textColor="@color/authx_seg_text"
+                        android:textSize="@dimen/_14sp" />
+                </RadioGroup>
+
+                <!-- File chooser (file mode) -->
+                <LinearLayout
+                    android:id="@+id/btnPickFile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:background="@drawable/bg_authx_dashed"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingTop="22dp"
+                    android:paddingBottom="20dp">
+
+                    <FrameLayout
+                        android:layout_width="52dp"
+                        android:layout_height="52dp"
+                        android:background="@drawable/bg_authx_pill_cta">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_upload_book"
+                            app:tint="@color/white"
+                            tools:ignore="ContentDescription" />
+                    </FrameLayout>
+
+                    <TextView
+                        style="@style/txt_OpenSansRomanBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/lbl_pick_file"
+                        android:textColor="@color/authx_text"
+                        android:textSize="@dimen/_15sp" />
+
+                    <TextView
+                        style="@style/txtOpenSansRomanSemiBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="@string/lbl_ub_pick_sub"
+                        android:textColor="@color/authx_text_muted"
+                        android:textSize="@dimen/_12sp" />
+                </LinearLayout>
+
+                <!-- The chosen file -->
+                <TextView
+                    android:id="@+id/tvFileName"
+                    style="@style/txt_OpenSansRomanBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_authx_coral_soft"
+                    android:drawableStart="@drawable/ic_feed_book"
+                    android:drawablePadding="10dp"
+                    android:drawableTint="@color/authx_coral"
+                    android:ellipsize="middle"
+                    android:padding="12dp"
+                    android:singleLine="true"
+                    android:textColor="@color/authx_text"
+                    android:textSize="@dimen/_14sp"
+                    android:visibility="gone"
+                    tools:text="os_unit3_notes.pdf"
+                    tools:visibility="visible" />
+
+                <!-- Link input (link mode) -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilLink"
+                    style="@style/AuthxField"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/lbl_ub_link"
+                    android:visibility="gone"
+                    app:placeholderText="@string/lbl_book_url_hint"
+                    app:startIconDrawable="@drawable/ic_feed_book">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtLink"
+                        style="@style/AuthxFieldEdit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textUri"
+                        tools:ignore="Autofill" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
+            <!-- Review note -->
             <TextView
-                android:id="@+id/tvFileName"
-                style="@style/txt_OpenSansRomanBold"
+                style="@style/txtOpenSansRomanSemiBold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5px"
-                android:textColor="@color/gray_trans_99"
-                android:textSize="@dimen/_14sp"
-                android:visibility="gone" />
-
-            <!-- Link input (visible in link mode) -->
-            <EditText
-                android:id="@+id/edtLink"
-                style="@style/edtBoxRoundedOutline"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10px"
-                android:background="@drawable/rectangle_bg_white_border"
-                android:hint="@string/lbl_book_url_hint"
-                android:textCursorDrawable="@drawable/cursor"
-                android:inputType="textUri"
-                android:paddingStart="@dimen/_20px"
-                android:paddingTop="@dimen/_18px"
-                android:paddingEnd="@dimen/_20px"
-                android:paddingBottom="@dimen/_18px"
-                android:singleLine="true"
-                android:textColorHint="@color/gray_edt_hint_text"
-                android:visibility="gone"
-                tools:ignore="Autofill" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnSubmitUpload"
-                style="@style/txtOpenSansRomanBold"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_25px"
-                android:gravity="center"
-                android:paddingTop="@dimen/_16px"
-                android:paddingBottom="@dimen/_16px"
-                android:text="@string/lbl_submit"
-                android:textAllCaps="false" />
-
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="14dp"
+                android:layout_marginEnd="18dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/bg_authx_soft"
+                android:lineSpacingExtra="2dp"
+                android:padding="14dp"
+                android:text="@string/lbl_ub_review_note"
+                android:textColor="@color/authx_text_muted"
+                android:textSize="@dimen/_13sp" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-</LinearLayout>
+</RelativeLayout>

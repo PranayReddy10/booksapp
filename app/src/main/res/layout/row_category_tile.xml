@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- One category on the Categories / Sub-categories grids: a rounded white tile
+     with the category image on top and its name under it. -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="6dp">
+
+    <LinearLayout
+        android:id="@+id/fmCat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_authx_card_sm"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        android:orientation="vertical"
+        android:padding="6dp">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/ivCat"
+            android:layout_width="match_parent"
+            android:layout_height="104dp"
+            android:background="@color/authx_soft"
+            android:scaleType="centerCrop"
+            android:src="@drawable/placeholder_landscape"
+            app:shapeAppearanceOverlay="@style/AuthxTileImageShape"
+            tools:ignore="ContentDescription" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:minHeight="46dp"
+            android:orientation="horizontal"
+            android:paddingStart="8dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="4dp"
+            android:paddingBottom="4dp">
+
+            <TextView
+                android:id="@+id/tvCat"
+                style="@style/txt_OpenSansRomanBold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:textColor="@color/authx_text"
+                android:textSize="@dimen/_14sp"
+                tools:text="Computer Science" />
+
+            <FrameLayout
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_marginStart="6dp"
+                android:background="@drawable/bg_authx_circle_soft">
+
+                <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_home_chevron"
+                    app:tint="@color/authx_coral"
+                    tools:ignore="ContentDescription" />
+            </FrameLayout>
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

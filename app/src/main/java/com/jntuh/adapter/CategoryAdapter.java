@@ -29,7 +29,7 @@ import com.applovin.mediation.nativeAds.MaxNativeAdView;
 import com.bumptech.glide.Glide;
 import com.jntuh.books.BuildConfig;
 import com.jntuh.books.R;
-import com.jntuh.books.databinding.RowCatBinding;
+import com.jntuh.books.databinding.RowCategoryTileBinding;
 import com.jntuh.item.CategoryList;
 import com.jntuh.util.AdInterstitialAds;
 import com.jntuh.util.Constant;
@@ -76,7 +76,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType) {
         if (viewType == VIEW_TYPE_ITEM) {
-            return new ViewHolder(RowCatBinding.inflate(activity.getLayoutInflater()));
+            return new ViewHolder(RowCategoryTileBinding.inflate(activity.getLayoutInflater(), parent, false));
         } else if (viewType == VIEW_TYPE_LOADING) {
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_loading_item, parent, false);
             return new ProgressViewHolder(v);
@@ -326,9 +326,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        RowCatBinding rowCatBinding;
+        RowCategoryTileBinding rowCatBinding;
 
-        public ViewHolder(RowCatBinding rowCatBinding) {
+        public ViewHolder(RowCategoryTileBinding rowCatBinding) {
             super(rowCatBinding.getRoot());
             this.rowCatBinding = rowCatBinding;
         }
