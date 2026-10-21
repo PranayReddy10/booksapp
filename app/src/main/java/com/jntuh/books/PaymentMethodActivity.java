@@ -17,7 +17,6 @@ import com.jntuh.item.ItemPaymentSetting;
 import com.jntuh.paymentmethod.FlutterWaveActivity;
 import com.jntuh.paymentmethod.ManualBankPaymentActivity;
 import com.jntuh.paymentmethod.MyCinetPayActivity;
-import com.jntuh.paymentmethod.PayPalActivity;
 import com.jntuh.paymentmethod.PayStackActivity;
 import com.jntuh.paymentmethod.PayUMoneyActivity;
 import com.jntuh.paymentmethod.RazorPayActivity;
@@ -152,9 +151,7 @@ public class PaymentMethodActivity extends AppCompatActivity {
             if (gatewayPos == 0) {
                 Toast.makeText(PaymentMethodActivity.this, getString(R.string.payment_select), Toast.LENGTH_SHORT).show();
             } else {
-                if (gatewayPos == 1) {
-                    goPayPal();
-                } else if (gatewayPos == 2) {
+                if (gatewayPos == 2) {
                     goStripe();
                 } else if (gatewayPos == 3) {
                     goRazorPay();
@@ -223,8 +220,8 @@ public class PaymentMethodActivity extends AppCompatActivity {
                             switch (gatewayId) {
                                 case "1":
                                     viewPaymentBinding.tvPaypal.setText(gatewayName);
-                                    paymentSetting.setPayPal(status);
-                                    paymentSetting.setPayPalSandbox(gatewayInfoJson.getString("mode").equals("sandbox"));
+                                    // PayPal (Braintree) is not supported in the app; keep it hidden.
+                                    paymentSetting.setPayPal(false);
                                     Glide.with(getApplicationContext()).load(gatewayLogo)
                                             .placeholder(R.drawable.placeholder_landscape)
                                             .into(viewPaymentBinding.ivPaypal);
@@ -356,17 +353,6 @@ public class PaymentMethodActivity extends AppCompatActivity {
             viewPaymentBinding.llNoData.textViewNoDataNoDataFound.setText(getString(R.string.no_payment));
             viewPaymentBinding.btnPay.setVisibility(View.GONE);
         }
-    }
-
-    private void goPayPal() {
-        Intent intentPayPal = new Intent(PaymentMethodActivity.this, PayPalActivity.class);
-        intentPayPal.putExtra("planId", planId);
-        intentPayPal.putExtra("planPrice", planPrice);
-        intentPayPal.putExtra("planCurrency", paymentSetting.getCurrencyCode());
-        intentPayPal.putExtra("planGateway", getString(R.string.payment_paypal));
-        intentPayPal.putExtra("isSandbox", paymentSetting.isPayPalSandbox());
-        intentPayPal.putExtra("isRent", isRent);
-        startActivity(intentPayPal);
     }
 
     private void goSslCommerz() {

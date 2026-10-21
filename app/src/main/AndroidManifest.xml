@@ -135,7 +135,6 @@
         <activity android:name="com.jntuh.books.MediaNotificationActivity" />
         <activity android:name="com.jntuh.paymentmethod.PayStackActivity" />
         <activity android:name="com.jntuh.paymentmethod.StripeActivity" />
-        <activity android:name="com.jntuh.paymentmethod.PayPalActivity" />
         <activity android:name="com.jntuh.paymentmethod.RazorPayActivity" />
         <activity android:name="com.jntuh.paymentmethod.PayUMoneyActivity" />
         <activity android:name="com.jntuh.paymentmethod.FlutterWaveActivity" />
