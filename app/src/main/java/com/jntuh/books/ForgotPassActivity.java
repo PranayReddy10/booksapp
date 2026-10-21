@@ -38,9 +38,9 @@ public class ForgotPassActivity extends AppCompatActivity {
         method.forceRTLIfSupported();
 
         progressDialog = new ProgressDialog(ForgotPassActivity.this,R.style.MyAlertDialogStyle);
-        viewForPassBinding.toolbarMain.tvToolbarTitle.setText(getString(R.string.lbl_forgot_password));
-
-        viewForPassBinding.toolbarMain.imageArrowBack.setOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
+        viewForPassBinding.btnForgotBack.setOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
+        viewForPassBinding.tvForgotLogin.setOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
+        com.jntuh.util.AuthAnimator.floatView(viewForPassBinding.authBlobRing, 40f, -45f, 4600);
 
         viewForPassBinding.btnForgotSend.setOnClickListener(v -> {
             String string = viewForPassBinding.edtForgotEmail.getText().toString();
