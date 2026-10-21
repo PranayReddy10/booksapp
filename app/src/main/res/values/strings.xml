@@ -863,4 +863,8 @@
     <string name="lbl_ep_lookup_ok">Details found and filled in. Change anything you like, then save.</string>
     <string name="lbl_ep_lookup_queued">Still looking. Tap Look up again in a moment.</string>
     <string name="lbl_shop_sub">Custom gifts, mugs and more from MadeForU</string>
+    <string name="lbl_post_text">Text</string>
+    <string name="lbl_post_type">What are you posting?</string>
+    <string name="lbl_post_attach">Attachments</string>
+    <string name="msg_post_text_only">Just your words — no photo or video needed.</string>
 </resources>

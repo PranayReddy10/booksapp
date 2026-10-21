@@ -21,6 +21,7 @@ import com.jntuh.books.ForgotPassActivity;
 import com.jntuh.books.LoginActivity;
 import com.jntuh.books.MainActivity;
 import com.jntuh.books.MediaFeedActivity;
+import com.jntuh.books.MediaUploadActivity;
 import com.jntuh.books.PaymentMethodActivity;
 import com.jntuh.books.PlanListActivity;
 import com.jntuh.books.ProfileSectionActivity;
@@ -182,7 +183,7 @@ public class MyApplication extends Application implements Application.ActivityLi
 
     @Override
     public void onActivityCreated(@NonNull Activity activity, @Nullable Bundle bundle) {
-        if(!(activity instanceof MainActivity) && !(activity instanceof LoginActivity) && !(activity instanceof RegisterActivity) && !(activity instanceof ForgotPassActivity) && !(activity instanceof CompleteProfileActivity) && !(activity instanceof EditProfileActivity) && !(activity instanceof ProfileSectionActivity) && !(activity instanceof UploadBookActivity) && !(activity instanceof SplashActivity) && !(activity instanceof SignInHubActivity)) {
+        if(!(activity instanceof MainActivity) && !(activity instanceof LoginActivity) && !(activity instanceof RegisterActivity) && !(activity instanceof ForgotPassActivity) && !(activity instanceof CompleteProfileActivity) && !(activity instanceof EditProfileActivity) && !(activity instanceof ProfileSectionActivity) && !(activity instanceof UploadBookActivity) && !(activity instanceof MediaUploadActivity) && !(activity instanceof SplashActivity) && !(activity instanceof SignInHubActivity)) {
             if(!(activity instanceof PaymentMethodActivity) && !(activity instanceof PlanListActivity)) {
                 StatusBarUtil.setStatusBar(activity, "");
             } else {
