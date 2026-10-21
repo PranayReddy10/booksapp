@@ -831,4 +831,6 @@
     <string name="lbl_authx_new_pass">New password (optional)</string>
     <string name="lbl_authx_save">Save changes</string>
     <string name="lbl_authx_change_photo">Change photo</string>
+    <string name="lbl_res_out_of">out of 10</string>
+    <string name="lbl_res_your_semesters">Your semesters</string>
 </resources>

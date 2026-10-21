@@ -208,4 +208,7 @@
     <color name="authx_on_header_muted">#C7C9F0</color>
     <color name="authx_glass">#1FFFFFFF</color>
     <color name="authx_glass_stroke">#33FFFFFF</color>
+    <color name="authx_coral_tint">#3A2A2E</color>
+    <color name="authx_good">#4ADE80</color>
+    <color name="authx_grade">#A5B4FC</color>
 </resources>

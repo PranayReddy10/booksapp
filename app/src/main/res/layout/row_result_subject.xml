@@ -23,7 +23,7 @@
             android:ellipsize="end"
             android:fontFamily="@font/opensansromansemibold"
             android:maxLines="2"
-            android:textColor="@color/gray"
+            android:textColor="@color/authx_text"
             android:textSize="12sp"
             tools:text="CRYPTOGRAPHY &amp; NETWORK SECURITY" />
 
@@ -39,7 +39,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/opensansromansemibold"
-                android:textColor="@color/gray_2"
+                android:textColor="@color/authx_text_muted"
                 android:textSize="10sp"
                 tools:text="157BB" />
 
@@ -65,7 +65,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/opensansromansemibold"
         android:gravity="center"
-        android:textColor="@color/gray"
+        android:textColor="@color/authx_text"
         android:textSize="12sp"
         tools:text="20" />
 
@@ -75,7 +75,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/opensansromansemibold"
         android:gravity="center"
-        android:textColor="@color/gray"
+        android:textColor="@color/authx_text"
         android:textSize="12sp"
         tools:text="31" />
 
@@ -85,7 +85,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/opensansromanbold"
         android:gravity="center"
-        android:textColor="@color/gray"
+        android:textColor="@color/authx_text"
         android:textSize="12sp"
         tools:text="51" />
 
@@ -95,7 +95,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/opensansromanextrabold"
         android:gravity="center"
-        android:textColor="@color/result_brand_blue"
+        android:textColor="@color/authx_grade"
         android:textSize="12.5sp"
         tools:text="B" />
 
@@ -105,7 +105,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/opensansromanbold"
         android:gravity="center"
-        android:textColor="@color/gray"
+        android:textColor="@color/authx_text"
         android:textSize="12sp"
         tools:text="3.0" />
 </LinearLayout>
